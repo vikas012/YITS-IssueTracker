@@ -71,6 +71,7 @@ public class IssueController {
 		
 		issueService.createIssue(issueForm);
 		return "success";
+		
 	}
 	
 	
