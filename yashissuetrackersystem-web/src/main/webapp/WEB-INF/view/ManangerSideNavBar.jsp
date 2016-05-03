@@ -3,6 +3,7 @@
                 
                     <li >
                         <a href="#"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                  
                     </li>
                     <li>
                         <a href="#/createIssue"><i class="glyphicon glyphicon-plus"></i> Create Issue</a>

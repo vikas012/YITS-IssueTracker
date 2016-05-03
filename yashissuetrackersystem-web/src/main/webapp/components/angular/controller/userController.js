@@ -8,6 +8,7 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
                 	 /*retrieve and assign value from list*/
                 	 angular.forEach(d,function(value,key){
             			 switch(key){
+            			 
             			 	case 0:
             					 $scope.priorities=value;
             					 break;

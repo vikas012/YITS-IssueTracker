@@ -21,6 +21,8 @@ import com.yash.yits.service.IssueService;
 @Controller
 public class IssueController {
 
+	
+	
 	@Autowired
 	IssueService issueService;
 	

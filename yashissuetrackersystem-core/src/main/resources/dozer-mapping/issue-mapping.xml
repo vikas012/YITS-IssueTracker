@@ -10,6 +10,7 @@
           	<class-b>com.yash.yits.domain.Issue</class-b>
           </mapping>
           
+          
           <mapping>
           	<class-a>com.yash.yits.form.UserForm</class-a>
           	<class-b>com.yash.yits.domain.User</class-b>

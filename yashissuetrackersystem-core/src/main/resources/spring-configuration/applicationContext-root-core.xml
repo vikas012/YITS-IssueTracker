@@ -18,6 +18,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 	<import resource="common-beans.xml" />
+	
 
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

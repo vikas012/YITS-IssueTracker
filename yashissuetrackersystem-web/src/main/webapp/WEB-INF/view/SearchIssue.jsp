@@ -6,6 +6,7 @@
 <style type="text/css">
 	
 	.container{
+	
 		width: 200px;
 		float: center;
 	}

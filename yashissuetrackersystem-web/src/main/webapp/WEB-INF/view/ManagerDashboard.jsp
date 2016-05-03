@@ -7,6 +7,7 @@
     <link href='<spring:url value="/styles/sb-admin.css"></spring:url>' rel="stylesheet">
 
     <!-- Morris Charts CSS -->
+    
     <link href='<spring:url value="/styles/plugins/morris.css"></spring:url>' rel="stylesheet">
 
     <!-- Custom Fonts -->

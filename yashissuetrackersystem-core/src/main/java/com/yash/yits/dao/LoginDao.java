@@ -9,6 +9,7 @@ import com.yash.yits.domain.User;
  * @author somesh.kumar
  *
  */
+
 public interface LoginDao {
 	
 	/**

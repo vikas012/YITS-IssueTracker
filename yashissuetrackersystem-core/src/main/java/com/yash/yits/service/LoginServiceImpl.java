@@ -34,6 +34,7 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	private LoginDao loginDao;
 	
+
 	User domainUser= new User();
 	UserForm userForm= new UserForm();
 	

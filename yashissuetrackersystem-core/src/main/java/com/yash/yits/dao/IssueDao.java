@@ -15,6 +15,7 @@ public interface IssueDao {
 
 	public List<IssuePriority> getPriorities();
 	
+	
 	public List<Project> getProjects();
 	
 	public List<IssueType> getIssueType();

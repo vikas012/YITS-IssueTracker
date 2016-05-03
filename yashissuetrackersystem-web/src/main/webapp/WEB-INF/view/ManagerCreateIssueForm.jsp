@@ -6,6 +6,7 @@
 
 <style>
 	.clear{
+	
 		clear: both;
 	}
 	.dropDown{

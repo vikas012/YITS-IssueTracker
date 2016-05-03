@@ -41,6 +41,7 @@ public class IssueServiceImpl implements IssueService {
 
 	@Autowired
 	IssueDao issueDao;
+	
 
 	@Autowired
 	DozerBeanMapper mapper;
@@ -57,6 +58,7 @@ public class IssueServiceImpl implements IssueService {
 
 	public List<ProjectForm> getProjects() {
 
+		
 		List<ProjectForm> projectForms = new ArrayList<ProjectForm>();
 		for (Project project : issueDao.getProjects()) {
 
@@ -77,6 +79,7 @@ public class IssueServiceImpl implements IssueService {
 
 	public List<IssueAssignedStatusForm> getAssignedStatus() {
 
+		
 		List<IssueAssignedStatusForm> issueAssignedStatusForms = new ArrayList<IssueAssignedStatusForm>();
 		for (IssueAssignedStatus issueAssignedStatus : issueDao.getAssignedStatus()) {
 
@@ -87,6 +90,7 @@ public class IssueServiceImpl implements IssueService {
 
 	public List<IssueStatusForm> getIssueStatus() {
 
+	
 		List<IssueStatusForm> issueStatusForms = new ArrayList<IssueStatusForm>();
 		for (IssueStatus issueStatus : issueDao.getIssueStatus()) {
 
@@ -97,6 +101,7 @@ public class IssueServiceImpl implements IssueService {
 
 	public List<UserForm> getAssigneeList() {
 
+		
 		List<UserForm> userForm = new ArrayList<UserForm>();
 		for (User user : issueDao.getAssigneeList()) {
 
@@ -125,7 +130,8 @@ public class IssueServiceImpl implements IssueService {
 		
 Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 	    
-	    Date currentTime = localCalendar.getTime();
+	  
+		Date currentTime = localCalendar.getTime();
 	    int currentDay = localCalendar.get(Calendar.DATE);
 	    int currentDayOfWeek = localCalendar.get(Calendar.DAY_OF_WEEK);
 	    Date date=new Date();
@@ -192,6 +198,7 @@ Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 	 *  */
 	public List<IssueForm> search(String searchText) {
 
+	
 		List<Issue> issues = issueDao.search(searchText);
 		List<IssueForm> issueForms = new ArrayList<IssueForm>();
 		for (Issue issue : issues) {

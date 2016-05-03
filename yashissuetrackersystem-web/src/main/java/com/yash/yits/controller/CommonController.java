@@ -9,6 +9,8 @@ public class CommonController {
 	@RequestMapping(value="/welcomeView")
 	public String welcomePage(){
 		return "Welcome";
+	
+	
 	}
 	
 	@RequestMapping(value="/userWelcome")
