@@ -92,7 +92,6 @@ public class IssueDaoImpl implements IssueDao{
 		
 		List<Issue> issues=query.list();
 		
-		session.close();
 		return issues;
 	}
 	
