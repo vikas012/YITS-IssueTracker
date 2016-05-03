@@ -1,0 +1,1 @@
+<div class="footer"><span class="glyphicon glyphicon-registration-mark"></span> yash.com 2016 </div>
