@@ -25,6 +25,7 @@
 	<mvc:annotation-driven></mvc:annotation-driven>
 	
 	<!-- configure static folders -->
+	<mvc:resources location="/WEB-INF/static/" mapping="/WEB-INF/static/**"/>
 	<mvc:resources location="/components/" mapping="/components/**"/>
 	<mvc:resources location="/fonts/" mapping="/fonts/**"/>
 	<mvc:resources location="/images/" mapping="/images/**"/>
@@ -33,8 +34,8 @@
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="0">
-		<property name="prefix" value="/WEB-INF/view/" />
-		<property name="suffix" value=".jsp" />
+		<property name="prefix" value="/WEB-INF/static/" />
+		<property name="suffix" value=""/>
 	</bean>
 
 	<!--  each translation message file should be placed here -->
