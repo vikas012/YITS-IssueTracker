@@ -1,9 +1,9 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
 import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -17,218 +17,209 @@ public class Issue implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
-	@Column(name="ISSUEDETAIL_ID")
-	private int issueDetailId;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
 
-	@Column(name="ISSUE_AFFECTEDVERSION")
-	private String issueAffectedVersion;
+	@Column(name="AFFECTED_USER")
+	private int affectedUser;
 
-	@Column(name="ISSUE_COMPONENT")
-	private String issueComponent;
+	@Column(name="AFFECTED_VERSION")
+	private String affectedVersion;
 
-	@Column(name="ISSUE_DESCRIPTION")
-	private String issueDescription;
-	
 	@Temporal(TemporalType.DATE)
-	@Column(name="ISSUE_CREATIONDATE")
-	private Date issueCreationDate;
-	
+	@Column(name="CLOSE_DATE")
+	private Date closeDate;
+
+	private String component;
+
+	@Column(name="CREATED_DATE_TIME")
+	private Timestamp createdDateTime;
+
+	private Object description;
+
 	@Temporal(TemporalType.DATE)
-	@Column(name="ISSUE_DUEDATE")
-	private Date issueDueDate;
+	@Column(name="DUE_DATE")
+	private Date dueDate;
 
-	@Column(name="ISSUE_ENVIRONMENT")
-	private String issueEnvironment;
+	private Object isactive;
 
-	@Column(name="ISSUE_ORIGINALESTIMATE")
-	private int issueOriginalEstimate;
+	@Column(name="LAST_MODIFIED_DATETIME")
+	private Timestamp lastModifiedDatetime;
 
-	@Column(name="ISSUE_REMAININGESTIMATE")
-	private int issueRemainingEstimate;
+	@Column(name="ORIGINAL_ESTIMATE")
+	private int originalEstimate;
 
-	@Column(name="ISSUE_SUMMARY")
-	private String issueSummary;
+	@Column(name="REMAINING_ESTIMATE")
+	private int remainingEstimate;
 
-	//bi-directional many-to-one association to IssueAssignedStatus
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="ISSUEASSIGNED_STATUS")
-	/*@Column(name="ISSUEASSIGNED_STATUS")*/
-	private IssueAssignedStatus issueAssignedStatus;
+	private Object summary;
 
-	//bi-directional many-to-one association to User
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="ISSUE_ASSIGNEEID")
-	private User user;
-
-	//bi-directional many-to-one association to Issuetype
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="ISSUE_TYPE_ID")
-	/*@Column(name="ISSUE_TYPE_ID")*/
-	private IssueType issueType;
-
-	//bi-directional many-to-one association to Project
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="ISSUE_PROJECT_ID")
-	/*@Column(name="ISSUE_PROJECT_ID")*/
-	private Project project;
-
-	//bi-directional many-to-one association to Issuepriority
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="ISSUE_PRIORITY_ID")
-	/*@Column(name="ISSUE_PRIORITY_ID")*/
-	private IssuePriority issuePriority;
-
-	//bi-directional many-to-one association to Issuestatus
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="ISSUE_STATUS_ID")
-	/*@Column(name="ISSUE_STATUS_ID")*/
-	private IssueStatus issueStatus;
-
-	//bi-directional many-to-many association to Attachment
-	@ManyToMany(mappedBy="issues")
+	//bi-directional many-to-one association to Attachment
+	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
 	private List<Attachment> attachments;
 
-	//bi-directional many-to-one association to Issuefeed
-	@OneToMany(mappedBy="issue")
-	private List<IssueFeed> issueFeeds;
+	//bi-directional many-to-one association to Conversation
+	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
+	private List<Conversation> conversations;
+
+	//bi-directional many-to-one association to ApplicationTeamMember
+	@ManyToOne
+	@JoinColumn(name="OWNER")
+	private ApplicationTeamMember applicationTeamMember1;
+
+	//bi-directional many-to-one association to ApplicationTeamMember
+	@ManyToOne
+	@JoinColumn(name="LAST_MODIFIED_BY")
+	private ApplicationTeamMember applicationTeamMember2;
+
+	//bi-directional many-to-one association to Project
+	@ManyToOne
+	private Project project;
+
+	//bi-directional many-to-one association to ApplicationIssueType
+	@ManyToOne
+	@JoinColumn(name="APPLICATION_ISSUE_TYPE_ID")
+	private ApplicationIssueType applicationIssueType;
+
+	//bi-directional many-to-one association to ApplicationIssuePriority
+	@ManyToOne
+	@JoinColumn(name="APPLICATION_ISSUE_PRIORITY_ID")
+	private ApplicationIssuePriority applicationIssuePriority;
+
+	//bi-directional many-to-one association to ApplicationEnvironment
+	@ManyToOne
+	@JoinColumn(name="APPLICATION_ENVIRONMENT_ID")
+	private ApplicationEnvironment applicationEnvironment;
+
+	//bi-directional many-to-one association to ApplicationRelease
+	@ManyToOne
+	@JoinColumn(name="APPLICATION_RELEASE_ID")
+	private ApplicationRelease applicationRelease;
+
+	//bi-directional many-to-one association to ProjectRelease
+	@ManyToOne
+	@JoinColumn(name="PROJECT_RELEASE_ID")
+	private ProjectRelease projectRelease;
+
+	//bi-directional many-to-one association to ApplicationIssueStatus
+	@ManyToOne
+	@JoinColumn(name="APPLICATION_ISSUE_STATUS_ID")
+	private ApplicationIssueStatus applicationIssueStatus;
+
+	//bi-directional many-to-one association to ApplicationTeamMember
+	@ManyToOne
+	@JoinColumn(name="CREATED_BY")
+	private ApplicationTeamMember applicationTeamMember3;
+
+	//bi-directional many-to-one association to IssueActivityLog
+	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
+	private List<IssueActivityLog> issueActivityLogs;
 
 	public Issue() {
-		
-		this.issueAssignedStatus = new IssueAssignedStatus();
-		this.user = new User();
-		this.issueType = new IssueType();
-		this.project = new Project();
-		this.issuePriority = new IssuePriority();
-		this.issueStatus = new IssueStatus();
 	}
 
-	public int getIssueDetailId() {
-		return this.issueDetailId;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIssueDetailId(int issueDetailId) {
-		this.issueDetailId = issueDetailId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getIssueAffectedVersion() {
-		return this.issueAffectedVersion;
+	public int getAffectedUser() {
+		return this.affectedUser;
 	}
 
-	public void setIssueAffectedVersion(String issueAffectedVersion) {
-		this.issueAffectedVersion = issueAffectedVersion;
+	public void setAffectedUser(int affectedUser) {
+		this.affectedUser = affectedUser;
 	}
 
-	public String getIssueComponent() {
-		return this.issueComponent;
+	public String getAffectedVersion() {
+		return this.affectedVersion;
 	}
 
-	public void setIssueComponent(String issueComponent) {
-		this.issueComponent = issueComponent;
+	public void setAffectedVersion(String affectedVersion) {
+		this.affectedVersion = affectedVersion;
 	}
 
-	public String getIssueDescription() {
-		return this.issueDescription;
+	public Date getCloseDate() {
+		return this.closeDate;
 	}
 
-	public void setIssueDescription(String issueDescription) {
-		this.issueDescription = issueDescription;
-	}
-	
-	public Date getIssueCreationDate() {
-		return this.issueCreationDate;
+	public void setCloseDate(Date closeDate) {
+		this.closeDate = closeDate;
 	}
 
-	public void setIssueCreationDate(Date issueCreationDate) {
-		this.issueCreationDate = issueCreationDate;
+	public String getComponent() {
+		return this.component;
 	}
 
-	public Date getIssueDueDate() {
-		return this.issueDueDate;
+	public void setComponent(String component) {
+		this.component = component;
 	}
 
-	public void setIssueDueDate(Date issueDueDate) {
-		this.issueDueDate = issueDueDate;
+	public Timestamp getCreatedDateTime() {
+		return this.createdDateTime;
 	}
 
-	public String getIssueEnvironment() {
-		return this.issueEnvironment;
+	public void setCreatedDateTime(Timestamp createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
-	public void setIssueEnvironment(String issueEnvironment) {
-		this.issueEnvironment = issueEnvironment;
+	public Object getDescription() {
+		return this.description;
 	}
 
-	public int getIssueOriginalEstimate() {
-		return this.issueOriginalEstimate;
+	public void setDescription(Object description) {
+		this.description = description;
 	}
 
-	public void setIssueOriginalEstimate(int issueOriginalEstimate) {
-		this.issueOriginalEstimate = issueOriginalEstimate;
+	public Date getDueDate() {
+		return this.dueDate;
 	}
 
-	public int getIssueRemainingEstimate() {
-		return this.issueRemainingEstimate;
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 
-	public void setIssueRemainingEstimate(int issueRemainingEstimate) {
-		this.issueRemainingEstimate = issueRemainingEstimate;
+	public Object getIsactive() {
+		return this.isactive;
 	}
 
-	public String getIssueSummary() {
-		return this.issueSummary;
+	public void setIsactive(Object isactive) {
+		this.isactive = isactive;
 	}
 
-	public void setIssueSummary(String issueSummary) {
-		this.issueSummary = issueSummary;
+	public Timestamp getLastModifiedDatetime() {
+		return this.lastModifiedDatetime;
 	}
 
-	public IssueAssignedStatus getIssueAssignedStatus() {
-		return this.issueAssignedStatus;
+	public void setLastModifiedDatetime(Timestamp lastModifiedDatetime) {
+		this.lastModifiedDatetime = lastModifiedDatetime;
 	}
 
-	public void setIssueAssignedStatus(IssueAssignedStatus issueAssignedStatus) {
-		this.issueAssignedStatus = issueAssignedStatus;
+	public int getOriginalEstimate() {
+		return this.originalEstimate;
 	}
 
-	public User getUser() {
-		return this.user;
+	public void setOriginalEstimate(int originalEstimate) {
+		this.originalEstimate = originalEstimate;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public int getRemainingEstimate() {
+		return this.remainingEstimate;
 	}
 
-	public IssueType getIssueType() {
-		return this.issueType;
+	public void setRemainingEstimate(int remainingEstimate) {
+		this.remainingEstimate = remainingEstimate;
 	}
 
-	public void setIssueType(IssueType issueType) {
-		this.issueType = issueType;
+	public Object getSummary() {
+		return this.summary;
 	}
 
-	public Project getProject() {
-		return this.project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
-
-	public IssuePriority getIssuePriority() {
-		return this.issuePriority;
-	}
-
-	public void setIssuePriority(IssuePriority issuePriority) {
-		this.issuePriority = issuePriority;
-	}
-
-	public IssueStatus getIssueStatus() {
-		return this.issueStatus;
-	}
-
-	public void setIssueStatus(IssueStatus issueStatus) {
-		this.issueStatus = issueStatus;
+	public void setSummary(Object summary) {
+		this.summary = summary;
 	}
 
 	public List<Attachment> getAttachments() {
@@ -239,26 +230,142 @@ public class Issue implements Serializable {
 		this.attachments = attachments;
 	}
 
-	public List<IssueFeed> getIssueFeeds() {
-		return this.issueFeeds;
+	public Attachment addAttachment(Attachment attachment) {
+		getAttachments().add(attachment);
+		attachment.setIssue(this);
+
+		return attachment;
 	}
 
-	public void setIssueFeeds(List<IssueFeed> issueFeeds) {
-		this.issueFeeds = issueFeeds;
+	public Attachment removeAttachment(Attachment attachment) {
+		getAttachments().remove(attachment);
+		attachment.setIssue(null);
+
+		return attachment;
 	}
 
-	public IssueFeed addIssueFeed(IssueFeed issueFeed) {
-		getIssueFeeds().add(issueFeed);
-		issueFeed.setIssue(this);
-
-		return issueFeed;
+	public List<Conversation> getConversations() {
+		return this.conversations;
 	}
 
-	public IssueFeed removeIssueFeed(IssueFeed issueFeed) {
-		getIssueFeeds().remove(issueFeed);
-		issueFeed.setIssue(null);
+	public void setConversations(List<Conversation> conversations) {
+		this.conversations = conversations;
+	}
 
-		return issueFeed;
+	public Conversation addConversation(Conversation conversation) {
+		getConversations().add(conversation);
+		conversation.setIssue(this);
+
+		return conversation;
+	}
+
+	public Conversation removeConversation(Conversation conversation) {
+		getConversations().remove(conversation);
+		conversation.setIssue(null);
+
+		return conversation;
+	}
+
+	public ApplicationTeamMember getApplicationTeamMember1() {
+		return this.applicationTeamMember1;
+	}
+
+	public void setApplicationTeamMember1(ApplicationTeamMember applicationTeamMember1) {
+		this.applicationTeamMember1 = applicationTeamMember1;
+	}
+
+	public ApplicationTeamMember getApplicationTeamMember2() {
+		return this.applicationTeamMember2;
+	}
+
+	public void setApplicationTeamMember2(ApplicationTeamMember applicationTeamMember2) {
+		this.applicationTeamMember2 = applicationTeamMember2;
+	}
+
+	public Project getProject() {
+		return this.project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public ApplicationIssueType getApplicationIssueType() {
+		return this.applicationIssueType;
+	}
+
+	public void setApplicationIssueType(ApplicationIssueType applicationIssueType) {
+		this.applicationIssueType = applicationIssueType;
+	}
+
+	public ApplicationIssuePriority getApplicationIssuePriority() {
+		return this.applicationIssuePriority;
+	}
+
+	public void setApplicationIssuePriority(ApplicationIssuePriority applicationIssuePriority) {
+		this.applicationIssuePriority = applicationIssuePriority;
+	}
+
+	public ApplicationEnvironment getApplicationEnvironment() {
+		return this.applicationEnvironment;
+	}
+
+	public void setApplicationEnvironment(ApplicationEnvironment applicationEnvironment) {
+		this.applicationEnvironment = applicationEnvironment;
+	}
+
+	public ApplicationRelease getApplicationRelease() {
+		return this.applicationRelease;
+	}
+
+	public void setApplicationRelease(ApplicationRelease applicationRelease) {
+		this.applicationRelease = applicationRelease;
+	}
+
+	public ProjectRelease getProjectRelease() {
+		return this.projectRelease;
+	}
+
+	public void setProjectRelease(ProjectRelease projectRelease) {
+		this.projectRelease = projectRelease;
+	}
+
+	public ApplicationIssueStatus getApplicationIssueStatus() {
+		return this.applicationIssueStatus;
+	}
+
+	public void setApplicationIssueStatus(ApplicationIssueStatus applicationIssueStatus) {
+		this.applicationIssueStatus = applicationIssueStatus;
+	}
+
+	public ApplicationTeamMember getApplicationTeamMember3() {
+		return this.applicationTeamMember3;
+	}
+
+	public void setApplicationTeamMember3(ApplicationTeamMember applicationTeamMember3) {
+		this.applicationTeamMember3 = applicationTeamMember3;
+	}
+
+	public List<IssueActivityLog> getIssueActivityLogs() {
+		return this.issueActivityLogs;
+	}
+
+	public void setIssueActivityLogs(List<IssueActivityLog> issueActivityLogs) {
+		this.issueActivityLogs = issueActivityLogs;
+	}
+
+	public IssueActivityLog addIssueActivityLog(IssueActivityLog issueActivityLog) {
+		getIssueActivityLogs().add(issueActivityLog);
+		issueActivityLog.setIssue(this);
+
+		return issueActivityLog;
+	}
+
+	public IssueActivityLog removeIssueActivityLog(IssueActivityLog issueActivityLog) {
+		getIssueActivityLogs().remove(issueActivityLog);
+		issueActivityLog.setIssue(null);
+
+		return issueActivityLog;
 	}
 
 }

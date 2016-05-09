@@ -14,23 +14,7 @@ import com.yash.yits.form.UserForm;
 
 public interface IssueService {
 
-	public List<IssuePriorityForm> getPriorities();
 	
-	public List<ProjectForm> getProjects();
-	
-	public List<IssueTypeForm> getIssueType();
-	
-	public List<IssueAssignedStatusForm> getAssignedStatus();
-	
-	public List<IssueStatusForm> getIssueStatus();
-	
-	public List<UserForm> getAssigneeList();
-	
-	public int createIssue(IssueForm issueForm);
-
-	public List<IssueForm> getDefaultIssues();
-
-	public List<IssueForm> search(String searchText);
 	
 	
 }
