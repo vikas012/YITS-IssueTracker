@@ -22,9 +22,9 @@ public class Conversation implements Serializable {
 	@Column(name="CREATED_DATETIME")
 	private Timestamp createdDatetime;
 
-	private Object isactive;
+	private int isactive;
 
-	private Object message;
+	private String message;
 
 	//bi-directional many-to-one association to Attachment
 	@OneToMany(mappedBy="conversation", fetch=FetchType.EAGER)
@@ -58,21 +58,23 @@ public class Conversation implements Serializable {
 		this.createdDatetime = createdDatetime;
 	}
 
-	public Object getIsactive() {
-		return this.isactive;
+	
+
+	/**
+	 * @return the isactive
+	 */
+	public int getIsactive() {
+		return isactive;
 	}
 
-	public void setIsactive(Object isactive) {
+	/**
+	 * @param isactive the isactive to set
+	 */
+	public void setIsactive(int isactive) {
 		this.isactive = isactive;
 	}
 
-	public Object getMessage() {
-		return this.message;
-	}
-
-	public void setMessage(Object message) {
-		this.message = message;
-	}
+	
 
 	public List<Attachment> getAttachments() {
 		return this.attachments;

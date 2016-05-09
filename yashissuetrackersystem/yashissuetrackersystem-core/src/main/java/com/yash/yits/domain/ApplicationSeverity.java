@@ -23,7 +23,11 @@ public class ApplicationSeverity implements Serializable {
 	@Column(name="CREATED_DATETIME")
 	private Timestamp createdDatetime;
 
-	private Object isactive;
+	private int isactive;
+
+	public void setIsactive(int isactive) {
+		this.isactive = isactive;
+	}
 
 	@Column(name="LAST_MODIFIED_DATETIME")
 	private Timestamp lastModifiedDatetime;
@@ -63,12 +67,12 @@ public class ApplicationSeverity implements Serializable {
 		this.createdDatetime = createdDatetime;
 	}
 
-	public Object getIsactive() {
-		return this.isactive;
-	}
-
-	public void setIsactive(Object isactive) {
-		this.isactive = isactive;
+	
+	/**
+	 * @return the isactive
+	 */
+	public int getIsactive() {
+		return isactive;
 	}
 
 	public Timestamp getLastModifiedDatetime() {

@@ -25,7 +25,7 @@ public class ApplicationEnvironment implements Serializable {
 
 	private String environment;
 
-	private Object isactive;
+	private int isactive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
 	private Timestamp lastModifiedDatetime;
@@ -75,11 +75,19 @@ public class ApplicationEnvironment implements Serializable {
 		this.environment = environment;
 	}
 
-	public Object getIsactive() {
-		return this.isactive;
+	
+
+	/**
+	 * @return the isactive
+	 */
+	public int getIsactive() {
+		return isactive;
 	}
 
-	public void setIsactive(Object isactive) {
+	/**
+	 * @param isactive the isactive to set
+	 */
+	public void setIsactive(int isactive) {
 		this.isactive = isactive;
 	}
 

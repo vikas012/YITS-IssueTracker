@@ -24,7 +24,23 @@ public class Attachment implements Serializable {
 	private Date attachmentDate;
 
 	@Column(name="ATTACHMENT_FILE")
-	private Object attachmentFile;
+	private byte[] attachmentFile;
+
+	
+
+	/**
+	 * @return the attachmentFile
+	 */
+	public byte[] getAttachmentFile() {
+		return attachmentFile;
+	}
+
+	/**
+	 * @param attachmentFile the attachmentFile to set
+	 */
+	public void setAttachmentFile(byte[] attachmentFile) {
+		this.attachmentFile = attachmentFile;
+	}
 
 	@Column(name="ATTACHMENT_ID")
 	private int attachmentId;
@@ -38,9 +54,8 @@ public class Attachment implements Serializable {
 	@Column(name="CREATED_DATE_TIME")
 	private Timestamp createdDateTime;
 
-	private Object file;
 
-	private Object isactive;
+	private int isactive;
 
 	@Column(name="`LABEL`")
 	private String label;
@@ -87,13 +102,13 @@ public class Attachment implements Serializable {
 		this.attachmentDate = attachmentDate;
 	}
 
-	public Object getAttachmentFile() {
+	/*public String getAttachmentFile() {
 		return this.attachmentFile;
 	}
 
-	public void setAttachmentFile(Object attachmentFile) {
+	public void setAttachmentFile(String attachmentFile) {
 		this.attachmentFile = attachmentFile;
-	}
+	}*/
 
 	public int getAttachmentId() {
 		return this.attachmentId;
@@ -127,19 +142,20 @@ public class Attachment implements Serializable {
 		this.createdDateTime = createdDateTime;
 	}
 
-	public Object getFile() {
-		return this.file;
+	
+
+	
+	/**
+	 * @return the isactive
+	 */
+	public int getIsactive() {
+		return isactive;
 	}
 
-	public void setFile(Object file) {
-		this.file = file;
-	}
-
-	public Object getIsactive() {
-		return this.isactive;
-	}
-
-	public void setIsactive(Object isactive) {
+	/**
+	 * @param isactive the isactive to set
+	 */
+	public void setIsactive(int isactive) {
 		this.isactive = isactive;
 	}
 

@@ -21,12 +21,10 @@ import com.yash.yits.dao.LoginDao;
  * @author somesh.kumar
  *
  */
-@Repository
+
 public class LoginDaoImpl implements LoginDao {
 
-	@Autowired
-	private SessionFactory sessionFactory;
-	
+
 	
 
 }

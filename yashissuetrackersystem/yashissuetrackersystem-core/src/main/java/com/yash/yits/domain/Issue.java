@@ -35,13 +35,12 @@ public class Issue implements Serializable {
 	@Column(name="CREATED_DATE_TIME")
 	private Timestamp createdDateTime;
 
-	private Object description;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="DUE_DATE")
 	private Date dueDate;
 
-	private Object isactive;
+	private int isactive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
 	private Timestamp lastModifiedDatetime;
@@ -52,7 +51,8 @@ public class Issue implements Serializable {
 	@Column(name="REMAINING_ESTIMATE")
 	private int remainingEstimate;
 
-	private Object summary;
+	private String description;
+	private String summary;
 
 	//bi-directional many-to-one association to Attachment
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
@@ -166,11 +166,19 @@ public class Issue implements Serializable {
 		this.createdDateTime = createdDateTime;
 	}
 
-	public Object getDescription() {
+	public String getSummary() {
+		return this.summary;
+	}
+	
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String getDescription() {
 		return this.description;
 	}
 
-	public void setDescription(Object description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -182,11 +190,19 @@ public class Issue implements Serializable {
 		this.dueDate = dueDate;
 	}
 
-	public Object getIsactive() {
-		return this.isactive;
+	
+
+	/**
+	 * @return the isactive
+	 */
+	public int getIsactive() {
+		return isactive;
 	}
 
-	public void setIsactive(Object isactive) {
+	/**
+	 * @param isactive the isactive to set
+	 */
+	public void setIsactive(int isactive) {
 		this.isactive = isactive;
 	}
 
@@ -214,13 +230,6 @@ public class Issue implements Serializable {
 		this.remainingEstimate = remainingEstimate;
 	}
 
-	public Object getSummary() {
-		return this.summary;
-	}
-
-	public void setSummary(Object summary) {
-		this.summary = summary;
-	}
 
 	public List<Attachment> getAttachments() {
 		return this.attachments;

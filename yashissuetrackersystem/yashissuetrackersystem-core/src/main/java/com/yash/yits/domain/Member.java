@@ -30,7 +30,7 @@ public class Member implements Serializable {
 
 	private String email;
 
-	private Object isactive;
+	private int isactive;
 
 	@Column(name="LAST_MODIFIED_BY")
 	private int lastModifiedBy;
@@ -99,11 +99,19 @@ public class Member implements Serializable {
 		this.email = email;
 	}
 
-	public Object getIsactive() {
-		return this.isactive;
+	
+
+	/**
+	 * @return the isactive
+	 */
+	public int getIsactive() {
+		return isactive;
 	}
 
-	public void setIsactive(Object isactive) {
+	/**
+	 * @param isactive the isactive to set
+	 */
+	public void setIsactive(int isactive) {
 		this.isactive = isactive;
 	}
 

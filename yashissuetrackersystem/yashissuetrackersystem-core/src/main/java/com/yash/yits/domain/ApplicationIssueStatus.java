@@ -23,7 +23,7 @@ public class ApplicationIssueStatus implements Serializable {
 	@Column(name="CREATED_DATETIME")
 	private Timestamp createdDatetime;
 
-	private Object isactive;
+	private int isactive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
 	private Timestamp lastModifiedDatetime;
@@ -67,11 +67,18 @@ public class ApplicationIssueStatus implements Serializable {
 		this.createdDatetime = createdDatetime;
 	}
 
-	public Object getIsactive() {
-		return this.isactive;
+	
+	/**
+	 * @return the isactive
+	 */
+	public int getIsactive() {
+		return isactive;
 	}
 
-	public void setIsactive(Object isactive) {
+	/**
+	 * @param isactive the isactive to set
+	 */
+	public void setIsactive(int isactive) {
 		this.isactive = isactive;
 	}
 

@@ -27,7 +27,7 @@ public class Project implements Serializable {
 	@Column(name="END_DATE")
 	private Date endDate;
 
-	private Object isactive;
+	private int isactive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
 	private Timestamp lastModifiedDatetime;
@@ -110,11 +110,18 @@ public class Project implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public Object getIsactive() {
-		return this.isactive;
+	
+	/**
+	 * @return the isactive
+	 */
+	public int getIsactive() {
+		return isactive;
 	}
 
-	public void setIsactive(Object isactive) {
+	/**
+	 * @param isactive the isactive to set
+	 */
+	public void setIsactive(int isactive) {
 		this.isactive = isactive;
 	}
 
