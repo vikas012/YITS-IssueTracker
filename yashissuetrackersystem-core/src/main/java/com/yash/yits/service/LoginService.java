@@ -26,4 +26,9 @@ public interface LoginService {
 	
 	public UserForm fetchAttributes(InitialDirContext ctx,String name) throws NamingException;
 
+	
+	
+	
+	
+	
 }

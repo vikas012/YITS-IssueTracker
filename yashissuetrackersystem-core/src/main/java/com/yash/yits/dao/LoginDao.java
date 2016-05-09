@@ -3,7 +3,7 @@
  */
 package com.yash.yits.dao;
 
-import com.yash.yits.domain.User;
+import org.springframework.security.core.userdetails.User;
 
 /**
  * @author somesh.kumar

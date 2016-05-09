@@ -21,9 +21,7 @@ import com.yash.yits.service.IssueService;
 @Controller
 public class IssueController {
 
-	
-	
-	@Autowired
+@Autowired
 	IssueService issueService;
 	
 	@RequestMapping(value="/createUserIssueView",method=RequestMethod.GET)
@@ -34,6 +32,7 @@ public class IssueController {
 	@RequestMapping(value="/createManagerIssueView",method=RequestMethod.GET)
 	public String managerIssueForm(){
 		return"ManagerCreateIssueForm";
+
 	}
 	
 	@RequestMapping(value="/getPriority",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
