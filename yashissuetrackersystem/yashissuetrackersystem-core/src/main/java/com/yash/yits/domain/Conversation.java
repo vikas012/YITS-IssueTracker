@@ -20,9 +20,9 @@ public class Conversation implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDatetime;
+	private Timestamp createdDateTime;
 
-	private int isactive;
+	private int isActive;
 
 	private String message;
 
@@ -37,81 +37,65 @@ public class Conversation implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember applicationTeamMember;
+	private ApplicationTeamMember createdBy;
 
 	public Conversation() {
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDatetime() {
-		return this.createdDatetime;
+	public Timestamp getCreatedDateTime() {
+		return createdDateTime;
 	}
 
-	public void setCreatedDatetime(Timestamp createdDatetime) {
-		this.createdDatetime = createdDatetime;
+	public void setCreatedDateTime(Timestamp createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
-	
-
-	/**
-	 * @return the isactive
-	 */
-	public int getIsactive() {
-		return isactive;
+	public int getIsActive() {
+		return isActive;
 	}
 
-	/**
-	 * @param isactive the isactive to set
-	 */
-	public void setIsactive(int isactive) {
-		this.isactive = isactive;
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 
-	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 	public List<Attachment> getAttachments() {
-		return this.attachments;
+		return attachments;
 	}
 
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
 	}
 
-	public Attachment addAttachment(Attachment attachment) {
-		getAttachments().add(attachment);
-		attachment.setConversation(this);
-
-		return attachment;
-	}
-
-	public Attachment removeAttachment(Attachment attachment) {
-		getAttachments().remove(attachment);
-		attachment.setConversation(null);
-
-		return attachment;
-	}
-
 	public Issue getIssue() {
-		return this.issue;
+		return issue;
 	}
 
 	public void setIssue(Issue issue) {
 		this.issue = issue;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember() {
-		return this.applicationTeamMember;
+	public ApplicationTeamMember getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setApplicationTeamMember(ApplicationTeamMember applicationTeamMember) {
-		this.applicationTeamMember = applicationTeamMember;
+	public void setCreatedBy(ApplicationTeamMember createdBy) {
+		this.createdBy = createdBy;
 	}
 
 }

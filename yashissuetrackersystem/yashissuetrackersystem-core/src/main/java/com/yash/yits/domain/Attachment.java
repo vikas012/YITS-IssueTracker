@@ -19,49 +19,18 @@ public class Attachment implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="ATTACHMENT_DATE")
-	private Date attachmentDate;
-
-	@Column(name="ATTACHMENT_FILE")
-	private byte[] attachmentFile;
-
-	
-
-	/**
-	 * @return the attachmentFile
-	 */
-	public byte[] getAttachmentFile() {
-		return attachmentFile;
-	}
-
-	/**
-	 * @param attachmentFile the attachmentFile to set
-	 */
-	public void setAttachmentFile(byte[] attachmentFile) {
-		this.attachmentFile = attachmentFile;
-	}
-
-	@Column(name="ATTACHMENT_ID")
-	private int attachmentId;
-
-	@Column(name="ATTACHMENT_LABEL")
-	private String attachmentLabel;
-
-	@Column(name="ATTACHMENT_NAME")
-	private String attachmentName;
-
 	@Column(name="CREATED_DATE_TIME")
 	private Timestamp createdDateTime;
 
+	private byte[] file;
 
-	private int isactive;
+	private int isActive;
 
 	@Column(name="`LABEL`")
 	private String label;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDatetime;
+	private Timestamp lastModifiedDateTime;
 
 	private String name;
 
@@ -76,107 +45,66 @@ public class Attachment implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
-	private ApplicationTeamMember applicationTeamMember1;
+	private ApplicationTeamMember lastModifiedBy;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember applicationTeamMember2;
+	private ApplicationTeamMember createdBy;
 
 	public Attachment() {
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Date getAttachmentDate() {
-		return this.attachmentDate;
-	}
-
-	public void setAttachmentDate(Date attachmentDate) {
-		this.attachmentDate = attachmentDate;
-	}
-
-	/*public String getAttachmentFile() {
-		return this.attachmentFile;
-	}
-
-	public void setAttachmentFile(String attachmentFile) {
-		this.attachmentFile = attachmentFile;
-	}*/
-
-	public int getAttachmentId() {
-		return this.attachmentId;
-	}
-
-	public void setAttachmentId(int attachmentId) {
-		this.attachmentId = attachmentId;
-	}
-
-	public String getAttachmentLabel() {
-		return this.attachmentLabel;
-	}
-
-	public void setAttachmentLabel(String attachmentLabel) {
-		this.attachmentLabel = attachmentLabel;
-	}
-
-	public String getAttachmentName() {
-		return this.attachmentName;
-	}
-
-	public void setAttachmentName(String attachmentName) {
-		this.attachmentName = attachmentName;
-	}
-
 	public Timestamp getCreatedDateTime() {
-		return this.createdDateTime;
+		return createdDateTime;
 	}
 
 	public void setCreatedDateTime(Timestamp createdDateTime) {
 		this.createdDateTime = createdDateTime;
 	}
 
-	
-
-	
-	/**
-	 * @return the isactive
-	 */
-	public int getIsactive() {
-		return isactive;
+	public byte[] getFile() {
+		return file;
 	}
 
-	/**
-	 * @param isactive the isactive to set
-	 */
-	public void setIsactive(int isactive) {
-		this.isactive = isactive;
+	public void setFile(byte[] file) {
+		this.file = file;
+	}
+
+	public int getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 
 	public String getLabel() {
-		return this.label;
+		return label;
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
 	}
 
-	public Timestamp getLastModifiedDatetime() {
-		return this.lastModifiedDatetime;
+	public Timestamp getLastModifiedDateTime() {
+		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDatetime(Timestamp lastModifiedDatetime) {
-		this.lastModifiedDatetime = lastModifiedDatetime;
+	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
@@ -184,7 +112,7 @@ public class Attachment implements Serializable {
 	}
 
 	public Conversation getConversation() {
-		return this.conversation;
+		return conversation;
 	}
 
 	public void setConversation(Conversation conversation) {
@@ -192,27 +120,27 @@ public class Attachment implements Serializable {
 	}
 
 	public Issue getIssue() {
-		return this.issue;
+		return issue;
 	}
 
 	public void setIssue(Issue issue) {
 		this.issue = issue;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember1() {
-		return this.applicationTeamMember1;
+	public ApplicationTeamMember getLastModifiedBy() {
+		return lastModifiedBy;
 	}
 
-	public void setApplicationTeamMember1(ApplicationTeamMember applicationTeamMember1) {
-		this.applicationTeamMember1 = applicationTeamMember1;
+	public void setLastModifiedBy(ApplicationTeamMember lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember2() {
-		return this.applicationTeamMember2;
+	public ApplicationTeamMember getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setApplicationTeamMember2(ApplicationTeamMember applicationTeamMember2) {
-		this.applicationTeamMember2 = applicationTeamMember2;
+	public void setCreatedBy(ApplicationTeamMember createdBy) {
+		this.createdBy = createdBy;
 	}
 
 }

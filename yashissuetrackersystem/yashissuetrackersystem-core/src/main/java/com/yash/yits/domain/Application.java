@@ -20,24 +20,24 @@ public class Application implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDatetime;
+	private Timestamp createdDateTime;
 
-	private int isactive;
+	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDatetime;
+	private Timestamp lastModifiedDateTime;
 
 	private String name;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
-	private ApplicationTeamMember applicationTeamMember1;
+	private ApplicationTeamMember lastModifiedBy;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember applicationTeamMember2;
+	private ApplicationTeamMember createdBy;
 
 	//bi-directional many-to-one association to ApplicationEnvironment
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
@@ -75,242 +75,124 @@ public class Application implements Serializable {
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDatetime() {
-		return this.createdDatetime;
+	public Timestamp getCreatedDateTime() {
+		return createdDateTime;
 	}
 
-	public void setCreatedDatetime(Timestamp createdDatetime) {
-		this.createdDatetime = createdDatetime;
+	public void setCreatedDateTime(Timestamp createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
-	
-	/**
-	 * @return the isactive
-	 */
-	public int getIsactive() {
-		return isactive;
+	public int getIsActive() {
+		return isActive;
 	}
 
-	/**
-	 * @param isactive the isactive to set
-	 */
-	public void setIsactive(int isactive) {
-		this.isactive = isactive;
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDatetime() {
-		return this.lastModifiedDatetime;
+	public Timestamp getLastModifiedDateTime() {
+		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDatetime(Timestamp lastModifiedDatetime) {
-		this.lastModifiedDatetime = lastModifiedDatetime;
+	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember1() {
-		return this.applicationTeamMember1;
+	public ApplicationTeamMember getLastModifiedBy() {
+		return lastModifiedBy;
 	}
 
-	public void setApplicationTeamMember1(ApplicationTeamMember applicationTeamMember1) {
-		this.applicationTeamMember1 = applicationTeamMember1;
+	public void setLastModifiedBy(ApplicationTeamMember lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember2() {
-		return this.applicationTeamMember2;
+	public ApplicationTeamMember getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setApplicationTeamMember2(ApplicationTeamMember applicationTeamMember2) {
-		this.applicationTeamMember2 = applicationTeamMember2;
+	public void setCreatedBy(ApplicationTeamMember createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public List<ApplicationEnvironment> getApplicationEnvironments() {
-		return this.applicationEnvironments;
+		return applicationEnvironments;
 	}
 
 	public void setApplicationEnvironments(List<ApplicationEnvironment> applicationEnvironments) {
 		this.applicationEnvironments = applicationEnvironments;
 	}
 
-	public ApplicationEnvironment addApplicationEnvironment(ApplicationEnvironment applicationEnvironment) {
-		getApplicationEnvironments().add(applicationEnvironment);
-		applicationEnvironment.setApplication(this);
-
-		return applicationEnvironment;
-	}
-
-	public ApplicationEnvironment removeApplicationEnvironment(ApplicationEnvironment applicationEnvironment) {
-		getApplicationEnvironments().remove(applicationEnvironment);
-		applicationEnvironment.setApplication(null);
-
-		return applicationEnvironment;
-	}
-
 	public List<ApplicationIssuePriority> getApplicationIssuePriorities() {
-		return this.applicationIssuePriorities;
+		return applicationIssuePriorities;
 	}
 
 	public void setApplicationIssuePriorities(List<ApplicationIssuePriority> applicationIssuePriorities) {
 		this.applicationIssuePriorities = applicationIssuePriorities;
 	}
 
-	public ApplicationIssuePriority addApplicationIssuePriority(ApplicationIssuePriority applicationIssuePriority) {
-		getApplicationIssuePriorities().add(applicationIssuePriority);
-		applicationIssuePriority.setApplication(this);
-
-		return applicationIssuePriority;
-	}
-
-	public ApplicationIssuePriority removeApplicationIssuePriority(ApplicationIssuePriority applicationIssuePriority) {
-		getApplicationIssuePriorities().remove(applicationIssuePriority);
-		applicationIssuePriority.setApplication(null);
-
-		return applicationIssuePriority;
-	}
-
 	public List<ApplicationIssueStatus> getApplicationIssueStatuses() {
-		return this.applicationIssueStatuses;
+		return applicationIssueStatuses;
 	}
 
 	public void setApplicationIssueStatuses(List<ApplicationIssueStatus> applicationIssueStatuses) {
 		this.applicationIssueStatuses = applicationIssueStatuses;
 	}
 
-	public ApplicationIssueStatus addApplicationIssueStatus(ApplicationIssueStatus applicationIssueStatus) {
-		getApplicationIssueStatuses().add(applicationIssueStatus);
-		applicationIssueStatus.setApplication(this);
-
-		return applicationIssueStatus;
-	}
-
-	public ApplicationIssueStatus removeApplicationIssueStatus(ApplicationIssueStatus applicationIssueStatus) {
-		getApplicationIssueStatuses().remove(applicationIssueStatus);
-		applicationIssueStatus.setApplication(null);
-
-		return applicationIssueStatus;
-	}
-
 	public List<ApplicationIssueType> getApplicationIssueTypes() {
-		return this.applicationIssueTypes;
+		return applicationIssueTypes;
 	}
 
 	public void setApplicationIssueTypes(List<ApplicationIssueType> applicationIssueTypes) {
 		this.applicationIssueTypes = applicationIssueTypes;
 	}
 
-	public ApplicationIssueType addApplicationIssueType(ApplicationIssueType applicationIssueType) {
-		getApplicationIssueTypes().add(applicationIssueType);
-		applicationIssueType.setApplication(this);
-
-		return applicationIssueType;
-	}
-
-	public ApplicationIssueType removeApplicationIssueType(ApplicationIssueType applicationIssueType) {
-		getApplicationIssueTypes().remove(applicationIssueType);
-		applicationIssueType.setApplication(null);
-
-		return applicationIssueType;
-	}
-
 	public List<ApplicationProjectStatus> getApplicationProjectStatuses() {
-		return this.applicationProjectStatuses;
+		return applicationProjectStatuses;
 	}
 
 	public void setApplicationProjectStatuses(List<ApplicationProjectStatus> applicationProjectStatuses) {
 		this.applicationProjectStatuses = applicationProjectStatuses;
 	}
 
-	public ApplicationProjectStatus addApplicationProjectStatus(ApplicationProjectStatus applicationProjectStatus) {
-		getApplicationProjectStatuses().add(applicationProjectStatus);
-		applicationProjectStatus.setApplication(this);
-
-		return applicationProjectStatus;
-	}
-
-	public ApplicationProjectStatus removeApplicationProjectStatus(ApplicationProjectStatus applicationProjectStatus) {
-		getApplicationProjectStatuses().remove(applicationProjectStatus);
-		applicationProjectStatus.setApplication(null);
-
-		return applicationProjectStatus;
-	}
-
 	public List<ApplicationRelease> getApplicationReleases() {
-		return this.applicationReleases;
+		return applicationReleases;
 	}
 
 	public void setApplicationReleases(List<ApplicationRelease> applicationReleases) {
 		this.applicationReleases = applicationReleases;
 	}
 
-	public ApplicationRelease addApplicationReleas(ApplicationRelease applicationReleas) {
-		getApplicationReleases().add(applicationReleas);
-		applicationReleas.setApplication(this);
-
-		return applicationReleas;
-	}
-
-	public ApplicationRelease removeApplicationReleas(ApplicationRelease applicationReleas) {
-		getApplicationReleases().remove(applicationReleas);
-		applicationReleas.setApplication(null);
-
-		return applicationReleas;
-	}
-
 	public List<ApplicationTeamMember> getApplicationTeamMembers() {
-		return this.applicationTeamMembers;
+		return applicationTeamMembers;
 	}
 
 	public void setApplicationTeamMembers(List<ApplicationTeamMember> applicationTeamMembers) {
 		this.applicationTeamMembers = applicationTeamMembers;
 	}
 
-	public ApplicationTeamMember addApplicationTeamMember(ApplicationTeamMember applicationTeamMember) {
-		getApplicationTeamMembers().add(applicationTeamMember);
-		applicationTeamMember.setApplication(this);
-
-		return applicationTeamMember;
-	}
-
-	public ApplicationTeamMember removeApplicationTeamMember(ApplicationTeamMember applicationTeamMember) {
-		getApplicationTeamMembers().remove(applicationTeamMember);
-		applicationTeamMember.setApplication(null);
-
-		return applicationTeamMember;
-	}
-
 	public List<Project> getProjects() {
-		return this.projects;
+		return projects;
 	}
 
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
 
-	public Project addProject(Project project) {
-		getProjects().add(project);
-		project.setApplication(this);
-
-		return project;
-	}
-
-	public Project removeProject(Project project) {
-		getProjects().remove(project);
-		project.setApplication(null);
-
-		return project;
-	}
-
+	
 }

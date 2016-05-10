@@ -21,16 +21,12 @@ public class ApplicationSeverity implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDatetime;
+	private Timestamp createdDateTime;
 
-	private int isactive;
-
-	public void setIsactive(int isactive) {
-		this.isactive = isactive;
-	}
+	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDatetime;
+	private Timestamp lastModifiedDateTime;
 
 	private String name;
 
@@ -41,50 +37,50 @@ public class ApplicationSeverity implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
-	private ApplicationTeamMember applicationTeamMember1;
+	private ApplicationTeamMember lastModifiedBy;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember applicationTeamMember2;
+	private ApplicationTeamMember createdBy;
 
 	public ApplicationSeverity() {
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDatetime() {
-		return this.createdDatetime;
+	public Timestamp getCreatedDateTime() {
+		return createdDateTime;
 	}
 
-	public void setCreatedDatetime(Timestamp createdDatetime) {
-		this.createdDatetime = createdDatetime;
+	public void setCreatedDateTime(Timestamp createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
-	
-	/**
-	 * @return the isactive
-	 */
-	public int getIsactive() {
-		return isactive;
+	public int getIsActive() {
+		return isActive;
 	}
 
-	public Timestamp getLastModifiedDatetime() {
-		return this.lastModifiedDatetime;
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 
-	public void setLastModifiedDatetime(Timestamp lastModifiedDatetime) {
-		this.lastModifiedDatetime = lastModifiedDatetime;
+	public Timestamp getLastModifiedDateTime() {
+		return lastModifiedDateTime;
+	}
+
+	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
@@ -92,41 +88,27 @@ public class ApplicationSeverity implements Serializable {
 	}
 
 	public List<ApplicationIssuePriority> getApplicationIssuePriorities() {
-		return this.applicationIssuePriorities;
+		return applicationIssuePriorities;
 	}
 
 	public void setApplicationIssuePriorities(List<ApplicationIssuePriority> applicationIssuePriorities) {
 		this.applicationIssuePriorities = applicationIssuePriorities;
 	}
 
-	public ApplicationIssuePriority addApplicationIssuePriority(ApplicationIssuePriority applicationIssuePriority) {
-		getApplicationIssuePriorities().add(applicationIssuePriority);
-		applicationIssuePriority.setApplicationSeverity(this);
-
-		return applicationIssuePriority;
+	public ApplicationTeamMember getLastModifiedBy() {
+		return lastModifiedBy;
 	}
 
-	public ApplicationIssuePriority removeApplicationIssuePriority(ApplicationIssuePriority applicationIssuePriority) {
-		getApplicationIssuePriorities().remove(applicationIssuePriority);
-		applicationIssuePriority.setApplicationSeverity(null);
-
-		return applicationIssuePriority;
+	public void setLastModifiedBy(ApplicationTeamMember lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember1() {
-		return this.applicationTeamMember1;
+	public ApplicationTeamMember getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setApplicationTeamMember1(ApplicationTeamMember applicationTeamMember1) {
-		this.applicationTeamMember1 = applicationTeamMember1;
-	}
-
-	public ApplicationTeamMember getApplicationTeamMember2() {
-		return this.applicationTeamMember2;
-	}
-
-	public void setApplicationTeamMember2(ApplicationTeamMember applicationTeamMember2) {
-		this.applicationTeamMember2 = applicationTeamMember2;
+	public void setCreatedBy(ApplicationTeamMember createdBy) {
+		this.createdBy = createdBy;
 	}
 
 }

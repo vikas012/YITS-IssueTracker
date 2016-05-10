@@ -25,10 +25,10 @@ public class ApplicationEnvironment implements Serializable {
 
 	private String environment;
 
-	private int isactive;
+	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDatetime;
+	private Timestamp lastModifiedDateTime;
 
 	//bi-directional many-to-one association to Application
 	@ManyToOne
@@ -37,12 +37,12 @@ public class ApplicationEnvironment implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
-	private ApplicationTeamMember applicationTeamMember1;
+	private ApplicationTeamMember lastModifiedBy;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember applicationTeamMember2;
+	private ApplicationTeamMember createdBy;
 
 	//bi-directional many-to-one association to Issue
 	@OneToMany(mappedBy="applicationEnvironment", fetch=FetchType.EAGER)
@@ -52,7 +52,7 @@ public class ApplicationEnvironment implements Serializable {
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
@@ -60,7 +60,7 @@ public class ApplicationEnvironment implements Serializable {
 	}
 
 	public Timestamp getCreatedDateTime() {
-		return this.createdDateTime;
+		return createdDateTime;
 	}
 
 	public void setCreatedDateTime(Timestamp createdDateTime) {
@@ -68,81 +68,59 @@ public class ApplicationEnvironment implements Serializable {
 	}
 
 	public String getEnvironment() {
-		return this.environment;
+		return environment;
 	}
 
 	public void setEnvironment(String environment) {
 		this.environment = environment;
 	}
 
-	
-
-	/**
-	 * @return the isactive
-	 */
-	public int getIsactive() {
-		return isactive;
+	public int getIsActive() {
+		return isActive;
 	}
 
-	/**
-	 * @param isactive the isactive to set
-	 */
-	public void setIsactive(int isactive) {
-		this.isactive = isactive;
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDatetime() {
-		return this.lastModifiedDatetime;
+	public Timestamp getLastModifiedDateTime() {
+		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDatetime(Timestamp lastModifiedDatetime) {
-		this.lastModifiedDatetime = lastModifiedDatetime;
+	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public Application getApplication() {
-		return this.application;
+		return application;
 	}
 
 	public void setApplication(Application application) {
 		this.application = application;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember1() {
-		return this.applicationTeamMember1;
+	public ApplicationTeamMember getLastModifiedBy() {
+		return lastModifiedBy;
 	}
 
-	public void setApplicationTeamMember1(ApplicationTeamMember applicationTeamMember1) {
-		this.applicationTeamMember1 = applicationTeamMember1;
+	public void setLastModifiedBy(ApplicationTeamMember lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember2() {
-		return this.applicationTeamMember2;
+	public ApplicationTeamMember getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setApplicationTeamMember2(ApplicationTeamMember applicationTeamMember2) {
-		this.applicationTeamMember2 = applicationTeamMember2;
+	public void setCreatedBy(ApplicationTeamMember createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public List<Issue> getIssues() {
-		return this.issues;
+		return issues;
 	}
 
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
-	}
-
-	public Issue addIssue(Issue issue) {
-		getIssues().add(issue);
-		issue.setApplicationEnvironment(this);
-
-		return issue;
-	}
-
-	public Issue removeIssue(Issue issue) {
-		getIssues().remove(issue);
-		issue.setApplicationEnvironment(null);
-
-		return issue;
 	}
 
 }

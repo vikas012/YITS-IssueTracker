@@ -22,12 +22,12 @@ public class IssueActivityLog implements Serializable {
 	private String action;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDatetime;
+	private Timestamp createdDateTime;
 
-	private int isactive;
+	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDatetime;
+	private Timestamp lastModifiedDateTime;
 
 	//bi-directional many-to-one association to Issue
 	@ManyToOne
@@ -36,18 +36,10 @@ public class IssueActivityLog implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
-	private ApplicationTeamMember applicationTeamMember1;
-
-	//bi-directional many-to-one association to ApplicationTeamMember
-	@ManyToOne
-	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember applicationTeamMember2;
-
-	public IssueActivityLog() {
-	}
+	private ApplicationTeamMember lastModifiedBy;
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
@@ -55,67 +47,68 @@ public class IssueActivityLog implements Serializable {
 	}
 
 	public String getAction() {
-		return this.action;
+		return action;
 	}
 
 	public void setAction(String action) {
 		this.action = action;
 	}
 
-	public Timestamp getCreatedDatetime() {
-		return this.createdDatetime;
+	public Timestamp getCreatedDateTime() {
+		return createdDateTime;
 	}
 
-	public void setCreatedDatetime(Timestamp createdDatetime) {
-		this.createdDatetime = createdDatetime;
+	public void setCreatedDateTime(Timestamp createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
-	
-
-	/**
-	 * @return the isactive
-	 */
-	public int getIsactive() {
-		return isactive;
+	public int getIsActive() {
+		return isActive;
 	}
 
-	/**
-	 * @param isactive the isactive to set
-	 */
-	public void setIsactive(int isactive) {
-		this.isactive = isactive;
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDatetime() {
-		return this.lastModifiedDatetime;
+	public Timestamp getLastModifiedDateTime() {
+		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDatetime(Timestamp lastModifiedDatetime) {
-		this.lastModifiedDatetime = lastModifiedDatetime;
+	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public Issue getIssue() {
-		return this.issue;
+		return issue;
 	}
 
 	public void setIssue(Issue issue) {
 		this.issue = issue;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember1() {
-		return this.applicationTeamMember1;
+	public ApplicationTeamMember getLastModifiedBy() {
+		return lastModifiedBy;
 	}
 
-	public void setApplicationTeamMember1(ApplicationTeamMember applicationTeamMember1) {
-		this.applicationTeamMember1 = applicationTeamMember1;
+	public void setLastModifiedBy(ApplicationTeamMember lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember2() {
-		return this.applicationTeamMember2;
+	public ApplicationTeamMember getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setApplicationTeamMember2(ApplicationTeamMember applicationTeamMember2) {
-		this.applicationTeamMember2 = applicationTeamMember2;
+	public void setCreatedBy(ApplicationTeamMember createdBy) {
+		this.createdBy = createdBy;
 	}
 
+	//bi-directional many-to-one association to ApplicationTeamMember
+	@ManyToOne
+	@JoinColumn(name="CREATED_BY")
+	private ApplicationTeamMember createdBy;
+
+	public IssueActivityLog() {
+	}
+	
+	
 }

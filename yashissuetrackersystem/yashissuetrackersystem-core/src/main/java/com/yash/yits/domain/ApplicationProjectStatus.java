@@ -23,10 +23,10 @@ public class ApplicationProjectStatus implements Serializable {
 	@Column(name="CREATED_DATE_TIME")
 	private Timestamp createdDateTime;
 
-	private int isactive;
+	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDatetime;
+	private Timestamp lastModifiedDateTime;
 
 	private String status;
 
@@ -37,12 +37,12 @@ public class ApplicationProjectStatus implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
-	private ApplicationTeamMember applicationTeamMember1;
+	private ApplicationTeamMember lastModifiedBy;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember applicationTeamMember2;
+	private ApplicationTeamMember createdBy;
 
 	//bi-directional many-to-one association to Project
 	@OneToMany(mappedBy="applicationProjectStatus", fetch=FetchType.EAGER)
@@ -52,7 +52,7 @@ public class ApplicationProjectStatus implements Serializable {
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
@@ -60,39 +60,31 @@ public class ApplicationProjectStatus implements Serializable {
 	}
 
 	public Timestamp getCreatedDateTime() {
-		return this.createdDateTime;
+		return createdDateTime;
 	}
 
 	public void setCreatedDateTime(Timestamp createdDateTime) {
 		this.createdDateTime = createdDateTime;
 	}
 
-	
-
-	/**
-	 * @return the isactive
-	 */
-	public int getIsactive() {
-		return isactive;
+	public int getIsActive() {
+		return isActive;
 	}
 
-	/**
-	 * @param isactive the isactive to set
-	 */
-	public void setIsactive(int isactive) {
-		this.isactive = isactive;
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDatetime() {
-		return this.lastModifiedDatetime;
+	public Timestamp getLastModifiedDateTime() {
+		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDatetime(Timestamp lastModifiedDatetime) {
-		this.lastModifiedDatetime = lastModifiedDatetime;
+	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public String getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(String status) {
@@ -100,49 +92,35 @@ public class ApplicationProjectStatus implements Serializable {
 	}
 
 	public Application getApplication() {
-		return this.application;
+		return application;
 	}
 
 	public void setApplication(Application application) {
 		this.application = application;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember1() {
-		return this.applicationTeamMember1;
+	public ApplicationTeamMember getLastModifiedBy() {
+		return lastModifiedBy;
 	}
 
-	public void setApplicationTeamMember1(ApplicationTeamMember applicationTeamMember1) {
-		this.applicationTeamMember1 = applicationTeamMember1;
+	public void setLastModifiedBy(ApplicationTeamMember lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember2() {
-		return this.applicationTeamMember2;
+	public ApplicationTeamMember getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setApplicationTeamMember2(ApplicationTeamMember applicationTeamMember2) {
-		this.applicationTeamMember2 = applicationTeamMember2;
+	public void setCreatedBy(ApplicationTeamMember createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public List<Project> getProjects() {
-		return this.projects;
+		return projects;
 	}
 
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
-	}
-
-	public Project addProject(Project project) {
-		getProjects().add(project);
-		project.setApplicationProjectStatus(this);
-
-		return project;
-	}
-
-	public Project removeProject(Project project) {
-		getProjects().remove(project);
-		project.setApplicationProjectStatus(null);
-
-		return project;
 	}
 
 }

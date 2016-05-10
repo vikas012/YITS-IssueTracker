@@ -20,7 +20,7 @@ public class Member implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	private BigInteger contact;
+	private Long contact;
 
 	@Column(name="CREATED_BY")
 	private int createdBy;
@@ -30,13 +30,13 @@ public class Member implements Serializable {
 
 	private String email;
 
-	private int isactive;
+	private int isActive;
 
 	@Column(name="LAST_MODIFIED_BY")
 	private int lastModifiedBy;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDatetime;
+	private Timestamp lastModifiedDateTime;
 
 	@Column(name="MEMBER_ID")
 	private int memberId;
@@ -60,23 +60,23 @@ public class Member implements Serializable {
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public BigInteger getContact() {
-		return this.contact;
+	public Long getContact() {
+		return contact;
 	}
 
-	public void setContact(BigInteger contact) {
+	public void setContact(Long contact) {
 		this.contact = contact;
 	}
 
 	public int getCreatedBy() {
-		return this.createdBy;
+		return createdBy;
 	}
 
 	public void setCreatedBy(int createdBy) {
@@ -84,7 +84,7 @@ public class Member implements Serializable {
 	}
 
 	public Timestamp getCreatedDateTime() {
-		return this.createdDateTime;
+		return createdDateTime;
 	}
 
 	public void setCreatedDateTime(Timestamp createdDateTime) {
@@ -92,47 +92,39 @@ public class Member implements Serializable {
 	}
 
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	
-
-	/**
-	 * @return the isactive
-	 */
-	public int getIsactive() {
-		return isactive;
+	public int getIsActive() {
+		return isActive;
 	}
 
-	/**
-	 * @param isactive the isactive to set
-	 */
-	public void setIsactive(int isactive) {
-		this.isactive = isactive;
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 
 	public int getLastModifiedBy() {
-		return this.lastModifiedBy;
+		return lastModifiedBy;
 	}
 
 	public void setLastModifiedBy(int lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public Timestamp getLastModifiedDatetime() {
-		return this.lastModifiedDatetime;
+	public Timestamp getLastModifiedDateTime() {
+		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDatetime(Timestamp lastModifiedDatetime) {
-		this.lastModifiedDatetime = lastModifiedDatetime;
+	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public int getMemberId() {
-		return this.memberId;
+		return memberId;
 	}
 
 	public void setMemberId(int memberId) {
@@ -140,7 +132,7 @@ public class Member implements Serializable {
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
@@ -148,29 +140,15 @@ public class Member implements Serializable {
 	}
 
 	public List<ApplicationTeamMember> getApplicationTeamMembers() {
-		return this.applicationTeamMembers;
+		return applicationTeamMembers;
 	}
 
 	public void setApplicationTeamMembers(List<ApplicationTeamMember> applicationTeamMembers) {
 		this.applicationTeamMembers = applicationTeamMembers;
 	}
 
-	public ApplicationTeamMember addApplicationTeamMember(ApplicationTeamMember applicationTeamMember) {
-		getApplicationTeamMembers().add(applicationTeamMember);
-		applicationTeamMember.setMember(this);
-
-		return applicationTeamMember;
-	}
-
-	public ApplicationTeamMember removeApplicationTeamMember(ApplicationTeamMember applicationTeamMember) {
-		getApplicationTeamMembers().remove(applicationTeamMember);
-		applicationTeamMember.setMember(null);
-
-		return applicationTeamMember;
-	}
-
 	public Member getMember() {
-		return this.member;
+		return member;
 	}
 
 	public void setMember(Member member) {
@@ -178,25 +156,11 @@ public class Member implements Serializable {
 	}
 
 	public List<Member> getMembers() {
-		return this.members;
+		return members;
 	}
 
 	public void setMembers(List<Member> members) {
 		this.members = members;
-	}
-
-	public Member addMember(Member member) {
-		getMembers().add(member);
-		member.setMember(this);
-
-		return member;
-	}
-
-	public Member removeMember(Member member) {
-		getMembers().remove(member);
-		member.setMember(null);
-
-		return member;
 	}
 
 }

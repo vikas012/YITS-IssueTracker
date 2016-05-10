@@ -35,15 +35,16 @@ public class Issue implements Serializable {
 	@Column(name="CREATED_DATE_TIME")
 	private Timestamp createdDateTime;
 
+	private String description;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="DUE_DATE")
 	private Date dueDate;
 
-	private int isactive;
+	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDatetime;
+	private Timestamp lastModifiedDateTime;
 
 	@Column(name="ORIGINAL_ESTIMATE")
 	private int originalEstimate;
@@ -51,7 +52,6 @@ public class Issue implements Serializable {
 	@Column(name="REMAINING_ESTIMATE")
 	private int remainingEstimate;
 
-	private String description;
 	private String summary;
 
 	//bi-directional many-to-one association to Attachment
@@ -65,12 +65,12 @@ public class Issue implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="OWNER")
-	private ApplicationTeamMember applicationTeamMember1;
+	private ApplicationTeamMember applicationOwner;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
-	private ApplicationTeamMember applicationTeamMember2;
+	private ApplicationTeamMember lastModifiedBy;
 
 	//bi-directional many-to-one association to Project
 	@ManyToOne
@@ -109,7 +109,7 @@ public class Issue implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember applicationTeamMember3;
+	private ApplicationTeamMember createdBy;
 
 	//bi-directional many-to-one association to IssueActivityLog
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
@@ -119,7 +119,7 @@ public class Issue implements Serializable {
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
@@ -127,7 +127,7 @@ public class Issue implements Serializable {
 	}
 
 	public int getAffectedUser() {
-		return this.affectedUser;
+		return affectedUser;
 	}
 
 	public void setAffectedUser(int affectedUser) {
@@ -135,7 +135,7 @@ public class Issue implements Serializable {
 	}
 
 	public String getAffectedVersion() {
-		return this.affectedVersion;
+		return affectedVersion;
 	}
 
 	public void setAffectedVersion(String affectedVersion) {
@@ -143,7 +143,7 @@ public class Issue implements Serializable {
 	}
 
 	public Date getCloseDate() {
-		return this.closeDate;
+		return closeDate;
 	}
 
 	public void setCloseDate(Date closeDate) {
@@ -151,7 +151,7 @@ public class Issue implements Serializable {
 	}
 
 	public String getComponent() {
-		return this.component;
+		return component;
 	}
 
 	public void setComponent(String component) {
@@ -159,23 +159,15 @@ public class Issue implements Serializable {
 	}
 
 	public Timestamp getCreatedDateTime() {
-		return this.createdDateTime;
+		return createdDateTime;
 	}
 
 	public void setCreatedDateTime(Timestamp createdDateTime) {
 		this.createdDateTime = createdDateTime;
 	}
 
-	public String getSummary() {
-		return this.summary;
-	}
-	
-	public void setSummary(String summary) {
-		this.summary = summary;
-	}
-
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(String description) {
@@ -183,39 +175,31 @@ public class Issue implements Serializable {
 	}
 
 	public Date getDueDate() {
-		return this.dueDate;
+		return dueDate;
 	}
 
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
 
-	
-
-	/**
-	 * @return the isactive
-	 */
-	public int getIsactive() {
-		return isactive;
+	public int getIsActive() {
+		return isActive;
 	}
 
-	/**
-	 * @param isactive the isactive to set
-	 */
-	public void setIsactive(int isactive) {
-		this.isactive = isactive;
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDatetime() {
-		return this.lastModifiedDatetime;
+	public Timestamp getLastModifiedDateTime() {
+		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDatetime(Timestamp lastModifiedDatetime) {
-		this.lastModifiedDatetime = lastModifiedDatetime;
+	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public int getOriginalEstimate() {
-		return this.originalEstimate;
+		return originalEstimate;
 	}
 
 	public void setOriginalEstimate(int originalEstimate) {
@@ -223,76 +207,55 @@ public class Issue implements Serializable {
 	}
 
 	public int getRemainingEstimate() {
-		return this.remainingEstimate;
+		return remainingEstimate;
 	}
 
 	public void setRemainingEstimate(int remainingEstimate) {
 		this.remainingEstimate = remainingEstimate;
 	}
 
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
 
 	public List<Attachment> getAttachments() {
-		return this.attachments;
+		return attachments;
 	}
 
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
 	}
 
-	public Attachment addAttachment(Attachment attachment) {
-		getAttachments().add(attachment);
-		attachment.setIssue(this);
-
-		return attachment;
-	}
-
-	public Attachment removeAttachment(Attachment attachment) {
-		getAttachments().remove(attachment);
-		attachment.setIssue(null);
-
-		return attachment;
-	}
-
 	public List<Conversation> getConversations() {
-		return this.conversations;
+		return conversations;
 	}
 
 	public void setConversations(List<Conversation> conversations) {
 		this.conversations = conversations;
 	}
 
-	public Conversation addConversation(Conversation conversation) {
-		getConversations().add(conversation);
-		conversation.setIssue(this);
-
-		return conversation;
+	public ApplicationTeamMember getApplicationOwner() {
+		return applicationOwner;
 	}
 
-	public Conversation removeConversation(Conversation conversation) {
-		getConversations().remove(conversation);
-		conversation.setIssue(null);
-
-		return conversation;
+	public void setApplicationOwner(ApplicationTeamMember applicationOwner) {
+		this.applicationOwner = applicationOwner;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember1() {
-		return this.applicationTeamMember1;
+	public ApplicationTeamMember getLastModifiedBy() {
+		return lastModifiedBy;
 	}
 
-	public void setApplicationTeamMember1(ApplicationTeamMember applicationTeamMember1) {
-		this.applicationTeamMember1 = applicationTeamMember1;
-	}
-
-	public ApplicationTeamMember getApplicationTeamMember2() {
-		return this.applicationTeamMember2;
-	}
-
-	public void setApplicationTeamMember2(ApplicationTeamMember applicationTeamMember2) {
-		this.applicationTeamMember2 = applicationTeamMember2;
+	public void setLastModifiedBy(ApplicationTeamMember lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 
 	public Project getProject() {
-		return this.project;
+		return project;
 	}
 
 	public void setProject(Project project) {
@@ -300,7 +263,7 @@ public class Issue implements Serializable {
 	}
 
 	public ApplicationIssueType getApplicationIssueType() {
-		return this.applicationIssueType;
+		return applicationIssueType;
 	}
 
 	public void setApplicationIssueType(ApplicationIssueType applicationIssueType) {
@@ -308,7 +271,7 @@ public class Issue implements Serializable {
 	}
 
 	public ApplicationIssuePriority getApplicationIssuePriority() {
-		return this.applicationIssuePriority;
+		return applicationIssuePriority;
 	}
 
 	public void setApplicationIssuePriority(ApplicationIssuePriority applicationIssuePriority) {
@@ -316,7 +279,7 @@ public class Issue implements Serializable {
 	}
 
 	public ApplicationEnvironment getApplicationEnvironment() {
-		return this.applicationEnvironment;
+		return applicationEnvironment;
 	}
 
 	public void setApplicationEnvironment(ApplicationEnvironment applicationEnvironment) {
@@ -324,7 +287,7 @@ public class Issue implements Serializable {
 	}
 
 	public ApplicationRelease getApplicationRelease() {
-		return this.applicationRelease;
+		return applicationRelease;
 	}
 
 	public void setApplicationRelease(ApplicationRelease applicationRelease) {
@@ -332,7 +295,7 @@ public class Issue implements Serializable {
 	}
 
 	public ProjectRelease getProjectRelease() {
-		return this.projectRelease;
+		return projectRelease;
 	}
 
 	public void setProjectRelease(ProjectRelease projectRelease) {
@@ -340,41 +303,27 @@ public class Issue implements Serializable {
 	}
 
 	public ApplicationIssueStatus getApplicationIssueStatus() {
-		return this.applicationIssueStatus;
+		return applicationIssueStatus;
 	}
 
 	public void setApplicationIssueStatus(ApplicationIssueStatus applicationIssueStatus) {
 		this.applicationIssueStatus = applicationIssueStatus;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember3() {
-		return this.applicationTeamMember3;
+	public ApplicationTeamMember getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setApplicationTeamMember3(ApplicationTeamMember applicationTeamMember3) {
-		this.applicationTeamMember3 = applicationTeamMember3;
+	public void setCreatedBy(ApplicationTeamMember createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public List<IssueActivityLog> getIssueActivityLogs() {
-		return this.issueActivityLogs;
+		return issueActivityLogs;
 	}
 
 	public void setIssueActivityLogs(List<IssueActivityLog> issueActivityLogs) {
 		this.issueActivityLogs = issueActivityLogs;
-	}
-
-	public IssueActivityLog addIssueActivityLog(IssueActivityLog issueActivityLog) {
-		getIssueActivityLogs().add(issueActivityLog);
-		issueActivityLog.setIssue(this);
-
-		return issueActivityLog;
-	}
-
-	public IssueActivityLog removeIssueActivityLog(IssueActivityLog issueActivityLog) {
-		getIssueActivityLogs().remove(issueActivityLog);
-		issueActivityLog.setIssue(null);
-
-		return issueActivityLog;
 	}
 
 }

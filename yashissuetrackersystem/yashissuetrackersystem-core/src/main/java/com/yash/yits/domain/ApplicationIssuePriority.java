@@ -21,12 +21,12 @@ public class ApplicationIssuePriority implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDatetime;
+	private Timestamp createdDateTime;
 
-	private int isactive;
+	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDatetime;
+	private Timestamp lastModifiedDateTime;
 
 	private String type;
 
@@ -37,12 +37,12 @@ public class ApplicationIssuePriority implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
-	private ApplicationTeamMember applicationTeamMember1;
+	private ApplicationTeamMember lastModifiedBy;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember applicationTeamMember2;
+	private ApplicationTeamMember createdBy;
 
 	//bi-directional many-to-one association to ApplicationSeverity
 	@ManyToOne
@@ -56,106 +56,5 @@ public class ApplicationIssuePriority implements Serializable {
 	public ApplicationIssuePriority() {
 	}
 
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Timestamp getCreatedDatetime() {
-		return this.createdDatetime;
-	}
-
-	public void setCreatedDatetime(Timestamp createdDatetime) {
-		this.createdDatetime = createdDatetime;
-	}
-
 	
-
-	/**
-	 * @return the isactive
-	 */
-	public int getIsactive() {
-		return isactive;
-	}
-
-	/**
-	 * @param isactive the isactive to set
-	 */
-	public void setIsactive(int isactive) {
-		this.isactive = isactive;
-	}
-
-	public Timestamp getLastModifiedDatetime() {
-		return this.lastModifiedDatetime;
-	}
-
-	public void setLastModifiedDatetime(Timestamp lastModifiedDatetime) {
-		this.lastModifiedDatetime = lastModifiedDatetime;
-	}
-
-	public String getType() {
-		return this.type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public Application getApplication() {
-		return this.application;
-	}
-
-	public void setApplication(Application application) {
-		this.application = application;
-	}
-
-	public ApplicationTeamMember getApplicationTeamMember1() {
-		return this.applicationTeamMember1;
-	}
-
-	public void setApplicationTeamMember1(ApplicationTeamMember applicationTeamMember1) {
-		this.applicationTeamMember1 = applicationTeamMember1;
-	}
-
-	public ApplicationTeamMember getApplicationTeamMember2() {
-		return this.applicationTeamMember2;
-	}
-
-	public void setApplicationTeamMember2(ApplicationTeamMember applicationTeamMember2) {
-		this.applicationTeamMember2 = applicationTeamMember2;
-	}
-
-	public ApplicationSeverity getApplicationSeverity() {
-		return this.applicationSeverity;
-	}
-
-	public void setApplicationSeverity(ApplicationSeverity applicationSeverity) {
-		this.applicationSeverity = applicationSeverity;
-	}
-
-	public List<Issue> getIssues() {
-		return this.issues;
-	}
-
-	public void setIssues(List<Issue> issues) {
-		this.issues = issues;
-	}
-
-	public Issue addIssue(Issue issue) {
-		getIssues().add(issue);
-		issue.setApplicationIssuePriority(this);
-
-		return issue;
-	}
-
-	public Issue removeIssue(Issue issue) {
-		getIssues().remove(issue);
-		issue.setApplicationIssuePriority(null);
-
-		return issue;
-	}
-
 }

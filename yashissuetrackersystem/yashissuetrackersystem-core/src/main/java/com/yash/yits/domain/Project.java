@@ -21,16 +21,16 @@ public class Project implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDatetime;
+	private Timestamp createdDateTime;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="END_DATE")
 	private Date endDate;
 
-	private int isactive;
+	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDatetime;
+	private Timestamp lastModifiedDateTime;
 
 	private String name;
 
@@ -49,7 +49,7 @@ public class Project implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="OWNER")
-	private ApplicationTeamMember applicationTeamMember1;
+	private ApplicationTeamMember applicationOwner;
 
 	//bi-directional many-to-one association to ApplicationProjectStatus
 	@ManyToOne
@@ -59,12 +59,12 @@ public class Project implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
-	private ApplicationTeamMember applicationTeamMember2;
+	private ApplicationTeamMember lastModifiedBy;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember applicationTeamMember3;
+	private ApplicationTeamMember createdBy;
 
 	//bi-directional many-to-many association to ApplicationTeamMember
 	@ManyToMany(fetch=FetchType.EAGER)
@@ -87,54 +87,47 @@ public class Project implements Serializable {
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDatetime() {
-		return this.createdDatetime;
+	public Timestamp getCreatedDateTime() {
+		return createdDateTime;
 	}
 
-	public void setCreatedDatetime(Timestamp createdDatetime) {
-		this.createdDatetime = createdDatetime;
+	public void setCreatedDateTime(Timestamp createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
 	public Date getEndDate() {
-		return this.endDate;
+		return endDate;
 	}
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
-	
-	/**
-	 * @return the isactive
-	 */
-	public int getIsactive() {
-		return isactive;
+	public int getIsActive() {
+		return isActive;
 	}
 
-	/**
-	 * @param isactive the isactive to set
-	 */
-	public void setIsactive(int isactive) {
-		this.isactive = isactive;
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDatetime() {
-		return this.lastModifiedDatetime;
+	public Timestamp getLastModifiedDateTime() {
+		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDatetime(Timestamp lastModifiedDatetime) {
-		this.lastModifiedDatetime = lastModifiedDatetime;
+	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
@@ -142,7 +135,7 @@ public class Project implements Serializable {
 	}
 
 	public Date getStartDate() {
-		return this.startDate;
+		return startDate;
 	}
 
 	public void setStartDate(Date startDate) {
@@ -150,69 +143,55 @@ public class Project implements Serializable {
 	}
 
 	public List<Issue> getIssues() {
-		return this.issues;
+		return issues;
 	}
 
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
 	}
 
-	public Issue addIssue(Issue issue) {
-		getIssues().add(issue);
-		issue.setProject(this);
-
-		return issue;
-	}
-
-	public Issue removeIssue(Issue issue) {
-		getIssues().remove(issue);
-		issue.setProject(null);
-
-		return issue;
-	}
-
 	public Application getApplication() {
-		return this.application;
+		return application;
 	}
 
 	public void setApplication(Application application) {
 		this.application = application;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember1() {
-		return this.applicationTeamMember1;
+	public ApplicationTeamMember getApplicationOwner() {
+		return applicationOwner;
 	}
 
-	public void setApplicationTeamMember1(ApplicationTeamMember applicationTeamMember1) {
-		this.applicationTeamMember1 = applicationTeamMember1;
+	public void setApplicationOwner(ApplicationTeamMember applicationOwner) {
+		this.applicationOwner = applicationOwner;
 	}
 
 	public ApplicationProjectStatus getApplicationProjectStatus() {
-		return this.applicationProjectStatus;
+		return applicationProjectStatus;
 	}
 
 	public void setApplicationProjectStatus(ApplicationProjectStatus applicationProjectStatus) {
 		this.applicationProjectStatus = applicationProjectStatus;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember2() {
-		return this.applicationTeamMember2;
+	public ApplicationTeamMember getLastModifiedBy() {
+		return lastModifiedBy;
 	}
 
-	public void setApplicationTeamMember2(ApplicationTeamMember applicationTeamMember2) {
-		this.applicationTeamMember2 = applicationTeamMember2;
+	public void setLastModifiedBy(ApplicationTeamMember lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public ApplicationTeamMember getApplicationTeamMember3() {
-		return this.applicationTeamMember3;
+	public ApplicationTeamMember getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setApplicationTeamMember3(ApplicationTeamMember applicationTeamMember3) {
-		this.applicationTeamMember3 = applicationTeamMember3;
+	public void setCreatedBy(ApplicationTeamMember createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public List<ApplicationTeamMember> getApplicationTeamMembers() {
-		return this.applicationTeamMembers;
+		return applicationTeamMembers;
 	}
 
 	public void setApplicationTeamMembers(List<ApplicationTeamMember> applicationTeamMembers) {
@@ -220,25 +199,11 @@ public class Project implements Serializable {
 	}
 
 	public List<ProjectRelease> getProjectReleases() {
-		return this.projectReleases;
+		return projectReleases;
 	}
 
 	public void setProjectReleases(List<ProjectRelease> projectReleases) {
 		this.projectReleases = projectReleases;
-	}
-
-	public ProjectRelease addProjectReleas(ProjectRelease projectReleas) {
-		getProjectReleases().add(projectReleas);
-		projectReleas.setProject(this);
-
-		return projectReleas;
-	}
-
-	public ProjectRelease removeProjectReleas(ProjectRelease projectReleas) {
-		getProjectReleases().remove(projectReleas);
-		projectReleas.setProject(null);
-
-		return projectReleas;
 	}
 
 }
