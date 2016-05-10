@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.service.IssueService;
 
-/**This is a IssueController. This object will communicate with front-end.
- * This will be responsible for managing flow related to issues.*/
+/**This is a MemberController. This object will communicate with front-end 
+ * This will be responsible for managing flow related to members.*/
+
 @Controller
 public class MemberController {
 
