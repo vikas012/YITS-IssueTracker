@@ -1,11 +1,34 @@
 angular.module('issueTrackingSystem.userModule').controller('userController',['$scope','$http','userService',function($scope,$http,userService){
 	
+	$scope.showLookUpForm=false;
+	$scope.ldapUser={name:"",email:""};
+	
+	$scope.showLookForm=function(){
+		
+		$scope.showLookUpForm=true;
+		
+	}
+	
+	$scope.checkUser=function(){
+		
+		alert("Inside Check User");
+		$scope.ldapUser.name=$scope.name;
+		$scope.ldapUser.email=$scope.email;
+		alert($scope.ldapUser.name+"---------"+$scope.ldapUser.email);
+		$scope.checkUserInLdap($scope.ldapUser);
+		
+	}
+	$scope.checkUserInLdap=function(ldapUser){
+		alert("inside checkUserInLdap");
+		
+		
+	}
 		/*issueService returns list to populate drop-down*/
-	userService.initializeSelect()
+	/*userService.initializeSelect()
         .then(
                  function(d) {
                 	 
-                	 /*retrieve and assign value from list*/
+                	 retrieve and assign value from list
                 	 angular.forEach(d,function(value,key){
             			 switch(key){
             			 
@@ -35,14 +58,14 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 			
 			// call service to persist in db
 			userService.submitCreateIssue(this.createIssue);
-	        /*.then(
+	        .then(
 	                 function(d) {
 	                	 
 	                 },
 	                  function(errResponse){
 	                      console.error('Error while fetching');
 	                  }
-	             );*/
+	             );
 			this.createIssue={};
-		};
+		};*/
 	}]);

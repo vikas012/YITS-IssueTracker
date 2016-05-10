@@ -23,7 +23,7 @@
 	}
 </style>
 
-<div class="container">
+<div class="container" ng-controller="userController as uc" >
   <form role="form" ng-submit="uc.add()">
 		<div class="box1">
 			<div class="form-group col-sm-4">
