@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.service.IssueService;
@@ -26,7 +27,7 @@ public class MemberController {
 @RequestMapping(value="/showYashForm")
 public String getCreateIssueForm(){
 	
-	return "Yash-NonYash";
+	return "redirect:/static/AddMember.html" ;
 }
 	
 	

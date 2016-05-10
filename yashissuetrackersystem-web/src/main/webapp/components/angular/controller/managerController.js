@@ -1,11 +1,36 @@
 angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope,$http,managerService){
 
+	$scope.showLookUpForm=false;
+	$scope.ldapUser={name:"",email:""};
+	
+	$scope.showLookForm=function(){
+		
+		$scope.showLookUpForm=true;
+		
+	}
+	
+	$scope.checkUser=function(){
+		
+		alert("Inside Check User");
+		$scope.ldapUser.name=$scope.name;
+		$scope.ldapUser.email=$scope.email;
+		alert($scope.ldapUser.name+"---------"+$scope.ldapUser.email);
+		$scope.checkUserInLdap($scope.ldapUser);
+		
+	}
+	$scope.checkUserInLdap=function(ldapUser){
+		alert("inside checkUserInLdap");
+		
+		
+	}
+	
+	
 		/*issueService returns list to populate drop-down*/
-	managerService.initializeSelect()
+	/*managerService.initializeSelect()
         .then(
                  function(d) {
                 	 
-                	 /*retrieve and assign value from list*/
+                	 retrieve and assign value from list
                 	 angular.forEach(d,function(value,key){
             			 switch(key){
             			 
@@ -35,14 +60,14 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 			
 			// call service to persist in db
 			managerService.submitCreateIssue(this.createIssue);
-	        /*.then(
+	        .then(
 	                 function(d) {
 	                	 
 	                 },
 	                  function(errResponse){
 	                      console.error('Error while fetching');
 	                  }
-	             );*/
+	             );
 			this.createIssue={};
 		};
 		
@@ -74,7 +99,7 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 				$('#datatable').remove();
 			}
 		};
-		
+		*/
 		
 	}]);
 

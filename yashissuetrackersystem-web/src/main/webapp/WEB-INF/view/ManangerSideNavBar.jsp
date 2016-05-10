@@ -6,7 +6,7 @@
                   
                     </li>
                     <li>
-                        <a href="#/createIssue"><i class="glyphicon glyphicon-plus"></i> Create Issue</a>
+                        <a href="#/addMember"><i class="glyphicon glyphicon-plus"></i>Add Member</a>
                     </li>
                     <li>
                         <a href="#"><i class="glyphicon glyphicon-edit"></i> Assign Issue</a>

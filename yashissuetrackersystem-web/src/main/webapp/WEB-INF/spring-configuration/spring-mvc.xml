@@ -34,6 +34,7 @@
 	<mvc:resources location="/images/" mapping="/images/**"/>
 	<mvc:resources location="/scripts/" mapping="/scripts/**"/>
 	<mvc:resources location="/styles/" mapping="/styles/**"/>
+	<mvc:resources location="/WEB-INF/static/" mapping="/static/**"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
