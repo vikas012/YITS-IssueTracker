@@ -8,8 +8,13 @@ public class CommonController {
 
 	@RequestMapping(value="/userWelcome")
 	public String userDashboard(){
+		
+		System.out.println("in common");
 		return "UserDashboard";
 
+		
+		
+		
 	}
 	
 	@RequestMapping(value="/managerWelcome")
