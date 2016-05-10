@@ -9,6 +9,7 @@ public class CommonController {
 	@RequestMapping(value="/userWelcome")
 	public String userDashboard(){
 		return "UserDashboard";
+
 	}
 	
 	@RequestMapping(value="/managerWelcome")
