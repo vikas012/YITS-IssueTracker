@@ -1,28 +1,6 @@
 angular.module('issueTrackingSystem.userModule').controller('userController',['$scope','$http','userService',function($scope,$http,userService){
 	
-	$scope.showLookUpForm=false;
-	$scope.ldapUser={name:"",email:""};
-	
-	$scope.showLookForm=function(){
-		
-		$scope.showLookUpForm=true;
-		
-	}
-	
-	$scope.checkUser=function(){
-		
-		alert("Inside Check User");
-		$scope.ldapUser.name=$scope.name;
-		$scope.ldapUser.email=$scope.email;
-		alert($scope.ldapUser.name+"---------"+$scope.ldapUser.email);
-		$scope.checkUserInLdap($scope.ldapUser);
-		
-	}
-	$scope.checkUserInLdap=function(ldapUser){
-		alert("inside checkUserInLdap");
-		
-		
-	}
+
 		/*issueService returns list to populate drop-down*/
 	/*userService.initializeSelect()
         .then(

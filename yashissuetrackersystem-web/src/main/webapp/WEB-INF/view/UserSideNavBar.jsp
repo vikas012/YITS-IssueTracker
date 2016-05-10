@@ -5,7 +5,7 @@
                         <a href="#"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="#/addMember"><i class="glyphicon glyphicon-plus"></i>Add Member</a>
+                        <a href="#/createIssue"><i class="glyphicon glyphicon-plus"></i>Create Issue</a>
                     </li>
                     <li>
                         <a href="#"><i class="glyphicon glyphicon-pencil"></i> Edit Issue</a>
