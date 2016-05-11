@@ -1,6 +1,11 @@
 angular.module('issueTrackingSystem.userModule').controller('userController',['$scope','$http','userService',function($scope,$http,userService,issuesList){
 	
-alert("in controller");
+	alert("In User controller");
+	
+	$scope.issueList = issuesList.data;
+	
+	alert($scope.issueList);
+	
 		/*issueService returns list to populate drop-down*/
 	/*userService.initializeSelect()
         .then(

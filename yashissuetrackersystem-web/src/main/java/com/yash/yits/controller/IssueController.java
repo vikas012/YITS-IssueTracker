@@ -40,7 +40,9 @@ public class IssueController {
 	@RequestMapping(value="/defaultIssuesList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Issue> showIssuesList(HttpServletRequest httpServletRequest){
-		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
+		System.out.println("In controller");
+		long memberId=1004686;
+		/*long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");*/
 		System.out.println(memberId);
 		List<Issue> issuesList = issueService.showIssuesList(memberId);
 		return issuesList;

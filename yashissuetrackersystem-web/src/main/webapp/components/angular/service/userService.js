@@ -1,5 +1,4 @@
 angular.module('issueTrackingSystem.userModule').factory('userService',['$http',function($http){
-	alert(" n service");
 	  return {
 		  
 		  initializeSelect: function() {
@@ -30,13 +29,11 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 		      	},
 	      	
 	      	 getIssuesList:function(){
-	      		 alert("Khushi")
 	      		 var issues=$http({
 	      		 method:'GET',
 	      		     url:'./defaultIssuesList' //spring controller call, use @ResponseBody
 	      		 }).success(function(data){
 	      		 alert(data);
-	      		 $scope.issuesData = data;
 	      		 return data;
 	      		 })
 	      		 }
