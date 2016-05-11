@@ -25,7 +25,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  alert("in default")
 		  var issues=$http({
 		  method:'GET',
-		      url:'./defaultIssues'
+		      url:'../defaultIssues'
 		  }).success(function(data){
 		  alert(data);
 		  return data;

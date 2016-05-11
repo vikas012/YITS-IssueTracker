@@ -1,5 +1,7 @@
 package com.yash.yits.serviceImpl;
 
+import java.lang.reflect.InvocationTargetException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,8 +10,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yash.yits.dao.IssueDao;
 import com.yash.yits.domain.Issue;
@@ -17,6 +21,7 @@ import com.yash.yits.form.IssueForm;
 import com.yash.yits.service.IssueService;
 
 @Service
+@Transactional
 public class IssueServiceImpl implements IssueService{
 
 	@Autowired
@@ -66,25 +71,36 @@ public class IssueServiceImpl implements IssueService{
 		cal.add(Calendar.DATE, +14);
 		Date dateAfter = cal.getTime();
 		
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		String date1=df.format(dateBefore);
 		
 		String date2=df.format(dateAfter);
 		
 		
-		List<Issue> issues = issueDao.getDefaultIssues(date1,date2);
 		
-		System.out.println("Service: "+issues);
+		Timestamp beforeTimestamp=new Timestamp(dateBefore.getTime());
+		
+		Timestamp afterTimestamp=new Timestamp(dateAfter.getTime());
+		
+		beforeTimestamp= Timestamp.valueOf(date1);
+		afterTimestamp= Timestamp.valueOf(date2);
+		
+		System.out.println(beforeTimestamp+ "----"+afterTimestamp);
+		
+		List<Issue> issues = issueDao.getDefaultIssues(beforeTimestamp,afterTimestamp);
 		
 		List<IssueForm> issueForms = new ArrayList<IssueForm>();
-		/*for (Issue issue : issues) {
+		for (Issue issue : issues) {
 
-			Mapper mapper = new DozerBeanMapper();
-			IssueForm issueForm = mapper.map(issue, IssueForm.class);
-			issueForms.add(issueForm);
-		}*/
-
+			
+			IssueForm issueForm = new IssueForm();
+			
+			
+		}
+		
+		System.out.println(issueForms);
+		
 		return issueForms;
 		
 	}

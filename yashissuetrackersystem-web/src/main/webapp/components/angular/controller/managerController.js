@@ -1,5 +1,5 @@
 angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope,$http,managerService,issueList){
-
+	$scope.issueList=issueList.data;
 	$scope.showLookUpForm=false;
 	$scope.ldapUser={ldapName:"",ldapEmail:""};
 	

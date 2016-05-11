@@ -32,8 +32,7 @@ public class IssueController {
 	
 	@RequestMapping(value="/issues",method=RequestMethod.GET)
 	public String showIssuePage(){
-		//List<IssueForm> issues=issueService.getDefaultIssues();
-		//model.addAttribute("issueList",issues);
+		System.out.println("issuePage");
 		return"redirect:/static/ManagerSearchIssue.html";
 	}
 	
@@ -41,8 +40,7 @@ public class IssueController {
 	@RequestMapping(value="/defaultIssues",method=RequestMethod.GET)
 	public List<IssueForm> defaultIssues(){
 		List<IssueForm> issues=issueService.getDefaultIssues();
-		//model.addAttribute("issueList",issues);
-		
-		return null;
+
+		return issues;
 	}
 }
