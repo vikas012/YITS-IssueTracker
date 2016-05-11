@@ -1,49 +1,37 @@
 package com.yash.yits.form;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import com.yash.yits.domain.Application;
-import com.yash.yits.domain.ApplicationProjectStatus;
 import com.yash.yits.domain.ApplicationTeamMember;
+import com.yash.yits.domain.Conversation;
 import com.yash.yits.domain.Issue;
-import com.yash.yits.domain.ProjectRelease;
 
-public class ProjectForm{
+public class AttachmentForm {
 
 	private int id;
 
 	private Timestamp createdDateTime;
 
-	private Date endDate;
+	private byte[] file;
 
 	private int isActive;
+
+	private String label;
 
 	private Timestamp lastModifiedDateTime;
 
 	private String name;
 
-	private Date startDate;
+	private ConversationForm conversation;
 
-	private ApplicationForm application;
-
-	private ApplicationTeamMemberForm applicationOwner;
-
-	private ApplicationProjectStatusForm applicationProjectStatus;
+	private IssueForm issue;
 
 	private ApplicationTeamMemberForm lastModifiedBy;
 
@@ -65,12 +53,12 @@ public class ProjectForm{
 		this.createdDateTime = createdDateTime;
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public byte[] getFile() {
+		return file;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setFile(byte[] file) {
+		this.file = file;
 	}
 
 	public int getIsActive() {
@@ -79,6 +67,14 @@ public class ProjectForm{
 
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	public Timestamp getLastModifiedDateTime() {
@@ -97,36 +93,20 @@ public class ProjectForm{
 		this.name = name;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public ConversationForm getConversation() {
+		return conversation;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setConversation(ConversationForm conversation) {
+		this.conversation = conversation;
 	}
 
-	public ApplicationForm getApplication() {
-		return application;
+	public IssueForm getIssue() {
+		return issue;
 	}
 
-	public void setApplication(ApplicationForm application) {
-		this.application = application;
-	}
-
-	public ApplicationTeamMemberForm getApplicationOwner() {
-		return applicationOwner;
-	}
-
-	public void setApplicationOwner(ApplicationTeamMemberForm applicationOwner) {
-		this.applicationOwner = applicationOwner;
-	}
-
-	public ApplicationProjectStatusForm getApplicationProjectStatus() {
-		return applicationProjectStatus;
-	}
-
-	public void setApplicationProjectStatus(ApplicationProjectStatusForm applicationProjectStatus) {
-		this.applicationProjectStatus = applicationProjectStatus;
+	public void setIssue(IssueForm issue) {
+		this.issue = issue;
 	}
 
 	public ApplicationTeamMemberForm getLastModifiedBy() {
@@ -144,5 +124,5 @@ public class ProjectForm{
 	public void setCreatedBy(ApplicationTeamMemberForm createdBy) {
 		this.createdBy = createdBy;
 	}
-
+	
 }

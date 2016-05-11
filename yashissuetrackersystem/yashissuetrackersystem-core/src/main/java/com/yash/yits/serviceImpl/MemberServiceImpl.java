@@ -4,6 +4,7 @@
 package com.yash.yits.serviceImpl;
 
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
@@ -16,17 +17,7 @@ import javax.naming.ldap.InitialLdapContext;
 
 import org.springframework.stereotype.Service;
 
-
-
-
-
-
-
-
-
-
-
-
+import com.yash.yits.domain.Member;
 import com.yash.yits.form.LdapUser;
 import com.yash.yits.service.MemberService;
 
@@ -162,6 +153,26 @@ public class MemberServiceImpl implements MemberService {
 			 	}
 			return searchResult;
  }
+
+	public Member addMember(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Member> showMembers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Member> searchMembers(String search) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Member> deleteMember(int memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 

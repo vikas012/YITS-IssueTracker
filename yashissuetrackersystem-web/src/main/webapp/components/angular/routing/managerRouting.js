@@ -7,4 +7,9 @@ managerModule.config(function($routeProvider){
 				controller:'managerController as mc'
 			})
 			
+			.when('/showMembers',{
+				
+				templateUrl:'showMembersPage',
+				controller:'managerController as mc'
+			})
 	});

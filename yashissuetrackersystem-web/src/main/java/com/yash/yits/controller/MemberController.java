@@ -39,6 +39,12 @@ public class MemberController {
 		return "redirect:/static/AddMember.html" ;
 	}
 	
+	@RequestMapping(value="/showMembersPage")
+	public String showMembersPage(){
+			
+		return "redirect:/static/ShowMember.html" ;
+	}
+	
 	@ResponseBody 
 	@RequestMapping(value="/checkMemberInLdap" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
 	public void checkUserInLdap(@RequestBody LdapUser ldapUser) throws NamingException{

@@ -1,63 +1,47 @@
-package com.yash.yits.domain;
+package com.yash.yits.form;
 
-import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
-import java.math.BigInteger;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-/**
- * The persistent class for the member database table.
- * 
- */
-@Entity
-@NamedQuery(name="Member.findAll", query="SELECT m FROM Member m")
-public class Member implements Serializable {
-	private static final long serialVersionUID = 1L;
+import com.yash.yits.domain.ApplicationTeamMember;
+import com.yash.yits.domain.Member;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+public class MemberForm {
+
 	private int id;
 
 	private Long contact;
 
-	@Column(name="CREATED_BY")
 	private int createdBy;
 
-	@Column(name="CREATED_DATE_TIME")
 	private Timestamp createdDateTime;
 
 	private String email;
 
 	private int isActive;
 
-	@Column(name="LAST_MODIFIED_BY")
 	private int lastModifiedBy;
 
-	@Column(name="LAST_MODIFIED_DATETIME")
 	private Timestamp lastModifiedDateTime;
 
-	@Column(name="MEMBER_ID")
 	private int memberId;
 	
-	@Column(name="MANAGER_ID")
 	private int managerId;
 	
-	@Column(name="MANAGER_NAME")
 	private String managerName;
 	
-	@Column(name="MANAGER_EMAIL")
 	private String managerEmail;
 
 	private String name;
-
-	//bi-directional many-to-one association to ApplicationTeamMember
-	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
-	private List<ApplicationTeamMember> applicationTeamMembers;
-
-	public Member() {
-	}
 
 	public int getId() {
 		return id;
@@ -82,8 +66,6 @@ public class Member implements Serializable {
 	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
-
-	
 
 	public Timestamp getCreatedDateTime() {
 		return createdDateTime;
@@ -133,6 +115,30 @@ public class Member implements Serializable {
 		this.memberId = memberId;
 	}
 
+	public int getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(int managerId) {
+		this.managerId = managerId;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public String getManagerEmail() {
+		return managerEmail;
+	}
+
+	public void setManagerEmail(String managerEmail) {
+		this.managerEmail = managerEmail;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -140,13 +146,6 @@ public class Member implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public List<ApplicationTeamMember> getApplicationTeamMembers() {
-		return applicationTeamMembers;
-	}
-
-	public void setApplicationTeamMembers(List<ApplicationTeamMember> applicationTeamMembers) {
-		this.applicationTeamMembers = applicationTeamMembers;
-	}
-
+	
+	
 }

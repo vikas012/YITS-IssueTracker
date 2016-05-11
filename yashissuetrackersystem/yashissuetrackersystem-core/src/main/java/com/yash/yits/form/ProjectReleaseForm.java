@@ -10,40 +10,32 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.yash.yits.domain.Application;
-import com.yash.yits.domain.ApplicationProjectStatus;
 import com.yash.yits.domain.ApplicationTeamMember;
 import com.yash.yits.domain.Issue;
-import com.yash.yits.domain.ProjectRelease;
+import com.yash.yits.domain.Project;
 
-public class ProjectForm{
+public class ProjectReleaseForm {
 
 	private int id;
 
+	
 	private Timestamp createdDateTime;
-
-	private Date endDate;
 
 	private int isActive;
 
+	
 	private Timestamp lastModifiedDateTime;
 
-	private String name;
+	private Date releaseDate;
 
-	private Date startDate;
+	private String version;
 
-	private ApplicationForm application;
-
-	private ApplicationTeamMemberForm applicationOwner;
-
-	private ApplicationProjectStatusForm applicationProjectStatus;
+	private ProjectForm project;
 
 	private ApplicationTeamMemberForm lastModifiedBy;
 
@@ -65,14 +57,6 @@ public class ProjectForm{
 		this.createdDateTime = createdDateTime;
 	}
 
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
 	public int getIsActive() {
 		return isActive;
 	}
@@ -89,44 +73,28 @@ public class ProjectForm{
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
-	public String getName() {
-		return name;
+	public Date getReleaseDate() {
+		return releaseDate;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public String getVersion() {
+		return version;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
-	public ApplicationForm getApplication() {
-		return application;
+	public ProjectForm getProject() {
+		return project;
 	}
 
-	public void setApplication(ApplicationForm application) {
-		this.application = application;
-	}
-
-	public ApplicationTeamMemberForm getApplicationOwner() {
-		return applicationOwner;
-	}
-
-	public void setApplicationOwner(ApplicationTeamMemberForm applicationOwner) {
-		this.applicationOwner = applicationOwner;
-	}
-
-	public ApplicationProjectStatusForm getApplicationProjectStatus() {
-		return applicationProjectStatus;
-	}
-
-	public void setApplicationProjectStatus(ApplicationProjectStatusForm applicationProjectStatus) {
-		this.applicationProjectStatus = applicationProjectStatus;
+	public void setProject(ProjectForm project) {
+		this.project = project;
 	}
 
 	public ApplicationTeamMemberForm getLastModifiedBy() {
@@ -144,5 +112,5 @@ public class ProjectForm{
 	public void setCreatedBy(ApplicationTeamMemberForm createdBy) {
 		this.createdBy = createdBy;
 	}
-
+	
 }
