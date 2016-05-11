@@ -3,7 +3,7 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	  return {
 		  
 		  initializeSelect: function() {
-	          return $http.get('./getPriority')
+	          return $http.get('./getProjects')
 	              .then(
 	                      function(response){
 	                          return response.data;
