@@ -1,1 +1,3 @@
-<div class="footer"><span class="glyphicon glyphicon-registration-mark"></span> yash.com 2016 </div>
+<div class="footer" style="margin-left: 550px;" >
+	<h3>Yash Technologies Pvt Ltd</h3>
+</div>

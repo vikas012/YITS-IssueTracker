@@ -15,6 +15,7 @@ public class IssueController {
 	@RequestMapping(value="/showCreateIssueForm")
 	public String getCreateIssueForm()
 	{
+		System.out.println("---getCreateIssueForm----");
 		return "redirect:/static/UserCreateIssueForm.html";
 	}
 }
