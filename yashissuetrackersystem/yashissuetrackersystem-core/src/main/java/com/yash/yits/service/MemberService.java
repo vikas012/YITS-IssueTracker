@@ -10,7 +10,13 @@ import javax.naming.directory.InitialDirContext;
 
 import com.yash.yits.domain.Member;
 import com.yash.yits.form.LdapUser;
+<<<<<<< HEAD
 import com.yash.yits.form.MemberForm;
+=======
+import com.yash.yits.form.LoginForm;
+import com.yash.yits.form.MemberForm;
+import com.yash.yits.form.UserForm;
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
 
 
 
@@ -21,13 +27,12 @@ import com.yash.yits.form.MemberForm;
 public interface MemberService {
 	
 	
-	public InitialDirContext  checkUser(LdapUser ldapUser);
-	
-	 public void fetchAttributes(InitialDirContext intialDirContext,String name) throws NamingException;
-		public Member addMember(Member member);
-		public List<Member> showMembers();
-		public List<Member> searchMembers(String search);
-		public List<Member> deleteMember(int memberId);
+	public InitialDirContext  checkUser(LoginForm loginForm);
+	public UserForm fetchAttributes(InitialDirContext intialDirContext,String name) throws NamingException;
+	public Member addMember(MemberForm memberForm);
+	public List<Member> showMembers();
+	public List<Member> searchMembers(String search);
+	public List<Member> deleteMember(int memberId);
 
 
 }

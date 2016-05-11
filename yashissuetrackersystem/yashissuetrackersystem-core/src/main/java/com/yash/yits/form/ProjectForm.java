@@ -145,4 +145,11 @@ public class ProjectForm{
 		this.createdBy = createdBy;
 	}
 
+	@Override
+	public String toString() {
+		return "ProjectForm [id=" + id + ", name=" + name + "]";
+	}
+	
+	
+
 }

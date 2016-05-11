@@ -13,20 +13,52 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.yash.yits.dao.MemberDao;
 import com.yash.yits.domain.Member;
 import com.yash.yits.form.*;
 
 /** This class interacts with database and provides the data for all member operations*/
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
 @Repository
 public class MemberDaoImpl implements MemberDao {
 
+<<<<<<< HEAD
 	 @Autowired
 	    private SessionFactory sessionFactory;
 	 
+=======
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	
+	
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
 	public Member addMember(Member member) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session=sessionFactory.getCurrentSession();
+		System.out.println(member);
+		Criteria criteria = session.createCriteria(Member.class);
+		criteria.add(Restrictions.eqOrIsNull("memberId",member.getMemberId()));
+		List<Member> listOfMember=criteria.list();
+		if(listOfMember.size()==1){
+			
+			System.out.println("User Already in database");
+		}
+		else{
+				
+			System.out.println("not in database");
+			session.save(member);
+		}
+		return member;
 	}
 
 	public List<Member> showMembers() {

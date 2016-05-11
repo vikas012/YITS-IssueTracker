@@ -9,8 +9,6 @@ public class CommonController {
 	@RequestMapping(value="/welcomeView")
 	public String welcomePage(){
 		return "Welcome";
-	
-	
 	}
 	
 	@RequestMapping(value="/userWelcome")
@@ -20,6 +18,6 @@ public class CommonController {
 	
 	@RequestMapping(value="/managerWelcome")
 	public String managerDashboard(){
-		return "ManagerDashboard";
+		return "redirect:/static/ManagerDashboard.html";
 	}
 }
