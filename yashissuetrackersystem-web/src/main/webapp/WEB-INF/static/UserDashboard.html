@@ -1,0 +1,100 @@
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../styles/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../styles/sb-admin.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../styles/plugins/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    
+    <link href="../styles/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	<!-- angular scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+	 <script src="../components/angular/routing/routing.js"></script> 
+	
+	<!--js related to user -->
+	<script src="../components/angular/routing/userRouting.js"></script>
+	<script src="../components/angular/controller/userController.js"></script>
+	<script src="../components/angular/service/userService.js"></script>
+	
+	<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	 -->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<div  ng-app="issueTrackingSystem.userModule">
+	
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+           
+            <div>
+ 	 <div ng-include="'LeftHeader.html'"></div>
+				</div>
+			
+            <!-- Top Menu Items -->
+			   
+			  
+			   <div ng-include="'RightHeader.html'"></div>
+       
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            
+           
+               <div ng-include="'UserSideNavBar.html'"></div>
+
+            <!-- /.navbar-collapse -->
+        </nav>
+		
+        <!-- page-wrapper -->
+        <div id="page-wrapper">
+		
+            <!-- container-fluid -->
+            <div class="container-fluid" style="margin-top: 0px;padding-top: 50px;height: 100%;" ng-view="">
+
+               
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+		
+
+    </div>
+    <!-- /#wrapper -->
+
+   <!-- jQuery -->
+    <script src="../scripts/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../scripts/bootstrap.min.css"></script>
+
+    <!-- Morris Charts JavaScript -->
+   <!--  <script src='<spring:url value="/scripts/plugins/morris/raphael.min.js"></spring:url>'></script>
+    <script src='<spring:url value="/scripts/plugins/morris/morris.min.js"></spring:url>'></script>
+    <script src='<spring:url value="/scripts/plugins/morris/morris-data.js"></spring:url>'></script> --> 
+	<!-- footer -->
+	 
+	
+	 
+	<!-- /footer -->
+	<div>
+         <div ng-include="'Footer.html'"></div>
+	</div>
+	
+</div>
