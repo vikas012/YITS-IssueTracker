@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+</head>
+<body ng-controller="managerController as mc">
+
+hello
+
+
+
+<div>
+			<table id="listOfMembers" class="table table-striped">
+				<tr>
+					<th>SELECT</th>				
+					<th> NAME</th>
+					<th>EMAIL</th>
+					<th>CONTACT</th>
+					<th colspan="2">ACTION</th>
+				</tr>
+
+				<tr ng-repeat="member in guests">
+					<td><input id='radio' type='radio' value={{member.id}}></td>				
+					<td>{{member.name}}</td>
+					<td>{{member.email}}</td>
+					<td>{{member.contact}}</td>
+					<td><input type="button" value="Delete" ng-click="delete()" class="btn btn-default"></td>
+					<td><input type="button" value="Block" ng-click="block()" class="btn btn-default"></td>
+					 <td><input type="button" value="UnBlock" ng-click="unblock()" class="btn btn-default"></td> 
+				</tr>
+
+			</table>
+		</div>
+
+</body>
+</html>

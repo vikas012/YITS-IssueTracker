@@ -21,7 +21,7 @@
                         <a href="#"><i class="glyphicon glyphicon-th-list"></i> Show Feed</a>
                     </li>
                     <li>
-                        <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Show Users</a>
+                        <a href="#/showMembers"><i class="glyphicon glyphicon-list-alt"></i> Show Members</a>
                     </li>               
                 </ul>
 </div>
