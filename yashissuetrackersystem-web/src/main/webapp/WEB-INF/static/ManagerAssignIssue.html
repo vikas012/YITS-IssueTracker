@@ -46,7 +46,7 @@
 					<th colspan="2">Action</th>
 				</tr>
 			</thead>
-			<tbody>
+		<!-- 	<tbody>
 			<c:forEach items="${issueList}" var="issue">
 			<tr id="datatable">
 				<td><input id='radio' type='radio' value="${issue.issueDetailId} "></td>
@@ -63,7 +63,7 @@
 				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
 			</tr>
 			</c:forEach>
-			</tbody>
+			</tbody> -->
 	
 			<tr  ng-repeat="issue in issues">
 				<td><input type="radio" value={{issue.issueDetailId}} ></td>

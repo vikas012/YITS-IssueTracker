@@ -29,6 +29,20 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 						  alert(data);
 						  return data;
 					  })
+	  			},
+	  			
+	  			registerMember:function(member){
+	  			  return $http.post('./registerMember',member)
+	  			  .then(
+	  			  function(response){
+	  			   return response.data;
+	  			  },
+	  			  function(errResponse){
+	  			  console.error('Error while fetching users');
+	  			  return $q.reject(errResponse);
+	  			  }
+
+	  			  );
 	  			}
 		  
 		 /*

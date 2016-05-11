@@ -34,6 +34,7 @@ public class IssueController {
 		return "redirect:/static/ManagerAssignIssue.html";
 	}
 	
+	
 	@ResponseBody
 	@RequestMapping(value="/issue/assign")
 	public List<Issue> getUnassignedIssues(){

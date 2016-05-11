@@ -26,5 +26,6 @@ managerModule.config(function($routeProvider){
 					return managerService.getUnassignedIssues();
 					}
 				}
+			
 			})
 	});
