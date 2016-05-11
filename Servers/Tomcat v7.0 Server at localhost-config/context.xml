@@ -25,6 +25,6 @@
 		
 	<Resource name="jdbc/issuetrackerDB" auth="Container"
 		type="javax.sql.DataSource" username="prajvi" password="prajvi"
-		driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://YITRNG30DT:3306/yashtestdb"
+		driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://YITRNG30DT:3306/yashissuetrackerdb"
 		maxActive="100" maxIdle="30" maxWait="10000" />
 </Context>
