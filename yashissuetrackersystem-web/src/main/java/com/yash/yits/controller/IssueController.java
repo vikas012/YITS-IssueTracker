@@ -15,6 +15,6 @@ public class IssueController {
 	@RequestMapping(value="/showCreateIssueForm")
 	public String getCreateIssueForm()
 	{
-		return "UserCreateIssueForm";
+		return "redirect:/static/UserCreateIssueForm.html";
 	}
 }

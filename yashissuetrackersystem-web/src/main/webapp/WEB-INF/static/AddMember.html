@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <style>
@@ -15,9 +16,19 @@
 
 
 </style>
-
+ 
+  </head>
 </head>
 <body ng-controller="managerController as mc">
+<script type="text/javascript">
+    
+        $("document").ready(function() {
+        	alert("in ready");
+            $('#includedContent').load('header.html');
+            alert("finished");
+        });
+    </script>
+  <div id="includedContent"></div> 
 	<center>
 		<div class="container">
 				<label><input type="radio" name="optradio" ng-click="showLookForm()">Yash</label>
@@ -52,5 +63,7 @@
 	  </form>
 	</div>
 	</center>
+	
+	
 </body>
 </html>
