@@ -1,6 +1,11 @@
 package com.yash.yits.serviceImpl;
 
-public class IssueServiceImpl {
+import org.springframework.stereotype.Service;
+
+import com.yash.yits.service.IssueService;
+
+@Service
+public class IssueServiceImpl implements IssueService{
 
 	
 	

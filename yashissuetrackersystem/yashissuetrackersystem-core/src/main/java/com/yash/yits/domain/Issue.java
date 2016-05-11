@@ -20,8 +20,8 @@ public class Issue implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Column(name="AFFECTED_USER")
-	private int affectedUser;
+	@Column(name="ASSIGNED_USER")
+	private int assignedUser;
 
 	@Column(name="AFFECTED_VERSION")
 	private String affectedVersion;
@@ -36,6 +36,8 @@ public class Issue implements Serializable {
 	private Timestamp createdDateTime;
 
 	private String description;
+	
+	private String taskProgressUpdate;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="DUE_DATE")
@@ -65,7 +67,7 @@ public class Issue implements Serializable {
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="OWNER")
-	private ApplicationTeamMember applicationOwner;
+	private ApplicationTeamMember issueOwner;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
@@ -126,13 +128,6 @@ public class Issue implements Serializable {
 		this.id = id;
 	}
 
-	public int getAffectedUser() {
-		return affectedUser;
-	}
-
-	public void setAffectedUser(int affectedUser) {
-		this.affectedUser = affectedUser;
-	}
 
 	public String getAffectedVersion() {
 		return affectedVersion;
@@ -238,12 +233,28 @@ public class Issue implements Serializable {
 		this.conversations = conversations;
 	}
 
-	public ApplicationTeamMember getApplicationOwner() {
-		return applicationOwner;
+	public int getAssignedUser() {
+		return assignedUser;
 	}
 
-	public void setApplicationOwner(ApplicationTeamMember applicationOwner) {
-		this.applicationOwner = applicationOwner;
+	public void setAssignedUser(int assignedUser) {
+		this.assignedUser = assignedUser;
+	}
+
+	public String getTaskProgressUpdate() {
+		return taskProgressUpdate;
+	}
+
+	public void setTaskProgressUpdate(String taskProgressUpdate) {
+		this.taskProgressUpdate = taskProgressUpdate;
+	}
+
+	public ApplicationTeamMember getIssueOwner() {
+		return issueOwner;
+	}
+
+	public void setIssueOwner(ApplicationTeamMember issueOwner) {
+		this.issueOwner = issueOwner;
 	}
 
 	public ApplicationTeamMember getLastModifiedBy() {

@@ -1,8 +1,26 @@
-angular.module('issueTrackingSystem.managerModule').factory('managerService',['$http',function($http){
+angular.module('issueTrackingSystem.managerModule').factory('managerService',['$http','$q',function($http,$q){
 	
 	  return {
 		  
-		  initializeSelect: function() {
+		  
+		  		checkUserInLdap:function(ldapUser){
+		  				alert("inside service");
+		  				alert("Name---in service "+ldapUser.ldapName);
+		  				return $http.post('./checkMemberInLdap',ldapUser)
+		  					.then(
+		  								function(response){
+		  								  return response.data;
+		  								},
+		  								function(errResponse){
+		  									console.error('Error while fetching users');
+		  									return $q.reject(errResponse);
+		  								}
+	
+		  						);
+			  
+		  			}
+		  
+		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')
 	              .then(
 	                      function(response){
@@ -27,10 +45,10 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		                              return $q.reject(errResponse);
 		                      }
 		                );
-		      	},
+		      	},*/
 	      	
 	      	
-	      	searchIssue:function(searchText){
+	      	/*searchIssue:function(searchText){
 				return $http.get(
 						'./getIssues/'
 						+ searchText)
@@ -43,7 +61,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
                      	return $q.reject(errResponse);
                  	 }
          		);
-		}
+		}*/
 	      	
 	  }
 }]);

@@ -1,7 +1,7 @@
 angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope,$http,managerService){
 
 	$scope.showLookUpForm=false;
-	$scope.ldapUser={name:"",email:""};
+	$scope.ldapUser={ldapName:"",ldapEmail:""};
 	
 	$scope.showLookForm=function(){
 		
@@ -12,15 +12,16 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 	$scope.checkUser=function(){
 		
 		alert("Inside Check User");
-		$scope.ldapUser.name=$scope.name;
-		$scope.ldapUser.email=$scope.email;
-		alert($scope.ldapUser.name+"---------"+$scope.ldapUser.email);
+		$scope.ldapUser.ldapName=$scope.ldapName;
+		$scope.ldapUser.ldapEmail=$scope.ldapEmail;
+		alert($scope.ldapUser.ldapName+"---------"+$scope.ldapUser.ldapEmail);
 		$scope.checkUserInLdap($scope.ldapUser);
 		
 	}
 	$scope.checkUserInLdap=function(ldapUser){
 		alert("inside checkUserInLdap");
-		
+		alert("Name---"+ldapUser.ldapName);
+		managerService.checkUserInLdap(ldapUser);
 		
 	}
 	
