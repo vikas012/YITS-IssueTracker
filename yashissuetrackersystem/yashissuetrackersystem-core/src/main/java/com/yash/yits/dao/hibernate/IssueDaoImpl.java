@@ -1,7 +1,7 @@
 package com.yash.yits.dao.hibernate;
 
 import java.sql.Timestamp;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -24,12 +24,17 @@ public class IssueDaoImpl implements IssueDao {
 		
 		Session session=sessionFactory.getCurrentSession();
 		Query query=session.createSQLQuery("SELECT * FROM Issue WHERE created_Date_Time BETWEEN '"+date1+"' AND '"+date2+"'");
+		List<Issue> issueList=new ArrayList<Issue>();
+		List<Object> issues=query.list();
 		
-		List<Issue> issues=query.list();
+		for (Object object : issues) {
+			
+			Issue issue=(Issue)object;
+			System.out.println(issue);
+			issueList.add(issue);
+		}
 		
-		System.out.println(issues);
-		
-		return issues;
+		return issueList;
 
 	}
 	public List<Issue> getUnassignedIssues() {
