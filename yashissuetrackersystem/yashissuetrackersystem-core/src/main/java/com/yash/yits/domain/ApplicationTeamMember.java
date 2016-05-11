@@ -131,7 +131,7 @@ public class ApplicationTeamMember implements Serializable {
 	private List<Conversation> conversations;
 
 	//bi-directional many-to-one association to Issue
-	@OneToMany(mappedBy="applicationOwner", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="issueOwner", fetch=FetchType.EAGER)
 	private List<Issue> issues1;
 
 	//bi-directional many-to-one association to Issue
