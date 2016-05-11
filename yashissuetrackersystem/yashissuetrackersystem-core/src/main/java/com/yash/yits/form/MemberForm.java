@@ -33,9 +33,9 @@ public class MemberForm {
 
 	private Timestamp lastModifiedDateTime;
 
-	private int memberId;
+	private Long memberId;
 	
-	private int managerId;
+	private Long managerId;
 	
 	private String managerName;
 	
@@ -107,19 +107,20 @@ public class MemberForm {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
-	public int getMemberId() {
+
+	public Long getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(int memberId) {
+	public void setMemberId(Long memberId) {
 		this.memberId = memberId;
 	}
 
-	public int getManagerId() {
+	public Long getManagerId() {
 		return managerId;
 	}
 
-	public void setManagerId(int managerId) {
+	public void setManagerId(Long managerId) {
 		this.managerId = managerId;
 	}
 

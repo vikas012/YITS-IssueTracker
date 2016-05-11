@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.naming.NamingException;
 import javax.naming.directory.InitialDirContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,6 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.LdapUser;
+import com.yash.yits.form.LoginForm;
+import com.yash.yits.form.MemberForm;
+import com.yash.yits.form.UserForm;
 import com.yash.yits.service.IssueService;
 import com.yash.yits.service.MemberService;
 
@@ -32,6 +36,8 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	LoginForm loginForm=new LoginForm();
+	UserForm userForm=null;
 	
 	@RequestMapping(value="/showYashForm")
 	public String getCreateIssueForm(){
@@ -47,11 +53,34 @@ public class MemberController {
 	
 	@ResponseBody 
 	@RequestMapping(value="/checkMemberInLdap" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void checkUserInLdap(@RequestBody LdapUser ldapUser) throws NamingException{
+	public UserForm checkMemberInLdap(@RequestBody LdapUser ldapUser,HttpServletRequest httpServletRequest) throws NamingException{
 			
-		System.out.println("inside controller--------checkUserInLdap!!!!!!-----"+ldapUser.getLdapName());
-		InitialDirContext intialDirContext=memberService.checkUser(ldapUser);
-			memberService.fetchAttributes(intialDirContext,ldapUser.getLdapName());
+		System.out.println("inside controller--------checkUserInLdap!!!!!!-----"+httpServletRequest.getSession().getAttribute("username"));
+		loginForm.setUsername((String) httpServletRequest.getSession().getAttribute("username"));
+		loginForm.setPassword((String) httpServletRequest.getSession().getAttribute("password"));
+		
+		InitialDirContext intialDirContext=memberService.checkUser(loginForm);
+		
+		int position=ldapUser.getLdapEmail().indexOf("@");
+		
+		String username=ldapUser.getLdapEmail().substring(0,position);
+		
+		userForm=memberService.fetchAttributes(intialDirContext,username);
+		
+		return userForm;
+	}
+	@ResponseBody 
+	@RequestMapping(value="/registerMember" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	public void registerMember(@RequestBody MemberForm memberForm){
+		
+		System.out.println("in side register "+ memberForm.getEmail()+"------"+memberForm.getContact());
+		memberForm.setManagerEmail(userForm.getUserManagerEmail());
+		memberForm.setManagerName(userForm.getUserManagerName());
+		memberForm.setManagerId(userForm.getUserManagerId());
+		memberService.addMember(memberForm);
+		
+		
+		
 	}
 	
 	

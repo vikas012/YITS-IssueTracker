@@ -53,6 +53,8 @@ public class LoginController {
 		UserForm userForm=loginService.fetchAttributes(intialDirContext,username);
 		
 		httpServletRequest.getSession().setAttribute("memberId",userForm.getUserId());
+		httpServletRequest.getSession().setAttribute("username",loginForm.getUsername());
+		httpServletRequest.getSession().setAttribute("password",loginForm.getPassword());
 		
 		System.out.println(userForm.getUserJobTitle());
 		if(userForm.getUserJobTitle().equals("Trainee Programmer"))
