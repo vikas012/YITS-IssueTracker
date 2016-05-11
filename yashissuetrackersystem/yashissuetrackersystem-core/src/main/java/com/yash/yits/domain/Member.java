@@ -41,11 +41,14 @@ public class Member implements Serializable {
 	@Column(name="MEMBER_ID")
 	private int memberId;
 	
-	@Column(name="MEMBER_NAME")
-	private int memberName;
+	@Column(name="MANAGER_ID")
+	private int managerId;
 	
-	@Column(name="MEMBER_EMAIL")
-	private int memberEmail;
+	@Column(name="MANAGER_NAME")
+	private int managerName;
+	
+	@Column(name="MANAGER_EMAIL")
+	private int managerEmail;
 
 	private String name;
 
@@ -80,21 +83,7 @@ public class Member implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public int getMemberName() {
-		return memberName;
-	}
-
-	public void setMemberName(int memberName) {
-		this.memberName = memberName;
-	}
-
-	public int getMemberEmail() {
-		return memberEmail;
-	}
-
-	public void setMemberEmail(int memberEmail) {
-		this.memberEmail = memberEmail;
-	}
+	
 
 	public Timestamp getCreatedDateTime() {
 		return createdDateTime;
