@@ -215,7 +215,7 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.addMember(member);
 		
 		
-		/*ApplicationContext context=ContextAware.getApplicationContext();
+		ApplicationContext context=ContextAware.getApplicationContext();
 		System.out.println("object of application context"+context);
 		JavaMailSenderImpl javamailsender=(JavaMailSenderImpl) context.getBean("mailSender");
 		
@@ -231,7 +231,7 @@ public class MemberServiceImpl implements MemberService {
 		String message="Hello,you have been successful registered with IssueTracker Application with email id "+memberForm.getEmail();
 		simpleMailMessage.setText(message);
 		
-		javaMailSender.send(simpleMailMessage);*/
+		javaMailSender.send(simpleMailMessage);
 
 		
 		
