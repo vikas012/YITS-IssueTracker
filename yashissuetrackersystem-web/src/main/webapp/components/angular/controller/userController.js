@@ -4,7 +4,8 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 	.then(
 			function(d) {
 				
-				alert(d);
+				alert(d.data.id);
+				alert(d.data.name);
 				
 			}
 	
