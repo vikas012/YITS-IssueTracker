@@ -39,7 +39,7 @@ public class IssueController {
 	@ResponseBody
 	@RequestMapping(value="/defaultIssues",method=RequestMethod.GET)
 	public List<IssueForm> defaultIssues(){
-		//List<IssueForm> issues=issueService.getDefaultIssues();
+		List<IssueForm> issues=issueService.getDefaultIssues();
 		//model.addAttribute("issueList",issues);
 		
 		return null;
