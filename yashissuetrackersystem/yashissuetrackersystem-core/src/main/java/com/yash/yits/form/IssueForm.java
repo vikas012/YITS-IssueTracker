@@ -1,155 +1,208 @@
 package com.yash.yits.form;
 
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.yash.yits.domain.ApplicationEnvironment;
+import com.yash.yits.domain.ApplicationIssuePriority;
+import com.yash.yits.domain.ApplicationIssueStatus;
+import com.yash.yits.domain.ApplicationIssueType;
+import com.yash.yits.domain.ApplicationRelease;
+import com.yash.yits.domain.ApplicationTeamMember;
+import com.yash.yits.domain.Attachment;
+import com.yash.yits.domain.Conversation;
+import com.yash.yits.domain.IssueActivityLog;
+import com.yash.yits.domain.Project;
+import com.yash.yits.domain.ProjectRelease;
 
 public class IssueForm {
 	
-	private int issueDetailId;
+	private int id;
+
+	private int assignedUser;
+
+	private String affectedVersion;
+
+	private Date closeDate;
+
+	private String component;
+
+	private Timestamp createdDateTime;
+
+	private String description;
 	
-	private String issueAffectedVersion;
+	private String taskProgressUpdate;
 
-	private String issueComponent;
+	private Date dueDate;
 
-	private String issueDescription;
+	private int isActive;
 
-	private Date issueCreationDate;
+	private Timestamp lastModifiedDateTime;
 
-	private Date issueDueDate;
+	private int originalEstimate;
 
-	private String issueEnvironment;
+	private int remainingEstimate;
 
-	private int issueOriginalEstimate;
+	private String summary;
 
-	private int issueRemainingEstimate;
+	private ApplicationTeamMemberForm issueOwner;
 
-	private String issueSummary;
-
-	private IssueAssignedStatusForm issueAssignedStatus;
-
-	private UserForm user;
-
-	private IssueTypeForm issueType;
+	private ApplicationTeamMemberForm lastModifiedBy;
 
 	private ProjectForm project;
 
-	private IssuePriorityForm issuePriority;
+	private ApplicationIssueTypeForm applicationIssueType;
 
-	private IssueStatusForm issueStatus;
+	private ApplicationIssuePriorityForm applicationIssuePriority;
 
-//	private List<AttachmentForm> attachments;
+	private ApplicationEnvironmentForm applicationEnvironment;
 
-	public IssueForm() {
-		
-		this.issueAssignedStatus = new IssueAssignedStatusForm();
-		this.user = new UserForm();
-		this.issueType = new IssueTypeForm();
-		this.project = new ProjectForm();
-		this.issuePriority = new IssuePriorityForm();
-		this.issueStatus = new IssueStatusForm();
+	private ApplicationReleaseForm applicationRelease;
+
+	private ProjectReleaseForm projectRelease;
+
+	private ApplicationIssueStatusForm applicationIssueStatus;
+
+	private ApplicationTeamMemberForm createdBy;
+
+	public int getId() {
+		return id;
 	}
 
-	public int getIssueDetailId() {
-		return issueDetailId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void setIssueDetailId(int issueDetailId) {
-		this.issueDetailId = issueDetailId;
+	public int getAssignedUser() {
+		return assignedUser;
 	}
 
-	public String getIssueAffectedVersion() {
-		return issueAffectedVersion;
+	public void setAssignedUser(int assignedUser) {
+		this.assignedUser = assignedUser;
 	}
 
-	public void setIssueAffectedVersion(String issueAffectedVersion) {
-		this.issueAffectedVersion = issueAffectedVersion;
+	public String getAffectedVersion() {
+		return affectedVersion;
 	}
 
-	public String getIssueComponent() {
-		return issueComponent;
+	public void setAffectedVersion(String affectedVersion) {
+		this.affectedVersion = affectedVersion;
 	}
 
-	public void setIssueComponent(String issueComponent) {
-		this.issueComponent = issueComponent;
+	public Date getCloseDate() {
+		return closeDate;
 	}
 
-	public String getIssueDescription() {
-		return issueDescription;
+	public void setCloseDate(Date closeDate) {
+		this.closeDate = closeDate;
 	}
 
-	public void setIssueDescription(String issueDescription) {
-		this.issueDescription = issueDescription;
+	public String getComponent() {
+		return component;
 	}
 
-	public Date getIssueCreationDate() {
-		return issueCreationDate;
+	public void setComponent(String component) {
+		this.component = component;
 	}
 
-	public void setIssueCreationDate(Date issueCreationDate) {
-		this.issueCreationDate = issueCreationDate;
+	public Timestamp getCreatedDateTime() {
+		return createdDateTime;
 	}
 
-	public Date getIssueDueDate() {
-		return issueDueDate;
+	public void setCreatedDateTime(Timestamp createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
-	public void setIssueDueDate(Date issueDueDate) {
-		this.issueDueDate = issueDueDate;
+	public String getDescription() {
+		return description;
 	}
 
-	public String getIssueEnvironment() {
-		return issueEnvironment;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setIssueEnvironment(String issueEnvironment) {
-		this.issueEnvironment = issueEnvironment;
+	public String getTaskProgressUpdate() {
+		return taskProgressUpdate;
 	}
 
-	public int getIssueOriginalEstimate() {
-		return issueOriginalEstimate;
+	public void setTaskProgressUpdate(String taskProgressUpdate) {
+		this.taskProgressUpdate = taskProgressUpdate;
 	}
 
-	public void setIssueOriginalEstimate(int issueOriginalEstimate) {
-		this.issueOriginalEstimate = issueOriginalEstimate;
+	public Date getDueDate() {
+		return dueDate;
 	}
 
-	public int getIssueRemainingEstimate() {
-		return issueRemainingEstimate;
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 
-	public void setIssueRemainingEstimate(int issueRemainingEstimate) {
-		this.issueRemainingEstimate = issueRemainingEstimate;
+	public int getIsActive() {
+		return isActive;
 	}
 
-	public String getIssueSummary() {
-		return issueSummary;
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 
-	public void setIssueSummary(String issueSummary) {
-		this.issueSummary = issueSummary;
+	public Timestamp getLastModifiedDateTime() {
+		return lastModifiedDateTime;
 	}
 
-	public IssueAssignedStatusForm getIssueAssignedStatus() {
-		return issueAssignedStatus;
+	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
-	public void setIssueAssignedStatus(IssueAssignedStatusForm issueAssignedStatus) {
-		this.issueAssignedStatus = issueAssignedStatus;
+	public int getOriginalEstimate() {
+		return originalEstimate;
 	}
 
-	public UserForm getUser() {
-		return user;
+	public void setOriginalEstimate(int originalEstimate) {
+		this.originalEstimate = originalEstimate;
 	}
 
-	public void setUser(UserForm user) {
-		this.user = user;
+	public int getRemainingEstimate() {
+		return remainingEstimate;
 	}
 
-	public IssueTypeForm getIssueType() {
-		return issueType;
+	public void setRemainingEstimate(int remainingEstimate) {
+		this.remainingEstimate = remainingEstimate;
 	}
 
-	public void setIssueType(IssueTypeForm issueType) {
-		this.issueType = issueType;
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public ApplicationTeamMemberForm getIssueOwner() {
+		return issueOwner;
+	}
+
+	public void setIssueOwner(ApplicationTeamMemberForm issueOwner) {
+		this.issueOwner = issueOwner;
+	}
+
+	public ApplicationTeamMemberForm getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(ApplicationTeamMemberForm lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 
 	public ProjectForm getProject() {
@@ -160,19 +213,60 @@ public class IssueForm {
 		this.project = project;
 	}
 
-	public IssuePriorityForm getIssuePriority() {
-		return issuePriority;
+	public ApplicationIssueTypeForm getApplicationIssueType() {
+		return applicationIssueType;
 	}
 
-	public void setIssuePriority(IssuePriorityForm issuePriority) {
-		this.issuePriority = issuePriority;
+	public void setApplicationIssueType(ApplicationIssueTypeForm applicationIssueType) {
+		this.applicationIssueType = applicationIssueType;
 	}
 
-	public IssueStatusForm getIssueStatus() {
-		return issueStatus;
+	public ApplicationIssuePriorityForm getApplicationIssuePriority() {
+		return applicationIssuePriority;
 	}
 
-	public void setIssueStatus(IssueStatusForm issueStatus) {
-		this.issueStatus = issueStatus;
+	public void setApplicationIssuePriority(ApplicationIssuePriorityForm applicationIssuePriority) {
+		this.applicationIssuePriority = applicationIssuePriority;
 	}
+
+	public ApplicationEnvironmentForm getApplicationEnvironment() {
+		return applicationEnvironment;
+	}
+
+	public void setApplicationEnvironment(ApplicationEnvironmentForm applicationEnvironment) {
+		this.applicationEnvironment = applicationEnvironment;
+	}
+
+	public ApplicationReleaseForm getApplicationRelease() {
+		return applicationRelease;
+	}
+
+	public void setApplicationRelease(ApplicationReleaseForm applicationRelease) {
+		this.applicationRelease = applicationRelease;
+	}
+
+	public ProjectReleaseForm getProjectRelease() {
+		return projectRelease;
+	}
+
+	public void setProjectRelease(ProjectReleaseForm projectRelease) {
+		this.projectRelease = projectRelease;
+	}
+
+	public ApplicationIssueStatusForm getApplicationIssueStatus() {
+		return applicationIssueStatus;
+	}
+
+	public void setApplicationIssueStatus(ApplicationIssueStatusForm applicationIssueStatus) {
+		this.applicationIssueStatus = applicationIssueStatus;
+	}
+
+	public ApplicationTeamMemberForm getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(ApplicationTeamMemberForm createdBy) {
+		this.createdBy = createdBy;
+	}
+
 }
