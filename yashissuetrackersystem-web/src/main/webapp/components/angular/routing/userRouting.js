@@ -5,4 +5,16 @@ userModule.config(function($routeProvider){
 				templateUrl:'showCreateIssueForm',
 				controller:'userController as uc'
 			})
+			
+			.when('/editIssues',{
+				templateUrl:'showEditIssueForm',
+				controller:'userController as uc',
+				resolve: {
+					issuesList:function(userService){
+						return userService.getIssuesList();
+					}
+				}
+			})
+			
+			
 	});
