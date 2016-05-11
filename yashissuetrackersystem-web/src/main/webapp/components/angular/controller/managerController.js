@@ -1,4 +1,4 @@
-angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope,$http,managerService){
+angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope,$http,managerService,unassignedIssueList){
 
 	$scope.showLookUpForm=false;
 	$scope.ldapUser={ldapName:"",ldapEmail:""};

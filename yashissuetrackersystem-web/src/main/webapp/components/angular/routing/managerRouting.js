@@ -1,6 +1,6 @@
 var managerModule = angular.module('issueTrackingSystem.managerModule',['ngRoute']);
 managerModule.config(function($routeProvider){
-		alert("routing");
+		
 		$routeProvider
 			.when('/addMember',{
 				
@@ -16,5 +16,15 @@ managerModule.config(function($routeProvider){
 			.when('/createIssueManager',{
 				templateUrl:'../showCreateIssueForm',
 				controller:'managerController as mc'
+			})
+			
+			.when('/assignIssue',{
+				templateUrl:'../getAssignIssueForm',
+				controller:'managerController as mc',
+				resolve: {
+					unassignedIssueList:function(managerService){
+					return managerService.getUnassignedIssues();
+					}
+				}
 			})
 	});
