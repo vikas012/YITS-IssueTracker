@@ -164,14 +164,6 @@ public class Member implements Serializable {
 		this.applicationTeamMembers = applicationTeamMembers;
 	}
 
-	public Member getMember() {
-		return member;
-	}
-
-	public void setMember(Member member) {
-		this.member = member;
-	}
-
 	public List<Member> getMembers() {
 		return members;
 	}
