@@ -53,10 +53,6 @@ public class Member implements Serializable {
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
 	private List<ApplicationTeamMember> applicationTeamMembers;
 
-	//bi-directional many-to-one association to Member
-	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
-	private List<Member> members;
-
 	public Member() {
 	}
 
@@ -162,14 +158,6 @@ public class Member implements Serializable {
 
 	public void setApplicationTeamMembers(List<ApplicationTeamMember> applicationTeamMembers) {
 		this.applicationTeamMembers = applicationTeamMembers;
-	}
-
-	public List<Member> getMembers() {
-		return members;
-	}
-
-	public void setMembers(List<Member> members) {
-		this.members = members;
 	}
 
 }
