@@ -45,10 +45,10 @@ public class Member implements Serializable {
 	private int managerId;
 	
 	@Column(name="MANAGER_NAME")
-	private int managerName;
+	private String managerName;
 	
 	@Column(name="MANAGER_EMAIL")
-	private int managerEmail;
+	private String managerEmail;
 
 	private String name;
 
