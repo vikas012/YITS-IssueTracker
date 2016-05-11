@@ -18,8 +18,21 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 	
 		  						);
 			  
-		  			}
+		  			},
 		  
+	  
+	  getIssues:function(){
+		  
+		  var issues=$http({
+		  method:'GET',
+		      url:'./defaultIssues'
+		 //spring controller call, use @ResponseBody
+		  }).success(function(data){
+		  alert(data);
+		  return data;
+		  })
+		  }
+	  
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')
 	              .then(
@@ -64,4 +77,6 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		}*/
 	      	
 	  }
+	 
+
 }]);
