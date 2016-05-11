@@ -55,6 +55,13 @@ public class MemberController {
 			
 		return "redirect:/static/ShowMember.html" ;
 	}
+
+	@RequestMapping(value="/showSearchMember")
+	public String showSearchMember(){
+			
+		return "redirect:/static/showSearchMember.html" ;
+	}
+
 	
 	@ResponseBody
 	@RequestMapping(value="/memberList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)

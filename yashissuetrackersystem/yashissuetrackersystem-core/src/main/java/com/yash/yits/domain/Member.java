@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-<<<<<<< HEAD
+
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-=======
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
+
 
 import java.sql.Timestamp;
 import java.math.BigInteger;

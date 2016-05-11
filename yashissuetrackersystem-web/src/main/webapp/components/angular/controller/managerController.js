@@ -68,6 +68,27 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 		managerService.registerMember($scope.member);
 		
 	}
+	$scope.getSearchMember = function() {
+		alert("Please Enter Text controller!");
+		alert($scope.searchText);
+		var searchText = $scope.searchText;
+		
+		if (searchText == "") {
+			alert("Please Enter Text!");
+		}
+		else{
+			managerService.searchMember(searchText)
+			.then(
+					function(data){
+						$scope.members=data;
+					},
+					 function(errResponse)
+					 {
+						 console.error('Error while showing search members');
+					 }
+			)	
+		}
+	};
 	
 		/*issueService returns list to populate drop-down*/
 	/*managerService.initializeSelect()

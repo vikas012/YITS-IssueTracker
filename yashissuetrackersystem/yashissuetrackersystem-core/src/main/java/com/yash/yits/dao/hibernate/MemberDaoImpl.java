@@ -25,24 +25,20 @@ import com.yash.yits.domain.Member;
 import com.yash.yits.form.*;
 
 /** This class interacts with database and provides the data for all member operations*/
-<<<<<<< HEAD
-=======
 
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
+
+
 @Repository
 public class MemberDaoImpl implements MemberDao {
 
-<<<<<<< HEAD
-	 @Autowired
-	    private SessionFactory sessionFactory;
+
 	 
-=======
 	@Autowired
 	private SessionFactory sessionFactory;
 	
 	
 	
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
+
 	public Member addMember(Member member) {
 		Session session=sessionFactory.getCurrentSession();
 		System.out.println(member);

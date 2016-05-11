@@ -30,7 +30,22 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  alert("Succeess");
 		  return data;
 		  })
-		  }
+		  },
+		  searchMember:function(searchText){
+			  alert("Please Enter Text service!");
+					return $http.get(
+							'./searchMember/'
+							+ searchText)
+				 	.then(
+	                	 function(response){
+	                     	return response.data;
+	                	 }, 
+	                	 function(errResponse){
+	                     	console.error('Error while searching issues');
+	                     	return $q.reject(errResponse);
+	                 	 }
+	         		);
+			}
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')
 	              .then(
