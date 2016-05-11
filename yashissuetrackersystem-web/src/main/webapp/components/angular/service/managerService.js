@@ -4,8 +4,8 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  
 		  
 		  		checkUserInLdap:function(ldapUser){
-		  				alert("inside service");
-		  				alert("Name---in service "+ldapUser.ldapName);
+		  				
+		  				
 		  				return $http.post('./checkMemberInLdap',ldapUser)
 		  					.then(
 		  								function(response){
@@ -18,8 +18,25 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 	
 		  						);
 			  
-		  			}
+		  			},
 		  
+	  				registerMember:function(member){
+	  					return $http.post('./registerMember',member)
+	  					.then(
+  								function(response){
+	  								  return response.data;
+	  								},
+	  								function(errResponse){
+	  									console.error('Error while fetching users');
+	  									return $q.reject(errResponse);
+	  								}
+
+	  						);
+	  					
+	  					
+	  					
+	  					
+	  				}
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')
 	              .then(

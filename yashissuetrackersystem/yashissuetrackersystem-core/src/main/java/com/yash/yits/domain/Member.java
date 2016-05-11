@@ -1,7 +1,12 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.sql.Timestamp;
 import java.math.BigInteger;
 import java.util.List;
@@ -39,10 +44,18 @@ public class Member implements Serializable {
 	private Timestamp lastModifiedDateTime;
 
 	@Column(name="MEMBER_ID")
-	private int memberId;
+	private Long memberId;
 	
+	public Long getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Long memberId) {
+		this.memberId = memberId;
+	}
+
 	@Column(name="MANAGER_ID")
-	private int managerId;
+	private Long managerId;
 	
 	@Column(name="MANAGER_NAME")
 	private String managerName;
@@ -125,13 +138,7 @@ public class Member implements Serializable {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
-	public int getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(int memberId) {
-		this.memberId = memberId;
-	}
+	
 
 	public String getName() {
 		return name;
@@ -147,6 +154,40 @@ public class Member implements Serializable {
 
 	public void setApplicationTeamMembers(List<ApplicationTeamMember> applicationTeamMembers) {
 		this.applicationTeamMembers = applicationTeamMembers;
+	}
+
+	
+
+	@Override
+	public String toString() {
+		return "Member [contact=" + contact + ", email=" + email
+				+ ", memberId=" + memberId + ", managerId=" + managerId
+				+ ", managerName=" + managerName + ", managerEmail="
+				+ managerEmail + ", name=" + name + "]";
+	}
+
+	public Long getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(Long managerId) {
+		this.managerId = managerId;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public String getManagerEmail() {
+		return managerEmail;
+	}
+
+	public void setManagerEmail(String managerEmail) {
+		this.managerEmail = managerEmail;
 	}
 
 }

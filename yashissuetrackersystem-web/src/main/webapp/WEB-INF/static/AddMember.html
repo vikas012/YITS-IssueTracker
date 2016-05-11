@@ -12,7 +12,13 @@
     width: 800px;
     height: 100px; 
 }
-
+#rcorners3 {
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px; 
+    width: 400px;
+    height: 300px; 
+}
 
 
 </style>
@@ -63,7 +69,51 @@
 	  </form>
 	</div>
 	</center>
+	<center>
+		<div class="container" ng-show="showRegisterForm" id="rcorners3">
+		  <form class="form-inline" role="form">
+		    
+		    <div class="form-group">
+		      <label for="Id">Id:</label>
+		      <input type="text" class="form-control" id="Id"  ng-model="userId">
+		    </div>
+		    
+		  	<br>
+		  	<br>
+		    
+		    <div class="form-group">
+		      <label for="name">Name:</label>
+		      <input type="name" class="form-control" id="name"  ng-model="userName">
+		    </div>
+		    
+		   <br>
+		  	<br>
+		    
+		    <div class="form-group">
+		      <label for="email">Email:</label>
+		      <input type="email" class="form-control" id="email"  ng-model="userEmail">
+		    </div>
+		    
+		    <br>
+		  	<br>
+		    
+		    <div class="form-group">
+		      <label for="contact">Contact:</label>
+		      <input type="text" class="form-control" id="contact" ng-model="userMobile">
+		    </div>
+		  	<br>
+		  	<br> 
+		    <button type="submit" class="btn btn-success" ng-click="registerMember()">Register</button>
+		  </form>
+		</div>
+
+  	</div>
 	
+	
+	
+	
+	
+	</center>
 	
 </body>
 </html>
