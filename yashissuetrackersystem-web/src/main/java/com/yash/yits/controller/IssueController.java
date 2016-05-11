@@ -3,6 +3,8 @@ package com.yash.yits.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,8 +15,14 @@ import com.yash.yits.form.IssueForm;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import com.yash.yits.domain.Issue;
 
+
+
+import com.google.gson.Gson;
+import com.yash.yits.form.ProjectForm;
+import com.yash.yits.domain.Issue;
 import com.yash.yits.service.IssueService;
 
 /**
@@ -25,9 +33,10 @@ import com.yash.yits.service.IssueService;
 @Controller
 public class IssueController {
 	
+
 	@Autowired
 	private IssueService issueService;
-	
+
 	
 	@RequestMapping(value="/showCreateIssueForm")
 	public String getCreateIssueForm()
@@ -51,6 +60,19 @@ public class IssueController {
 
 		return issues;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getProjects",produces=MediaType.APPLICATION_JSON_VALUE)
+	public String getProjects()
+	{
+		System.out.println("in controller for show projects");
+		List<ProjectForm> projectForms=issueService.getProjectNames();
+		System.out.println(projectForms);
+		
+		Gson gson= new Gson();
+		return gson.toJson(projectForms);
+
+	}
 
 	@RequestMapping(value="/getAssignIssueForm")
 	public String getAssignIssueForm()
@@ -67,6 +89,7 @@ public class IssueController {
 		return unassignedIssueList;
 	}
 	
+
 	
 
 }

@@ -1,6 +1,11 @@
 
-angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope,$http,managerService,issueList,unassignedIssueList){
+angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope,$http,managerService,issueList,unassignedIssueList,memberList){
 	//$scope.issueList=issueList.data;
+
+	alert("manager");
+	$scope.members=memberList.data;
+	//alert(memberList.data);
+
 
 	$scope.showLookUpForm=false;
 	$scope.showRegisterForm=false;

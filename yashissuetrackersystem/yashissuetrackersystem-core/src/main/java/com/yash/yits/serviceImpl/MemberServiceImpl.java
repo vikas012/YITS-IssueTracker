@@ -16,37 +16,48 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yash.yits.dao.MemberDao;
 import com.yash.yits.domain.Member;
 import com.yash.yits.form.LdapUser;
+
+import com.yash.yits.form.MemberForm;
+
 import com.yash.yits.form.LoginForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.UserForm;
+
 import com.yash.yits.service.MemberService;
+
+
 import com.yash.yits.util.ContextAware;
+
 
 /**
  * @author somesh.kumar
  *
  */
+
+
+
+
 @Service
 @Transactional
 public class MemberServiceImpl implements MemberService {
-	
+
 	@Autowired
 	private MemberDao memberDao;
 	
 	@Autowired
 	JavaMailSender javaMailSender;
-	
-
 	
 	UserForm userForm=new UserForm();
 	Member member=new Member();
@@ -239,8 +250,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	public List<Member> showMembers() {
+
+	List<Member> memberList=memberDao.showMembers();
 		
-		return null;
+		return memberList;
+
+		
+	//	return null;
+
 	}
 
 	public List<Member> searchMembers(String search) {

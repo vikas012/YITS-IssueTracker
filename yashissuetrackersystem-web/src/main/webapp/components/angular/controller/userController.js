@@ -1,5 +1,15 @@
 angular.module('issueTrackingSystem.userModule').controller('userController',['$scope','$http','userService',function($scope,$http,userService){
+	alert("in controller");
+	userService.initializeSelect()
+	.then(
+			function(d) {
+				
+				alert(d.data.id);
+				alert(d.data.name);
+				
+			}
 	
+          );
 
 	
 		/*issueService returns list to populate drop-down*/

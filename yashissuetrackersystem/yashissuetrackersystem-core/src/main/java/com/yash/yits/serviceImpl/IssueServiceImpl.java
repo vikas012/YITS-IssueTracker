@@ -1,6 +1,7 @@
 package com.yash.yits.serviceImpl;
 
 
+<<<<<<< HEAD
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -11,34 +12,56 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+=======
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+<<<<<<< HEAD
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+=======
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yash.yits.dao.IssueDao;
+<<<<<<< HEAD
 import com.yash.yits.domain.Issue;
 import com.yash.yits.form.IssueForm;
 
 import com.yash.yits.dao.IssueDao;
 import com.yash.yits.domain.Issue;
 
+=======
+import com.yash.yits.domain.Project;
+import com.yash.yits.form.ProjectForm;
+import com.yash.yits.dao.IssueDao;
+import com.yash.yits.domain.Issue;
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 import com.yash.yits.service.IssueService;
 
 @Service
 @Transactional
 public class IssueServiceImpl implements IssueService{
 	
+<<<<<<< HEAD
+=======
+	@Autowired
+	private IssueDao issueDao;
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 	
 	public List<Issue> getUnassignedIssues() {
 		List unassignedIssueList=issueDao.getUnassignedIssues();
 		return unassignedIssueList;
 	}
+<<<<<<< HEAD
 
 	@Autowired
 	private IssueDao issueDao;
@@ -122,7 +145,23 @@ public class IssueServiceImpl implements IssueService{
 	}
 
 	
+=======
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 	
-	
+	public List<ProjectForm> getProjectNames() {
+		List<ProjectForm> projectForms= new ArrayList<ProjectForm>();
+		List<Project> projects = issueDao.getProjectNames();
+		System.out.println(projects);
+		Iterator<Project>  iterator = projects.iterator();
+		while (iterator.hasNext()) {
+			Project project = (Project) iterator.next();
+			ProjectForm projectForm = new ProjectForm();
+			projectForm.setId(project.getId());
+			projectForm.setName(project.getName());
+			projectForms.add(projectForm);
+		}
+		System.out.println("in service "+projectForms);
+		return projectForms;
+	}
 	
 }

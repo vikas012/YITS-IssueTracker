@@ -19,11 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.yash.yits.domain.Member;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.LdapUser;
+
+
+
 import com.yash.yits.form.LoginForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.UserForm;
+
 import com.yash.yits.service.IssueService;
 import com.yash.yits.service.MemberService;
 
@@ -51,6 +56,15 @@ public class MemberController {
 		return "redirect:/static/ShowMember.html" ;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/memberList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Member> showMembersList(){
+		System.out.println("for member list");
+	List<Member> membersList=memberService.showMembers();
+		
+		return membersList;
+		//return "succes";
+	}
 	@ResponseBody 
 	@RequestMapping(value="/checkMemberInLdap" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
 	public UserForm checkMemberInLdap(@RequestBody LdapUser ldapUser,HttpServletRequest httpServletRequest) throws NamingException{
