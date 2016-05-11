@@ -40,17 +40,18 @@ public class Member implements Serializable {
 
 	@Column(name="MEMBER_ID")
 	private int memberId;
+	
+	@Column(name="MEMBER_NAME")
+	private int memberName;
+	
+	@Column(name="MEMBER_EMAIL")
+	private int memberEmail;
 
 	private String name;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
 	private List<ApplicationTeamMember> applicationTeamMembers;
-
-	//bi-directional many-to-one association to Member
-	@ManyToOne
-	@JoinColumn(name="MANAGER_ID")
-	private Member member;
 
 	//bi-directional many-to-one association to Member
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
@@ -81,6 +82,22 @@ public class Member implements Serializable {
 
 	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public int getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(int memberName) {
+		this.memberName = memberName;
+	}
+
+	public int getMemberEmail() {
+		return memberEmail;
+	}
+
+	public void setMemberEmail(int memberEmail) {
+		this.memberEmail = memberEmail;
 	}
 
 	public Timestamp getCreatedDateTime() {
