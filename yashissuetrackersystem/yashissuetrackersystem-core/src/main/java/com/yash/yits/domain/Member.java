@@ -2,6 +2,10 @@ package com.yash.yits.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import java.sql.Timestamp;
 import java.math.BigInteger;
 import java.util.List;

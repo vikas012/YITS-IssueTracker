@@ -10,6 +10,7 @@ import javax.naming.directory.InitialDirContext;
 
 import com.yash.yits.domain.Member;
 import com.yash.yits.form.LdapUser;
+import com.yash.yits.form.MemberForm;
 
 
 

@@ -15,18 +15,31 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.yash.yits.dao.MemberDao;
 import com.yash.yits.domain.Member;
 import com.yash.yits.form.LdapUser;
+import com.yash.yits.form.MemberForm;
 import com.yash.yits.service.MemberService;
+
 
 /**
  * @author somesh.kumar
  *
  */
+
+
+
+@Transactional
 @Service
 public class MemberServiceImpl implements MemberService {
+	
+	
+	@Autowired
+	private MemberDao memberDao;
 
 	public InitialDirContext checkUser(LdapUser ldapUser) {
 		
@@ -160,8 +173,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	public List<Member> showMembers() {
-		// TODO Auto-generated method stub
-		return null;
+	List<Member> memberList=memberDao.showMembers();
+		
+		return memberList;
 	}
 
 	public List<Member> searchMembers(String search) {
