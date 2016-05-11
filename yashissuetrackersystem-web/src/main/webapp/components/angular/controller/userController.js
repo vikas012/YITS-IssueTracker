@@ -11,6 +11,7 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 	
           );
 
+	
 		/*issueService returns list to populate drop-down*/
 	/*userService.initializeSelect()
         .then(

@@ -5,4 +5,5 @@ userModule.config(function($routeProvider){
 				templateUrl:'showCreateIssueForm',
 				controller:'userController as uc'
 			})
+			
 	});

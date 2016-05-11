@@ -1,7 +1,14 @@
-angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope,$http,managerService){
+angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope,$http,managerService,unassignedIssueList){
 
 	$scope.showLookUpForm=false;
+	$scope.showRegisterForm=false;
 	$scope.ldapUser={ldapName:"",ldapEmail:""};
+	$scope.members=[];
+	$scope.member={memberId:"",name:"",email:"",contact:""};
+	$scope.userId="";
+	$scope.userName="";
+	$scope.userEmail="";
+	$scope.userMobile="";
 	
 	$scope.showLookForm=function(){
 		
@@ -11,20 +18,51 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 	
 	$scope.checkUser=function(){
 		
-		alert("Inside Check User");
+		
 		$scope.ldapUser.ldapName=$scope.ldapName;
 		$scope.ldapUser.ldapEmail=$scope.ldapEmail;
-		alert($scope.ldapUser.ldapName+"---------"+$scope.ldapUser.ldapEmail);
+		
+		$scope.showLookUpForm=false;
+		$scope.showRegisterForm=true;
 		$scope.checkUserInLdap($scope.ldapUser);
 		
 	}
 	$scope.checkUserInLdap=function(ldapUser){
-		alert("inside checkUserInLdap");
-		alert("Name---"+ldapUser.ldapName);
-		managerService.checkUserInLdap(ldapUser);
+		
+		
+		managerService.checkUserInLdap(ldapUser)
+		.then(
+				function(d) {
+               	 
+					$scope.members=d;
+					
+					$scope.userId=$scope.members.userId;
+					$scope.userName=$scope.members.userName;
+					$scope.userEmail=$scope.members.userEmail;
+					$scope.userMobile=$scope.members.userMobile;
+					
+                },
+                
+                function(errResponse){
+                     console.error('Error while fetching');
+                 }
+		
+		
+		
+		
+			)
 		
 	}
-	
+	$scope.registerMember=function(){
+		
+		$scope.member.memberId=$scope.userId;
+		$scope.member.name=$scope.userName;
+		$scope.member.email=$scope.userEmail;
+		$scope.member.contact=$scope.userMobile;
+		$scope.showRegisterForm=false;
+		managerService.registerMember($scope.member);
+		
+	}
 	
 		/*issueService returns list to populate drop-down*/
 	/*managerService.initializeSelect()

@@ -141,6 +141,10 @@ public class ApplicationTeamMember implements Serializable {
 	//bi-directional many-to-one association to Issue
 	@OneToMany(mappedBy="createdBy", fetch=FetchType.EAGER)
 	private List<Issue> issues3;
+	
+	//bi-directional many-to-one association to Issue
+	@OneToMany(mappedBy="assignedUser", fetch=FetchType.EAGER)
+	private List<Issue> issues4;
 
 	//bi-directional many-to-one association to IssueActivityLog
 	@OneToMany(mappedBy="lastModifiedBy", fetch=FetchType.EAGER)
