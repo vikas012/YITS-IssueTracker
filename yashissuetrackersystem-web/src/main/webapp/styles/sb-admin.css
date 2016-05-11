@@ -264,3 +264,9 @@ a:active
     background-color: black;
 }
 /* Responsive Side navigation property */
+.footer1{
+	
+	    position: absolute;
+        margin-left: 452px;
+        margin-top: 254px;
+}
