@@ -5,10 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yash.yits.form.IssueForm;
+
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.yash.yits.domain.Issue;
+
 import com.yash.yits.service.IssueService;
 
 /**
@@ -19,6 +25,9 @@ import com.yash.yits.service.IssueService;
 @Controller
 public class IssueController {
 	
+	@Autowired
+	private IssueService issueService;
+	
 	
 	@RequestMapping(value="/showCreateIssueForm")
 	public String getCreateIssueForm()
@@ -27,9 +36,8 @@ public class IssueController {
 		return "redirect:/static/UserCreateIssueForm.html";
 	}
 	
-	@Autowired
-	private IssueService issueService;
-	
+
+
 	@RequestMapping(value="/issues",method=RequestMethod.GET)
 	public String showIssuePage(){
 		System.out.println("issuePage");
@@ -43,4 +51,22 @@ public class IssueController {
 
 		return issues;
 	}
+
+	@RequestMapping(value="/getAssignIssueForm")
+	public String getAssignIssueForm()
+	{
+		return "redirect:/static/ManagerAssignIssue.html";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/issue/assign")
+	public List<Issue> getUnassignedIssues(){
+		System.out.println("unassigned controller");
+		List unassignedIssueList=issueService.getUnassignedIssues();
+		return unassignedIssueList;
+	}
+	
+	
+
 }

@@ -1,5 +1,6 @@
 package com.yash.yits.serviceImpl;
 
+
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -10,6 +11,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +24,21 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yash.yits.dao.IssueDao;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.form.IssueForm;
+
+import com.yash.yits.dao.IssueDao;
+import com.yash.yits.domain.Issue;
+
 import com.yash.yits.service.IssueService;
 
 @Service
 @Transactional
 public class IssueServiceImpl implements IssueService{
+	
+	
+	public List<Issue> getUnassignedIssues() {
+		List unassignedIssueList=issueDao.getUnassignedIssues();
+		return unassignedIssueList;
+	}
 
 	@Autowired
 	private IssueDao issueDao;

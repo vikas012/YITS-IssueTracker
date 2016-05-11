@@ -5,11 +5,17 @@ import java.util.List;
 
 import com.yash.yits.domain.Issue;
 
+import com.yash.yits.domain.Issue;
+
 
 
 public interface IssueDao {
 
+
 	List<Issue> getDefaultIssues(Timestamp beforeTimestamp, Timestamp afterTimestamp);
+
+	public List<Issue> getUnassignedIssues();
+
 
 	
 }

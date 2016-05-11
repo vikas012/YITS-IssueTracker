@@ -20,9 +20,6 @@ public class Issue implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Column(name="ASSIGNED_USER")
-	private int assignedUser;
-
 	@Column(name="AFFECTED_VERSION")
 	private String affectedVersion;
 
@@ -116,7 +113,16 @@ public class Issue implements Serializable {
 	//bi-directional many-to-one association to IssueActivityLog
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
 	private List<IssueActivityLog> issueActivityLogs;
-
+	
+	//bi-directional many-to-one association to ApplicationTeamMember
+	@ManyToOne
+	@JoinColumn(name="ASSIGNED_USER")
+	private ApplicationTeamMember assignedUser;
+	
+	//bi-directional many-to-one association to IssuePauseReason
+	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
+	private List<IssuePauseReason> issuePauseReasons;
+	
 	public Issue() {
 	}
 
@@ -233,12 +239,20 @@ public class Issue implements Serializable {
 		this.conversations = conversations;
 	}
 
-	public int getAssignedUser() {
+	public ApplicationTeamMember getAssignedUser() {
 		return assignedUser;
 	}
 
-	public void setAssignedUser(int assignedUser) {
+	public void setAssignedUser(ApplicationTeamMember assignedUser) {
 		this.assignedUser = assignedUser;
+	}
+
+	public List<IssuePauseReason> getIssuePauseReasons() {
+		return issuePauseReasons;
+	}
+
+	public void setIssuePauseReasons(List<IssuePauseReason> issuePauseReasons) {
+		this.issuePauseReasons = issuePauseReasons;
 	}
 
 	public String getTaskProgressUpdate() {

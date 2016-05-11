@@ -22,6 +22,8 @@ public class UserForm {
 
 	private String userOffice;
 
+	private String userManagerEmail;
+	
 	public Long getUserId() {
 		return userId;
 	}
@@ -100,5 +102,11 @@ public class UserForm {
 
 	public void setUserOffice(String userOffice) {
 		this.userOffice = userOffice;
+	}
+	public String getUserManagerEmail() {
+		return userManagerEmail;
+	}
+	public void setUserManagerEmail(String userManagerEmail) {
+		this.userManagerEmail = userManagerEmail;
 	}
 }

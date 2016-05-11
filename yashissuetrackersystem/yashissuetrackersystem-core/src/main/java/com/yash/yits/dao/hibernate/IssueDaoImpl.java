@@ -1,6 +1,7 @@
 package com.yash.yits.dao.hibernate;
 
 import java.sql.Timestamp;
+
 import java.util.List;
 
 import org.hibernate.Query;
@@ -16,6 +17,7 @@ import com.yash.yits.domain.Issue;
 public class IssueDaoImpl implements IssueDao {
 	
 	@Autowired
+
 	private SessionFactory sessionFactory;
 	
 	public List<Issue> getDefaultIssues(Timestamp date1, Timestamp date2) {
@@ -28,6 +30,16 @@ public class IssueDaoImpl implements IssueDao {
 		System.out.println(issues);
 		
 		return issues;
+
+	}
+	public List<Issue> getUnassignedIssues() {
+		
+		Session session=sessionFactory.getCurrentSession();
+		Query criteria=session.createQuery("from Issue where assignedUser=0");
+		List unassignedIssueList=criteria.list();
+		return unassignedIssueList;
+		
+
 	}
 
 }
