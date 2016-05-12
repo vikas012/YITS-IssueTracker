@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 
 /**
  * The persistent class for the member database table.
@@ -69,6 +72,7 @@ public class Member implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
+	@Fetch(value = FetchMode.SUBSELECT)
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
 	private List<ApplicationTeamMember> applicationTeamMembers;
 

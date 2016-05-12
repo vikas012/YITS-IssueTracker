@@ -212,5 +212,13 @@ public class Application implements Serializable {
 	public void setCreatedBy(ApplicationTeamMember createdBy) {
 		this.createdBy = createdBy;
 	}
+
+	@Override
+	public String toString() {
+		return "Application [id=" + id + ", name=" + name + "]";
+	}
+	
+	
+	
 	
 }

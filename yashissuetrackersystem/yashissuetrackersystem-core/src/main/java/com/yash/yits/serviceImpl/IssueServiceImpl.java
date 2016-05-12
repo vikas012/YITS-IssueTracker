@@ -32,8 +32,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yash.yits.dao.IssueDao;
 
 import com.yash.yits.domain.Issue;
+import com.yash.yits.domain.Member;
 import com.yash.yits.form.IssueForm;
-
+import com.yash.yits.form.MemberForm;
 import com.yash.yits.dao.IssueDao;
 import com.yash.yits.domain.Issue;
 
@@ -152,6 +153,14 @@ public class IssueServiceImpl implements IssueService{
 		}
 		System.out.println("in service "+projectForms);
 		return projectForms;
+	}
+
+	public void getAllSelectFields(ProjectForm projectForm, MemberForm member) {
+		Project project = new Project();
+		project.setId(projectForm.getId());
+		
+		issueDao.getAllSelectFields(project,member);
+		
 	}
 	
 }

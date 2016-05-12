@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yash.yits.form.IssueForm;
+import com.yash.yits.form.MemberForm;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -85,12 +86,13 @@ public class IssueController {
 	public Map<String,Object> getAllSelectFields(@PathVariable("projectId") int projectId,HttpServletRequest httpServletRequest )
 	{
 		System.out.println("project Id>>>>"+projectId);
-		Member member = new Member();
-		
+		MemberForm member = new MemberForm();
+		ProjectForm projectForm = new ProjectForm();
+		projectForm.setId(projectId);
 		member.setMemberId((Long)httpServletRequest.getSession().getAttribute("memberId"));
 		System.out.println("Member ID>>>> "+member.getMemberId());
 		Map<String,Object> map = new HashMap<String, Object>();
-		
+		issueService.getAllSelectFields(projectForm,member);
 		map.put("myValue", "Hello there");
 		return map;
 
