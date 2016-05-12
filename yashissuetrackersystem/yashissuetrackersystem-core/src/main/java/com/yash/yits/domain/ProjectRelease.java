@@ -34,10 +34,10 @@ public class ProjectRelease implements Serializable {
 	private Date releaseDate;
 
 	private String version;
-
+/*
 	//bi-directional many-to-one association to Issue
 	@OneToMany(mappedBy="projectRelease", fetch=FetchType.EAGER)
-	private List<Issue> issues;
+	private List<Issue> issues;*/
 
 	//bi-directional many-to-one association to Project
 	@ManyToOne
@@ -106,13 +106,13 @@ public class ProjectRelease implements Serializable {
 		this.version = version;
 	}
 
-	public List<Issue> getIssues() {
+/*	public List<Issue> getIssues() {
 		return issues;
 	}
 
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
-	}
+	}*/
 
 	public Project getProject() {
 		return project;

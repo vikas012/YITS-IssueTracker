@@ -49,9 +49,9 @@ public class ApplicationRelease implements Serializable {
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
 
-	//bi-directional many-to-one association to Issue
+	/*//bi-directional many-to-one association to Issue
 	@OneToMany(mappedBy="applicationRelease", fetch=FetchType.EAGER)
-	private List<Issue> issues;
+	private List<Issue> issues;*/
 
 	public ApplicationRelease() {
 	}
@@ -128,12 +128,12 @@ public class ApplicationRelease implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public List<Issue> getIssues() {
+	/*public List<Issue> getIssues() {
 		return issues;
 	}
 
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
-	}
+	}*/
 
 }

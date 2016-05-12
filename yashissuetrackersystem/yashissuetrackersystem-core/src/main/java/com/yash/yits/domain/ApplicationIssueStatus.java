@@ -56,9 +56,9 @@ public class ApplicationIssueStatus implements Serializable {
 	@JoinColumn(name="LAST_MODIFIED_BY")
 	private ApplicationTeamMember lastModifiedBy;
 
-	//bi-directional many-to-one association to Issue
+/*	//bi-directional many-to-one association to Issue
 	@OneToMany(mappedBy="applicationIssueStatus", fetch=FetchType.EAGER)
-	private List<Issue> issues;
+	private List<Issue> issues;*/
 
 	public ApplicationIssueStatus() {
 	}
@@ -131,13 +131,13 @@ public class ApplicationIssueStatus implements Serializable {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public List<Issue> getIssues() {
+/*	public List<Issue> getIssues() {
 		return issues;
 	}
 
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
 	}
-
+*/
 	
 }

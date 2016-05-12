@@ -36,8 +36,9 @@ import com.yash.yits.domain.ApplicationIssuePriority;
 import com.yash.yits.domain.ApplicationIssueStatus;
 import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.Issue;
+import com.yash.yits.domain.Member;
 import com.yash.yits.form.IssueForm;
-
+import com.yash.yits.form.MemberForm;
 import com.yash.yits.dao.IssueDao;
 import com.yash.yits.domain.Issue;
 
@@ -160,6 +161,7 @@ public class IssueServiceImpl implements IssueService{
 
 
 
+
 	public void createIssue(IssueForm issueForm,Long createdBy) {
 		Project project=new Project();
 		project.setId(issueForm.getProject().getId());
@@ -189,6 +191,14 @@ public class IssueServiceImpl implements IssueService{
 		
 		
 		issueDao.createIssue(issue,createdBy);
+}
+
+	public void getAllSelectFields(ProjectForm projectForm, MemberForm member) {
+		Project project = new Project();
+		project.setId(projectForm.getId());
+		
+		issueDao.getAllSelectFields(project,member);
+
 		
 	}
 	

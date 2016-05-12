@@ -42,10 +42,6 @@ public class ApplicationSeverity implements Serializable {
 
 	private String name;
 
-	//bi-directional many-to-one association to ApplicationIssuePriority
-	@OneToMany(mappedBy="applicationSeverity", fetch=FetchType.EAGER)
-	private List<ApplicationIssuePriority> applicationIssuePriorities;
-
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
@@ -56,6 +52,10 @@ public class ApplicationSeverity implements Serializable {
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
 
+	/*//bi-directional many-to-one association to ApplicationIssuePriority
+		@OneToMany(mappedBy="applicationSeverity", fetch=FetchType.EAGER)
+		private List<ApplicationIssuePriority> applicationIssuePriorities;
+	*/
 	public ApplicationSeverity() {
 	}
 
@@ -83,13 +83,13 @@ public class ApplicationSeverity implements Serializable {
 		this.name = name;
 	}
 
-	public List<ApplicationIssuePriority> getApplicationIssuePriorities() {
+/*	public List<ApplicationIssuePriority> getApplicationIssuePriorities() {
 		return applicationIssuePriorities;
 	}
 
 	public void setApplicationIssuePriorities(List<ApplicationIssuePriority> applicationIssuePriorities) {
 		this.applicationIssuePriorities = applicationIssuePriorities;
-	}
+	}*/
 
 	public ApplicationTeamMember getLastModifiedBy() {
 		return lastModifiedBy;

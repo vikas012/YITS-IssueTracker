@@ -50,7 +50,7 @@ public class Application implements Serializable {
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
 
-	//bi-directional many-to-one association to ApplicationEnvironment
+	/*//bi-directional many-to-one association to ApplicationEnvironment
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
 	private List<ApplicationEnvironment> applicationEnvironments;
 
@@ -80,7 +80,7 @@ public class Application implements Serializable {
 
 	//bi-directional many-to-one association to Project
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
-	private List<Project> projects;
+	private List<Project> projects;*/
 
 	public Application() {
 	}
@@ -113,7 +113,7 @@ public class Application implements Serializable {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
-	public List<ApplicationEnvironment> getApplicationEnvironments() {
+	/*public List<ApplicationEnvironment> getApplicationEnvironments() {
 		return applicationEnvironments;
 	}
 
@@ -175,7 +175,7 @@ public class Application implements Serializable {
 
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
-	}
+	}*/
 
 	public int getIsActive() {
 		return isActive;
@@ -212,5 +212,13 @@ public class Application implements Serializable {
 	public void setCreatedBy(ApplicationTeamMember createdBy) {
 		this.createdBy = createdBy;
 	}
+
+	@Override
+	public String toString() {
+		return "Application [id=" + id + ", name=" + name + "]";
+	}
+	
+	
+	
 	
 }

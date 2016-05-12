@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Project;
+import com.yash.yits.form.MemberForm;
 
 public interface IssueDao {
 
@@ -12,6 +13,11 @@ public interface IssueDao {
 	public List<Project> getProjectNames();
 
 	public List<Issue> getUnassignedIssues();
+
 	public void createIssue(Issue issue,Long createdBy);
+
+
+	public void getAllSelectFields(Project project, MemberForm member);
+
 
 }

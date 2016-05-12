@@ -59,8 +59,11 @@ width:50%;
 <input type="text" ng-model="uc.createIssue.affectedVersion" class="form-control" />
  </div>
  <div class="form-group col-sm-4">
-<label for="environment">Application Environment</label>
-<input type="text" ng-model="uc.createIssue.applicationEnvironment" class="form-control" />
+ <label for="applicationEnvironment">ApplicationEnvironment</label>
+<select ng-model="uc.createIssue.applicationEnvironment" class="dropDown form-control">
+<option ng-repeat="environment in environments" value="{{environment.id}}">{{environment.environment}}</option>
+</select>
+
  </div>
  </div>
  <div class="box4">
@@ -77,18 +80,28 @@ width:50%;
 <!--  
   <div class="form-group col-sm-4">
 <label for="environment">Original Estimate</label>
+<<<<<<< HEAD
 <input type="text" ng-model="uc.createIssue.originalEstimate" class="form-control" />
+=======
+<input type="text" ng-model="uc.createIssue.applicationEnvironment" class="form-control" disabled/>
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
  </div>
  
  <div class="form-group col-sm-4">
 <label for="dueDate">IssueDueDate</label>
-<input type="date" ng-model="uc.createIssue.originalEstimate" class="form-control" />
+<input type="date" ng-model="uc.createIssue.originalEstimate" class="form-control" disabled />
  </div>
+<<<<<<< HEAD
   -->
 <!--  <div class="form-group col-sm-4">
 <label for="issueProject">IssueAssignee</label>
+=======
+ 
+ <div class="form-group col-sm-4">
+<label for="issueTeamMember">IssueOwner</label>
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 <select class="dropDown form-control" ng-model="" class="form-control">
-<option value="{{assignee.memberId}}" ng-repeat="assignee in assigneeList" value="{{assignee.memberId}}">{{assignee.name}}</option>
+<option value="{{owner.memberId}}" ng-repeat="owner in team" value="{{owner.memberId}}">{{owner.email}}</option>
 </select>
   </div> -->
  </div> 

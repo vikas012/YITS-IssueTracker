@@ -11,6 +11,10 @@ body {
     margin-top: 100px;
     background-color: white;
 }
+.headerlabel{
+	color:#009999;
+	text-align: center;
+}
 .box{
 	background-color: white;
 	border-color: white;

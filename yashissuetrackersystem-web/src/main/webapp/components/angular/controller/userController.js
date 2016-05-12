@@ -4,8 +4,8 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 	userService.initializeSelect()
 	.then(
 			function(d) {
-				$scope.projects=d;
-				alert(d);
+				$scope.projects=d.projects;
+				alert(d.myValue);
 				
 
 				//alert(d.data.id);
@@ -20,13 +20,17 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 
 	$scope.myFunc=function()
 	{
-		var index = angular.element(
+		var projectId = angular.element(
 				document.querySelector("select[id=selectId]")).val();
 		alert("in onchange")
-		alert(index);
-		userService.initializeSelect().then(
+		alert(projectId);
+		this.pId=projectId;
+		this.project ={
+				id:projectId
+		}
+		userService.initializeSelectAll(this.pId).then(
 				function(d) {
-					$scope.projects=d;
+					
 					alert(d);
 					
 

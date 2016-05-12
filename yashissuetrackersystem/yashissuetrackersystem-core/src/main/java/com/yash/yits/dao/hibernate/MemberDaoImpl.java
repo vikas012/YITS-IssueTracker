@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.yash.yits.dao.MemberDao;
@@ -15,12 +16,19 @@ import com.yash.yits.domain.Member;
 /** This class interacts with database and provides the data for all member operations*/
 
 
+
 @Repository
 public class MemberDaoImpl implements MemberDao {
 
 
+
+
+	
+
+
 	 @Autowired
 	 private SessionFactory sessionFactory;
+
 
 
 	public Member addMember(Member member) {
@@ -46,16 +54,23 @@ public class MemberDaoImpl implements MemberDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
-		 Criteria  criteria  =session.createCriteria(Member.class);
-		 
-		   criteria.setProjection(Projections.projectionList().add(
-		     Projections.property("name")).add(Projections.property("email"))); 
-
+		
+		Criteria criteria =session.createCriteria(Member.class)
+				.setProjection(Projections.projectionList()		
+						.add(Projections.property("memberId"), "memberId")
+					      .add(Projections.property("name"), "name")
+					      .add(Projections.property("email"), "email")
+							.add(Projections.property("contact"), "contact"))
+					    .setResultTransformer(Transformers.aliasToBean(Member.class));
+		
 		
 		List<Member> allMembers = criteria.list();
+		
+		
 		System.out.println(allMembers);
 		for (Member member : allMembers) {
-			System.out.println(member);
+			System.out.println(member.getEmail());
+			System.out.println(member.getMemberId());
 		}
 		
 		
@@ -66,15 +81,16 @@ public class MemberDaoImpl implements MemberDao {
 		System.out.println("in dao");
 		Session session=sessionFactory.getCurrentSession();
 		
-		Query query=session.createQuery("FROM Member where "
-				+ "memberId=(Select memberId from Member where memberId LIKE '"+search+"%') OR "
-				+ "name=(Select name from Member where name LIKE '"+search+"%') OR "
-				+ "email=(Select email from Member where email LIKE '"+search+"%') OR "
-				+ "contact=(Select contact from Member where contact LIKE '"+search+"%')");
-		
-		List<Member> issues=query.list();
-		
-		return issues;
+		String selectQuery="FROM Member where name LIKE '"+search+"%' OR email LIKE '"+search+"%' OR managerName LIKE '"+search+"%'";
+		Query query=session.createQuery(selectQuery);
+		List<Member> members=query.list();
+		for(Member membersList:members){
+			
+			System.out.println(membersList.getContact());
+			
+		}
+
+		return members;
 	}
 
 	public List<Member> deleteMember(int memberId) {
