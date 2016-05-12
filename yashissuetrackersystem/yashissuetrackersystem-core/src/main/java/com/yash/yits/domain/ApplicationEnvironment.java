@@ -1,9 +1,21 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -21,14 +33,14 @@ public class ApplicationEnvironment implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATE_TIME")
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private String environment;
 
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	//bi-directional many-to-one association to Application
 	@ManyToOne
@@ -59,13 +71,7 @@ public class ApplicationEnvironment implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
 
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
 
 	public String getEnvironment() {
 		return environment;
@@ -83,11 +89,19 @@ public class ApplicationEnvironment implements Serializable {
 		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
