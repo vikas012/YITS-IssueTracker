@@ -1,9 +1,20 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -20,7 +31,7 @@ public class Conversation implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private int isActive;
 
@@ -48,14 +59,6 @@ public class Conversation implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
 	}
 
 	public int getIsActive() {

@@ -3,6 +3,7 @@ package com.yash.yits.domain;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 
@@ -21,12 +22,12 @@ public class ApplicationIssuePriority implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	private String type;
 
@@ -64,11 +65,11 @@ public class ApplicationIssuePriority implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
+	public Date getCreatedDateTime() {
 		return createdDateTime;
 	}
 
-	public void setCreatedDateTime(Timestamp createdDateTime) {
+	public void setCreatedDateTime(Date createdDateTime) {
 		this.createdDateTime = createdDateTime;
 	}
 
@@ -80,11 +81,11 @@ public class ApplicationIssuePriority implements Serializable {
 		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
@@ -137,4 +138,6 @@ public class ApplicationIssuePriority implements Serializable {
 	}
 
 	
+
+
 }

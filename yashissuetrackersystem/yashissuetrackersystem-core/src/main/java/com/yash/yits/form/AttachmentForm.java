@@ -1,23 +1,13 @@
 package com.yash.yits.form;
 
 import java.sql.Timestamp;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import com.yash.yits.domain.ApplicationTeamMember;
-import com.yash.yits.domain.Conversation;
-import com.yash.yits.domain.Issue;
+import java.util.Date;
 
 public class AttachmentForm {
 
 	private int id;
 
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private byte[] file;
 
@@ -25,7 +15,7 @@ public class AttachmentForm {
 
 	private String label;
 
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	private String name;
 
@@ -45,13 +35,7 @@ public class AttachmentForm {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
+	
 
 	public byte[] getFile() {
 		return file;
@@ -77,11 +61,21 @@ public class AttachmentForm {
 		this.label = label;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+	
+
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 

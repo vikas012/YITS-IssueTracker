@@ -1,10 +1,24 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -21,7 +35,7 @@ public class Project implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="END_DATE")
@@ -30,7 +44,7 @@ public class Project implements Serializable {
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	private String name;
 
@@ -94,13 +108,6 @@ public class Project implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
 
 	public Date getEndDate() {
 		return endDate;
@@ -117,12 +124,20 @@ public class Project implements Serializable {
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
 	}
+	
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
 
-	public Timestamp getLastModifiedDateTime() {
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
