@@ -55,6 +55,22 @@ public class MemberController {
 			
 		return "redirect:/static/ShowMember.html" ;
 	}
+
+	@RequestMapping(value="/showSearchMember")
+	public String showSearchMember(){
+			
+		return "redirect:/static/showSearchMember.html" ;
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/searchMember/{searchText}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<MemberForm> searchMember(@PathVariable("searchText") String searchText){
+			
+		System.out.println("in controller" +searchText);
+			List<MemberForm> members=memberService.searchMembers(searchText);
+		
+		return members; 
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="/memberList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)

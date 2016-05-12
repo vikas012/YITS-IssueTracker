@@ -3,6 +3,8 @@
  */
 package com.yash.yits.serviceImpl;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.ApplicationContext;
@@ -33,6 +36,13 @@ import com.yash.yits.form.MemberForm;
 
 import com.yash.yits.form.LoginForm;
 
+
+import com.yash.yits.form.UserForm;
+
+import com.yash.yits.service.MemberService;
+
+
+import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.UserForm;
 
 import com.yash.yits.service.MemberService;
@@ -53,8 +63,10 @@ import com.yash.yits.util.ContextAware;
 @Service
 @Transactional
 public class MemberServiceImpl implements MemberService {
+
 	
 
+	
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -62,10 +74,8 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	JavaMailSender javaMailSender;
-	
 
 
-	
 	UserForm userForm=new UserForm();
 	Member member=new Member();
 
@@ -256,18 +266,39 @@ public class MemberServiceImpl implements MemberService {
 		return member;
 	}
 
+	public List<MemberForm> searchMembers(String search) {
+		System.out.println("in service");
+		List<Member> members = memberDao.searchMembers(search);
+		List<MemberForm> memberForms = new ArrayList<MemberForm>();
+		for (Member member : members) {
+
+			//Mapper mapper = new DozerBeanMapper();
+			//IssueForm issueForm = mapper.map(issue, IssueForm.class);
+			MemberForm memberForm = new MemberForm();
+			try {
+				BeanUtils.copyProperties(memberForm, member);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			memberForms.add(memberForm);
+		}
+		
+		System.out.println(memberForms);
+		
+		return memberForms;
+	}
 	public List<Member> showMembers() {
 
 	List<Member> memberList=memberDao.showMembers();
 		
 		return memberList;
 
+
 	}
 
-	public List<Member> searchMembers(String search) {
-		
-		return null;
-	}
+	
 
 	public List<Member> deleteMember(int memberId) {
 		

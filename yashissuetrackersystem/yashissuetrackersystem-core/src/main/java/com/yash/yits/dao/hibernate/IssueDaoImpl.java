@@ -1,5 +1,7 @@
 package com.yash.yits.dao.hibernate;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -20,7 +22,7 @@ public class IssueDaoImpl implements IssueDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	public List<Project> getProjectNames() {
 		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Project.class)
 				
@@ -32,14 +34,32 @@ public class IssueDaoImpl implements IssueDao {
 		System.out.println("in dao "+projects);
 		return projects;
 	}
+
 	
+	public List<Issue> getDefaultIssues(Timestamp date1, Timestamp date2) {
+		
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createSQLQuery("SELECT * FROM Issue WHERE created_Date_Time BETWEEN '"+date1+"' AND '"+date2+"'");
+		List<Issue> issueList=new ArrayList<Issue>();
+		List<Object> issues=query.list();
+		
+		for (Object object : issues) {
+			
+			Issue issue=(Issue)object;
+			System.out.println(issue);
+			issueList.add(issue);
+		}
+		
+		return issueList;
+
+	}
 	public List<Issue> getUnassignedIssues() {
 		
-		Session session=sessionFactory.openSession();
+		Session session=sessionFactory.getCurrentSession();
 		Query criteria=session.createQuery("from Issue where assignedUser=0");
 		List unassignedIssueList=criteria.list();
 		return unassignedIssueList;
-		
-	}
+
+}
 
 }
