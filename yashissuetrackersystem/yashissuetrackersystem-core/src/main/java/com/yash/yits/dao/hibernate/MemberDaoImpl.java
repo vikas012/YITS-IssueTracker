@@ -67,12 +67,12 @@ public class MemberDaoImpl implements MemberDao {
 		List<Member> allMembers = criteria.list();
 		
 		
-		System.out.println(allMembers);
+	/*	System.out.println(allMembers);
 		for (Member member : allMembers) {
 			System.out.println(member.getEmail());
 			System.out.println(member.getMemberId());
 		}
-		
+		*/
 		
 		return   allMembers ;
 	}

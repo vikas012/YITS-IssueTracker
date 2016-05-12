@@ -7,7 +7,10 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -40,6 +43,28 @@ public class IssueDaoImpl implements IssueDao {
 	}
 
 	
+	public List<Issue> getUnassignedIssues() {
+		
+		
+		/*Criteria criteria=session.createCriteria(Issue.class);
+		Disjunction disjunction = Restrictions.disjunction();
+		disjunction.add(Restrictions.isNull("a"));
+		criteria.add(disjunction);*/
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Issue.class)
+				.setProjection(Projections.projectionList()
+						.add( Projections.property("summary"), "summary")
+						.add(Projections.property("applicationIssueType"),"applicationIssueType")
+						.add(Projections.property("project"),"project")					
+											
+						.add(Projections.property("applicationIssuePriority"),"applicationIssuePriority"))
+						.add(Restrictions.isNull("assignedUser"))
+				.setResultTransformer(Transformers.aliasToBean(Issue.class));
+		List<Issue> unassignedIssueList=criteria.list();
+		List<Issue> list=new ArrayList<Issue>();
+		Iterator<Issue> iterator=unassignedIssueList.iterator();
+		return unassignedIssueList;
+
+}
 	public List<Issue> getDefaultIssues(Timestamp date1, Timestamp date2) {
 		
 		Session session=sessionFactory.getCurrentSession();
@@ -57,16 +82,6 @@ public class IssueDaoImpl implements IssueDao {
 		return issueList;
 
 	}
-	public List<Issue> getUnassignedIssues() {
-		
-		Session session=sessionFactory.getCurrentSession();
-		Query criteria=session.createQuery("from Issue where assignedUser=0");
-		List unassignedIssueList=criteria.list();
-		return unassignedIssueList;
-
-}
-
-
 	public void getAllSelectFields(Project project, MemberForm member) {
 		System.out.println("In DAO for all select fields "+project.getId()+" "+member.getMemberId());
 		Session session=sessionFactory.getCurrentSession();

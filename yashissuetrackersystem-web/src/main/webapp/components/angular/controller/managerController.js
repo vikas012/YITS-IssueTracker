@@ -6,20 +6,21 @@ angular
 						'$scope',
 						'$http',
 						'managerService',
-						function($scope, $http, managerService, issueList,
-								unassignedIssueList) {
-							alert("controller");
-							
+						function($scope, $http, managerService, issueList) {
+			
+
 							$scope.members1 = [];
-						
-							 var issues=$http({
-								  method:'GET',
-								      url:'../memberList' 
-								  }).success(function(data){
-									  
-									  $scope.members1=data;
-								  })
+
+							var members = $http({
+								method : 'GET',
+								url : '../memberList'
+							}).success(function(data) {
+
+								$scope.members1 = data;
+							})
 							
+					
+
 							$scope.showLookUpForm = false;
 							$scope.showRegisterForm = false;
 							$scope.ldapUser = {
@@ -54,6 +55,18 @@ angular
 								$scope.checkUserInLdap($scope.ldapUser);
 
 							}
+							
+							$scope.unassignedIssueList=[];
+							
+							var unassignedIssues=$http({
+								method : 'GET',
+								url : '../issue/assign'
+							}).success(function(data) {
+
+								$scope.unassignedIssueList = data;
+							})
+							
+							
 							$scope.checkUserInLdap = function(ldapUser) {
 
 								managerService
@@ -88,33 +101,31 @@ angular
 								managerService.registerMember($scope.member);
 
 							}
-							
-							$scope.deleteMember=function(){
-								
-								
-								
+
+							$scope.deleteMember = function() {
+
 							}
 							
 							
+
 							$scope.getSearchMember = function() {
 								alert("Please Enter Text controller!");
 								alert($scope.searchText);
 								var searchText = $scope.searchText;
-								
+
 								if (searchText == "") {
 									alert("Please Enter Text!");
-								}
-								else{
-									managerService.searchMember(searchText)
-									.then(
-											function(data){
-												$scope.members=data;
-											},
-											 function(errResponse)
-											 {
-												 console.error('Error while showing search members');
-											 }
-									)	
+								} else {
+									managerService
+											.searchMember(searchText)
+											.then(
+													function(data) {
+														$scope.members = data;
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing search members');
+													})
 								}
 							};
 
@@ -130,16 +141,16 @@ angular
 							 * case 0: $scope.priorities=value; break; case 1:
 							 * $scope.assigneeList=value; break; case 2:
 							 * $scope.issueTypeList=value; break; case 3:
-							 * $scope.projects=value; break; } });
-							 *  }, function(errResponse){ console.error('Error
-							 * while fetching'); } );
+							 * $scope.projects=value; break; } }); },
+							 * function(errResponse){ console.error('Error while
+							 * fetching'); } );
 							 * 
-							 * this.createIssue={}; this.add=function(){
-							 *  // call service to persist in db
+							 * this.createIssue={}; this.add=function(){ // call
+							 * service to persist in db
 							 * managerService.submitCreateIssue(this.createIssue);
-							 * .then( function(d) {
-							 *  }, function(errResponse){ console.error('Error
-							 * while fetching'); } ); this.createIssue={}; };
+							 * .then( function(d) { }, function(errResponse){
+							 * console.error('Error while fetching'); } );
+							 * this.createIssue={}; };
 							 * 
 							 * this.getIssues = function() {
 							 * 
@@ -149,7 +160,6 @@ angular
 							 * function(data){ $scope.issues=data; },
 							 * function(errResponse) { console.error('Error
 							 * while showing default search issues'); } )
-							 * 
 							 *  } };
 							 * 
 							 * this.change=function(){ if(this.searchText ==

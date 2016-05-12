@@ -62,16 +62,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			},
 
 		  			
-		  getUnassignedIssues:function(){
-						  alert("Prajvi")
-						  var issues=$http({
-							  method:'GET',
-						      url:'../issue/assign' 
-						  }).success(function(data){
-							  alert(data);
-							  return data;
-						  })
-		  			},
+
 		  			
 		  			registerMember:function(member){
 		  				return $http.post('../registerMember',member)

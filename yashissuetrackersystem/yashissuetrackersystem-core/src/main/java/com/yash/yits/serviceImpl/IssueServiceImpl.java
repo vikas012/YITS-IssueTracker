@@ -57,6 +57,7 @@ public class IssueServiceImpl implements IssueService{
 	
 	public List<Issue> getUnassignedIssues() {
 		List unassignedIssueList=issueDao.getUnassignedIssues();
+		System.out.println("after call");
 		return unassignedIssueList;
 	}
 
