@@ -63,14 +63,14 @@ public class IssueController {
 	
 	@ResponseBody
 	@RequestMapping(value="/getProjects",produces=MediaType.APPLICATION_JSON_VALUE)
-	public String getProjects()
+	public List<ProjectForm> getProjects()
 	{
 		System.out.println("in controller for show projects");
 		List<ProjectForm> projectForms=issueService.getProjectNames();
 		System.out.println(projectForms);
 		
-		Gson gson= new Gson();
-		return gson.toJson(projectForms);
+		
+		return projectForms;
 
 	}
 
