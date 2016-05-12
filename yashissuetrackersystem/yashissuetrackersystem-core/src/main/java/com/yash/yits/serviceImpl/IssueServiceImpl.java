@@ -153,5 +153,10 @@ public class IssueServiceImpl implements IssueService{
 		System.out.println("in service "+projectForms);
 		return projectForms;
 	}
+
+	public void createIssue(Issue issue) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -15,8 +15,8 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	                );
 	      	},
 	  
-	      	submitCreateIssue: function(createIssue) {
-		          return $http.post('./createIssue',createIssue)
+	      	submitCreateIssue: function(formData) {
+		          return $http.post('./createIssue',formData)
 		              .then(
 		                      function(response){
 		                    	  alert(response.data);
@@ -27,6 +27,9 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 		                              return $q.reject(errResponse);
 		                      }
 		                );
-		      	}
+	      	
+	  
+	      	
+	      	}
 	  }
 }]);

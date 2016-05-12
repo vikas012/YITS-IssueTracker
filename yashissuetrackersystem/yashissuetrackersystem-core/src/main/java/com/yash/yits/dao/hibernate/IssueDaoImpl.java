@@ -62,4 +62,12 @@ public class IssueDaoImpl implements IssueDao {
 
 }
 
+
+	public void createIssue(Issue issue) {
+		Session session=sessionFactory.getCurrentSession();
+		session.save(issue);
+		
+		
+	}
+
 }

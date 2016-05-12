@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,7 +47,10 @@ public class IssueController {
 		return "redirect:/static/UserCreateIssueForm.html";
 	}
 	
+	
 
+	
+	
 
 	@RequestMapping(value="/issues",method=RequestMethod.GET)
 	public String showIssuePage(){
@@ -89,6 +94,23 @@ public class IssueController {
 		return unassignedIssueList;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping(value="/createIssue",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.POST)
+	public String createIssue(@RequestBody IssueForm issueForm){
+		System.out.println(issueForm);
+		System.out.println(issueForm.getProject());
+		System.out.println(issueForm.getApplicationIssuePriority());
+		System.out.println(issueForm.getComponent());
+		System.out.println(issueForm.getDescription());
+		System.out.println("in create issue");
+		//System.out.println(issue);
+		//System.out.println(issue.getComponent());
+		
+		System.out.println("in controller for show projects");
+		return null;
+
+	}
 
 	
 

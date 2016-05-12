@@ -6,4 +6,6 @@ userModule.config(function($routeProvider){
 				controller:'userController as uc'
 			})
 			
+		
+			
 	});

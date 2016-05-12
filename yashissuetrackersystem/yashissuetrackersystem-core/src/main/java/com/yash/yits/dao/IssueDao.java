@@ -12,5 +12,6 @@ public interface IssueDao {
 	public List<Project> getProjectNames();
 
 	public List<Issue> getUnassignedIssues();
+	public void createIssue(Issue issue);
 
 }
