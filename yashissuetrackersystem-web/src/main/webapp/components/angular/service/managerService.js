@@ -21,19 +21,6 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  			},
 
 
-		  /*getMembers:function(){
-		  alert("in service for data");
-		  var issues=$http({
-		  method:'GET',
-		      url:'../memberList' 
-		  }).success(function(data){
-			  
-		  alert(data+"service");	
-		  
-		  return data;
-		  })
-		  },*/
-
 		  		getMembers:function(){
 		              alert("shraddha");
 		              var issues=$http({
@@ -49,7 +36,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 
 		  searchMember:function(searchText){
 			  alert("Please Enter Text service!");
-					return $http.get('./searchMember/'+ searchText)
+					return $http.get('../searchMember/'+ searchText)
 				 	.then(
 				 				function(response){
 				 						return response.data;
@@ -74,6 +61,19 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  			},
 		  			
 		  			registerMember:function(member){
+		  				return $http.post('../registerYashMember',member)
+		  				.then(
+		  							function(response){
+		  								return response.data;
+		  							},
+		  							function(errResponse){
+		  								console.error('Error while fetching users');
+		  								return $q.reject(errResponse);
+		  							}
+
+		  					);
+		  			},
+		  			registerNonYashMember:function(member){
 		  				return $http.post('../registerMember',member)
 		  				.then(
 		  							function(response){

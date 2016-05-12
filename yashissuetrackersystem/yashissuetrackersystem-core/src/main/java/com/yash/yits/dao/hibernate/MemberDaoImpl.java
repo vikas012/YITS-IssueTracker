@@ -31,23 +31,23 @@ public class MemberDaoImpl implements MemberDao {
 
 
 
-	public Member addMember(Member member) {
-		Session session=sessionFactory.getCurrentSession();
-		System.out.println(member);
-		Criteria criteria = session.createCriteria(Member.class);
-		criteria.add(Restrictions.eqOrIsNull("memberId",member.getMemberId()));
-		List<Member> listOfMember=criteria.list();
-		if(listOfMember.size()==1){
-			
-			System.out.println("User Already in database");
-		}
-		else{
+	 public Member addMember(Member member) {
+			Session session=sessionFactory.getCurrentSession();
+			System.out.println(member);
+			Criteria criteria = session.createCriteria(Member.class);
+			criteria.add(Restrictions.eqOrIsNull("memberId",member.getMemberId()));
+			List<Member> listOfMember=criteria.list();
+			if(listOfMember.size()==1){
 				
-			System.out.println("not in database");
-			session.save(member);
+				System.out.println("User Already in database");
+			}
+			else{
+					
+				System.out.println("not in database");
+				session.save(member);
+			}
+			return member;
 		}
-		return member;
-	}
 
 	public List<Member> showMembers() {
 		System.out.println("dao members");
@@ -81,15 +81,16 @@ public class MemberDaoImpl implements MemberDao {
 		System.out.println("in dao");
 		Session session=sessionFactory.getCurrentSession();
 		
-		Query query=session.createQuery("FROM Member where "
-				+ "memberId=(Select memberId from Member where memberId LIKE '"+search+"%') OR "
-				+ "name=(Select name from Member where name LIKE '"+search+"%') OR "
-				+ "email=(Select email from Member where email LIKE '"+search+"%') OR "
-				+ "contact=(Select contact from Member where contact LIKE '"+search+"%')");
-		
-		List<Member> issues=query.list();
-		
-		return issues;
+		String selectQuery="FROM Member where name LIKE '"+search+"%' OR email LIKE '"+search+"%' OR managerName LIKE '"+search+"%'";
+		Query query=session.createQuery(selectQuery);
+		List<Member> members=query.list();
+		for(Member membersList:members){
+			
+			System.out.println(membersList.getContact());
+			
+		}
+
+		return members;
 	}
 
 	public List<Member> deleteMember(int memberId) {

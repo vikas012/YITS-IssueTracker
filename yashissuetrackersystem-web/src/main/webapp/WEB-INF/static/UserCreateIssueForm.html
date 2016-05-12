@@ -31,9 +31,15 @@ width:50%;
 </select>
   </div>
   <div class="form-group col-sm-4">
+<<<<<<< HEAD
 <label for="issueType">IssueType</label>
 <select ng-model="uc.createIssue.issueType.id" class="dropDown form-control">
 <option ng-repeat="issueType in issueTypeList" value="{{issueType.id}}" >{{issueType.type}}</option>
+=======
+<label for="issueType">Issue Type</label>
+<select ng-model="uc.createIssue.issueType.issueId" class="dropDown form-control">
+<option ng-repeat="issueType in issueTypeList" value="{{issueType.issueId}}" >{{issueType.issueType}}</option>
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 </select>
   </div>
   
@@ -45,26 +51,17 @@ width:50%;
   </div>
 </div>
 <div class="form-group col-sm-12">
-<label for="summary">IssueSummary</label>
+<label for="summary">Issue Summary</label>
 <input type="text" ng-model="uc.createIssue.summary" class="form-control" />
   </div>
- <div class="box2 ">
-  <!-- <div class="form-group col-sm-6">
-<label for="creationDate">IssueCreationDate</label>
-<input type="date" ng-model="uc.createIssue.issueCreationDate" class="form-control" disabled/>
- </div> -->
- <!-- <div class="form-group col-sm-6">
-<label for="dueDate">IssueDueDate</label>
-<input type="date" ng-model="uc.createIssue.issueDueDate" class="form-control" disabled />
- </div> -->
- </div>
+
  <div class="box3 ">
   <div class="form-group col-sm-4">
-<label for="component">IssueComponent</label>
+<label for="component">Issue Component</label>
 <input type="text" ng-model="uc.createIssue.component" class="form-control" />
  </div>
  <div class="form-group col-sm-4">
-<label for="affectedVersion">IssueAffectiveVersion</label>
+<label for="affectedVersion">Issue Affective Version</label>
 <input type="text" ng-model="uc.createIssue.affectedVersion" class="form-control" />
  </div>
  <div class="form-group col-sm-4">
@@ -72,36 +69,47 @@ width:50%;
 <select ng-model="uc.createIssue.applicationEnvironment" class="dropDown form-control">
 <option ng-repeat="environment in environments" value="{{environment.id}}">{{environment.environment}}</option>
 </select>
+
  </div>
  </div>
  <div class="box4">
 <div class="form-group col-sm-12">
-<label for="description">IssueDescription</label>
+<label for="description">Issue Description</label>
 <textarea class="form-control" rows="5" ng-model="uc.createIssue.description" class="form-control" ></textarea>
 </div>
  </div>
    <div class="box5">
-   <!-- <div class="form-group col-sm-6">
+<!--    <div class="form-group col-sm-6">
 <label for="email">Email address:</label>
 <input type="email" class="form-control" id="email">
  </div>  -->
- 
+<!--  
   <div class="form-group col-sm-4">
 <label for="environment">Original Estimate</label>
+<<<<<<< HEAD
+<input type="text" ng-model="uc.createIssue.originalEstimate" class="form-control" />
+=======
 <input type="text" ng-model="uc.createIssue.applicationEnvironment" class="form-control" disabled/>
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
  </div>
  
  <div class="form-group col-sm-4">
 <label for="dueDate">IssueDueDate</label>
 <input type="date" ng-model="uc.createIssue.originalEstimate" class="form-control" disabled />
  </div>
+<<<<<<< HEAD
+  -->
+<!--  <div class="form-group col-sm-4">
+<label for="issueProject">IssueAssignee</label>
+=======
  
  <div class="form-group col-sm-4">
 <label for="issueTeamMember">IssueOwner</label>
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 <select class="dropDown form-control" ng-model="" class="form-control">
 <option value="{{owner.memberId}}" ng-repeat="owner in team" value="{{owner.memberId}}">{{owner.email}}</option>
 </select>
-  </div>
+  </div> -->
  </div> 
  <div class="form-group submitButton">        
       <div class="col-sm-offset-2 col-sm-10">

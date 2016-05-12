@@ -19,6 +19,7 @@ import java.util.List;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yash.yits.dao.IssueDao;
-
+import com.yash.yits.domain.ApplicationEnvironment;
+import com.yash.yits.domain.ApplicationIssuePriority;
+import com.yash.yits.domain.ApplicationIssueStatus;
+import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
 import com.yash.yits.form.IssueForm;
@@ -156,12 +160,48 @@ public class IssueServiceImpl implements IssueService{
 		return projectForms;
 	}
 
+
+	public void createIssue(IssueForm issueForm,Long createdBy) {
+		Project project=new Project();
+		project.setId(issueForm.getProject().getId());
+		
+		ApplicationEnvironment applicationEnvironment=new ApplicationEnvironment();
+		applicationEnvironment.setId(issueForm.getApplicationEnvironment().getId());
+		
+		ApplicationIssuePriority applicationIssuePriority=new ApplicationIssuePriority();
+		applicationIssuePriority.setId(issueForm.getApplicationIssuePriority().getId());
+		
+		ApplicationIssueType applicationIssueType=new ApplicationIssueType();
+		applicationIssueType.setId(issueForm.getApplicationIssueType().getId());
+		
+		ApplicationIssueStatus applicationIssueStatus=new ApplicationIssueStatus();
+		applicationIssueStatus.setId(1);
+		
+		Issue issue=new Issue();
+		issue.setAffectedVersion(issueForm.getAffectedVersion());
+		issue.setComponent(issueForm.getComponent());
+		issue.setDescription(issueForm.getDescription());
+		issue.setSummary(issueForm.getSummary());
+		issue.setProject(project);
+		issue.setApplicationIssuePriority(applicationIssuePriority);
+		issue.setApplicationEnvironment(applicationEnvironment);
+		issue.setApplicationIssueType(applicationIssueType);
+		issue.setApplicationIssueStatus(applicationIssueStatus);
+		
+		
+		issueDao.createIssue(issue,createdBy);
+}
+
+	
+
 	public Map<String, Object> getAllSelectFields(ProjectForm projectForm, MemberForm member) {
+
 		Project project = new Project();
 		project.setId(projectForm.getId());
 		
+
 		return issueDao.getAllSelectFields(project,member);
-		
+
 	}
 	
 }

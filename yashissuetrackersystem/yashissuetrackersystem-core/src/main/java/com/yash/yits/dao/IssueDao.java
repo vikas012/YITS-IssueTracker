@@ -16,6 +16,10 @@ public interface IssueDao {
 
 	public List<Issue> getUnassignedIssues();
 
+	public void createIssue(Issue issue,Long createdBy);
+
+
 	public Map<String, Object> getAllSelectFields(Project project, MemberForm member);
+
 
 }

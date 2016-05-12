@@ -15,6 +15,10 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	                      }
 	                );
 	      	},
+
+	  
+	      	
+
 	      	initializeSelectAll:function(projectId){
 	      		alert("in service Select All");
 	      		alert(projectId);
@@ -32,6 +36,7 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	      	},
 	      	submitCreateIssue: function(createIssue) {
 		          return $http.post('./createIssue',createIssue)
+
 		              .then(
 		                      function(response){
 		                    	  alert(response.data);
@@ -42,6 +47,9 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 		                              return $q.reject(errResponse);
 		                      }
 		                );
-		      	}
+	      	
+	  
+	      	
+	      	}
 	  }
 }]);

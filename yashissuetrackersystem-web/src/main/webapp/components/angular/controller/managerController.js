@@ -1,49 +1,31 @@
-angular
-		.module('issueTrackingSystem.managerModule')
-		.controller(
-				'managerController',
-				[
-						'$scope',
-						'$http',
-						'managerService',
-						function($scope, $http, managerService, issueList,
-								unassignedIssueList) {
-							alert("controller");
+angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope, $http, managerService, issueList,unassignedIssueList) {
 							
-							$scope.members1 = [];
-						
-							 var issues=$http({
-								  method:'GET',
-								      url:'../memberList' 
-								  }).success(function(data){
-									  
-									  $scope.members1=data;
-								  })
+							
 							
 							$scope.showLookUpForm = false;
 							$scope.showRegisterForm = false;
-							$scope.ldapUser = {
-								ldapName : "",
-								ldapEmail : ""
-							};
+							$scope.showNonYashRegisterForm=false;
+							
+							$scope.ldapUser = {ldapName : "",ldapEmail : ""};
 							$scope.members = [];
-							$scope.member = {
-								memberId : "",
-								name : "",
-								email : "",
-								contact : ""
-							};
+							$scope.member = {memberId : "",name : "",email : "",contact : "",managerEmail:""};
 							$scope.userId = "";
 							$scope.userName = "";
 							$scope.userEmail = "";
 							$scope.userMobile = "";
-
+							
 							$scope.showLookForm = function() {
 
 								$scope.showLookUpForm = true;
+								$scope.showNonYashRegisterForm =false;
 
 							}
-
+							$scope.showRegisterationForm=function(){
+								
+								$scope.showLookUpForm =false;
+								$scope.showRegisterForm = false;
+								$scope.showNonYashRegisterForm = true;
+							}
 							$scope.checkUser = function() {
 
 								$scope.ldapUser.ldapName = $scope.ldapName;
@@ -54,15 +36,22 @@ angular
 								$scope.checkUserInLdap($scope.ldapUser);
 
 							}
+							$scope.members1 = [];
+							
+							 var issues=$http({
+								  method:'GET',
+								      url:'../memberList' 
+								  }).success(function(data){
+									  
+									  $scope.members1=data;
+								  })
 							$scope.checkUserInLdap = function(ldapUser) {
 
-								managerService
-										.checkUserInLdap(ldapUser)
+								managerService.checkUserInLdap(ldapUser)
 										.then(
 												function(d) {
 
 													$scope.members = d;
-
 													$scope.userId = $scope.members.userId;
 													$scope.userName = $scope.members.userName;
 													$scope.userEmail = $scope.members.userEmail;
@@ -85,10 +74,24 @@ angular
 								$scope.member.email = $scope.userEmail;
 								$scope.member.contact = $scope.userMobile;
 								$scope.showRegisterForm = false;
+								
 								managerService.registerMember($scope.member);
 
 							}
+							$scope.registerNonYashMember=function(){
+								
+								$scope.member.memberId = $scope.userId;
+								$scope.member.name = $scope.userName;
+								$scope.member.email = $scope.userEmail;
+								$scope.member.contact = $scope.userMobile;
+								$scope.member.managerEmail=$scope.managerEmail;
+								$scope.showNonYashRegisterForm=false;
 							
+								managerService.registerNonYashMember($scope.member);
+								
+								
+								
+							}
 							$scope.deleteMember=function(){
 								
 								
@@ -101,7 +104,7 @@ angular
 								alert($scope.searchText);
 								var searchText = $scope.searchText;
 								
-								if (searchText == "") {
+								if (searchText == undefined) {
 									alert("Please Enter Text!");
 								}
 								else{

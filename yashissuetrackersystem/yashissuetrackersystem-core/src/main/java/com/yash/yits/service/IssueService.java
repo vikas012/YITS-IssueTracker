@@ -21,6 +21,6 @@ public interface IssueService {
 
 	public Map<String, Object> getAllSelectFields(ProjectForm projectForm, MemberForm member);
 	
-	
+	public void createIssue(IssueForm issueForm,Long createdBy);
 	
 }

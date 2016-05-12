@@ -19,6 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.yash.yits.dao.IssueDao;
 import com.yash.yits.domain.Project;
+
+import com.yash.yits.domain.ApplicationTeamMember;
+import com.yash.yits.domain.Issue;
+import com.yash.yits.domain.Member;
+
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.domain.Application;
 import com.yash.yits.domain.ApplicationEnvironment;
@@ -70,9 +75,39 @@ public class IssueDaoImpl implements IssueDao {
 		return unassignedIssueList;
 
 }
+	public void createIssue(Issue issue,Long createdBy) {
+		Session session=sessionFactory.getCurrentSession();
+		int createdBy1=findMemberId(createdBy);
+		ApplicationTeamMember applicationTeamMember=new ApplicationTeamMember();
+		applicationTeamMember.setId(createdBy1);
+		issue.setCreatedBy(applicationTeamMember);
+		session.save(issue);
+		
+		
+	}
+	
+	public int findMemberId(Long memberId){
+		Session session=sessionFactory.getCurrentSession();
+		
+		Criteria criteria=session.createCriteria(ApplicationTeamMember.class);
+		criteria.setProjection(Projections.projectionList()
+			    .add(Projections.property("id"), "id"))
+				.setResultTransformer(Transformers.aliasToBean(ApplicationTeamMember.class));
+		Criteria criteria1=criteria.createCriteria("member");
+		criteria1.add(Restrictions.eq("memberId", memberId));
+		
+		System.out.println(criteria.uniqueResult());
+		
+		
+		ApplicationTeamMember applicationTeamMember=(ApplicationTeamMember)criteria.uniqueResult();
+		int id=applicationTeamMember.getId();
+		return id ;
+		
+	}
 
 
 	public Map<String, Object> getAllSelectFields(Project project, MemberForm member) {
+
 		System.out.println("In DAO for all select fields "+project.getId()+" "+member.getMemberId());
 		Session session=sessionFactory.getCurrentSession();
 		
@@ -83,8 +118,6 @@ public class IssueDaoImpl implements IssueDao {
 					      .add(Projections.property("application"), "application"))
 				.setResultTransformer(Transformers.aliasToBean(Project.class));
 		criteria2.add(Restrictions.eq("id",project.getId()));
-		//List<Project> projects = criteria2.list();
-		//Iterator<Project> iterator = projects.iterator();
 		
 		Project project3 = (Project) criteria2.uniqueResult();
 		
@@ -132,6 +165,7 @@ public class IssueDaoImpl implements IssueDao {
 		map.put("applicationEnvironment",applicationEnvironment);
 		return map;
 		
+
 	}
 
 }
