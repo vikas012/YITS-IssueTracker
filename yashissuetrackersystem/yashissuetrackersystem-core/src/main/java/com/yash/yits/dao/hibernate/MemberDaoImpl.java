@@ -27,17 +27,13 @@ import com.yash.yits.form.*;
 /** This class interacts with database and provides the data for all member operations*/
 
 
-
 @Repository
 public class MemberDaoImpl implements MemberDao {
 
 
-	 
-	@Autowired
-	private SessionFactory sessionFactory;
-	
-	
-	
+	 @Autowired
+	 private SessionFactory sessionFactory;
+
 
 	public Member addMember(Member member) {
 		Session session=sessionFactory.getCurrentSession();
@@ -62,18 +58,6 @@ public class MemberDaoImpl implements MemberDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
-		
-		/*Query query1 = session.createQuery("select name ,email,contact from Member");
-		
-		List<> name =query1.list();
-		
-		for(String lists : name){
-			
-			System.out.println(lists);
-		}*/
-		
-		
-		/*Criteria criteria = session.createCriteria(Member.class);*/
 		 Criteria  criteria  =session.createCriteria(Member.class);
 		 
 		   criteria.setProjection(Projections.projectionList().add(
@@ -86,44 +70,23 @@ public class MemberDaoImpl implements MemberDao {
 			System.out.println(member);
 		}
 		
-		/*List<MemberForm> memberList = new ArrayList<MemberForm>();
 		
-		System.out.println(allMembers.size());
-		for (Member member : allMembers) {
-			MemberForm memberForm =new MemberForm();
-			
-			memberForm.setId(member.getId());
-			memberForm.setName(member.getName());	
-			memberForm.setEmail(member.getEmail());
-			memberForm.setContact(member.getContact());
-			
-			memberList.add(memberForm);
-			
-		}*/
-		/*List<MemberForm> memberList = new ArrayList<MemberForm>();
-		Iterator<Member> iterator = allMembers.iterator();
-		
-		while (iterator.hasNext()) {
-			Member member = (Member) iterator.next();
-			
-			MemberForm memberForm =new MemberForm();
-				memberForm.setId(member.getId());
-				memberForm.setName(member.getName());	
-				memberForm.setEmail(member.getEmail());
-				memberForm.setContact(member.getContact());
-				
-				memberList.add(memberForm);
-		}
-		*/
 		return   allMembers ;
-		
-		
-
 	}
 
 	public List<Member> searchMembers(String search) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("in dao");
+		Session session=sessionFactory.getCurrentSession();
+		
+		Query query=session.createQuery("FROM Member where "
+				+ "memberId=(Select memberId from Member where memberId LIKE '"+search+"%') OR "
+				+ "name=(Select name from Member where name LIKE '"+search+"%') OR "
+				+ "email=(Select email from Member where email LIKE '"+search+"%') OR "
+				+ "contact=(Select contact from Member where contact LIKE '"+search+"%')");
+		
+		List<Member> issues=query.list();
+		
+		return issues;
 	}
 
 	public List<Member> deleteMember(int memberId) {
