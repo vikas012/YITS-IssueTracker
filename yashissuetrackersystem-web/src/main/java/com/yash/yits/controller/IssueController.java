@@ -91,7 +91,7 @@ public class IssueController {
 	
 	@ResponseBody
 	@RequestMapping(value="/getAllSelectFields/{projectId}",produces=MediaType.APPLICATION_JSON_VALUE)
-	public Map<String,Object> getAllSelectFields(@PathVariable("projectId") int projectId,HttpServletRequest httpServletRequest )
+	public String getAllSelectFields(@PathVariable("projectId") int projectId,HttpServletRequest httpServletRequest )
 	{
 		System.out.println("project Id>>>>"+projectId);
 		MemberForm member = new MemberForm();
@@ -99,10 +99,12 @@ public class IssueController {
 		projectForm.setId(projectId);
 		member.setMemberId((Long)httpServletRequest.getSession().getAttribute("memberId"));
 		System.out.println("Member ID>>>> "+member.getMemberId());
-		Map<String,Object> map = new HashMap<String, Object>();
-		issueService.getAllSelectFields(projectForm,member);
-		map.put("myValue", "Hello there");
-		return map;
+		Map<String,Object> map1 = new HashMap<String, Object>();
+		map1 = issueService.getAllSelectFields(projectForm,member);
+		System.out.println("Map value  "+map1.get("issueType"));
+		map1.put("myValue1", "Hello there");
+		Gson gson= new Gson();
+		return gson.toJson(map1);
 
 	}
 

@@ -130,6 +130,11 @@ public class ApplicationEnvironment implements Serializable {
 		this.createdBy = createdBy;
 	}
 
+	@Override
+	public String toString() {
+		return "ApplicationEnvironment [id=" + id + ", environment=" + environment + "]";
+	}
+
 	/*public List<Issue> getIssues() {
 		return issues;
 	}
@@ -137,5 +142,7 @@ public class ApplicationEnvironment implements Serializable {
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
 	}*/
+	
+	
 
 }
