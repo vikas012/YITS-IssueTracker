@@ -1,4 +1,4 @@
-angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope, $http, managerService, issueList,unassignedIssueList, memberList) {
+angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope, $http, managerService,unassignedIssueList, memberList) {
 							
 
 							
@@ -11,7 +11,17 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							$scope.userName = "";
 							$scope.userEmail = "";
 							$scope.userMobile = "";
+							
+							$scope.issueList = [];
+							var issueList=$http({
+							 method:'GET',
+							     url:'../defaultIssues' 
+							 }).success(function(data){
+							 
+							 $scope.issueList=data;
+							 })
 
+							
 							//$scope.members = memberList.data;
 							$scope.showLookForm = function() {
 

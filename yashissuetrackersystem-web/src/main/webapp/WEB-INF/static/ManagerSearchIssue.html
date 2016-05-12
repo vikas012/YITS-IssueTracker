@@ -65,9 +65,8 @@
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach items="${issueList}" var="issue">
-			<tr id="datatable">
-				<td><input id='radio' type='radio' value="${issue.issueDetailId} "></td>
+			<tr id="datatable" ng-repeat="issue in issueList">
+				<td><input id='radio' type='radio' value="{{issue.issueDetailId}} "></td>
 
 				<td>${issue.issueType.issueType}</td>
 				<td>${issue.issueCreationDate}</td>
@@ -80,7 +79,6 @@
 				<td><input type="button" value="Feed" class="btn btn-primary"></td>
 				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
 			</tr>
-			</c:forEach>
 			</tbody>
 	
 			<tr  ng-repeat="issue in issues">

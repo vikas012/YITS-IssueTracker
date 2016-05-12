@@ -70,18 +70,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 
 		  					);
 		  			},
-		  			 getIssues:function(){
-		  				  alert("in default")
-		  				  var issues=$http({
-		  				  method:'GET',
-		  				      url:'../defaultIssues'
-		  				  }).success(function(data){
-		  				  alert(data);
-		  				  return data;
-		  				  })
-		  				  },
-		  				  
-
+		  			 
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')
 	              .then(

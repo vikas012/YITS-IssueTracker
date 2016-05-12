@@ -28,11 +28,7 @@ managerModule.config(function($routeProvider) {
 	}).when('/issues', {
 		templateUrl : '../issues',
 		controller : 'managerController as mc',
-		resolve : {
-			issueList : function(managerService) {
-				return managerService.getIssues();
-			}
-		}
+		
 	}).when('/assignIssue', {
 		templateUrl : '../getAssignIssueForm',
 		controller : 'managerController as mc',

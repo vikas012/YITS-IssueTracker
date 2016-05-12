@@ -5,6 +5,7 @@ package com.yash.yits.serviceImpl;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -67,7 +68,10 @@ public class IssueServiceImpl implements IssueService{
 	    int currentDay = localCalendar.get(Calendar.DATE);
 	    int currentDayOfWeek = localCalendar.get(Calendar.DAY_OF_WEEK);
 	    Date date=new Date();
-		
+	    
+	    
+	   
+	    
 		
 		Calendar cal = Calendar.getInstance();
 		Date dateBefore=new Date();
@@ -109,18 +113,19 @@ public class IssueServiceImpl implements IssueService{
 		
 		String date2=df.format(dateAfter);
 		
+		System.out.println(date1+"-----------"+date2);
+		
+		try {
+			Date date3=df.parse(date1);
+			Date date4=df.parse(date2);
+			
+			System.out.println(date3+"------"+date4);
+			
 		
 		
-		Timestamp beforeTimestamp=new Timestamp(dateBefore.getTime());
 		
-		Timestamp afterTimestamp=new Timestamp(dateAfter.getTime());
+		List<Issue> issues = issueDao.getDefaultIssues(date3,date4);
 		
-		beforeTimestamp= Timestamp.valueOf(date1);
-		afterTimestamp= Timestamp.valueOf(date2);
-		
-		System.out.println(beforeTimestamp+ "----"+afterTimestamp);
-		
-		List<Issue> issues = issueDao.getDefaultIssues(beforeTimestamp,afterTimestamp);
 		
 		List<IssueForm> issueForms = new ArrayList<IssueForm>();
 		for (Issue issue : issues) {
@@ -128,12 +133,26 @@ public class IssueServiceImpl implements IssueService{
 			
 			IssueForm issueForm = new IssueForm();
 			
-			
+			try {
+				BeanUtils.copyProperties(issueForm, issue);
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			issueForms.add(issueForm);
 		}
 		
 		System.out.println(issueForms);
 		
 		return issueForms;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		
 	}
 
