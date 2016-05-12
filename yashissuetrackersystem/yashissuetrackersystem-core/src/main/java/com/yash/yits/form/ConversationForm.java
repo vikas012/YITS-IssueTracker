@@ -1,12 +1,13 @@
 package com.yash.yits.form;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class ConversationForm {
 	
 	private int id;
 
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private int isActive;
 
@@ -24,11 +25,12 @@ public class ConversationForm {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
+	
+	public Date getCreatedDateTime() {
 		return createdDateTime;
 	}
 
-	public void setCreatedDateTime(Timestamp createdDateTime) {
+	public void setCreatedDateTime(Date createdDateTime) {
 		this.createdDateTime = createdDateTime;
 	}
 

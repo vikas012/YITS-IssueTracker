@@ -30,26 +30,26 @@ public class Issue implements Serializable {
 	private String component;
 
 	@Column(name="CREATED_DATE_TIME")
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private String description;
-	
-	private String taskProgressUpdate;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="DUE_DATE")
 	private Date dueDate;
 
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	@Column(name="ORIGINAL_ESTIMATE")
 	private int originalEstimate;
 
 	@Column(name="REMAINING_ESTIMATE")
 	private int remainingEstimate;
+	
+	@Column(name="TASK_PROGRESS_UPDATE")
+	private String taskProgressUpdate;
 
 	private String summary;
 
@@ -159,14 +159,6 @@ public class Issue implements Serializable {
 		this.component = component;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -189,14 +181,6 @@ public class Issue implements Serializable {
 
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
-	}
-
-	public Timestamp getLastModifiedDateTime() {
-		return lastModifiedDateTime;
-	}
-
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
-		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public int getOriginalEstimate() {

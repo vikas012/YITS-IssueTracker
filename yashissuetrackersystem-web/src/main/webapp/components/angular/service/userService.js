@@ -6,6 +6,7 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	          return $http.get('./getProjects')
 	              .then(
 	                      function(response){
+	                    	  alert("in service");
 	                          return response.data;
 	                      }, 
 	                      function(errResponse){

@@ -39,7 +39,7 @@ public class IssueForm {
 
 	private String component;
 
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private String description;
 	
@@ -49,7 +49,7 @@ public class IssueForm {
 
 	private int isActive;
 
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	private int originalEstimate;
 
@@ -117,13 +117,7 @@ public class IssueForm {
 		this.component = component;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
 
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
 
 	public String getDescription() {
 		return description;
@@ -157,11 +151,20 @@ public class IssueForm {
 		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+	
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 

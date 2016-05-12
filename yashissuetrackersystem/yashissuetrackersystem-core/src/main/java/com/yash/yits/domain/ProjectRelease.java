@@ -22,12 +22,12 @@ public class ProjectRelease implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATE_TIME")
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="RELEASE_DATE")
@@ -64,13 +64,6 @@ public class ProjectRelease implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
 
 	public int getIsActive() {
 		return isActive;
@@ -80,11 +73,20 @@ public class ProjectRelease implements Serializable {
 		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 

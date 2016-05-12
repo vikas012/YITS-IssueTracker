@@ -1,28 +1,17 @@
 package com.yash.yits.dao.hibernate;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.yash.yits.dao.MemberDao;
 import com.yash.yits.domain.Member;
-import com.yash.yits.form.*;
 
 /** This class interacts with database and provides the data for all member operations*/
 
@@ -104,6 +93,37 @@ public class MemberDaoImpl implements MemberDao {
 	public List<Member> deleteMember(int memberId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 *blockUnblockMember method is used to block or unblock the member
+	 * 
+	 */
+	public List<Member> blockUnblockMember(Member member) {
+	
+		
+		if(member.getIsActive()==0){
+			
+			Session session=sessionFactory.getCurrentSession();
+			Query query=session.createQuery("from Member where memberId=?");
+			Member member2=(Member) query.setLong(0, member.getMemberId());
+			member2.setIsActive(1);
+			session.saveOrUpdate(member2);
+			List<Member> members=query.list();
+			return members;
+		}
+		else{
+			
+			Session session=sessionFactory.getCurrentSession();
+			Query query=session.createQuery("from Member where memberId=?");
+			Member member2=(Member) query.setLong(0, member.getMemberId());
+			member2.setIsActive(0);
+			session.saveOrUpdate(member2);
+			
+			List<Member> members=query.list();
+			return members;
+		}
+	
 	}
 
 }
