@@ -41,7 +41,7 @@ public class ApplicationTeamMember implements Serializable {
 	@Column(name="LAST_MODIFIED_DATETIME")
 	private Date lastModifiedDateTime;
 
-	//bi-directional many-to-one association to Application
+	/*//bi-directional many-to-one association to Application
 	@OneToMany(mappedBy="lastModifiedBy", fetch=FetchType.EAGER)
 	private List<Application> applications1;
 
@@ -103,7 +103,7 @@ public class ApplicationTeamMember implements Serializable {
 
 	//bi-directional many-to-one association to ApplicationSeverity
 	@OneToMany(mappedBy="createdBy", fetch=FetchType.EAGER)
-	private List<ApplicationSeverity> applicationSeverities2;
+	private List<ApplicationSeverity> applicationSeverities2;*/
 
 	//bi-directional many-to-one association to Member
 	@ManyToOne
@@ -118,16 +118,16 @@ public class ApplicationTeamMember implements Serializable {
 	@JoinColumn(name="LAST_MODIFIED_BY")
 	private ApplicationTeamMember applicationTeamMember1;
 
-	//bi-directional many-to-one association to ApplicationTeamMember
+	/*//bi-directional many-to-one association to ApplicationTeamMember
 	@OneToMany(mappedBy="applicationTeamMember1", fetch=FetchType.EAGER)
-	private List<ApplicationTeamMember> applicationTeamMembers1;
+	private List<ApplicationTeamMember> applicationTeamMembers1;*/
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember applicationTeamMember2;
 
-	//bi-directional many-to-one association to ApplicationTeamMember
+	/*//bi-directional many-to-one association to ApplicationTeamMember
 	@OneToMany(mappedBy="applicationTeamMember2", fetch=FetchType.EAGER)
 	private List<ApplicationTeamMember> applicationTeamMembers2;
 
@@ -189,7 +189,7 @@ public class ApplicationTeamMember implements Serializable {
 
 	//bi-directional many-to-one association to ProjectRelease
 	@OneToMany(mappedBy="createdBy", fetch=FetchType.EAGER)
-	private List<ProjectRelease> projectReleases2;
+	private List<ProjectRelease> projectReleases2;*/
 
 	public ApplicationTeamMember() {
 	}
@@ -213,7 +213,7 @@ public class ApplicationTeamMember implements Serializable {
 
 
 
-	public List<Application> getApplications1() {
+	/*public List<Application> getApplications1() {
 		return applications1;
 	}
 
@@ -339,7 +339,9 @@ public class ApplicationTeamMember implements Serializable {
 
 	public void setApplicationSeverities2(List<ApplicationSeverity> applicationSeverities2) {
 		this.applicationSeverities2 = applicationSeverities2;
-	}
+			}
+		*/
+
 
 	public Member getMember() {
 		return member;
@@ -365,7 +367,7 @@ public class ApplicationTeamMember implements Serializable {
 		this.applicationTeamMember1 = applicationTeamMember1;
 	}
 
-	public List<ApplicationTeamMember> getApplicationTeamMembers1() {
+	/*public List<ApplicationTeamMember> getApplicationTeamMembers1() {
 		return applicationTeamMembers1;
 	}
 
@@ -500,7 +502,7 @@ public class ApplicationTeamMember implements Serializable {
 	public void setProjectReleases2(List<ProjectRelease> projectReleases2) {
 		this.projectReleases2 = projectReleases2;
 	}
-
+*/
 	
 
 }
