@@ -62,6 +62,8 @@ public class MemberDaoImpl implements MemberDao {
 					      .add(Projections.property("email"), "email")
 							.add(Projections.property("contact"), "contact"))
 					    .setResultTransformer(Transformers.aliasToBean(Member.class));
+		
+		
 		List<Member> allMembers = criteria.list();
 		
 		
