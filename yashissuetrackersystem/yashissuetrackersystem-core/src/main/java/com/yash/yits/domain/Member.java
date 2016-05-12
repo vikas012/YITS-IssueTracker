@@ -58,7 +58,7 @@ public class Member implements Serializable {
 	@Column(name="CREATED_BY")
 	private int createdBy;
 
-	@Column(name="CREATED_DATE_TIME")
+	@Column(name="CREATED_DATETIME")
 	private Date createdDateTime;
 
 	private String email;

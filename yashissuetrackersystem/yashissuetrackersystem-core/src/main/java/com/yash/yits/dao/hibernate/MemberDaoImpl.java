@@ -81,15 +81,16 @@ public class MemberDaoImpl implements MemberDao {
 		System.out.println("in dao");
 		Session session=sessionFactory.getCurrentSession();
 		
-		Query query=session.createQuery("FROM Member where "
-				+ "memberId=(Select memberId from Member where memberId LIKE '"+search+"%') OR "
-				+ "name=(Select name from Member where name LIKE '"+search+"%') OR "
-				+ "email=(Select email from Member where email LIKE '"+search+"%') OR "
-				+ "contact=(Select contact from Member where contact LIKE '"+search+"%')");
-		
-		List<Member> issues=query.list();
-		
-		return issues;
+		String selectQuery="FROM Member where name LIKE '"+search+"%' OR email LIKE '"+search+"%' OR managerName LIKE '"+search+"%'";
+		Query query=session.createQuery(selectQuery);
+		List<Member> members=query.list();
+		for(Member membersList:members){
+			
+			System.out.println(membersList.getContact());
+			
+		}
+
+		return members;
 	}
 
 	public List<Member> deleteMember(int memberId) {

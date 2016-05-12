@@ -101,7 +101,7 @@ angular
 								alert($scope.searchText);
 								var searchText = $scope.searchText;
 								
-								if (searchText == "") {
+								if (searchText == undefined) {
 									alert("Please Enter Text!");
 								}
 								else{
