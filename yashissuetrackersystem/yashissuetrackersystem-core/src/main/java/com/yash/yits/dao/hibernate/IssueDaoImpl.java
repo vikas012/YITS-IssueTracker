@@ -19,6 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.yash.yits.dao.IssueDao;
 import com.yash.yits.domain.Project;
+
+import com.yash.yits.domain.ApplicationTeamMember;
+import com.yash.yits.domain.Issue;
+import com.yash.yits.domain.Member;
+
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.domain.Application;
 import com.yash.yits.domain.ApplicationIssuePriority;
@@ -82,6 +87,40 @@ public class IssueDaoImpl implements IssueDao {
 		return issueList;
 
 	}
+
+
+
+
+	public void createIssue(Issue issue,Long createdBy) {
+		Session session=sessionFactory.getCurrentSession();
+		int createdBy1=findMemberId(createdBy);
+		ApplicationTeamMember applicationTeamMember=new ApplicationTeamMember();
+		applicationTeamMember.setId(createdBy1);
+		issue.setCreatedBy(applicationTeamMember);
+		session.save(issue);
+		
+		
+	}
+	
+	public int findMemberId(Long memberId){
+		Session session=sessionFactory.getCurrentSession();
+		
+		Criteria criteria=session.createCriteria(ApplicationTeamMember.class);
+		criteria.setProjection(Projections.projectionList()
+			    .add(Projections.property("id"), "id"))
+				.setResultTransformer(Transformers.aliasToBean(ApplicationTeamMember.class));
+		Criteria criteria1=criteria.createCriteria("member");
+		criteria1.add(Restrictions.eq("memberId", memberId));
+		
+		System.out.println(criteria.uniqueResult());
+		
+		
+		ApplicationTeamMember applicationTeamMember=(ApplicationTeamMember)criteria.uniqueResult();
+		int id=applicationTeamMember.getId();
+		return id ;
+		
+	}
+
 	public void getAllSelectFields(Project project, MemberForm member) {
 		System.out.println("In DAO for all select fields "+project.getId()+" "+member.getMemberId());
 		Session session=sessionFactory.getCurrentSession();
@@ -113,6 +152,7 @@ public class IssueDaoImpl implements IssueDao {
 		}
 		System.out.println("Application "+application1.getId());
 		//System.out.println("Application "+application.getId());
+
 	}
 
 }

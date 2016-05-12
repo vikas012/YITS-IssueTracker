@@ -5,8 +5,10 @@ package com.yash.yits.serviceImpl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -15,25 +17,23 @@ import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.yash.yits.dao.MemberDao;
 import com.yash.yits.domain.Member;
 import com.yash.yits.form.LoginForm;
 
 
 import com.yash.yits.form.UserForm;
-
 import com.yash.yits.service.MemberService;
-
-
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.UserForm;
 import com.yash.yits.service.MemberService;
@@ -219,45 +219,47 @@ public class MemberServiceImpl implements MemberService {
 			return searchResult;
 	 }
 
-	public Member addMember(MemberForm memberForm) {
-		
-		member.setMemberId(memberForm.getMemberId());
-		member.setName(memberForm.getName());
-		member.setEmail(memberForm.getEmail());
-		member.setContact(memberForm.getContact());
-		member.setManagerId(memberForm.getManagerId());
-		member.setManagerName(memberForm.getManagerName());
-		member.setManagerEmail(memberForm.getManagerEmail());
-		memberDao.addMember(member);
-		
-		
-		ApplicationContext context=ContextAware.getApplicationContext();
-		System.out.println("object of application context"+context);
-		JavaMailSenderImpl javamailsender=(JavaMailSenderImpl) context.getBean("mailSender");
-		
-		System.out.println(javamailsender.getHost()+"  "+javamailsender.getPort());
-		SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
-		
-		simpleMailMessage.setFrom(javamailsender.getUsername());
-		simpleMailMessage.setTo(memberForm.getEmail());
-		simpleMailMessage.setCc(memberForm.getManagerEmail());
-		String subject="Successful Registration In IssueTracker Application!!!";
-		simpleMailMessage.setSubject(subject);
-		
-		String message="Hi," 
-						+ "You have been successfully successfully registered with Yash Issue Tracking System Application with email id."+memberForm.getEmail()+
+	 public Member addMember(MemberForm memberForm) {
+			
+			member.setMemberId(memberForm.getMemberId());
+			member.setName(memberForm.getName());
+			member.setEmail(memberForm.getEmail());
+			member.setContact(memberForm.getContact());
+			member.setManagerId(memberForm.getManagerId());
+			member.setManagerName(memberForm.getManagerName());
+			member.setManagerEmail(memberForm.getManagerEmail());
+			member.setCreatedDateTime(new Date());
+			member.setLastModifiedDateTime(new Date());
+			memberDao.addMember(member);
+			
+			
+			/*ApplicationContext context=ContextAware.getApplicationContext();
+			System.out.println("object of application context"+context);
+			JavaMailSenderImpl javamailsender=(JavaMailSenderImpl) context.getBean("mailSender");
+			
+			System.out.println(javamailsender.getHost()+"  "+javamailsender.getPort());
+			SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
+			
+			simpleMailMessage.setFrom(javamailsender.getUsername());
+			simpleMailMessage.setTo(memberForm.getEmail());
+			simpleMailMessage.setCc(memberForm.getManagerEmail());
+			String subject="Successful Registration In IssueTracker Application!!!";
+			simpleMailMessage.setSubject(subject);
+			
+			String message="Hi," 
+							+ "You have been successfully successfully registered with Yash Issue Tracking System Application with email id."+memberForm.getEmail()+
 
-		"Regards,"
-		+"Team : Yash Issue Tracking Sytem.";
-		
-		simpleMailMessage.setText(message);
-		
-		javaMailSender.send(simpleMailMessage);
+			"Regards,"
+			+"Team : Yash Issue Tracking Sytem.";
+			
+			simpleMailMessage.setText(message);
+			
+			javaMailSender.send(simpleMailMessage);*/
 
-		
-		
-		return member;
-	}
+			
+			
+			return member;
+		}
 
 	public List<MemberForm> searchMembers(String search) {
 		System.out.println("in service");

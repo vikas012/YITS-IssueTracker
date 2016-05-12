@@ -8,6 +8,12 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 				alert(d.myValue);
 				
 
+				//alert(d.data.id);
+				//alert(d.data.name);
+				
+
+
+
 			}
 			
 	);
@@ -32,6 +38,84 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 	}
 
 
+	this.add = function() {
+		alert("hello");
+		/*var projectId = this.createIssue.project.projectId;
+		var issueId = this.createIssue.issueType.issueId;
+		var issuePriorityId = this.createIssue.issuePriority.issuePriorityId;
+		var summary = this.createIssue.summary;
+		var component = this.createIssue.component;
+		var affectedVersion = this.createIssue.affectedVersion;
+		var applicationEnvironment = this.createIssue.applicationEnvironment;
+		var description = this.createIssue.description;*/
+		var summary =this.createIssue.summary;
+		var component=this.createIssue.component;
+		var affectedVersion=this.createIssue.affectedVersion;
+		var description=this.createIssue.description;
+		
+		var project={
+				"id":1
+		}
+		
+		var applicationIssueType={
+				"id":1
+		}
+		
+		var applicationIssuePriority={
+				"id":1
+		}
+		 var applicationEnvironment={
+				"id":1
+		}
+		
+		
+		
+		
+		var formData={
+				"project":project,
+				"applicationIssueType":applicationIssueType,
+				"applicationIssuePriority":applicationIssuePriority,
+				"summary":summary,
+				"component":component,
+				"affectedVersion":affectedVersion,
+				"applicationEnvironment":applicationEnvironment,
+				"description":description
+		};
+		alert(formData);
+		
+		
+		userService.submitCreateIssue(formData)
+		.then(
+				function(formData) {
+						alert("REgistered");
+				},
+				function(errResponse)
+				{
+				console.error('Error while searching issues');
+				});
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 		/*issueService returns list to populate drop-down*/
 	/*userService.initializeSelect()

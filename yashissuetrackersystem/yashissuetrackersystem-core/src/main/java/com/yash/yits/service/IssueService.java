@@ -19,6 +19,6 @@ public interface IssueService {
 
 	public void getAllSelectFields(ProjectForm projectForm, MemberForm member);
 	
-	
+	public void createIssue(IssueForm issueForm,Long createdBy);
 	
 }

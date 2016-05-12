@@ -142,5 +142,5 @@ public class ApplicationIssuePriority implements Serializable {
 	}
 
 	
-	
+
 }
