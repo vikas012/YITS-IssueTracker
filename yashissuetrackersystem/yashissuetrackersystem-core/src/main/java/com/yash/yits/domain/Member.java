@@ -6,9 +6,18 @@ import javax.persistence.*;
 
 
 import org.hibernate.annotations.LazyCollection;
+
 import org.hibernate.annotations.LazyCollectionOption;
+
+
+import org.hibernate.annotations.LazyCollectionOption;
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
+
+
+
 import java.sql.Timestamp;
 import java.math.BigInteger;
 import java.util.List;
@@ -68,6 +77,7 @@ public class Member implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
+	@Fetch(value = FetchMode.SUBSELECT)
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
 	private List<ApplicationTeamMember> applicationTeamMembers;
 

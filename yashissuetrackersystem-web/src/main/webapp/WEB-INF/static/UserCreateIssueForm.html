@@ -20,14 +20,14 @@ height:50%;
 width:50%;
 }
 </style> 
-
-<div class="container" ng-controller="userController as uc" >
+<!-- ng-controller="userController as uc" -->
+<div class="container"  >
   <form role="form" ng-submit="uc.add()">
 <div class="box1">
 <div class="form-group col-sm-4">
 <label for="issueProject">Project Name</label>
-<select ng-model="uc.createIssue.project.projectId" class="dropDown form-control">
-<option ng-repeat="project in projects" value="{{project.projectId}}" >{{project.projectName}}</option>
+<select ng-model="uc.createIssue.project.id" class="dropDown form-control" ng-change="myFunc()" id="selectId">
+<option ng-repeat="project in projects" value="{{project.id}}" >{{project.name}}</option>
 </select>
   </div>
   <div class="form-group col-sm-4">

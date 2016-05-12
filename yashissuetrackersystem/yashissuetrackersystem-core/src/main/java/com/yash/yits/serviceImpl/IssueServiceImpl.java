@@ -18,6 +18,7 @@ import java.util.List;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yash.yits.dao.IssueDao;
-
+import com.yash.yits.domain.ApplicationEnvironment;
+import com.yash.yits.domain.ApplicationIssuePriority;
+import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.form.IssueForm;
 
@@ -154,8 +157,33 @@ public class IssueServiceImpl implements IssueService{
 		return projectForms;
 	}
 
-	public void createIssue(Issue issue) {
-		// TODO Auto-generated method stub
+
+
+	public void createIssue(IssueForm issueForm) {
+		Project project=new Project();
+		project.setId(issueForm.getProject().getId());
+		
+		ApplicationEnvironment applicationEnvironment=new ApplicationEnvironment();
+		applicationEnvironment.setId(issueForm.getApplicationEnvironment().getId());
+		
+		ApplicationIssuePriority applicationIssuePriority=new ApplicationIssuePriority();
+		applicationIssuePriority.setId(issueForm.getApplicationIssuePriority().getId());
+		
+		ApplicationIssueType applicationIssueType=new ApplicationIssueType();
+		applicationIssueType.setId(issueForm.getApplicationIssueType().getId());
+		
+		Issue issue=new Issue();
+		issue.setAffectedVersion(issueForm.getAffectedVersion());
+		issue.setComponent(issueForm.getComponent());
+		issue.setDescription(issueForm.getDescription());
+		issue.setProject(project);
+		issue.setApplicationIssuePriority(applicationIssuePriority);
+		issue.setApplicationEnvironment(applicationEnvironment);
+		issue.setApplicationIssueType(applicationIssueType);
+	
+		
+		
+		issueDao.createIssue(issue);
 		
 	}
 	

@@ -1,15 +1,38 @@
 angular.module('issueTrackingSystem.userModule').controller('userController',['$scope','$http','userService',function($scope,$http,userService){
 	alert("in controller");
+	
 	userService.initializeSelect()
 	.then(
 			function(d) {
+				$scope.projects=d;
+				alert(d);
 				
+
 				//alert(d.data.id);
 				//alert(d.data.name);
 				
+
+
+
 			}
-	
-          );
+			
+	);
+
+	$scope.myFunc=function()
+	{
+		var index = angular.element(
+				document.querySelector("select[id=selectId]")).val();
+		alert("in onchange")
+		alert(index);
+		userService.initializeSelect().then(
+				function(d) {
+					$scope.projects=d;
+					alert(d);
+					
+
+				});
+	}
+
 
 	this.add = function() {
 		alert("hello");

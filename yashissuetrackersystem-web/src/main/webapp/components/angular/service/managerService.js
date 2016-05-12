@@ -4,9 +4,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  
 		  
 		  		checkUserInLdap:function(ldapUser){
-		  				alert("inside service");
-		  				alert("Name---in service "+ldapUser.ldapName);
-		  				return $http.post('./checkMemberInLdap',ldapUser)
+		  				return $http.post('../checkMemberInLdap',ldapUser)
 		  					.then(
 		  								function(response){
 		  								  return response.data;
@@ -21,16 +19,32 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  			},
 
 
-	  getMembers:function(){
-		  alert("shraddha");
-		  var issues=$http({
-		  method:'GET',
-		      url:'./memberList' //spring controller call, use @ResponseBody
-		  }).success(function(data){
-		  alert("Succeess");
-		  return data;
-		  })
-		  },
+		  		getMembers:function(){
+		              alert("shraddha");
+		              var issues=$http({
+		            	  				method:'GET',
+		            	  				url:'./memberList' //spring controller call, use @ResponseBody
+		              				})
+		             .success(function(data){
+		            	 	alert("Succeess");
+		            	 	return data;
+		             })
+		  		},
+
+		  searchMember:function(searchText){
+			  alert("Please Enter Text service!");
+					return $http.get('./searchMember/'+ searchText)
+				 	.then(
+				 				function(response){
+				 						return response.data;
+				 				}, 
+				 				function(errResponse){
+				 						console.error('Error while searching issues');
+				 						return $q.reject(errResponse);
+				 				}
+	         			);
+			},
+
 		  			
 		  getUnassignedIssues:function(){
 						  alert("Prajvi")
@@ -44,17 +58,17 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  			},
 		  			
 		  			registerMember:function(member){
-		  			  return $http.post('./registerMember',member)
-		  			  .then(
-		  			  function(response){
-		  			   return response.data;
-		  			  },
-		  			  function(errResponse){
-		  			  console.error('Error while fetching users');
-		  			  return $q.reject(errResponse);
-		  			  }
+		  				return $http.post('../registerMember',member)
+		  				.then(
+		  							function(response){
+		  								return response.data;
+		  							},
+		  							function(errResponse){
+		  								console.error('Error while fetching users');
+		  								return $q.reject(errResponse);
+		  							}
 
-		  			  );
+		  					);
 		  			},
 		  			 getIssues:function(){
 		  				  alert("in default")
@@ -67,6 +81,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  				  })
 		  				  },
 		  				  
+
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')
 	              .then(

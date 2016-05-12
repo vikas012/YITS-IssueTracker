@@ -3,9 +3,10 @@
  */
 package com.yash.yits.serviceImpl;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -14,30 +15,20 @@ import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
-
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.yash.yits.dao.MemberDao;
 import com.yash.yits.domain.Member;
-import com.yash.yits.form.LdapUser;
-
-import com.yash.yits.form.MemberForm;
-
 import com.yash.yits.form.LoginForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.UserForm;
-
 import com.yash.yits.service.MemberService;
-
-
 import com.yash.yits.util.ContextAware;
 
 
@@ -58,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	JavaMailSender javaMailSender;
-	
+
 	UserForm userForm=new UserForm();
 	Member member=new Member();
 
@@ -239,7 +230,12 @@ public class MemberServiceImpl implements MemberService {
 		String subject="Successful Registration In IssueTracker Application!!!";
 		simpleMailMessage.setSubject(subject);
 		
-		String message="Hello,you have been successful registered with IssueTracker Application with email id "+memberForm.getEmail();
+		String message="Hi," 
+						+ "You have been successfully successfully registered with Yash Issue Tracking System Application with email id."+memberForm.getEmail()+
+
+		"Regards,"
+		+"Team : Yash Issue Tracking Sytem.";
+		
 		simpleMailMessage.setText(message);
 		
 		javaMailSender.send(simpleMailMessage);
@@ -249,25 +245,57 @@ public class MemberServiceImpl implements MemberService {
 		return member;
 	}
 
+	public List<MemberForm> searchMembers(String search) {
+		System.out.println("in service");
+		List<Member> members = memberDao.searchMembers(search);
+		List<MemberForm> memberForms = new ArrayList<MemberForm>();
+		for (Member member : members) {
+
+			//Mapper mapper = new DozerBeanMapper();
+			//IssueForm issueForm = mapper.map(issue, IssueForm.class);
+			MemberForm memberForm = new MemberForm();
+			try {
+				BeanUtils.copyProperties(memberForm, member);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			memberForms.add(memberForm);
+		}
+		
+		System.out.println(memberForms);
+		
+		return memberForms;
+	}
 	public List<Member> showMembers() {
 
 	List<Member> memberList=memberDao.showMembers();
 		
 		return memberList;
 
-		
 	//	return null;
 
-	}
 
-	public List<Member> searchMembers(String search) {
-		
-		return null;
 	}
 
 	public List<Member> deleteMember(int memberId) {
 		
 		return null;
+	}
+
+	/**
+	 *blockUnblockMember method is used to block or unblock the member
+	 * 
+	 */
+	public List<Member> blockUnblockMember(MemberForm memberForm) {
+
+		Member member=new Member();
+		member.setMemberId(memberForm.getMemberId());
+		member.setManagerName(memberForm.getManagerName());
+		
+		List<Member> members=memberDao.blockUnblockMember(member);
+		return members;
 	}
 	
 	

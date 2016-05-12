@@ -15,6 +15,6 @@ public interface IssueService {
 	
 	public List<ProjectForm> getProjectNames();
 	
-	public void createIssue(Issue issue);
+	public void createIssue(IssueForm issueForm);
 	
 }
