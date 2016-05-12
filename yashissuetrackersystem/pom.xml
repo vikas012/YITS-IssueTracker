@@ -131,13 +131,13 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-
+	<!-- mail dependencies -->
 	<dependency>
 	<groupId>com.sun.mail</groupId>
 	<artifactId>gimap</artifactId>
 	<version>1.5.5</version>
 </dependency>
-<!-- mail dependencies -->
+
 	<dependency>
 		<groupId>org.apache.poi</groupId>
 		<artifactId>poi</artifactId>

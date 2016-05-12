@@ -244,7 +244,12 @@ public class MemberServiceImpl implements MemberService {
 		String subject="Successful Registration In IssueTracker Application!!!";
 		simpleMailMessage.setSubject(subject);
 		
-		String message="Hello,you have been successful registered with IssueTracker Application with email id "+memberForm.getEmail();
+		String message="Hi," 
+						+ "You have been successfully successfully registered with Yash Issue Tracking System Application with email id."+memberForm.getEmail()+
+
+		"Regards,"
+		+"Team : Yash Issue Tracking Sytem.";
+		
 		simpleMailMessage.setText(message);
 		
 		javaMailSender.send(simpleMailMessage);

@@ -1,37 +1,18 @@
-angular
-		.module('issueTrackingSystem.managerModule')
-		.controller(
-				'managerController',
-				[
-						'$scope',
-						'$http',
-						'managerService',
-						function($scope, $http, managerService, issueList,
-								unassignedIssueList, memberList) {
-							// $scope.issueList=issueList.data;
+angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope, $http, managerService, issueList,unassignedIssueList, memberList) {
+							
 
-							alert("manager");
-							$scope.members = memberList.data;
-							// alert(memberList.data);
-
+							
 							$scope.showLookUpForm = false;
 							$scope.showRegisterForm = false;
-							$scope.ldapUser = {
-								ldapName : "",
-								ldapEmail : ""
-							};
+							$scope.ldapUser = {ldapName : "",ldapEmail : ""};
 							$scope.members = [];
-							$scope.member = {
-								memberId : "",
-								name : "",
-								email : "",
-								contact : ""
-							};
+							$scope.member = {memberId : "",name : "",email : "",contact : ""};
 							$scope.userId = "";
 							$scope.userName = "";
 							$scope.userEmail = "";
 							$scope.userMobile = "";
 
+							//$scope.members = memberList.data;
 							$scope.showLookForm = function() {
 
 								$scope.showLookUpForm = true;
@@ -40,6 +21,7 @@ angular
 
 							$scope.checkUser = function() {
 
+								alert("inside check user");
 								$scope.ldapUser.ldapName = $scope.ldapName;
 								$scope.ldapUser.ldapEmail = $scope.ldapEmail;
 
@@ -50,8 +32,7 @@ angular
 							}
 							$scope.checkUserInLdap = function(ldapUser) {
 
-								managerService
-										.checkUserInLdap(ldapUser)
+								managerService.checkUserInLdap(ldapUser)
 										.then(
 												function(d) {
 
@@ -86,21 +67,20 @@ angular
 								alert("Please Enter Text controller!");
 								alert($scope.searchText);
 								var searchText = $scope.searchText;
-								
+
 								if (searchText == "") {
 									alert("Please Enter Text!");
-								}
-								else{
-									managerService.searchMember(searchText)
-									.then(
-											function(data){
-												$scope.members=data;
-											},
-											 function(errResponse)
-											 {
-												 console.error('Error while showing search members');
-											 }
-									)	
+								} else {
+									managerService
+											.searchMember(searchText)
+											.then(
+													function(data) {
+														$scope.members = data;
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing search members');
+													})
 								}
 							};
 
@@ -116,16 +96,16 @@ angular
 							 * case 0: $scope.priorities=value; break; case 1:
 							 * $scope.assigneeList=value; break; case 2:
 							 * $scope.issueTypeList=value; break; case 3:
-							 * $scope.projects=value; break; } });
-							 *  }, function(errResponse){ console.error('Error
-							 * while fetching'); } );
+							 * $scope.projects=value; break; } }); },
+							 * function(errResponse){ console.error('Error while
+							 * fetching'); } );
 							 * 
-							 * this.createIssue={}; this.add=function(){
-							 *  // call service to persist in db
+							 * this.createIssue={}; this.add=function(){ // call
+							 * service to persist in db
 							 * managerService.submitCreateIssue(this.createIssue);
-							 * .then( function(d) {
-							 *  }, function(errResponse){ console.error('Error
-							 * while fetching'); } ); this.createIssue={}; };
+							 * .then( function(d) { }, function(errResponse){
+							 * console.error('Error while fetching'); } );
+							 * this.createIssue={}; };
 							 * 
 							 * this.getIssues = function() {
 							 * 
@@ -135,7 +115,6 @@ angular
 							 * function(data){ $scope.issues=data; },
 							 * function(errResponse) { console.error('Error
 							 * while showing default search issues'); } )
-							 * 
 							 *  } };
 							 * 
 							 * this.change=function(){ if(this.searchText ==

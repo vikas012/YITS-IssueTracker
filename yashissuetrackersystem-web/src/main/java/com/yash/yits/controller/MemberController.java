@@ -76,10 +76,10 @@ public class MemberController {
 	@RequestMapping(value="/memberList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Member> showMembersList(){
 		System.out.println("for member list");
-	List<Member> membersList=memberService.showMembers();
+		List<Member> membersList=memberService.showMembers();
 		
 		return membersList;
-		//return "succes";
+		
 	}
 	@ResponseBody 
 	@RequestMapping(value="/checkMemberInLdap" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)

@@ -41,7 +41,7 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.mail.yahoo.com" />
 		<property name="port" value="587" />
-		<property name="username" value="yashissuetrackersystem@yahoo.com" />
+		<property name="username" value="yashissuetracker@yahoo.com" />
 		<property name="password" value="8103284296" />
 		<property name="javaMailProperties">
 			<props>
