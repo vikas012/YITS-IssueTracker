@@ -83,7 +83,7 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 		userService.submitCreateIssue(formData)
 		.then(
 				function(formData) {
-						alert("yoo");
+						alert("REgistered");
 				},
 				function(errResponse)
 				{

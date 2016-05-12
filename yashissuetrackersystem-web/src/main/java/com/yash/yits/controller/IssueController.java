@@ -108,7 +108,9 @@ public class IssueController {
 		System.out.println(issueForm.getApplicationIssuePriority());
 		System.out.println(issueForm.getComponent());
 		System.out.println(issueForm.getDescription());
+		System.out.println(issueForm.getSummary());
 		System.out.println("in create issue");
+		
 		//System.out.println(issue);
 		//System.out.println(issue.getComponent());
 		issueService.createIssue(issueForm,createdBy);

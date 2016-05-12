@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yash.yits.dao.IssueDao;
 import com.yash.yits.domain.ApplicationEnvironment;
 import com.yash.yits.domain.ApplicationIssuePriority;
+import com.yash.yits.domain.ApplicationIssueStatus;
 import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.form.IssueForm;
@@ -172,15 +173,19 @@ public class IssueServiceImpl implements IssueService{
 		ApplicationIssueType applicationIssueType=new ApplicationIssueType();
 		applicationIssueType.setId(issueForm.getApplicationIssueType().getId());
 		
+		ApplicationIssueStatus applicationIssueStatus=new ApplicationIssueStatus();
+		applicationIssueStatus.setId(1);
+		
 		Issue issue=new Issue();
 		issue.setAffectedVersion(issueForm.getAffectedVersion());
 		issue.setComponent(issueForm.getComponent());
 		issue.setDescription(issueForm.getDescription());
+		issue.setSummary(issueForm.getSummary());
 		issue.setProject(project);
 		issue.setApplicationIssuePriority(applicationIssuePriority);
 		issue.setApplicationEnvironment(applicationEnvironment);
 		issue.setApplicationIssueType(applicationIssueType);
-	
+		issue.setApplicationIssueStatus(applicationIssueStatus);
 		
 		
 		issueDao.createIssue(issue,createdBy);
