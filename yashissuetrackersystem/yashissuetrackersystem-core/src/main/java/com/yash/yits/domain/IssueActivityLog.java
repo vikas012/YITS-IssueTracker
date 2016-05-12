@@ -38,6 +38,14 @@ public class IssueActivityLog implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
 	private ApplicationTeamMember lastModifiedBy;
+	
+	//bi-directional many-to-one association to ApplicationTeamMember
+	@ManyToOne
+	@JoinColumn(name="CREATED_BY")
+	private ApplicationTeamMember createdBy;
+
+	public IssueActivityLog() {
+	}
 
 	public int getId() {
 		return id;
@@ -103,13 +111,7 @@ public class IssueActivityLog implements Serializable {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
-	//bi-directional many-to-one association to ApplicationTeamMember
-	@ManyToOne
-	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember createdBy;
 
-	public IssueActivityLog() {
-	}
 	
 	
 }

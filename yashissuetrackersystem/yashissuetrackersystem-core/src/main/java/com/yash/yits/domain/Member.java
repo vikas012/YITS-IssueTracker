@@ -1,6 +1,28 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
+
+
+import javax.persistence.*;
+
+
+
+
+import org.hibernate.annotations.LazyCollection;
+
+import org.hibernate.annotations.LazyCollectionOption;
+
+
+
+import org.hibernate.annotations.LazyCollectionOption;
+
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+
+
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -52,14 +74,6 @@ public class Member implements Serializable {
 	@Column(name="MEMBER_ID")
 	private Long memberId;
 	
-	public Long getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
-	}
-
 	@Column(name="MANAGER_ID")
 	private Long managerId;
 	
@@ -71,10 +85,6 @@ public class Member implements Serializable {
 
 	private String name;
 
-	//bi-directional many-to-one association to ApplicationTeamMember
-	@Fetch(value = FetchMode.SUBSELECT)
-	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
-	private List<ApplicationTeamMember> applicationTeamMembers;
 
 	public Member() {
 	}
@@ -109,6 +119,14 @@ public class Member implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Long getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Long memberId) {
+		this.memberId = memberId;
 	}
 
 	public int getIsActive() {
@@ -151,14 +169,14 @@ public class Member implements Serializable {
 		this.name = name;
 	}
 
-	public List<ApplicationTeamMember> getApplicationTeamMembers() {
+/*	public List<ApplicationTeamMember> getApplicationTeamMembers() {
 		return applicationTeamMembers;
 	}
 
 	public void setApplicationTeamMembers(List<ApplicationTeamMember> applicationTeamMembers) {
 		this.applicationTeamMembers = applicationTeamMembers;
 	}
-
+*/
 	
 
 	@Override

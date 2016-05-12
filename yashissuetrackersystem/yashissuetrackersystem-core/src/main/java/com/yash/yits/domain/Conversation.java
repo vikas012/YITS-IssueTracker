@@ -25,7 +25,6 @@ import javax.persistence.OneToMany;
 @NamedQuery(name="Conversation.findAll", query="SELECT c FROM Conversation c")
 public class Conversation implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
@@ -49,6 +48,11 @@ public class Conversation implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
+
+	/*//bi-directional many-to-one association to Attachment
+	@OneToMany(mappedBy="conversation", fetch=FetchType.EAGER)
+	private List<Attachment> attachments;
+*/
 
 	public Conversation() {
 	}
@@ -77,13 +81,13 @@ public class Conversation implements Serializable {
 		this.message = message;
 	}
 
-	public List<Attachment> getAttachments() {
+/*	public List<Attachment> getAttachments() {
 		return attachments;
 	}
 
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
-	}
+	}*/
 
 	public Issue getIssue() {
 		return issue;

@@ -49,11 +49,10 @@ public class ApplicationIssuePriority implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="SEVERITY_ID")
 	private ApplicationSeverity applicationSeverity;
-
-	//bi-directional many-to-one association to Issue
+/*	//bi-directional many-to-one association to Issue
 	@OneToMany(mappedBy="applicationIssuePriority", fetch=FetchType.EAGER)
 	private List<Issue> issues;
-
+*/
 	public ApplicationIssuePriority() {
 	}
 
@@ -129,13 +128,13 @@ public class ApplicationIssuePriority implements Serializable {
 		this.applicationSeverity = applicationSeverity;
 	}
 
-	public List<Issue> getIssues() {
+/*	public List<Issue> getIssues() {
 		return issues;
 	}
 
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
-	}
+	}*/
 
 	@Override
 	public String toString() {
