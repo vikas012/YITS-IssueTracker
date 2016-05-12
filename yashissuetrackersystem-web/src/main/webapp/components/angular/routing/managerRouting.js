@@ -23,8 +23,8 @@ managerModule.config(function($routeProvider){
 				}
 				})
 
-				controller:'managerController as mc'
-			})
+				
+			
 			.when('/createIssueManager',{
 				templateUrl:'../showCreateIssueForm',
 				controller:'managerController as mc'
@@ -40,5 +40,5 @@ managerModule.config(function($routeProvider){
 				}
 			
 			})
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
+
 	});

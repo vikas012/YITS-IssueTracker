@@ -16,32 +16,31 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-=======
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yash.yits.dao.MemberDao;
 import com.yash.yits.domain.Member;
 import com.yash.yits.form.LdapUser;
-<<<<<<< HEAD
-import com.yash.yits.form.MemberForm;
-=======
-import com.yash.yits.form.LoginForm;
-import com.yash.yits.form.MemberForm;
-import com.yash.yits.form.UserForm;
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
-import com.yash.yits.service.MemberService;
-<<<<<<< HEAD
 
-=======
+import com.yash.yits.form.MemberForm;
+
+import com.yash.yits.form.LoginForm;
+
+import com.yash.yits.form.UserForm;
+
+import com.yash.yits.service.MemberService;
+
+
+
 import com.yash.yits.util.ContextAware;
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
+
 
 /**
  * @author somesh.kumar
@@ -50,23 +49,21 @@ import com.yash.yits.util.ContextAware;
 
 
 
-@Transactional
+
 @Service
 @Transactional
 public class MemberServiceImpl implements MemberService {
 	
-<<<<<<< HEAD
+
 	
 	@Autowired
 	private MemberDao memberDao;
-=======
-	@Autowired
-	private MemberDao memberDao;
+
 	
 	@Autowired
 	JavaMailSender javaMailSender;
 	
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
+
 
 	
 	UserForm userForm=new UserForm();
@@ -260,14 +257,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	public List<Member> showMembers() {
-<<<<<<< HEAD
+
 	List<Member> memberList=memberDao.showMembers();
 		
 		return memberList;
-=======
-		
-		return null;
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
+
 	}
 
 	public List<Member> searchMembers(String search) {
