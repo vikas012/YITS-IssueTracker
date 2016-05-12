@@ -1,16 +1,7 @@
 package com.yash.yits.form;
 
 import java.sql.Timestamp;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import com.yash.yits.domain.ApplicationTeamMember;
-import com.yash.yits.domain.Issue;
+import java.util.Date;
 
 public class IssueActivityLogForm {
 	
@@ -18,11 +9,11 @@ public class IssueActivityLogForm {
 
 	private String action;
 
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private int isActive;
 
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	private IssueForm issue;
 
@@ -44,13 +35,7 @@ public class IssueActivityLogForm {
 		this.action = action;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
 
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
 
 	public int getIsActive() {
 		return isActive;
@@ -60,11 +45,20 @@ public class IssueActivityLogForm {
 		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 

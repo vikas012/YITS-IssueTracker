@@ -1,19 +1,7 @@
 package com.yash.yits.form;
 
 import java.sql.Timestamp;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import com.yash.yits.domain.ApplicationTeamMember;
-import com.yash.yits.domain.Member;
+import java.util.Date;
 
 public class MemberForm {
 
@@ -23,7 +11,7 @@ public class MemberForm {
 
 	private int createdBy;
 
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private String email;
 
@@ -31,7 +19,7 @@ public class MemberForm {
 
 	private int lastModifiedBy;
 
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	private Long memberId;
 	
@@ -67,13 +55,7 @@ public class MemberForm {
 		this.createdBy = createdBy;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
+	
 
 	public String getEmail() {
 		return email;
@@ -99,14 +81,23 @@ public class MemberForm {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+	
+
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
-
 
 	public Long getMemberId() {
 		return memberId;
