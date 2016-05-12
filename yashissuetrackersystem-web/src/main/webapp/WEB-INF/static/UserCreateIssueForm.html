@@ -32,15 +32,15 @@ width:50%;
   </div>
   <div class="form-group col-sm-4">
 <label for="issueType">IssueType</label>
-<select ng-model="uc.createIssue.issueType.issueId" class="dropDown form-control">
-<option ng-repeat="issueType in issueTypeList" value="{{issueType.issueId}}" >{{issueType.issueType}}</option>
+<select ng-model="uc.createIssue.issueType.id" class="dropDown form-control">
+<option ng-repeat="issueType in issueTypeList" value="{{issueType.id}}" >{{issueType.type}}</option>
 </select>
   </div>
   
   <div class="form-group col-sm-4">
 <label for="issuePriority">IssuePriority</label>
-<select ng-model="uc.createIssue.issuePriority.issuePriorityId" class="dropDown form-control">
-<option ng-repeat="priority in priorities" value="{{priority.issuePriorityId}}">{{priority.issuePriorityType}}</option>
+<select ng-model="uc.createIssue.issuePriority.id" class="dropDown form-control">
+<option ng-repeat="priority in priorities" value="{{priority.id}}">{{priority.type}}</option>
 </select>
   </div>
 </div>

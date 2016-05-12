@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import java.util.ArrayList;
@@ -155,11 +156,11 @@ public class IssueServiceImpl implements IssueService{
 		return projectForms;
 	}
 
-	public void getAllSelectFields(ProjectForm projectForm, MemberForm member) {
+	public Map<String, Object> getAllSelectFields(ProjectForm projectForm, MemberForm member) {
 		Project project = new Project();
 		project.setId(projectForm.getId());
 		
-		issueDao.getAllSelectFields(project,member);
+		return issueDao.getAllSelectFields(project,member);
 		
 	}
 	

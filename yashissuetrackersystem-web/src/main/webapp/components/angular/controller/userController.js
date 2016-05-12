@@ -1,6 +1,7 @@
 angular.module('issueTrackingSystem.userModule').controller('userController',['$scope','$http','userService',function($scope,$http,userService){
 	alert("in controller");
 	
+	
 	userService.initializeSelect()
 	.then(
 			function(d) {
@@ -11,7 +12,7 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 			}
 			
 	);
-
+	
 	$scope.myFunc=function()
 	{
 		var projectId = angular.element(
@@ -24,9 +25,12 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 		}
 		userService.initializeSelectAll(this.pId).then(
 				function(d) {
-					
-					alert(d);
-					
+					alert("in success all select");
+					alert("In controller select all called");
+					alert(d.myValue1);
+					$scope.issueTypeList=d.issueType;
+					$scope.priorities=d.issuePriority;
+					$scope.environments=d.applicationEnvironment;
 
 				});
 	}

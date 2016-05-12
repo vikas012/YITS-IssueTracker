@@ -6,7 +6,7 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	          return $http.get('./getProjects')
 	              .then(
 	                      function(response){
-	                    	  alert("in service");
+	                    	  alert("in service for projects");
 	                          return response.data;
 	                      }, 
 	                      function(errResponse){
@@ -21,7 +21,7 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	      		return $http.get('./getAllSelectFields/'+projectId)
 	              .then(
 	                      function(response){
-	                    	  alert("in service");
+	                    	  alert("in service for all");
 	                          return response.data;
 	                      }, 
 	                      function(errResponse){
