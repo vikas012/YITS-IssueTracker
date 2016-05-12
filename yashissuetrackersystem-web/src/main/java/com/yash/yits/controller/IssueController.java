@@ -1,11 +1,17 @@
 package com.yash.yits.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,9 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import com.yash.yits.domain.Issue;
-
-
-
+import com.yash.yits.domain.Member;
 import com.google.gson.Gson;
 import com.yash.yits.form.ProjectForm;
 import com.yash.yits.domain.Issue;
@@ -63,14 +67,32 @@ public class IssueController {
 	
 	@ResponseBody
 	@RequestMapping(value="/getProjects",produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<ProjectForm> getProjects()
+	public Map<String,Object> getProjects()
 	{
 		System.out.println("in controller for show projects");
 		List<ProjectForm> projectForms=issueService.getProjectNames();
 		System.out.println(projectForms);
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("projects", projectForms);
+		map.put("myValue", "Hie there");
+		return map;
+
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/getAllSelectFields/{projectId}",produces=MediaType.APPLICATION_JSON_VALUE)
+	public Map<String,Object> getAllSelectFields(@PathVariable("projectId") int projectId,HttpServletRequest httpServletRequest )
+	{
+		System.out.println("project Id>>>>"+projectId);
+		Member member = new Member();
 		
+		member.setMemberId((Long)httpServletRequest.getSession().getAttribute("memberId"));
+		System.out.println("Member ID>>>> "+member.getMemberId());
+		Map<String,Object> map = new HashMap<String, Object>();
 		
-		return projectForms;
+		map.put("myValue", "Hello there");
+		return map;
 
 	}
 

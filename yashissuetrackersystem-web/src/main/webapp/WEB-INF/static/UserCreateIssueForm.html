@@ -68,8 +68,10 @@ width:50%;
 <input type="text" ng-model="uc.createIssue.affectedVersion" class="form-control" />
  </div>
  <div class="form-group col-sm-4">
-<label for="environment">ApplicationEnvironment</label>
-<input type="text" ng-model="uc.createIssue.applicationEnvironment" class="form-control" />
+ <label for="applicationEnvironment">ApplicationEnvironment</label>
+<select ng-model="uc.createIssue.applicationEnvironment" class="dropDown form-control">
+<option ng-repeat="environment in environments" value="{{environment.id}}">{{environment.environment}}</option>
+</select>
  </div>
  </div>
  <div class="box4">
@@ -86,18 +88,18 @@ width:50%;
  
   <div class="form-group col-sm-4">
 <label for="environment">Original Estimate</label>
-<input type="text" ng-model="uc.createIssue.applicationEnvironment" class="form-control" />
+<input type="text" ng-model="uc.createIssue.applicationEnvironment" class="form-control" disabled/>
  </div>
  
  <div class="form-group col-sm-4">
 <label for="dueDate">IssueDueDate</label>
-<input type="date" ng-model="uc.createIssue.originalEstimate" class="form-control" />
+<input type="date" ng-model="uc.createIssue.originalEstimate" class="form-control" disabled />
  </div>
  
  <div class="form-group col-sm-4">
-<label for="issueProject">IssueAssignee</label>
+<label for="issueTeamMember">IssueOwner</label>
 <select class="dropDown form-control" ng-model="" class="form-control">
-<option value="{{assignee.memberId}}" ng-repeat="assignee in assigneeList" value="{{assignee.memberId}}">{{assignee.name}}</option>
+<option value="{{owner.memberId}}" ng-repeat="owner in team" value="{{owner.memberId}}">{{owner.email}}</option>
 </select>
   </div>
  </div> 
