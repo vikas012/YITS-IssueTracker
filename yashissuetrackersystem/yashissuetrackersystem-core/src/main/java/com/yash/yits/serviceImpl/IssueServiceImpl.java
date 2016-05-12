@@ -159,7 +159,7 @@ public class IssueServiceImpl implements IssueService{
 
 
 
-	public void createIssue(IssueForm issueForm) {
+	public void createIssue(IssueForm issueForm,Long createdBy) {
 		Project project=new Project();
 		project.setId(issueForm.getProject().getId());
 		
@@ -183,7 +183,7 @@ public class IssueServiceImpl implements IssueService{
 	
 		
 		
-		issueDao.createIssue(issue);
+		issueDao.createIssue(issue,createdBy);
 		
 	}
 	

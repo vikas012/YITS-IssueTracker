@@ -99,7 +99,7 @@ public class IssueController {
 	@RequestMapping(value="/createIssue",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.POST)
 	public String createIssue(@RequestBody IssueForm issueForm,HttpServletRequest httpServletRequest){
 		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
-
+		
 		
 		System.out.println(createdBy);
 		//issueForm.setCreatedBy(createdBy);
@@ -111,7 +111,7 @@ public class IssueController {
 		System.out.println("in create issue");
 		//System.out.println(issue);
 		//System.out.println(issue.getComponent());
-		issueService.createIssue(issueForm);
+		issueService.createIssue(issueForm,createdBy);
 		System.out.println("in controller for show projects");
 		return null;
 
