@@ -36,7 +36,7 @@ managerModule.config(function($routeProvider) {
 	
 	$routeProvider.when('/addMember', {
 
-		templateUrl : 'showYashForm',
+		templateUrl : '../showYashForm',
 		controller : 'managerController as mc'
 	})
 
