@@ -78,6 +78,9 @@ public class MemberController {
 		System.out.println("for member list");
 	List<Member> membersList=memberService.showMembers();
 		
+	for (Member member : membersList) {
+		System.out.println(member.getName());
+	}
 		return membersList;
 		//return "succes";
 	}

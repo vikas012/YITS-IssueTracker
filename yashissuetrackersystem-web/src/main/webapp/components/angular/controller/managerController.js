@@ -7,13 +7,19 @@ angular
 						'$http',
 						'managerService',
 						function($scope, $http, managerService, issueList,
-								unassignedIssueList, memberList) {
-							// $scope.issueList=issueList.data;
-
-							alert("manager");
-							$scope.members = memberList.data;
-							// alert(memberList.data);
-
+								unassignedIssueList) {
+							alert("controller");
+							
+							$scope.members1 = [];
+						
+							 var issues=$http({
+								  method:'GET',
+								      url:'../memberList' 
+								  }).success(function(data){
+									  
+									  $scope.members1=data;
+								  })
+							
 							$scope.showLookUpForm = false;
 							$scope.showRegisterForm = false;
 							$scope.ldapUser = {
@@ -82,6 +88,14 @@ angular
 								managerService.registerMember($scope.member);
 
 							}
+							
+							$scope.deleteMember=function(){
+								
+								
+								
+							}
+							
+							
 							$scope.getSearchMember = function() {
 								alert("Please Enter Text controller!");
 								alert($scope.searchText);

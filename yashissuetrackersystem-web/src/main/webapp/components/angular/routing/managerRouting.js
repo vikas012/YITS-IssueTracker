@@ -1,5 +1,5 @@
 
-var managerModule = angular.module('issueTrackingSystem.managerModule',[ 'ngRoute' ]);
+/*var managerModule = angular.module('issueTrackingSystem.managerModule',[ 'ngRoute' ]);
 managerModule.config(function($routeProvider) {
 	$routeProvider.when('/addMember', {
 
@@ -28,12 +28,12 @@ managerModule.config(function($routeProvider) {
 
 	
 
-});
+});*/
 
 var managerModule = angular.module('issueTrackingSystem.managerModule',[ 'ngRoute' ]);
 managerModule.config(function($routeProvider) {
-	alert("routing");
-
+	
+	
 	$routeProvider.when('/addMember', {
 
 		templateUrl : 'showYashForm',
@@ -41,14 +41,15 @@ managerModule.config(function($routeProvider) {
 	})
 
 	.when('/showMembers', {
-		templateUrl : 'showMembersPage',
+		
+		templateUrl : '../showMembersPage',
 
-		controller : 'managerController as mc',
-		resolve : {
+		controller : 'managerController',
+		/*resolve : {
 			memberList : function(managerService) {
 				return managerService.getMembers();
 			}
-		}
+		}*/
 	})
 	.when('/searchMembers',{
 				
@@ -57,8 +58,7 @@ managerModule.config(function($routeProvider) {
 			})
 
 
-	// controller:'managerController as mc'
-	// })
+	
 	.when('/createIssueManager', {
 		templateUrl : '../showCreateIssueForm',
 		controller : 'managerController as mc'
@@ -88,10 +88,12 @@ managerModule.config(function($routeProvider) {
 				controller:'managerController'
 			})
 			
-			.when('/showMembers', {
+	.when('/showMembers', {
 
-		templateUrl : 'showMembersPage',
-		controller : 'managerController as mc'
+		templateUrl : '../showMembersPage',
+		controller : 'managerController',			
+			
+		
 	})
 
 	

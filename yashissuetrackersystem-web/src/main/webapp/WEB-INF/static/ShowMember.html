@@ -7,10 +7,7 @@
 </head>
 <body ng-controller="managerController as mc">
 
-<<<<<<< HEAD
-=======
-hello
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker.git
+
 
 <div>
 			<table id="listOfMembers" class="table table-striped">
@@ -22,8 +19,8 @@ hello
 					<th colspan="2">ACTION</th>
 				</tr>
 
-				<tr ng-repeat="member in members">
-					<td><input id='radio' type='radio' value={{member.id}}></td>				
+				<tr ng-repeat="member in members1">
+					<td><input id='radio' type='radio' value={{member.memberId}}></td>				
 					<td>{{member.name}}</td>
 					<td>{{member.email}}</td>
 					<td>{{member.contact}}</td>

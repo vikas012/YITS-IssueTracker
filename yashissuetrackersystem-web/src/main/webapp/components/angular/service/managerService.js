@@ -1,4 +1,6 @@
-angular.module('issueTrackingSystem.managerModule').factory('managerService',['$http','$q',function($http,$q){
+angular.module('issueTrackingSystem.managerModule').factory('managerService',['$http','$q',function($http,$q,$scope){
+	
+
 	
 	  return {
 		  
@@ -21,16 +23,18 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  			},
 
 
-	  getMembers:function(){
-		  alert("shraddha");
+		  /*getMembers:function(){
+		  alert("in service for data");
 		  var issues=$http({
 		  method:'GET',
-		      url:'./memberList' //spring controller call, use @ResponseBody
+		      url:'../memberList' 
 		  }).success(function(data){
-		  alert("Succeess");
+			  
+		  alert(data+"service");	
+		  
 		  return data;
 		  })
-		  },
+		  },*/
 
 		  searchMember:function(searchText){
 			  alert("Please Enter Text service!");

@@ -65,16 +65,21 @@ public class MemberDaoImpl implements MemberDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
-		 Criteria  criteria  =session.createCriteria(Member.class);
-		 
-		   criteria.setProjection(Projections.projectionList().add(
-		     Projections.property("name")).add(Projections.property("email"))); 
-
 		
+		Criteria criteria =session.createCriteria(Member.class)
+				.setProjection(Projections.projectionList()		
+						.add(Projections.property("memberId"), "memberId")
+					      .add(Projections.property("name"), "name")
+					      .add(Projections.property("email"), "email")
+							.add(Projections.property("contact"), "contact"))
+					    .setResultTransformer(Transformers.aliasToBean(Member.class));
 		List<Member> allMembers = criteria.list();
+		
+		
 		System.out.println(allMembers);
 		for (Member member : allMembers) {
-			System.out.println(member);
+			System.out.println(member.getEmail());
+			System.out.println(member.getMemberId());
 		}
 		
 		
