@@ -56,9 +56,9 @@ public class ApplicationProjectStatus implements Serializable {
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
 
-	//bi-directional many-to-one association to Project
+/*	//bi-directional many-to-one association to Project
 	@OneToMany(mappedBy="applicationProjectStatus", fetch=FetchType.EAGER)
-	private List<Project> projects;
+	private List<Project> projects;*/
 
 	public ApplicationProjectStatus() {
 	}
@@ -127,12 +127,12 @@ public class ApplicationProjectStatus implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public List<Project> getProjects() {
+	/*public List<Project> getProjects() {
 		return projects;
 	}
 
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
-
+*/
 }

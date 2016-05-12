@@ -53,13 +53,13 @@ public class Issue implements Serializable {
 
 	private String summary;
 
-	//bi-directional many-to-one association to Attachment
+	/*//bi-directional many-to-one association to Attachment
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
 	private List<Attachment> attachments;
 
 	//bi-directional many-to-one association to Conversation
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
-	private List<Conversation> conversations;
+	private List<Conversation> conversations;*/
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
@@ -110,18 +110,18 @@ public class Issue implements Serializable {
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
 
-	//bi-directional many-to-one association to IssueActivityLog
+/*	//bi-directional many-to-one association to IssueActivityLog
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
-	private List<IssueActivityLog> issueActivityLogs;
+	private List<IssueActivityLog> issueActivityLogs;*/
 	
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="ASSIGNED_USER")
 	private ApplicationTeamMember assignedUser;
 	
-	//bi-directional many-to-one association to IssuePauseReason
+/*	//bi-directional many-to-one association to IssuePauseReason
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
-	private List<IssuePauseReason> issuePauseReasons;
+	private List<IssuePauseReason> issuePauseReasons;*/
 	
 	public Issue() {
 	}
@@ -207,7 +207,7 @@ public class Issue implements Serializable {
 		this.summary = summary;
 	}
 
-	public List<Attachment> getAttachments() {
+	/*public List<Attachment> getAttachments() {
 		return attachments;
 	}
 
@@ -221,7 +221,7 @@ public class Issue implements Serializable {
 
 	public void setConversations(List<Conversation> conversations) {
 		this.conversations = conversations;
-	}
+	}*/
 
 	public ApplicationTeamMember getAssignedUser() {
 		return assignedUser;
@@ -231,13 +231,13 @@ public class Issue implements Serializable {
 		this.assignedUser = assignedUser;
 	}
 
-	public List<IssuePauseReason> getIssuePauseReasons() {
+	/*public List<IssuePauseReason> getIssuePauseReasons() {
 		return issuePauseReasons;
 	}
 
 	public void setIssuePauseReasons(List<IssuePauseReason> issuePauseReasons) {
 		this.issuePauseReasons = issuePauseReasons;
-	}
+	}*/
 
 	public String getTaskProgressUpdate() {
 		return taskProgressUpdate;
@@ -327,12 +327,12 @@ public class Issue implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public List<IssueActivityLog> getIssueActivityLogs() {
+/*	public List<IssueActivityLog> getIssueActivityLogs() {
 		return issueActivityLogs;
 	}
 
 	public void setIssueActivityLogs(List<IssueActivityLog> issueActivityLogs) {
 		this.issueActivityLogs = issueActivityLogs;
-	}
+	}*/
 
 }

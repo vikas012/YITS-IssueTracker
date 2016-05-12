@@ -52,10 +52,10 @@ public class Project implements Serializable {
 	@Column(name="START_DATE")
 	private Date startDate;
 
-	//bi-directional many-to-one association to Issue
+/*	//bi-directional many-to-one association to Issue
 	@OneToMany(mappedBy="project", fetch=FetchType.EAGER)
 	private List<Issue> issues;
-
+*/
 	//bi-directional many-to-one association to Application
 	@ManyToOne
 	private Application application;
@@ -93,9 +93,9 @@ public class Project implements Serializable {
 		)
 	private List<ApplicationTeamMember> applicationTeamMembers;
 
-	//bi-directional many-to-one association to ProjectRelease
+/*	//bi-directional many-to-one association to ProjectRelease
 	@OneToMany(mappedBy="project", fetch=FetchType.EAGER)
-	private List<ProjectRelease> projectReleases;
+	private List<ProjectRelease> projectReleases;*/
 
 	public Project() {
 	}
@@ -157,13 +157,13 @@ public class Project implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public List<Issue> getIssues() {
+/*	public List<Issue> getIssues() {
 		return issues;
 	}
 
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
-	}
+	}*/
 
 	public Application getApplication() {
 		return application;
@@ -213,13 +213,13 @@ public class Project implements Serializable {
 		this.applicationTeamMembers = applicationTeamMembers;
 	}
 
-	public List<ProjectRelease> getProjectReleases() {
+/*	public List<ProjectRelease> getProjectReleases() {
 		return projectReleases;
 	}
 
 	public void setProjectReleases(List<ProjectRelease> projectReleases) {
 		this.projectReleases = projectReleases;
-	}
+	}*/
 
 	@Override
 	public String toString() {
