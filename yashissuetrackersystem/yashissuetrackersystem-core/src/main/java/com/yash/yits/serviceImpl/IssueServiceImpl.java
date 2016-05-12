@@ -19,6 +19,7 @@ import java.util.List;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yash.yits.dao.IssueDao;
-
+import com.yash.yits.domain.ApplicationEnvironment;
+import com.yash.yits.domain.ApplicationIssuePriority;
+import com.yash.yits.domain.ApplicationIssueStatus;
+import com.yash.yits.domain.ApplicationIssueType;
+import com.yash.yits.domain.ApplicationTeamMember;
 import com.yash.yits.domain.Issue;
+import com.yash.yits.domain.Member;
+import com.yash.yits.form.ApplicationIssuePriorityForm;
+import com.yash.yits.form.ApplicationIssueStatusForm;
+import com.yash.yits.form.ApplicationIssueTypeForm;
+import com.yash.yits.form.ApplicationTeamMemberForm;
 import com.yash.yits.form.IssueForm;
-
+import com.yash.yits.form.MemberForm;
 import com.yash.yits.dao.IssueDao;
 import com.yash.yits.domain.Issue;
 
@@ -133,15 +143,43 @@ public class IssueServiceImpl implements IssueService{
 			
 			IssueForm issueForm = new IssueForm();
 			
-			try {
-				BeanUtils.copyProperties(issueForm, issue);
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			issueForm.setId(issue.getId());
+			issueForm.setCloseDate(issue.getCloseDate());
+			issueForm.setCreatedDateTime(issue.getCreatedDateTime());
+			issueForm.setDueDate(issue.getDueDate());
+			issueForm.setSummary(issue.getSummary());
+			issueForm.setAssignedUser(issue.getAssignedUser().getMember().getId());
+			
+			/*ApplicationTeamMemberForm issueOwner=new ApplicationTeamMemberForm();
+			MemberForm memberForm=new MemberForm();
+			memberForm.setId(issue.getIssueOwner().getMember().getId());
+			issueOwner.setMember(memberForm);
+			issueForm.setIssueOwner(issueOwner);*/
+			
+			ProjectForm projectForm=new ProjectForm();
+			projectForm.setId(issue.getProject().getId());
+			issueForm.setProject(projectForm);
+			
+			ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setId(issue.getApplicationIssuePriority().getId());
+			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+			
+			ApplicationIssueStatusForm applicationIssueStatusForm=new ApplicationIssueStatusForm();
+			applicationIssueStatusForm.setId(issue.getApplicationIssueStatus().getId());
+			issueForm.setApplicationIssueStatus(applicationIssueStatusForm);
+			
+			/*ApplicationTeamMemberForm createdBy=new ApplicationTeamMemberForm();
+			MemberForm memberForm2=new MemberForm();
+			memberForm2.setId(issue.getCreatedBy().getMember().getId());
+			createdBy.setMember(memberForm2);
+			issueForm.setCreatedBy(createdBy);*/
+		
+			
+			
+			ApplicationIssueTypeForm applicationIssueTypeForm=new ApplicationIssueTypeForm();
+			applicationIssuePriorityForm.setType(issue.getApplicationIssueType().getType());
+			issueForm.setApplicationIssueType(applicationIssueTypeForm);
+			
 			issueForms.add(issueForm);
 		}
 		
@@ -171,6 +209,49 @@ public class IssueServiceImpl implements IssueService{
 		}
 		System.out.println("in service "+projectForms);
 		return projectForms;
+	}
+
+
+
+
+	public void createIssue(IssueForm issueForm,Long createdBy) {
+		Project project=new Project();
+		project.setId(issueForm.getProject().getId());
+		
+		ApplicationEnvironment applicationEnvironment=new ApplicationEnvironment();
+		applicationEnvironment.setId(issueForm.getApplicationEnvironment().getId());
+		
+		ApplicationIssuePriority applicationIssuePriority=new ApplicationIssuePriority();
+		applicationIssuePriority.setId(issueForm.getApplicationIssuePriority().getId());
+		
+		ApplicationIssueType applicationIssueType=new ApplicationIssueType();
+		applicationIssueType.setId(issueForm.getApplicationIssueType().getId());
+		
+		ApplicationIssueStatus applicationIssueStatus=new ApplicationIssueStatus();
+		applicationIssueStatus.setId(1);
+		
+		Issue issue=new Issue();
+		issue.setAffectedVersion(issueForm.getAffectedVersion());
+		issue.setComponent(issueForm.getComponent());
+		issue.setDescription(issueForm.getDescription());
+		issue.setSummary(issueForm.getSummary());
+		issue.setProject(project);
+		issue.setApplicationIssuePriority(applicationIssuePriority);
+		issue.setApplicationEnvironment(applicationEnvironment);
+		issue.setApplicationIssueType(applicationIssueType);
+		issue.setApplicationIssueStatus(applicationIssueStatus);
+		
+		
+		issueDao.createIssue(issue,createdBy);
+}
+
+	public void getAllSelectFields(ProjectForm projectForm, MemberForm member) {
+		Project project = new Project();
+		project.setId(projectForm.getId());
+		
+		issueDao.getAllSelectFields(project,member);
+
+		
 	}
 	
 }

@@ -136,4 +136,11 @@ public class ApplicationIssuePriority implements Serializable {
 		this.issues = issues;
 	}*/
 
+	@Override
+	public String toString() {
+		return "ApplicationIssuePriority [id=" + id + ", type=" + type + "]";
+	}
+
+	
+
 }

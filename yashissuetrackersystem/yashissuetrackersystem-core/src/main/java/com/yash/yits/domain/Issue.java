@@ -32,6 +32,14 @@ public class Issue implements Serializable {
 	@Column(name="CREATED_DATE_TIME")
 	private Date createdDateTime;
 
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
 	private String description;
 
 	@Column(name="DUE_DATE")

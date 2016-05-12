@@ -1,4 +1,6 @@
-angular.module('issueTrackingSystem.managerModule').factory('managerService',['$http','$q',function($http,$q){
+angular.module('issueTrackingSystem.managerModule').factory('managerService',['$http','$q',function($http,$q,$scope){
+	
+
 	
 	  return {
 		  
@@ -19,6 +21,19 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  			},
 
 
+		  /*getMembers:function(){
+		  alert("in service for data");
+		  var issues=$http({
+		  method:'GET',
+		      url:'../memberList' 
+		  }).success(function(data){
+			  
+		  alert(data+"service");	
+		  
+		  return data;
+		  })
+		  },*/
+
 		  		getMembers:function(){
 		              alert("shraddha");
 		              var issues=$http({
@@ -31,9 +46,10 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		             })
 		  		},
 
+
 		  searchMember:function(searchText){
 			  alert("Please Enter Text service!");
-					return $http.get('./searchMember/'+ searchText)
+					return $http.get('../searchMember/'+ searchText)
 				 	.then(
 				 				function(response){
 				 						return response.data;

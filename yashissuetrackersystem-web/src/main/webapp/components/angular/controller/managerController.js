@@ -1,12 +1,44 @@
-angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope, $http, managerService,unassignedIssueList, memberList) {
-							
 
+angular.module('issueTrackingSystem.managerModule')
+.controller('managerController',['$scope','$http','managerService',function($scope, $http, managerService,unassignedIssueList, memberList) {
+}
+	]);
+angular
+		.module('issueTrackingSystem.managerModule')
+		.controller(
+				'managerController',
+				[
+						'$scope',
+						'$http',
+						'managerService',
+						function($scope, $http, managerService, issueList,
+								unassignedIssueList) {
+							alert("controller");
+
+							
+							$scope.members1 = [];
+						
+							 var issues=$http({
+								  method:'GET',
+								      url:'../memberList' 
+								  }).success(function(data){
+									  
+									  $scope.members1=data;
+								  })
 							
 							$scope.showLookUpForm = false;
 							$scope.showRegisterForm = false;
-							$scope.ldapUser = {ldapName : "",ldapEmail : ""};
+							$scope.ldapUser = {
+								ldapName : "",
+								ldapEmail : ""
+							};
 							$scope.members = [];
-							$scope.member = {memberId : "",name : "",email : "",contact : ""};
+							$scope.member = {
+								memberId : "",
+								name : "",
+								email : "",
+								contact : ""
+							};
 							$scope.userId = "";
 							$scope.userName = "";
 							$scope.userEmail = "";
@@ -21,8 +53,10 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							 $scope.issueList=data;
 							 })
 
+
 							
 							//$scope.members = memberList.data;
+
 							$scope.showLookForm = function() {
 
 								$scope.showLookUpForm = true;
@@ -31,7 +65,6 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 
 							$scope.checkUser = function() {
 
-								alert("inside check user");
 								$scope.ldapUser.ldapName = $scope.ldapName;
 								$scope.ldapUser.ldapEmail = $scope.ldapEmail;
 
@@ -42,7 +75,8 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							}
 							$scope.checkUserInLdap = function(ldapUser) {
 
-								managerService.checkUserInLdap(ldapUser)
+								managerService
+										.checkUserInLdap(ldapUser)
 										.then(
 												function(d) {
 
@@ -73,24 +107,33 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								managerService.registerMember($scope.member);
 
 							}
+							
+							$scope.deleteMember=function(){
+								
+								
+								
+							}
+							
+							
 							$scope.getSearchMember = function() {
 								alert("Please Enter Text controller!");
 								alert($scope.searchText);
 								var searchText = $scope.searchText;
-
-								if (searchText == "") {
+								
+								if (searchText == undefined) {
 									alert("Please Enter Text!");
-								} else {
-									managerService
-											.searchMember(searchText)
-											.then(
-													function(data) {
-														$scope.members = data;
-													},
-													function(errResponse) {
-														console
-																.error('Error while showing search members');
-													})
+								}
+								else{
+									managerService.searchMember(searchText)
+									.then(
+											function(data){
+												$scope.members=data;
+											},
+											 function(errResponse)
+											 {
+												 console.error('Error while showing search members');
+											 }
+									)	
 								}
 							};
 
@@ -106,16 +149,16 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							 * case 0: $scope.priorities=value; break; case 1:
 							 * $scope.assigneeList=value; break; case 2:
 							 * $scope.issueTypeList=value; break; case 3:
-							 * $scope.projects=value; break; } }); },
-							 * function(errResponse){ console.error('Error while
-							 * fetching'); } );
+							 * $scope.projects=value; break; } });
+							 *  }, function(errResponse){ console.error('Error
+							 * while fetching'); } );
 							 * 
-							 * this.createIssue={}; this.add=function(){ // call
-							 * service to persist in db
+							 * this.createIssue={}; this.add=function(){
+							 *  // call service to persist in db
 							 * managerService.submitCreateIssue(this.createIssue);
-							 * .then( function(d) { }, function(errResponse){
-							 * console.error('Error while fetching'); } );
-							 * this.createIssue={}; };
+							 * .then( function(d) {
+							 *  }, function(errResponse){ console.error('Error
+							 * while fetching'); } ); this.createIssue={}; };
 							 * 
 							 * this.getIssues = function() {
 							 * 
@@ -125,10 +168,12 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							 * function(data){ $scope.issues=data; },
 							 * function(errResponse) { console.error('Error
 							 * while showing default search issues'); } )
+							 * 
 							 *  } };
 							 * 
 							 * this.change=function(){ if(this.searchText ==
 							 * ""){} else{ $('#datatable').remove(); } };
 							 */
 
-						} ]);
+						} 
+						]);

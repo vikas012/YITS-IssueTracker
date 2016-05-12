@@ -1,6 +1,28 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
+
+
+import javax.persistence.*;
+
+
+
+
+import org.hibernate.annotations.LazyCollection;
+
+import org.hibernate.annotations.LazyCollectionOption;
+
+
+
+import org.hibernate.annotations.LazyCollectionOption;
+
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+
+
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +35,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 
 /**
@@ -33,7 +58,7 @@ public class Member implements Serializable {
 	@Column(name="CREATED_BY")
 	private int createdBy;
 
-	@Column(name="CREATED_DATE_TIME")
+	@Column(name="CREATED_DATETIME")
 	private Date createdDateTime;
 
 	private String email;
@@ -60,10 +85,7 @@ public class Member implements Serializable {
 
 	private String name;
 
-/*	//bi-directional many-to-one association to ApplicationTeamMember
-	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
-	private List<ApplicationTeamMember> applicationTeamMembers;
-*/
+
 	public Member() {
 	}
 

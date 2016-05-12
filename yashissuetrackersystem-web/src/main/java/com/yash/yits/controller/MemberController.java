@@ -58,7 +58,11 @@ public class MemberController {
 			
 		System.out.println("in controller" +searchText);
 			List<MemberForm> members=memberService.searchMembers(searchText);
-		
+			for(MemberForm membersList:members){
+				
+				System.out.println(membersList.getContact());
+				
+			}
 		return members; 
 	}
 	
@@ -68,6 +72,9 @@ public class MemberController {
 		System.out.println("for member list");
 		List<Member> membersList=memberService.showMembers();
 		
+	for (Member member : membersList) {
+		System.out.println(member.getName());
+	}
 		return membersList;
 		
 	}
