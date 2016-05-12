@@ -94,4 +94,17 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 
+	/**
+	 *blockUnblockMember method is used to block or unblock the member
+	 * 
+	 */
+	public List<Member> blockUnblockMember(Member member) {
+	
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Member where memberId=?");
+		Member member2=(Member) query.setLong(0, member.getMemberId());
+		
+		return null;
+	}
+
 }

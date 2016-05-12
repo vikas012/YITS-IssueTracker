@@ -297,6 +297,16 @@ public class MemberServiceImpl implements MemberService {
 		
 		return null;
 	}
+
+	/**
+	 *blockUnblockMember method is used to block or unblock the member
+	 * 
+	 */
+	public List<Member> blockUnblockMember(Member member) {
+
+		List<Member> members=memberDao.blockUnblockMember(member);
+		return members;
+	}
 	
 	
 

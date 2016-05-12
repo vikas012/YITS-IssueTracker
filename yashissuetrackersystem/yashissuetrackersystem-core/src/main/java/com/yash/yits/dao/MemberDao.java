@@ -13,5 +13,6 @@ public interface MemberDao {
 	public List<Member> showMembers();
 	public List<Member> searchMembers(String search);
 	public List<Member> deleteMember(int memberId);
+	public List<Member> blockUnblockMember(Member member);
 
 }

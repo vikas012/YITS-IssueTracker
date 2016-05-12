@@ -112,4 +112,17 @@ public class MemberController {
 	}
 	
 	
+	/**
+	 *blockUnblockMember method is used to block or unblock the member
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value="/blockUnblockMember")
+	public List<Member> blockUnblockMember(Member member) {
+
+		List<Member> members=memberService.blockUnblockMember(member);
+		return members;
+	}
+	
+	
 }
