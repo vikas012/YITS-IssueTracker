@@ -20,16 +20,8 @@ import com.yash.yits.domain.Member;
 @Repository
 public class MemberDaoImpl implements MemberDao {
 
-
-
-
-	
-
-
 	 @Autowired
 	 private SessionFactory sessionFactory;
-
-
 
 	public Member addMember(Member member) {
 		Session session=sessionFactory.getCurrentSession();
@@ -81,7 +73,7 @@ public class MemberDaoImpl implements MemberDao {
 		System.out.println("in dao");
 		Session session=sessionFactory.getCurrentSession();
 		
-		String selectQuery="FROM Member where name LIKE '"+search+"%' OR email LIKE '"+search+"%' OR managerName LIKE '"+search+"%'";
+		String selectQuery="FROM Member where name LIKE '%"+search+"%' OR email LIKE '"+search+"%' OR managerName LIKE '%"+search+"%'";
 		Query query=session.createQuery(selectQuery);
 		List<Member> members=query.list();
 		for(Member membersList:members){
