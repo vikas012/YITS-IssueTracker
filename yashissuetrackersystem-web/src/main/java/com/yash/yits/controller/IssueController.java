@@ -117,9 +117,9 @@ public class IssueController {
 	
 	@ResponseBody
 	@RequestMapping(value="/issue/assign")
-	public List<Issue> getUnassignedIssues(){
-		System.out.println("unassigned controller");
-		List unassignedIssueList=issueService.getUnassignedIssues();
+	public List<IssueForm> getUnassignedIssues(){
+		System.out.println("unassigned Controller");
+		List<IssueForm> unassignedIssueList=issueService.getUnassignedIssues();
 		return unassignedIssueList;
 	}
 	

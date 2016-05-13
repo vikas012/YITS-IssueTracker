@@ -2,52 +2,44 @@ package com.yash.yits.serviceImpl;
 
 
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.List;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yash.yits.dao.IssueDao;
+import com.yash.yits.dao.IssueDao;
 import com.yash.yits.dao.IssueDao;
 import com.yash.yits.domain.ApplicationEnvironment;
 import com.yash.yits.domain.ApplicationIssuePriority;
 import com.yash.yits.domain.ApplicationIssueStatus;
 import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.Issue;
-import com.yash.yits.domain.Member;
+import com.yash.yits.domain.Issue;
+import com.yash.yits.domain.Issue;
+import com.yash.yits.domain.Project;
+import com.yash.yits.form.ApplicationIssuePriorityForm;
+import com.yash.yits.form.ApplicationIssueTypeForm;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
-import com.yash.yits.dao.IssueDao;
-import com.yash.yits.domain.Issue;
-
-
-import com.yash.yits.domain.Project;
 import com.yash.yits.form.ProjectForm;
-import com.yash.yits.dao.IssueDao;
-import com.yash.yits.domain.Issue;
 import com.yash.yits.service.IssueService;
 
 @Service
@@ -60,11 +52,35 @@ public class IssueServiceImpl implements IssueService{
 	private IssueDao issueDao;
 
 	
-	public List<Issue> getUnassignedIssues() {
-		List unassignedIssueList=issueDao.getUnassignedIssues();
-		System.out.println("after call");
+	public List<IssueForm> getUnassignedIssues() {
+		System.out.println("prajvi service");
+		List<Issue> issueList=issueDao.getUnassignedIssues();
+		List<IssueForm> unassignedIssueList=new ArrayList<IssueForm>();
+		
+		for (Issue issue: issueList) {
+			
+			IssueForm issueForm=new IssueForm();
+			
+			ApplicationIssueTypeForm applicationIssueType=new ApplicationIssueTypeForm();
+			applicationIssueType.setType(issue.getApplicationIssueType().getType());
+			issueForm.setApplicationIssueType(applicationIssueType);
+			
+			issueForm.setSummary(issue.getSummary());
+			
+			ApplicationIssuePriorityForm applicationIssuePriority=new ApplicationIssuePriorityForm();
+			applicationIssuePriority.setType(issue.getApplicationIssuePriority().getType());
+			issueForm.setApplicationIssuePriority(applicationIssuePriority);
+			
+			ProjectForm projectForm=new ProjectForm();
+			projectForm.setName(issue.getProject().getName());
+			issueForm.setProject(projectForm);
+			
+			unassignedIssueList.add(issueForm);
+			
+		}
 		return unassignedIssueList;
 	}
+
 
 	public List<IssueForm> getDefaultIssues() {
 		
