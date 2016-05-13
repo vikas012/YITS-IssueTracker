@@ -1,7 +1,10 @@
 package com.yash.yits.service;
 
 import java.util.List;
+
 import java.util.Set;
+
+import java.util.Map;
 
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
@@ -19,7 +22,7 @@ public interface IssueService {
 	
 	public List<ProjectForm> getProjectNames();
 
-	public void getAllSelectFields(ProjectForm projectForm, MemberForm member);
+	public Map<String, Object> getAllSelectFields(ProjectForm projectForm, MemberForm member);
 	
 	public void createIssue(IssueForm issueForm,Long createdBy);
 

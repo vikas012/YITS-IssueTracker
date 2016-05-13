@@ -7,43 +7,57 @@ angular
 		.module("issueTrackingSystem.managerModule")
 		.controller(
 				'managerController',
-				[
-						'$scope',
+				['$scope',
 						'$http',
 						'managerService',
+<<<<<<< HEAD
 						function($scope, $http, managerService,
 								unassignedIssueList) {
 							alert("controller");
 
 							
+=======
+						function($scope, $http, managerService, issueList) {
+			
+
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 							$scope.members1 = [];
-						
-							 var issues=$http({
-								  method:'GET',
-								      url:'../memberList' 
-								  }).success(function(data){
+
+							var members = $http({
+								method : 'GET',
+								url : '../memberList'
+							}).success(function(data) {
+
+								$scope.members1 = data;
+								
+								angular.forEach($scope.members1, function(value, key) {
+									
+									  if(value.isActive==0){
+										  
+										  value.isActive="Activate";
+									  }
+									  else{
+										  
+										  value.isActive="DeActivate";
+									  }
 									  
-									  $scope.members1=data;
-								  })
-							
+									 });
+								
+							})
+
 							$scope.showLookUpForm = false;
 							$scope.showRegisterForm = false;
-							$scope.ldapUser = {
-								ldapName : "",
-								ldapEmail : ""
-							};
+							$scope.showNonYashRegisterForm=false;
+							
+							$scope.ldapUser = {ldapName : "",ldapEmail : ""};
 							$scope.members = [];
-							$scope.member = {
-								memberId : "",
-								name : "",
-								email : "",
-								contact : ""
-							};
+							$scope.member = {memberId : "",name : "",email : "",contact : "",managerEmail:""};
 							$scope.userId = "";
 							$scope.userName = "";
 							$scope.userEmail = "";
 							$scope.userMobile = "";
 							
+<<<<<<< HEAD
 							$scope.defaultIssueList = [];
 							
 							
@@ -72,12 +86,24 @@ angular
 							
 							//$scope.members = memberList.data;
 
+=======
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 							$scope.showLookForm = function() {
 
 								$scope.showLookUpForm = true;
+								$scope.showNonYashRegisterForm =false;
 
-							}
-
+								}
+							
+							
+							$scope.showRegisterationForm=function(){
+								
+								$scope.showLookUpForm =false;
+								$scope.showRegisterForm = false;
+								$scope.showNonYashRegisterForm = true;
+								}
+							
+							
 							$scope.checkUser = function() {
 
 								$scope.ldapUser.ldapName = $scope.ldapName;
@@ -87,16 +113,52 @@ angular
 								$scope.showRegisterForm = true;
 								$scope.checkUserInLdap($scope.ldapUser);
 
-							}
-							$scope.checkUserInLdap = function(ldapUser) {
+								}
 
-								managerService
-										.checkUserInLdap(ldapUser)
+							
+							$scope.unassignedIssueList=[];
+							
+							var unassignedIssues=$http({
+								method : 'GET',
+								url : '../issue/assign'
+							}).success(function(data) {
+
+								$scope.unassignedIssueList = data;
+							})
+							
+							
+
+							$scope.members1 = [];
+							
+							 var issues=$http({
+								  method:'GET',
+								      url:'../memberList' 
+								  }).success(function(data){
+									  
+									  $scope.members1=data;
+									  
+									  angular.forEach($scope.members1, function(value, key) {
+											
+										  if(value.isActive==0){
+											  
+											  value.isActive="Activate";
+										  }
+										  else{
+											  
+											  value.isActive="DeActivate";
+										  }
+										  
+										 });
+									  
+								  })						
+								  
+						$scope.checkUserInLdap = function(ldapUser) {
+
+								managerService.checkUserInLdap(ldapUser)
 										.then(
 												function(d) {
 
 													$scope.members = d;
-
 													$scope.userId = $scope.members.userId;
 													$scope.userName = $scope.members.userName;
 													$scope.userEmail = $scope.members.userEmail;
@@ -109,38 +171,74 @@ angular
 															.error('Error while fetching');
 												}
 
-										)
+										)};
 
-							}
-							$scope.registerMember = function() {
+						$scope.registerMember = function() {
 
 								$scope.member.memberId = $scope.userId;
 								$scope.member.name = $scope.userName;
 								$scope.member.email = $scope.userEmail;
 								$scope.member.contact = $scope.userMobile;
 								$scope.showRegisterForm = false;
+								
 								managerService.registerMember($scope.member);
 
 							}
+
+							$scope.registerNonYashMember=function(){
+								
+								$scope.member.memberId = $scope.userId;
+								$scope.member.name = $scope.userName;
+								$scope.member.email = $scope.userEmail;
+								$scope.member.contact = $scope.userMobile;
+								$scope.member.managerEmail=$scope.managerEmail;
+								$scope.showNonYashRegisterForm=false;
 							
-							$scope.deleteMember=function(){
+								managerService.registerNonYashMember($scope.member);
 								
 								
 								
 							}
-							
-							
+			
 							$scope.getSearchMember = function() {
 								alert("Please Enter Text controller!");
 								alert($scope.searchText);
 								var searchText = $scope.searchText;
+
+
+								if (searchText == "") {
+
 								
 								if (searchText == undefined) {
+
 									alert("Please Enter Text!");
+								} else {
+									managerService
+											.searchMember(searchText)
+											.then(
+													function(data) {
+														$scope.members = data;
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing search members');
+													})
+								}
+							}
+
+
+						} 
+							
+						$scope.memberActivate = function(memberId) {
+								
+
+								if (memberId == "") {
+										alert("Please Select ID!");
 								}
 								else{
-									managerService.searchMember(searchText)
+									managerService.memberActivate(memberId)
 									.then(
+<<<<<<< HEAD
 											function(data){
 												$scope.members=data;
 											},
@@ -192,3 +290,33 @@ angular
 
 						} 
 						]);
+=======
+										function(data){
+											$scope.members1=data;
+											
+											angular.forEach($scope.members1, function(value, key) {
+												
+												  if(value.isActive==0){
+													  
+													  value.isActive="Activate";
+												  }
+												  else{
+													  
+													  value.isActive="DeActivate";
+												  }
+												  
+												 });
+											
+														
+												},
+												 function(errResponse)
+												 {
+													 console.error('Error while showing member status');
+												 }
+										)	
+									}
+								};		
+							
+							
+				}]);
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker

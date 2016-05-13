@@ -28,7 +28,7 @@ public class Issue implements Serializable {
 	private Date closeDate;
 
 	private String component;
-	
+
 	@Column(name="CREATED_DATETIME")
 	private Date createdDateTime;
 

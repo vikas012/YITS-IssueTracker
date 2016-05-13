@@ -21,19 +21,6 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  			},
 
 
-		  /*getMembers:function(){
-		  alert("in service for data");
-		  var issues=$http({
-		  method:'GET',
-		      url:'../memberList' 
-		  }).success(function(data){
-			  
-		  alert(data+"service");	
-		  
-		  return data;
-		  })
-		  },*/
-
 		  		getMembers:function(){
 		              alert("shraddha");
 		              var issues=$http({
@@ -47,7 +34,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  		},
 
 
-		  searchMember:function(searchText){
+		  		searchMember:function(searchText){
 			  alert("Please Enter Text service!");
 					return $http.get('../searchMember/'+ searchText)
 				 	.then(
@@ -62,18 +49,22 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			},
 
 		  			
-		  getUnassignedIssues:function(){
-						  alert("Prajvi")
-						  var issues=$http({
-							  method:'GET',
-						      url:'../issue/assign' 
-						  }).success(function(data){
-							  alert(data);
-							  return data;
-						  })
-		  			},
+
 		  			
 		  			registerMember:function(member){
+		  				return $http.post('../registerYashMember',member)
+		  				.then(
+		  							function(response){
+		  								return response.data;
+		  							},
+		  							function(errResponse){
+		  								console.error('Error while fetching users');
+		  								return $q.reject(errResponse);
+		  							}
+
+		  					);
+		  			},
+		  			registerNonYashMember:function(member){
 		  				return $http.post('../registerMember',member)
 		  				.then(
 		  							function(response){
@@ -86,7 +77,44 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 
 		  					);
 		  			},
+<<<<<<< HEAD
 		  			 
+=======
+		  			 getIssues:function(){
+		  				  alert("in default")
+		  				  var issues=$http({
+		  				  method:'GET',
+		  				      url:'../defaultIssues'
+		  				  }).success(function(data){
+		  				  alert(data);
+		  				  return data;
+		  				  })
+		  				  },
+		  				  
+		  			memberActivate:function(memberId){
+		  					
+		  					var member={
+		  							
+		  						"memberId":memberId,	
+		  					};
+			  				return $http.post('../blockUnblockMember',member)
+			  					.then(
+			  								function(response){
+			  								  return response.data;
+			  								},
+			  								function(errResponse){
+			  									console.error('Error while fetching users');
+			  									return $q.reject(errResponse);
+			  								}
+		
+			  						);
+				  
+			  			},	  
+		  				  
+		  				  
+		  				  
+
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')
 	              .then(

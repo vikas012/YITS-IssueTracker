@@ -97,7 +97,7 @@ public class MemberController {
 		return userForm;
 	}
 	@ResponseBody 
-	@RequestMapping(value="/registerMember" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/registerYashMember" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
 	public void registerMember(@RequestBody MemberForm memberForm){
 		
 		System.out.println("in side register "+ memberForm.getEmail()+"------"+memberForm.getContact());
@@ -107,7 +107,14 @@ public class MemberController {
 		memberService.addMember(memberForm);
 			
 	}
-	
+	@ResponseBody 
+	@RequestMapping(value="/registerMember" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	public void registerNonYashMember(@RequestBody MemberForm memberForm){
+		
+		System.out.println("in side register "+ memberForm.getEmail()+"------"+memberForm.getContact());
+		memberService.addMember(memberForm);
+			
+	}
 	
 	/**
 	 *blockUnblockMember method is used to block or unblock the member
@@ -115,8 +122,9 @@ public class MemberController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/blockUnblockMember")
-	public List<Member> blockUnblockMember(MemberForm memberForm) {
-
+	public List<Member> blockUnblockMember(@RequestBody MemberForm memberForm) {
+		
+		System.out.println("in block unblock controller"+memberForm.getMemberId());
 		List<Member> members=memberService.blockUnblockMember(memberForm);
 		return members;
 	}

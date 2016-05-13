@@ -12,7 +12,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+
 import java.util.Set;
+
+import java.util.Map;
+
 import java.util.TimeZone;
 
 import java.util.ArrayList;
@@ -69,6 +73,7 @@ public class IssueServiceImpl implements IssueService{
 	
 	public List<Issue> getUnassignedIssues() {
 		List unassignedIssueList=issueDao.getUnassignedIssues();
+		System.out.println("after call");
 		return unassignedIssueList;
 	}
 
@@ -178,8 +183,6 @@ public class IssueServiceImpl implements IssueService{
 	}
 
 
-
-
 	public void createIssue(IssueForm issueForm,Long createdBy) {
 		Project project=new Project();
 		project.setId(issueForm.getProject().getId());
@@ -211,13 +214,16 @@ public class IssueServiceImpl implements IssueService{
 		issueDao.createIssue(issue,createdBy);
 }
 
-	public void getAllSelectFields(ProjectForm projectForm, MemberForm member) {
+	
+
+	public Map<String, Object> getAllSelectFields(ProjectForm projectForm, MemberForm member) {
+
 		Project project = new Project();
 		project.setId(projectForm.getId());
 		
-		issueDao.getAllSelectFields(project,member);
 
-		
+		return issueDao.getAllSelectFields(project,member);
+
 	}
 
 	public List<String> getDefaultIssueTypes() {
