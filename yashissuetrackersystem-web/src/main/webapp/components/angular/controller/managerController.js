@@ -196,7 +196,6 @@ angular
 								alert($scope.searchText);
 								var searchText = $scope.searchText;
 
-								if (searchText == "") {
 
 									if (searchText == undefined) {
 
@@ -212,7 +211,7 @@ angular
 															console
 																	.error('Error while showing search members');
 														})
-									}
+									
 								}
 
 							}
