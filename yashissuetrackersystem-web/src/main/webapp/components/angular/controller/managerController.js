@@ -185,6 +185,36 @@ angular
 
 						} 
 							
+							
+						$scope.getDataAfterActiveStatus=function(){
+							
+							$http({
+									method : 'GET',
+									url : '../memberList'
+								}).success(function(data) {
+								//	alert(data);
+								//	console.log(data);
+									
+									console.log(data);	
+									$scope.members1=data;
+									angular.forEach($scope.members1, function(value, key) {
+										
+										  if(value.isActive==0){
+											  
+											  value.isActive="Activate";
+										  }
+										  else{
+											  
+											  value.isActive="DeActivate";
+										  }
+										  
+										 });
+										
+									
+									
+								});
+						}	
+							
 						$scope.memberActivate = function(memberId) {
 								
 
@@ -195,22 +225,8 @@ angular
 									managerService.memberActivate(memberId)
 									.then(
 										function(data){
-											$scope.members1=data;
 											
-											angular.forEach($scope.members1, function(value, key) {
-												
-												  if(value.isActive==0){
-													  
-													  value.isActive="Activate";
-												  }
-												  else{
-													  
-													  value.isActive="DeActivate";
-												  }
-												  
-												 });
-											
-														
+											$scope.getDataAfterActiveStatus();			
 												},
 												 function(errResponse)
 												 {
