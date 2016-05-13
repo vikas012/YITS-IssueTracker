@@ -12,21 +12,24 @@
 <div>
 			<table id="listOfMembers" class="table table-striped">
 				<tr>
-					<th>SELECT</th>				
-					<th> NAME</th>
-					<th>EMAIL</th>
-					<th>CONTACT</th>
-					<th colspan="2">ACTION</th>
+					<th>SELECT</th>		
+					<th>MEMBER ID</th>		
+					<th>MEMBER NAME</th>
+					<th>MEMBER EMAIL</th>
+					<th>MEMBER CONTACT</th>
+					<th colspan="3">ACTIVE STATUS</th>	
+					<th colspan="1">ACTION</th>
 				</tr>
 
 				<tr ng-repeat="member in members1">
 					<td><input id='radio' type='radio' value={{member.memberId}}></td>				
+					<td>{{member.memberId}}</td>
 					<td>{{member.name}}</td>
 					<td>{{member.email}}</td>
 					<td>{{member.contact}}</td>
+					<td><button ng-click="memberActivate(member.memberId)" class="btn btn-default">{{member.isActive}}</button></td>
 					<td><input type="button" value="Delete" ng-click="delete(member.memberId)" class="btn btn-default"></td>
-					<td><input type="button" value="Block" ng-click="block()" class="btn btn-default"></td>
-					 <td><input type="button" value="UnBlock" ng-click="unblock()" class="btn btn-default"></td> 
+				 
 				</tr>
 
 			</table>

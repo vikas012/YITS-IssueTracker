@@ -300,6 +300,8 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	
+	
 	/**
 	 *blockUnblockMember method is used to block or unblock the member
 	 * 
@@ -308,7 +310,6 @@ public class MemberServiceImpl implements MemberService {
 
 		Member member=new Member();
 		member.setMemberId(memberForm.getMemberId());
-		member.setManagerName(memberForm.getManagerName());
 		
 		List<Member> members=memberDao.blockUnblockMember(member);
 		return members;

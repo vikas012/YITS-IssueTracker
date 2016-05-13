@@ -88,6 +88,28 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  				  })
 		  				  },
 		  				  
+		  			memberActivate:function(memberId){
+		  					
+		  					var member={
+		  							
+		  						"memberId":memberId,	
+		  					};
+			  				return $http.post('../blockUnblockMember',member)
+			  					.then(
+			  								function(response){
+			  								  return response.data;
+			  								},
+			  								function(errResponse){
+			  									console.error('Error while fetching users');
+			  									return $q.reject(errResponse);
+			  								}
+		
+			  						);
+				  
+			  			},	  
+		  				  
+		  				  
+		  				  
 
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')

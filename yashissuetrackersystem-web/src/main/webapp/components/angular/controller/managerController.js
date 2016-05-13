@@ -16,6 +16,22 @@ angular
 							}).success(function(data) {
 
 								$scope.members1 = data;
+								
+								angular.forEach($scope.members1, function(value, key) {
+									
+									  if(value.isActive==0){
+										  
+										  value.isActive="Activate";
+									  }
+									  else{
+										  
+										  value.isActive="DeActivate";
+									  }
+									  
+									 });
+								
+								
+								
 							})
 
 							
@@ -77,6 +93,23 @@ angular
 								  }).success(function(data){
 									  
 									  $scope.members1=data;
+									  
+									  angular.forEach($scope.members1, function(value, key) {
+											
+										  if(value.isActive==0){
+											  
+											  value.isActive="Activate";
+										  }
+										  else{
+											  
+											  value.isActive="DeActivate";
+										  }
+										  
+										 });
+									  
+									  
+									  
+									  
 								  })						
 								  
 						$scope.checkUserInLdap = function(ldapUser) {
@@ -161,5 +194,41 @@ angular
 
 
 						} 
+							
+						$scope.memberActivate = function(memberId) {
+								
+
+								if (memberId == "") {
+										alert("Please Select ID!");
+								}
+								else{
+									managerService.memberActivate(memberId)
+									.then(
+										function(data){
+											$scope.members1=data;
+											
+											angular.forEach($scope.members1, function(value, key) {
+												
+												  if(value.isActive==0){
+													  
+													  value.isActive="Activate";
+												  }
+												  else{
+													  
+													  value.isActive="DeActivate";
+												  }
+												  
+												 });
+											
+														
+												},
+												 function(errResponse)
+												 {
+													 console.error('Error while showing search members');
+												 }
+										)	
+									}
+								};		
+							
 							
 				}]);
