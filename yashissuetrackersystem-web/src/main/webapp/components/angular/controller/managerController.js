@@ -30,12 +30,7 @@ angular
 									  
 									 });
 								
-								
-								
 							})
-
-							
-				
 
 							$scope.showLookUpForm = false;
 							$scope.showRegisterForm = false;
@@ -54,13 +49,17 @@ angular
 								$scope.showLookUpForm = true;
 								$scope.showNonYashRegisterForm =false;
 
-							}
+								}
+							
+							
 							$scope.showRegisterationForm=function(){
 								
 								$scope.showLookUpForm =false;
 								$scope.showRegisterForm = false;
 								$scope.showNonYashRegisterForm = true;
-							}
+								}
+							
+							
 							$scope.checkUser = function() {
 
 								$scope.ldapUser.ldapName = $scope.ldapName;
@@ -70,7 +69,7 @@ angular
 								$scope.showRegisterForm = true;
 								$scope.checkUserInLdap($scope.ldapUser);
 
-							}
+								}
 
 							
 							$scope.unassignedIssueList=[];
@@ -107,9 +106,6 @@ angular
 										  
 										 });
 									  
-									  
-									  
-									  
 								  })						
 								  
 						$scope.checkUserInLdap = function(ldapUser) {
@@ -133,9 +129,7 @@ angular
 
 										)};
 
-							
-					 
-							$scope.registerMember = function() {
+						$scope.registerMember = function() {
 
 								$scope.member.memberId = $scope.userId;
 								$scope.member.name = $scope.userName;
@@ -147,8 +141,6 @@ angular
 
 							}
 
-
-							
 							$scope.registerNonYashMember=function(){
 								
 								$scope.member.memberId = $scope.userId;
@@ -164,8 +156,6 @@ angular
 								
 							}
 			
-							
-
 							$scope.getSearchMember = function() {
 								alert("Please Enter Text controller!");
 								alert($scope.searchText);
@@ -224,7 +214,7 @@ angular
 												},
 												 function(errResponse)
 												 {
-													 console.error('Error while showing search members');
+													 console.error('Error while showing member status');
 												 }
 										)	
 									}
