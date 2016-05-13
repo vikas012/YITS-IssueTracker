@@ -300,6 +300,24 @@ angular
 													})
 								}
 							}
+							
+							$scope.memberActivateForSearch = function(memberId) {
+
+								if (memberId == "") {
+									alert("Please Select ID!");
+								} else {
+									managerService.memberActivate(memberId)
+											.then(
+													function(data) {
+
+														$scope.getSearchMember();
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing member status');
+													})
+								}
+							}
 
 							managerService.showAssignedIssues()
 							.then(
