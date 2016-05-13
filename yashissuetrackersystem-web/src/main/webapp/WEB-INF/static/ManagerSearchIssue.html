@@ -1,19 +1,5 @@
 <head>
 
-<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-
-<script type="text/javascript">
-	
-$(document).ready(function() {
-    $('#searchIssueTable').DataTable( {
-        "pagingType": "full_numbers"
-    } );
-} );
-
-
-})
-
-</script>
 <style type="text/css">
 	
 	.container{
@@ -89,7 +75,6 @@ $(document).ready(function() {
 				<td>{{issue.applicationIssueStatus.status}}</td>
 				<td>{{issue.applicationIssuePriority.type}}</td> 
 				<td>{{issue.summary}}</td>
-				<td><input type="button" value="Conversation" class="btn btn-primary"></td>
 				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
 			</tr>
 			</tbody>

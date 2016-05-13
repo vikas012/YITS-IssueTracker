@@ -18,7 +18,7 @@ public interface IssueService {
 
 	public List<IssueForm> getDefaultIssues();
 
-	public List<Issue> getUnassignedIssues();
+	public List<IssueForm> getUnassignedIssues();
 	
 	public List<ProjectForm> getProjectNames();
 

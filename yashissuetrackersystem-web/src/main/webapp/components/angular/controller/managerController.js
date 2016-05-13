@@ -37,30 +37,6 @@ angular
 
 											})
 
-							$scope.defaultIssueList = [];
-
-							var issueList = $http({
-								method : 'GET',
-								url : '../defaultIssues'
-							}).success(function(data) {
-
-								$scope.defaultIssueList = data;
-
-							})
-
-							$scope.defaultIssueTypes = [];
-							var issueType = $http({
-
-								method : 'GET',
-								url : '../defaultIssueTypes'
-							}).success(function(data) {
-
-								$scope.defaultIssueTypes = data;
-
-								alert($scope.defaultIssueTypes);
-
-							})
-
 							$scope.showLookUpForm = false;
 							$scope.showRegisterForm = false;
 							$scope.showNonYashRegisterForm = false;
@@ -194,7 +170,27 @@ angular
 										.registerNonYashMember($scope.member);
 
 							}
+							$scope.defaultIssueList = [];
 
+							var issueList = $http({
+								method : 'GET',
+								url : '../defaultIssues'
+							}).success(function(data) {
+
+								$scope.defaultIssueList = data;
+
+							})
+
+							$scope.defaultIssueTypes = [];
+							var issueType = $http({
+
+								method : 'GET',
+								url : '../defaultIssueTypes'
+							}).success(function(data) {
+
+								$scope.defaultIssueTypes = data;
+
+							})
 							$scope.getSearchMember = function() {
 								alert("Please Enter Text controller!");
 								alert($scope.searchText);

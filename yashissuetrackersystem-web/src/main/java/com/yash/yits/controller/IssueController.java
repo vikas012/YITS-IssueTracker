@@ -78,9 +78,7 @@ public class IssueController {
 	@ResponseBody
 	@RequestMapping(value="/defaultIssueTypes",method=RequestMethod.GET)
 	public List<String> defaultIssueTypes(){
-		
-		System.out.println("types=--------------------------------");
-		
+	
 		List<String> issueTypes=issueService.getDefaultIssueTypes();
 		
 		return issueTypes;
@@ -129,9 +127,9 @@ public class IssueController {
 	
 	@ResponseBody
 	@RequestMapping(value="/issue/assign")
-	public List<Issue> getUnassignedIssues(){
-		System.out.println("unassigned controller");
-		List unassignedIssueList=issueService.getUnassignedIssues();
+	public List<IssueForm> getUnassignedIssues(){
+		System.out.println("unassigned Controller");
+		List<IssueForm> unassignedIssueList=issueService.getUnassignedIssues();
 		return unassignedIssueList;
 	}
 	

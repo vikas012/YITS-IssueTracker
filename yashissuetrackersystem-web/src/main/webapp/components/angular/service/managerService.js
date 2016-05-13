@@ -88,6 +88,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  				  return data;
 		  				  })
 		  				  },
+		  	
 		  				  
 		  			memberActivate:function(memberId){
 		  					
@@ -98,7 +99,11 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			  				return $http.post('../blockUnblockMember',member)
 			  					.then(
 			  								function(response){
-			  								  return response.data;
+			  									
+			  									
+			  										return response.data;
+			  					
+			  									
 			  								},
 			  								function(errResponse){
 			  									console.error('Error while fetching users');

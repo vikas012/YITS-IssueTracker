@@ -63,33 +63,25 @@ public class IssueDaoImpl implements IssueDao {
 		return projects;
 	}
 
-	
-
-	
 
 	public List<Issue> getUnassignedIssues() {
-		
-		
-		/*Criteria criteria=session.createCriteria(Issue.class);
-		Disjunction disjunction = Restrictions.disjunction();
-		disjunction.add(Restrictions.isNull("a"));
-		criteria.add(disjunction);*/
+		System.out.println("prajvi dao");
 		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Issue.class)
 				.setProjection(Projections.projectionList()
-						.add( Projections.property("summary"), "summary")
-						.add(Projections.property("applicationIssueType"),"applicationIssueType")
-						.add(Projections.property("project"),"project")					
-											
-						.add(Projections.property("applicationIssuePriority"),"applicationIssuePriority"))
-						.add(Restrictions.isNull("assignedUser"))
+				.add(Projections.property("id"),"id")
+				.add(Projections.property("project"),"project")
+				.add(Projections.property("applicationIssuePriority"),"applicationIssuePriority")
+				.add( Projections.property("summary"), "summary")
+				.add(Projections.property("applicationIssueType"),"applicationIssueType"))
+				.add(Restrictions.isNull("assignedUser"))
 				.setResultTransformer(Transformers.aliasToBean(Issue.class));
 		List<Issue> unassignedIssueList=criteria.list();
-		List<Issue> list=new ArrayList<Issue>();
-		Iterator<Issue> iterator=unassignedIssueList.iterator();
+
 		return unassignedIssueList;
 
-}
-		public List<Issue> getDefaultIssues(Date date1, Date date2) {
+	}
+	
+	public List<Issue> getDefaultIssues(Date date1, Date date2) {
 
 		
 		Session session=sessionFactory.getCurrentSession();
