@@ -6,11 +6,11 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 	.then(
 			function(d) {
 				$scope.projects=d.projects;
-				alert(d.projects);
-				alert(d.myValue);
+				//alert(d.projects);
+				//alert(d.myValue);
 				
 				//$scope.applications=d.application;
-				alert(d.application);
+				//alert(d.application);
 
 				//alert(d.data.id);
 				//alert(d.data.name);
@@ -34,9 +34,9 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 		}
 		userService.initializeSelectAll(this.pId).then(
 				function(d) {
-					alert("in success all select");
-					alert("In controller select all called");
-					alert(d.myValue1);
+					//alert("in success all select");
+					//alert("In controller select all called");
+					//alert(d.myValue1);
 					$scope.issueTypeList=d.issueType;
 					$scope.priorities=d.issuePriority;
 					$scope.environments=d.applicationEnvironment;
