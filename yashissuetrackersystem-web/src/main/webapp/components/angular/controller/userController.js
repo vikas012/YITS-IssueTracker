@@ -1,10 +1,16 @@
 angular.module('issueTrackingSystem.userModule').controller('userController',['$scope','$http','userService',function($scope,$http,userService,issuesList){
 	
 	alert("In User controller");
+	$scope.issueList = [];
 	
-	$scope.issueList = issuesList.data;
-	
-	alert($scope.issueList);
+	var issues=$http({
+ 		 method:'GET',
+ 		     url:'../defaultIssuesList' //spring controller call, use @ResponseBody
+ 		 }).success(function(data){
+ 		 alert(data);
+ 		 	$scope.issueList = issuesList;
+ 		 })
+ 		 
 	
 		/*issueService returns list to populate drop-down*/
 	/*userService.initializeSelect()

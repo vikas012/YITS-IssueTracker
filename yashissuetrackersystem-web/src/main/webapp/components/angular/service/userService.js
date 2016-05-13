@@ -26,16 +26,6 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 		                              return $q.reject(errResponse);
 		                      }
 		                );
-		      	},
-	      	
-	      	 getIssuesList:function(){
-	      		 var issues=$http({
-	      		 method:'GET',
-	      		     url:'./defaultIssuesList' //spring controller call, use @ResponseBody
-	      		 }).success(function(data){
-	      		 alert(data);
-	      		 return data;
-	      		 })
-	      		 }
+		      	}	 
 	  }
 }]);

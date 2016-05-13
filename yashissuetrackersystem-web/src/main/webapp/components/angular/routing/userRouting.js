@@ -8,12 +8,7 @@ userModule.config(function($routeProvider){
 			
 			.when('/editIssues',{
 				templateUrl:'showEditIssueForm',
-				controller:'userController as uc',
-				resolve: {
-					issuesList:function(userService){
-						return userService.getIssuesList();
-					}
-				}
+				controller:'userController as uc'
 			})
 			
 			
