@@ -214,23 +214,36 @@ angular
 								alert($scope.searchText);
 								var searchText = $scope.searchText;
 
-								if (searchText == "") {
 
 									if (searchText == undefined) {
 
 										alert("Please Enter Text!");
 									} else {
 										managerService
-												.searchMember(searchText)
+											.searchMember(searchText)
 												.then(
-														function(data) {
-															$scope.members = data;
+													function(data) {
+													$scope.members= data;
+															
+													angular.forEach(
+														$scope.members,
+															function(value,key) {
+
+																if (value.isActive == 0) {
+
+																	value.isActive = "Activate";
+																	} else {
+
+																	value.isActive = "DeActivate";
+																		}
+
+																	});
 														},
 														function(errResponse) {
 															console
 																	.error('Error while showing search members');
 														})
-									}
+									
 								}
 
 							}
