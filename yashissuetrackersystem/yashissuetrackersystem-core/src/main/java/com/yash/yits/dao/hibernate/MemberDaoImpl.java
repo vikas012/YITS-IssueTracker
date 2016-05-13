@@ -23,23 +23,23 @@ public class MemberDaoImpl implements MemberDao {
 	 @Autowired
 	 private SessionFactory sessionFactory;
 
-	public Member addMember(Member member) {
-		Session session=sessionFactory.getCurrentSession();
-		System.out.println(member);
-		Criteria criteria = session.createCriteria(Member.class);
-		criteria.add(Restrictions.eqOrIsNull("memberId",member.getMemberId()));
-		List<Member> listOfMember=criteria.list();
-		if(listOfMember.size()==1){
-			
-			System.out.println("User Already in database");
-		}
-		else{
+	 public Member addMember(Member member) {
+			Session session=sessionFactory.getCurrentSession();
+			System.out.println(member);
+			Criteria criteria = session.createCriteria(Member.class);
+			criteria.add(Restrictions.eqOrIsNull("memberId",member.getMemberId()));
+			List<Member> listOfMember=criteria.list();
+			if(listOfMember.size()==1){
 				
-			System.out.println("not in database");
-			session.save(member);
+				System.out.println("User Already in database");
+			}
+			else{
+					
+				System.out.println("not in database");
+				session.save(member);
+			}
+			return member;
 		}
-		return member;
-	}
 
 	public List<Member> showMembers() {
 		System.out.println("dao members");
@@ -59,12 +59,12 @@ public class MemberDaoImpl implements MemberDao {
 		List<Member> allMembers = criteria.list();
 		
 		
-		System.out.println(allMembers);
+	/*	System.out.println(allMembers);
 		for (Member member : allMembers) {
 			System.out.println(member.getEmail());
 			System.out.println(member.getMemberId());
 		}
-		
+		*/
 		
 		return   allMembers ;
 	}

@@ -7,11 +7,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +27,7 @@ import com.yash.yits.form.MemberForm;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import com.yash.yits.domain.ApplicationTeamMember;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
 import com.google.gson.Gson;
@@ -50,7 +55,10 @@ public class IssueController {
 		return "redirect:/static/UserCreateIssueForm.html";
 	}
 	
+	
 
+	
+	
 
 	@RequestMapping(value="/issues",method=RequestMethod.GET)
 	public String showIssuePage(){
@@ -83,7 +91,7 @@ public class IssueController {
 	
 	@ResponseBody
 	@RequestMapping(value="/getAllSelectFields/{projectId}",produces=MediaType.APPLICATION_JSON_VALUE)
-	public Map<String,Object> getAllSelectFields(@PathVariable("projectId") int projectId,HttpServletRequest httpServletRequest )
+	public String getAllSelectFields(@PathVariable("projectId") int projectId,HttpServletRequest httpServletRequest )
 	{
 		System.out.println("project Id>>>>"+projectId);
 		MemberForm member = new MemberForm();
@@ -91,10 +99,12 @@ public class IssueController {
 		projectForm.setId(projectId);
 		member.setMemberId((Long)httpServletRequest.getSession().getAttribute("memberId"));
 		System.out.println("Member ID>>>> "+member.getMemberId());
-		Map<String,Object> map = new HashMap<String, Object>();
-		issueService.getAllSelectFields(projectForm,member);
-		map.put("myValue", "Hello there");
-		return map;
+		Map<String,Object> map1 = new HashMap<String, Object>();
+		map1 = issueService.getAllSelectFields(projectForm,member);
+		System.out.println("Map value  "+map1.get("issueType"));
+		map1.put("myValue1", "Hello there");
+		Gson gson= new Gson();
+		return gson.toJson(map1);
 
 	}
 
@@ -113,6 +123,30 @@ public class IssueController {
 		return unassignedIssueList;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping(value="/createIssue",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.POST)
+	public String createIssue(@RequestBody IssueForm issueForm,HttpServletRequest httpServletRequest){
+		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
+		
+		
+		System.out.println(createdBy);
+		//issueForm.setCreatedBy(createdBy);
+		System.out.println(issueForm);
+		System.out.println(issueForm.getProject());
+		System.out.println(issueForm.getApplicationIssuePriority());
+		System.out.println(issueForm.getComponent());
+		System.out.println(issueForm.getDescription());
+		System.out.println(issueForm.getSummary());
+		System.out.println("in create issue");
+		
+		//System.out.println(issue);
+		//System.out.println(issue.getComponent());
+		issueService.createIssue(issueForm,createdBy);
+		System.out.println("in controller for show projects");
+		return null;
+
+	}
 
 	
 

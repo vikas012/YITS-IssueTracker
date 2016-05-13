@@ -36,7 +36,7 @@ managerModule.config(function($routeProvider) {
 	
 	$routeProvider.when('/addMember', {
 
-		templateUrl : 'showYashForm',
+		templateUrl : '../showYashForm',
 		controller : 'managerController as mc'
 	})
 
@@ -74,12 +74,6 @@ managerModule.config(function($routeProvider) {
 	}).when('/assignIssue', {
 		templateUrl : '../getAssignIssueForm',
 		controller : 'managerController as mc',
-		resolve : {
-			unassignedIssueList : function(managerService) {
-				return managerService.getUnassignedIssues();
-			}
-		}
-
 	})
 	
 	.when('/searchMembers',{

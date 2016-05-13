@@ -35,48 +35,22 @@
 				<tr  id="heading">
 					<th>Select</th>
 
-					<th>Issue Type</th>
-					<th>Issue Creation Date</th>
-					<th>Issue Priority</th>
-					<th>Issue Summary</th>
-					<th>Assigned To</th>
-					<th>Issue Status</th>
+					<th>Type</th>
+					<th>Priority</th>
 					<th>Project Name</th>
-					<th>Assigned Status</th>
-					<th colspan="2">Action</th>
+					<th>Summary</th>	
+					<th colspan="2"><center>Action</center></th>
 				</tr>
 			</thead>
-		<!-- 	<tbody>
-			<c:forEach items="${issueList}" var="issue">
-			<tr id="datatable">
-				<td><input id='radio' type='radio' value="${issue.issueDetailId} "></td>
-
-				<td>${issue.issueType.issueType}</td>
-				<td>${issue.issueCreationDate}</td>
-				<td>${issue.issuePriority.issuePriorityType}</td>
-				<td>${issue.issueSummary}</td>
-				<td>${issue.user.userName}</td>
-				<td>${issue.issueStatus.issueStatusType}</td>
-				<td>${issue.project.projectName}</td>
-				<td>${issue.issueAssignedStatus.issueAssignmentStatus}</td>
-				<td><input type="button" value="Feed" class="btn btn-primary"></td>
-				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
-			</tr>
-			</c:forEach>
-			</tbody> -->
 	
-			<tr  ng-repeat="issue in issues">
-				<td><input type="radio" value={{issue.issueDetailId}} ></td>
+			<tr  ng-repeat="issue in unassignedIssueList">
+				<td><input type="radio" value={{issue.id}} ></td>
 
-				<td>{{issue.issueType.issueType}}</td>
-				<td>{{issue.issueCreationDate}}</td>
-				<td>{{issue.issuePriority.issuePriorityType}}</td>
-				<td>{{issue.issueSummary}}</td>
-				<td>{{issue.user.userName}}</td>
-				<td>{{issue.issueStatus.issueStatusType}}</td>
-				<td>{{issue.project.projectName}}</td>
-				<td>{{issue.issueAssignedStatus.issueAssignmentStatus}}</td>
-				<td><input type="button" value="Feed" class="btn btn-primary"></td>
+				<td>{{issue.applicationIssueType.type}}</td>
+				<td>{{issue.applicationIssuePriority.type}}</td>
+				<td>{{issue.project.name}}</td>
+				<td>{{issue.summary}}</td>
+				<td><input type="button" value="Assign" class="btn btn-primary"></td>
 				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
 			</tr>
 

@@ -127,6 +127,11 @@ public class ApplicationIssueType implements Serializable {
 		this.createdBy = createdBy;
 	}
 
+	@Override
+	public String toString() {
+		return "ApplicationIssueType [id=" + id + ", type=" + type + "]";
+	}
+
 	/*public List<Issue> getIssues() {
 		return issues;
 	}
@@ -135,4 +140,6 @@ public class ApplicationIssueType implements Serializable {
 		this.issues = issues;
 	}
 */
+	
+	
 }
