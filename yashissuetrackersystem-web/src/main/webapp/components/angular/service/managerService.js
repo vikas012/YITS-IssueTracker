@@ -1,4 +1,4 @@
-angular.module('issueTrackingSystem.managerModule').factory('managerService',['$http','$q',function($http,$q,$scope){
+angular.module('issueTrackingSystem.managerModule').factory('managerService',['$http',function($http,$q,$scope){
 	
 
 	
@@ -77,9 +77,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 
 		  					);
 		  			},
-<<<<<<< HEAD
-		  			 
-=======
+
 		  			 getIssues:function(){
 		  				  alert("in default")
 		  				  var issues=$http({
@@ -114,7 +112,6 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  				  
 		  				  
 
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')
 	              .then(
