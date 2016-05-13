@@ -128,9 +128,16 @@ public class IssueController {
 	@ResponseBody
 	@RequestMapping(value="/issue/assign")
 	public List<IssueForm> getUnassignedIssues(){
-		System.out.println("unassigned Controller");
 		List<IssueForm> unassignedIssueList=issueService.getUnassignedIssues();
 		return unassignedIssueList;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/fetchIssueDetails")
+	public IssueForm fetchIssueDetails(@PathVariable int index){
+		System.out.println("unassigned Controller");
+		IssueForm issueForm=issueService.fetchIssueDetails(index);
+		return null;
 	}
 	
 	

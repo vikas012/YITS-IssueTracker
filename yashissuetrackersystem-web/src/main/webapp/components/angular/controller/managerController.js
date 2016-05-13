@@ -71,7 +71,25 @@ angular
 								$scope.showRegisterForm = false;
 								$scope.showNonYashRegisterForm = true;
 							}
-
+							
+							$scope.fetchIssueDetails=function(){
+								
+								var index = angular.element(document.querySelector("input[id=radio]:checked")).val();
+								alert(index);
+								
+								if(index==null){
+									alert("Please select the entry you want to update!");
+								}
+								
+								var fetchIssueDetails = $http({
+									method : 'GET',
+									url : '../fetchIssueDetails/{index}'
+								}).success(function(data) {
+									alert("success")
+											$scope.fetchedIssue = data;
+								})
+							}
+							
 							$scope.checkUser = function() {
 
 								$scope.ldapUser.ldapName = $scope.ldapName;

@@ -26,12 +26,11 @@ public interface IssueDao {
 
 	public void createIssue(Issue issue,Long createdBy);
 
-
-	
-
 	public List<ApplicationIssueType> getDefaultIssueTypes();
 
 	public Map<String, Object> getAllSelectFields(Project project, MemberForm member);
+
+	public Issue fetchIssueDetails(int fetchId);
 
 
 

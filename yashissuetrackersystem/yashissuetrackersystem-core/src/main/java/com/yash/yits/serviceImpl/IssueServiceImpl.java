@@ -59,7 +59,7 @@ public class IssueServiceImpl implements IssueService{
 
 	
 	public List<IssueForm> getUnassignedIssues() {
-		System.out.println("prajvi service");
+
 		List<Issue> issueList=issueDao.getUnassignedIssues();
 		List<IssueForm> unassignedIssueList=new ArrayList<IssueForm>();
 		
@@ -72,6 +72,7 @@ public class IssueServiceImpl implements IssueService{
 			issueForm.setApplicationIssueType(applicationIssueType);
 			
 			issueForm.setSummary(issue.getSummary());
+			issueForm.setId(issue.getId());
 			
 			ApplicationIssuePriorityForm applicationIssuePriority=new ApplicationIssuePriorityForm();
 			applicationIssuePriority.setType(issue.getApplicationIssuePriority().getType());
@@ -96,10 +97,6 @@ public class IssueServiceImpl implements IssueService{
 	    int currentDay = localCalendar.get(Calendar.DATE);
 	    int currentDayOfWeek = localCalendar.get(Calendar.DAY_OF_WEEK);
 	    Date date=new Date();
-	    
-	    
-	   
-	    
 		
 		Calendar cal = Calendar.getInstance();
 		Date dateBefore=new Date();
@@ -217,8 +214,6 @@ public class IssueServiceImpl implements IssueService{
 		issue.setApplicationEnvironment(applicationEnvironment);
 		issue.setApplicationIssueType(applicationIssueType);
 		issue.setApplicationIssueStatus(applicationIssueStatus);
-		
-		
 		issueDao.createIssue(issue,createdBy);
 }
 
@@ -247,6 +242,14 @@ public class IssueServiceImpl implements IssueService{
 		}
 		
 		return issueTypesList;
+	}
+
+
+	public IssueForm fetchIssueDetails(int fetchId) {
+		System.out.println("prajvi service");
+		Issue fetchedIssue=issueDao.fetchIssueDetails(fetchId);
+		IssueForm fetchedIssueForm=new IssueForm();
+		return fetchedIssueForm;
 	}
 	
 }

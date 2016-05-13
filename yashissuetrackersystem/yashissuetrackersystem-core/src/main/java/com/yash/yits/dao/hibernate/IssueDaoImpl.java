@@ -65,7 +65,7 @@ public class IssueDaoImpl implements IssueDao {
 
 
 	public List<Issue> getUnassignedIssues() {
-		System.out.println("prajvi dao");
+
 		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Issue.class)
 				.setProjection(Projections.projectionList()
 				.add(Projections.property("id"),"id")
@@ -76,7 +76,6 @@ public class IssueDaoImpl implements IssueDao {
 				.add(Restrictions.isNull("assignedUser"))
 				.setResultTransformer(Transformers.aliasToBean(Issue.class));
 		List<Issue> unassignedIssueList=criteria.list();
-
 		return unassignedIssueList;
 
 	}
@@ -226,6 +225,15 @@ public class IssueDaoImpl implements IssueDao {
 		List<ApplicationIssueType> issueTypes=criteria.list();
 		
 		return issueTypes;
+	}
+
+
+	public Issue fetchIssueDetails(int fetchId) {
+		System.out.println("prajvi dao");
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Issue where id="+fetchId);
+		Issue issue=(Issue)query.uniqueResult();
+		return null;
 	}
 
 }
