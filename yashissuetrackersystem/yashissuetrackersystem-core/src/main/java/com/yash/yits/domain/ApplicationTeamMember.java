@@ -193,7 +193,7 @@ public class ApplicationTeamMember implements Serializable {
 
 	public ApplicationTeamMember() {
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -365,6 +365,11 @@ public class ApplicationTeamMember implements Serializable {
 
 	public void setApplicationTeamMember1(ApplicationTeamMember applicationTeamMember1) {
 		this.applicationTeamMember1 = applicationTeamMember1;
+	}
+
+	@Override
+	public String toString() {
+		return "ApplicationTeamMember [id=" + id + ", member=" + member.toString() + "]";
 	}
 
 	/*public List<ApplicationTeamMember> getApplicationTeamMembers1() {

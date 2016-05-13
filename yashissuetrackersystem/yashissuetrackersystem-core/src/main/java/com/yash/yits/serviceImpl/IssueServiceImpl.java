@@ -32,12 +32,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yash.yits.dao.IssueDao;
+import com.yash.yits.domain.Application;
 import com.yash.yits.domain.ApplicationEnvironment;
 import com.yash.yits.domain.ApplicationIssuePriority;
 import com.yash.yits.domain.ApplicationIssueStatus;
 import com.yash.yits.domain.ApplicationIssueType;
+import com.yash.yits.domain.ApplicationTeamMember;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
+import com.yash.yits.form.ApplicationForm;
+import com.yash.yits.form.ApplicationTeamMemberForm;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.dao.IssueDao;
@@ -161,9 +165,10 @@ public class IssueServiceImpl implements IssueService{
 	}
 
 
-	public void createIssue(IssueForm issueForm,Long createdBy) {
+	public void createIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId) {
 		Project project=new Project();
 		project.setId(issueForm.getProject().getId());
+		
 		
 		ApplicationEnvironment applicationEnvironment=new ApplicationEnvironment();
 		applicationEnvironment.setId(issueForm.getApplicationEnvironment().getId());
@@ -187,9 +192,11 @@ public class IssueServiceImpl implements IssueService{
 		issue.setApplicationEnvironment(applicationEnvironment);
 		issue.setApplicationIssueType(applicationIssueType);
 		issue.setApplicationIssueStatus(applicationIssueStatus);
+		issue.setTaskProgressUpdate("Not Started");
+		issue.setCreatedDateTime(new Date());
+		issue.setIsActive(1);
 		
-		
-		issueDao.createIssue(issue,createdBy);
+		issueDao.createIssue(issue,createdBy,issueOwnerMemberId);
 }
 
 	
@@ -202,6 +209,23 @@ public class IssueServiceImpl implements IssueService{
 
 		return issueDao.getAllSelectFields(project,member);
 
+	}
+
+	public List<ApplicationForm> getApplicationNames() {
+		
+		List<ApplicationForm> applicationForms= new ArrayList<ApplicationForm>();
+		List<Application> applications = issueDao.getApplicationNames();
+		System.out.println("Service getApplication names "+applications);
+		Iterator<Application>  iterator = applications.iterator();
+		while (iterator.hasNext()) {
+			Application application = (Application) iterator.next();
+			ApplicationForm applicationForm = new ApplicationForm();
+			applicationForm.setId(application.getId());
+			applicationForm.setName(application.getName());
+			applicationForms.add(applicationForm);
+		}
+		System.out.println("in service application"+applicationForms);
+		return applicationForms;
 	}
 	
 }

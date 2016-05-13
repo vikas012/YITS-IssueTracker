@@ -95,6 +95,11 @@ public class ApplicationForm {
 	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
+
+	@Override
+	public String toString() {
+		return "ApplicationForm [id=" + id + ", name=" + name + "]";
+	}
 	
 	
 }

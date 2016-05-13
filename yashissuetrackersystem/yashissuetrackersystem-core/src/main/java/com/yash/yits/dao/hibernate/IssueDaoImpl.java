@@ -48,6 +48,18 @@ public class IssueDaoImpl implements IssueDao {
 		System.out.println("in dao "+projects);
 		return projects;
 	}
+	
+	public List<Application> getApplicationNames() {
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Application.class)
+				
+				.setProjection(Projections.projectionList()
+					      .add(Projections.property("id"), "id")
+					      .add(Projections.property("name"), "name"))
+				.setResultTransformer(Transformers.aliasToBean(Application.class));
+		List<Application> application= criteria.list();
+		System.out.println("in dao application "+application);
+		return application;
+	}
 
 	
 	public List<Issue> getDefaultIssues(Timestamp date1, Timestamp date2) {
@@ -75,13 +87,20 @@ public class IssueDaoImpl implements IssueDao {
 		return unassignedIssueList;
 
 }
-	public void createIssue(Issue issue,Long createdBy) {
+	public void createIssue(Issue issue,Long createdBy,Long issueOwnerMemberId) {
 		Session session=sessionFactory.getCurrentSession();
 		int createdBy1=findMemberId(createdBy);
 		ApplicationTeamMember applicationTeamMember=new ApplicationTeamMember();
 		applicationTeamMember.setId(createdBy1);
+		
 		issue.setCreatedBy(applicationTeamMember);
-		session.save(issue);
+		
+		ApplicationTeamMember applicationTeamMember2 = new ApplicationTeamMember();
+		applicationTeamMember2.setId(findMemberId(issueOwnerMemberId));
+		
+		issue.setIssueOwner(applicationTeamMember2);
+		
+		session.saveOrUpdate(issue);
 		
 		
 	}
@@ -96,14 +115,18 @@ public class IssueDaoImpl implements IssueDao {
 		Criteria criteria1=criteria.createCriteria("member");
 		criteria1.add(Restrictions.eq("memberId", memberId));
 		
-		System.out.println(criteria.uniqueResult());
-		
 		
 		ApplicationTeamMember applicationTeamMember=(ApplicationTeamMember)criteria.uniqueResult();
 		int id=applicationTeamMember.getId();
+		
+		System.out.println(" Application Team menber ID"+applicationTeamMember.getId());
+		
 		return id ;
 		
 	}
+
+	
+	
 
 
 	public Map<String, Object> getAllSelectFields(Project project, MemberForm member) {
@@ -127,29 +150,62 @@ public class IssueDaoImpl implements IssueDao {
 		System.out.println("Application  "+application);
 		
 		
-		Criteria criteria = session.createCriteria(ApplicationIssuePriority.class)
-				.setProjection(Projections.projectionList()
-					      .add(Projections.property("id"), "id")
-					      .add(Projections.property("type"), "type"))
-				.setResultTransformer(Transformers.aliasToBean(ApplicationIssuePriority.class));
-		criteria.add(Restrictions.eq("application", application));
-		
-		List<ApplicationIssuePriority> applicationIssuePriority=criteria.list();
+		List<ApplicationIssuePriority> applicationIssuePriority = getApplicationIssuePriority(application);
 		System.out.println("ApplicationIssuePriority "+applicationIssuePriority);
 		
 		
-		Criteria criteria3 = session.createCriteria(ApplicationIssueType.class)
-				.setProjection(Projections.projectionList()
-					      .add(Projections.property("id"), "id")
-					      .add(Projections.property("type"), "type"))
-				.setResultTransformer(Transformers.aliasToBean(ApplicationIssueType.class));
-		criteria3.add(Restrictions.eq("application", application));
 		
-		List<ApplicationIssueType> applicationIssueType=criteria3.list();
+		List<ApplicationIssueType> applicationIssueType=getApplicationIssueType(application);
 		System.out.println("ApplicationIssueType "+applicationIssueType);
 		
 		
+		List<ApplicationEnvironment> applicationEnvironment = getApplicationEnvironment(application);
+		System.out.println("ApplicationEnvironment "+applicationEnvironment);
 		
+		
+		List<Member> members = getApplicationMembers(application);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("applicationTeamMembers", members);
+		map.put("issuePriority", applicationIssuePriority);
+		map.put("issueType", applicationIssueType);
+		map.put("applicationEnvironment",applicationEnvironment);
+		return map;
+		
+
+	}
+	
+	public List<Member> getApplicationMembers(Application application) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria5 = session.createCriteria(Application.class);		
+		criteria5.add(Restrictions.eq("id", application.getId()));
+		List<Application> applications=criteria5.list();
+		System.out.println("ApplicationTeamMember "+applications);
+		
+		
+		
+		List<ApplicationTeamMember> applicationTeamMembers = application.getApplicationTeamMembers();
+		System.out.println("ApplicationTeam Member "+applicationTeamMembers);
+		
+		Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
+		List<Member> members = new ArrayList<Member>();
+		
+		while (iterator.hasNext()) {
+			ApplicationTeamMember applicationTeamMember = (ApplicationTeamMember) iterator.next();
+			System.out.println(applicationTeamMember);
+			members.add( applicationTeamMember.getMember());
+			
+		}
+		
+		System.out.println("Members member "+members);
+		
+		
+		return members;
+		
+	}
+	
+	public List<ApplicationEnvironment> getApplicationEnvironment(Application application) {
+		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria4 = session.createCriteria(ApplicationEnvironment.class)
 				.setProjection(Projections.projectionList()
 					      .add(Projections.property("id"), "id")
@@ -158,14 +214,38 @@ public class IssueDaoImpl implements IssueDao {
 		criteria4.add(Restrictions.eq("application", application));
 		
 		List<ApplicationEnvironment> applicationEnvironment=criteria4.list();
-		System.out.println("ApplicationEnvironment "+applicationEnvironment);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("issuePriority", applicationIssuePriority);
-		map.put("issueType", applicationIssueType);
-		map.put("applicationEnvironment",applicationEnvironment);
-		return map;
+		return applicationEnvironment;
 		
-
 	}
+	
+	
+	public List<ApplicationIssueType> getApplicationIssueType(Application application) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria3 = session.createCriteria(ApplicationIssueType.class)
+				.setProjection(Projections.projectionList()
+					      .add(Projections.property("id"), "id")
+					      .add(Projections.property("type"), "type"))
+				.setResultTransformer(Transformers.aliasToBean(ApplicationIssueType.class));
+		criteria3.add(Restrictions.eq("application", application));
+		
+		List<ApplicationIssueType> applicationIssueType=criteria3.list();
+		return applicationIssueType;
+		
+	}
+	
+	public List<ApplicationIssuePriority> getApplicationIssuePriority(Application application) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(ApplicationIssuePriority.class)
+				.setProjection(Projections.projectionList()
+					      .add(Projections.property("id"), "id")
+					      .add(Projections.property("type"), "type"))
+				.setResultTransformer(Transformers.aliasToBean(ApplicationIssuePriority.class));
+		criteria.add(Restrictions.eq("application", application));
+		
+		List<ApplicationIssuePriority> applicationIssuePriority=criteria.list();
+		return applicationIssuePriority;
+		
+	}
+	
 
 }

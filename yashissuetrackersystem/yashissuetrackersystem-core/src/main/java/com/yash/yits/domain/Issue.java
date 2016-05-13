@@ -29,7 +29,7 @@ public class Issue implements Serializable {
 
 	private String component;
 
-	@Column(name="CREATED_DATE_TIME")
+	@Column(name="CREATED_DATETIME")
 	private Date createdDateTime;
 
 	private String description;
@@ -326,6 +326,16 @@ public class Issue implements Serializable {
 	public void setCreatedBy(ApplicationTeamMember createdBy) {
 		this.createdBy = createdBy;
 	}
+
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+	
+	
 
 /*	public List<IssueActivityLog> getIssueActivityLogs() {
 		return issueActivityLogs;

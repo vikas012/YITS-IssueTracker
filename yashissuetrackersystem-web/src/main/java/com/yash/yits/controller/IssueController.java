@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yash.yits.form.ApplicationForm;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 
@@ -82,8 +83,12 @@ public class IssueController {
 		List<ProjectForm> projectForms=issueService.getProjectNames();
 		System.out.println(projectForms);
 		Map<String,Object> map = new HashMap<String, Object>();
+		List<ApplicationForm> applicationForms = issueService.getApplicationNames();
+		map.put("application",applicationForms);
 		map.put("projects", projectForms);
 		map.put("myValue", "Hie there");
+		
+		//System.out.println("Applications >>"+map.get("application"));
 		return map;
 
 	}
@@ -130,19 +135,20 @@ public class IssueController {
 		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
 		
 		
-		System.out.println(createdBy);
+		System.out.println("Create Issue "+createdBy);
 		//issueForm.setCreatedBy(createdBy);
 		System.out.println(issueForm);
-		System.out.println(issueForm.getProject());
+		System.out.println("Project createIssue "+issueForm.getProject());
 		System.out.println(issueForm.getApplicationIssuePriority());
 		System.out.println(issueForm.getComponent());
 		System.out.println(issueForm.getDescription());
 		System.out.println(issueForm.getSummary());
+		System.out.println("Application Issue type "+issueForm.getApplicationIssueType());
 		System.out.println("in create issue");
+		System.out.println("Application Issue Owner   "+issueForm.getIssueOwner().getMember());
+		Long issueOwnerMemberId = issueForm.getIssueOwner().getMember().getMemberId();
 		
-		//System.out.println(issue);
-		//System.out.println(issue.getComponent());
-		issueService.createIssue(issueForm,createdBy);
+		issueService.createIssue(issueForm,createdBy,issueOwnerMemberId);
 		System.out.println("in controller for show projects");
 		return null;
 
