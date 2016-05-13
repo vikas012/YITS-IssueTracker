@@ -85,7 +85,12 @@ managerModule.config(function($routeProvider) {
 			
 		
 	})
+	
+	.when('/showIssues', {
 
+		templateUrl : '../showAssignedIssuePage',
+		controller : 'managerController',
+	});
 	
 });
 

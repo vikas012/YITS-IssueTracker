@@ -372,6 +372,22 @@ public class ApplicationTeamMember implements Serializable {
 		return "ApplicationTeamMember [id=" + id + ", member=" + member.toString() + "]";
 	}
 
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
+		return lastModifiedDateTime;
+	}
+
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
+	}
+
 	/*public List<ApplicationTeamMember> getApplicationTeamMembers1() {
 		return applicationTeamMembers1;
 	}

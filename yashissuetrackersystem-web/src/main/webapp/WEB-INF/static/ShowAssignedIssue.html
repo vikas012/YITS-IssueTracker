@@ -1,0 +1,34 @@
+<div ng-controller="managerController as mc">
+
+	<h2 class="headerlabel">Show Issues</h2>
+	<div class="input-group">
+		<input type="text" class="form-control" ng-model="searchAssignedIssueText" placeholder="Member, Project">
+		<div class="input-group-btn">
+			<button class="btn btn-primary" type="button" ng-click="getSearchAssignedIssue()">
+				<i class="glyphicon glyphicon-search"></i>&nbsp; Search
+			</button>
+		</div>
+	</div>
+	
+	<br> <br> <br>
+	
+	<div>
+		<table id="listOfMembers" class="table table-striped">
+			<tr>
+				<th>MEMBER</th>				
+				<th>PROJECT</th>
+				<th>SUMMARY</th>
+				<th>DISCRIPTION</th>
+			</tr>
+	
+			<tr ng-repeat="assignedIssue in assignedIssues">			
+				<td>{{assignedIssue.assignedUser.member.name}}</td>
+				<td>{{assignedIssue.project.name}}</td>
+				<td>{{assignedIssue.summary}}</td>
+				<td>{{assignedIssue.description}}</td>
+			</tr>
+	
+		</table>
+	</div>
+
+</div>
