@@ -4,14 +4,14 @@ angular.module('issueTrackingSystem.managerModule')
 }
 	]);
 angular
-		.module('issueTrackingSystem.managerModule')
+		.module("issueTrackingSystem.managerModule")
 		.controller(
 				'managerController',
 				[
 						'$scope',
 						'$http',
 						'managerService',
-						function($scope, $http, managerService, issueList,
+						function($scope, $http, managerService,
 								unassignedIssueList) {
 							alert("controller");
 
@@ -44,16 +44,31 @@ angular
 							$scope.userEmail = "";
 							$scope.userMobile = "";
 							
-							$scope.issueList = [];
+							$scope.defaultIssueList = [];
+							
+							
 							var issueList=$http({
 							 method:'GET',
 							     url:'../defaultIssues' 
 							 }).success(function(data){
 							 
-							 $scope.issueList=data;
+							 $scope.defaultIssueList=data;
+							 
+							})
+							
+							
+							$scope.defaultIssueTypes = [];
+							var issueType=$http({
+									
+								 method:'GET',
+							     url:'../defaultIssueTypes' 
+							 }).success(function(data){
+							 
+							 $scope.defaultIssueTypes=data;
+							 
+							 alert( $scope.defaultIssueTypes);
+							 
 							 })
-
-
 							
 							//$scope.members = memberList.data;
 

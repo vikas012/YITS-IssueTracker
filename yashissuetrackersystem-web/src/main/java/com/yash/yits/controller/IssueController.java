@@ -3,6 +3,7 @@ package com.yash.yits.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -72,6 +73,17 @@ public class IssueController {
 		List<IssueForm> issues=issueService.getDefaultIssues();
 
 		return issues;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/defaultIssueTypes",method=RequestMethod.GET)
+	public List<String> defaultIssueTypes(){
+		
+		System.out.println("types=--------------------------------");
+		
+		List<String> issueTypes=issueService.getDefaultIssueTypes();
+		
+		return issueTypes;
 	}
 	
 	@ResponseBody

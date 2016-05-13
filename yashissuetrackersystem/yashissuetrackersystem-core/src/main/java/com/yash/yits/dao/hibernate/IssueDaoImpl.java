@@ -4,10 +4,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import java.util.Date;
-
+import java.util.HashSet;
 import java.util.Iterator;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -26,10 +27,11 @@ import com.yash.yits.domain.Project;
 import com.yash.yits.domain.ApplicationTeamMember;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
-
+import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.domain.Application;
 import com.yash.yits.domain.ApplicationIssuePriority;
+import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.Issue;
 
 @Repository
@@ -70,7 +72,7 @@ public class IssueDaoImpl implements IssueDao {
 				.add(Projections.property("applicationIssuePriority"),"applicationIssuePriority")
 				.add(Projections.property("applicationIssueStatus"),"applicationIssueStatus")
 			//	.add(Projections.property("createdBy"),"createdBy")
-				.add(Projections.property("assignedUser"),"assignedUser")
+			//	.add(Projections.property("assignedUser"),"assignedUser")
 				.add( Projections.property("summary"), "summary")
 				.add(Projections.property("applicationIssueType"),"applicationIssueType"))
 				.add(Restrictions.between("createdDateTime", date1, date2))
@@ -162,6 +164,19 @@ public class IssueDaoImpl implements IssueDao {
 		System.out.println("Application "+application1.getId());
 		//System.out.println("Application "+application.getId());
 
+	}
+
+
+	public List<ApplicationIssueType> getDefaultIssueTypes() {
+		
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(ApplicationIssueType.class)
+				.setProjection(Projections.projectionList()
+						.add(Projections.property("type"),"type"))
+				.setResultTransformer(Transformers.aliasToBean(ApplicationIssueType.class));
+		List<ApplicationIssueType> issueTypes=criteria.list();
+		
+		return issueTypes;
 	}
 
 }

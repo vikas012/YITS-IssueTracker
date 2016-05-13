@@ -30,7 +30,7 @@ managerModule.config(function($routeProvider) {
 
 });*/
 
-var managerModule = angular.module('issueTrackingSystem.managerModule',[ 'ngRoute' ]);
+var managerModule = angular.module('issueTrackingSystem.managerModule',['ngRoute']);
 managerModule.config(function($routeProvider) {
 	
 	

@@ -10,7 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
 
 import java.util.ArrayList;
@@ -117,24 +119,7 @@ public class IssueServiceImpl implements IssueService{
 		cal.add(Calendar.DATE, +14);
 		Date dateAfter = cal.getTime();
 		
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
-		String date1=df.format(dateBefore);
-		
-		String date2=df.format(dateAfter);
-		
-		System.out.println(date1+"-----------"+date2);
-		
-		try {
-			Date date3=df.parse(date1);
-			Date date4=df.parse(date2);
-			
-			System.out.println(date3+"------"+date4);
-			
-		
-		
-		
-		List<Issue> issues = issueDao.getDefaultIssues(date3,date4);
+		List<Issue> issues = issueDao.getDefaultIssues(dateBefore,dateAfter);
 		
 		
 		List<IssueForm> issueForms = new ArrayList<IssueForm>();
@@ -148,50 +133,31 @@ public class IssueServiceImpl implements IssueService{
 			issueForm.setCreatedDateTime(issue.getCreatedDateTime());
 			issueForm.setDueDate(issue.getDueDate());
 			issueForm.setSummary(issue.getSummary());
-			issueForm.setAssignedUser(issue.getAssignedUser().getMember().getId());
-			
-			/*ApplicationTeamMemberForm issueOwner=new ApplicationTeamMemberForm();
-			MemberForm memberForm=new MemberForm();
-			memberForm.setId(issue.getIssueOwner().getMember().getId());
-			issueOwner.setMember(memberForm);
-			issueForm.setIssueOwner(issueOwner);*/
-			
+
 			ProjectForm projectForm=new ProjectForm();
-			projectForm.setId(issue.getProject().getId());
+			projectForm.setName(issue.getProject().getName());
 			issueForm.setProject(projectForm);
 			
 			ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
-			applicationIssuePriorityForm.setId(issue.getApplicationIssuePriority().getId());
+			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+			System.out.println(issue.getApplicationIssuePriority().getType());
 			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+			System.out.println(issueForm.getApplicationIssuePriority()+"issueForm");
 			
 			ApplicationIssueStatusForm applicationIssueStatusForm=new ApplicationIssueStatusForm();
-			applicationIssueStatusForm.setId(issue.getApplicationIssueStatus().getId());
+			applicationIssueStatusForm.setStatus(issue.getApplicationIssueStatus().getStatus());
 			issueForm.setApplicationIssueStatus(applicationIssueStatusForm);
-			
-			/*ApplicationTeamMemberForm createdBy=new ApplicationTeamMemberForm();
-			MemberForm memberForm2=new MemberForm();
-			memberForm2.setId(issue.getCreatedBy().getMember().getId());
-			createdBy.setMember(memberForm2);
-			issueForm.setCreatedBy(createdBy);*/
-		
-			
-			
+
 			ApplicationIssueTypeForm applicationIssueTypeForm=new ApplicationIssueTypeForm();
-			applicationIssuePriorityForm.setType(issue.getApplicationIssueType().getType());
+			applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
 			issueForm.setApplicationIssueType(applicationIssueTypeForm);
 			
 			issueForms.add(issueForm);
 		}
 		
-		System.out.println(issueForms);
+		System.out.println(issueForms+"Form");
 		
 		return issueForms;
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		
 	}
 
 	
@@ -252,6 +218,23 @@ public class IssueServiceImpl implements IssueService{
 		issueDao.getAllSelectFields(project,member);
 
 		
+	}
+
+	public List<String> getDefaultIssueTypes() {
+		
+		List<ApplicationIssueType> issueTypes=issueDao.getDefaultIssueTypes();
+		
+		List<String> issueTypesList=new ArrayList<String>();
+		
+		for (ApplicationIssueType issue : issueTypes) {
+			
+			String type=issue.getType();
+			issueTypesList.add(type);
+		}
+		
+		System.out.println(issueTypes+"types");
+		
+		return issueTypesList;
 	}
 	
 }

@@ -3,8 +3,12 @@ package com.yash.yits.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
+import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Project;
+import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 
 public interface IssueDao {
@@ -19,6 +23,8 @@ public interface IssueDao {
 
 
 	public void getAllSelectFields(Project project, MemberForm member);
+
+	public List<ApplicationIssueType> getDefaultIssueTypes();
 
 
 }
