@@ -41,7 +41,6 @@ public class IssueController {
 	@ResponseBody
 	public List<Issue> showIssuesList(HttpServletRequest httpServletRequest){
 		System.out.println("In controller");
-		//long memberId=1004686;
 		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
 		System.out.println(memberId);
 		List<Issue> issuesList = issueService.showIssuesList(memberId);

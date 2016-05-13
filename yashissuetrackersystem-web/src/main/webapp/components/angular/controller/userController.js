@@ -5,7 +5,7 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 	
 	var issues=$http({
  		 method:'GET',
- 		     url:'../defaultIssuesList' //spring controller call, use @ResponseBody
+ 		     url:'./defaultIssuesList' //spring controller call, use @ResponseBody
  		 }).success(function(data){
  		 alert(data);
  		 	$scope.issueList = issuesList;
