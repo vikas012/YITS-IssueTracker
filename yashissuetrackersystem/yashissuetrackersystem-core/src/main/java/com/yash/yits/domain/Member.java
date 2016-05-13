@@ -1,32 +1,15 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
-
-
 import javax.persistence.*;
-
-
-
-
 import org.hibernate.annotations.LazyCollection;
-
 import org.hibernate.annotations.LazyCollectionOption;
-
-
-
 import org.hibernate.annotations.LazyCollectionOption;
-
-
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-
-
-
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,10 +18,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
 
 /**
  * The persistent class for the member database table.
@@ -55,8 +36,8 @@ public class Member implements Serializable {
 
 	private Long contact;
 
-	@Column(name="CREATED_BY")
-	private int createdBy;
+	/*@Column(name="CREATED_BY")
+	private int createdBy;*/
 
 	@Column(name="CREATED_DATETIME")
 	private Date createdDateTime;
@@ -65,8 +46,8 @@ public class Member implements Serializable {
 
 	private int isActive;
 
-	@Column(name="LAST_MODIFIED_BY")
-	private int lastModifiedBy;
+//	@Column(name="LAST_MODIFIED_BY")
+//	private int lastModifiedBy;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
 	private Date lastModifiedDateTime;
@@ -105,14 +86,14 @@ public class Member implements Serializable {
 		this.contact = contact;
 	}
 
-	public int getCreatedBy() {
+	/*public int getCreatedBy() {
 		return createdBy;
 	}
 
 	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
-
+*/
 	public String getEmail() {
 		return email;
 	}
@@ -137,13 +118,13 @@ public class Member implements Serializable {
 		this.isActive = isActive;
 	}
 
-	public int getLastModifiedBy() {
+	/*public int getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
 	public void setLastModifiedBy(int lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
-	}
+	}*/
 
 	public Date getCreatedDateTime() {
 		return createdDateTime;

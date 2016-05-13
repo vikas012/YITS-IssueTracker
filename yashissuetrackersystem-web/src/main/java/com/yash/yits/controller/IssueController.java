@@ -3,6 +3,7 @@ package com.yash.yits.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -76,6 +77,15 @@ public class IssueController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/defaultIssueTypes",method=RequestMethod.GET)
+	public List<String> defaultIssueTypes(){
+	
+		List<String> issueTypes=issueService.getDefaultIssueTypes();
+		
+		return issueTypes;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/getProjects",produces=MediaType.APPLICATION_JSON_VALUE)
 	public Map<String,Object> getProjects()
 	{
@@ -122,10 +132,17 @@ public class IssueController {
 	
 	@ResponseBody
 	@RequestMapping(value="/issue/assign")
-	public List<Issue> getUnassignedIssues(){
-		System.out.println("unassigned controller");
-		List unassignedIssueList=issueService.getUnassignedIssues();
+	public List<IssueForm> getUnassignedIssues(){
+		List<IssueForm> unassignedIssueList=issueService.getUnassignedIssues();
 		return unassignedIssueList;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/fetchIssueDetails")
+	public IssueForm fetchIssueDetails(@PathVariable int index){
+		System.out.println("unassigned Controller");
+		IssueForm issueForm=issueService.fetchIssueDetails(index);
+		return null;
 	}
 	
 	

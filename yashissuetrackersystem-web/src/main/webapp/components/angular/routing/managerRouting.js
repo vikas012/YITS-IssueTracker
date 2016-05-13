@@ -30,7 +30,7 @@ managerModule.config(function($routeProvider) {
 
 });*/
 
-var managerModule = angular.module('issueTrackingSystem.managerModule',[ 'ngRoute' ]);
+var managerModule = angular.module('issueTrackingSystem.managerModule',['ngRoute']);
 managerModule.config(function($routeProvider) {
 	
 	
@@ -66,20 +66,10 @@ managerModule.config(function($routeProvider) {
 	}).when('/issues', {
 		templateUrl : '../issues',
 		controller : 'managerController as mc',
-		resolve : {
-			issueList : function(managerService) {
-				return managerService.getIssues();
-			}
-		}
+		
 	}).when('/assignIssue', {
 		templateUrl : '../getAssignIssueForm',
 		controller : 'managerController as mc',
-		resolve : {
-			unassignedIssueList : function(managerService) {
-				return managerService.getUnassignedIssues();
-			}
-		}
-
 	})
 	
 	.when('/searchMembers',{

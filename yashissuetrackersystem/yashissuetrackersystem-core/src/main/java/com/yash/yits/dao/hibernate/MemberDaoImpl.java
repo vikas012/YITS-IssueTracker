@@ -20,16 +20,8 @@ import com.yash.yits.domain.Member;
 @Repository
 public class MemberDaoImpl implements MemberDao {
 
-
-
-
-	
-
-
 	 @Autowired
 	 private SessionFactory sessionFactory;
-
-
 
 	 public Member addMember(Member member) {
 			Session session=sessionFactory.getCurrentSession();
@@ -60,19 +52,20 @@ public class MemberDaoImpl implements MemberDao {
 						.add(Projections.property("memberId"), "memberId")
 					      .add(Projections.property("name"), "name")
 					      .add(Projections.property("email"), "email")
-							.add(Projections.property("contact"), "contact"))
+							.add(Projections.property("contact"), "contact")
+							.add(Projections.property("isActive"),"isActive"))
 					    .setResultTransformer(Transformers.aliasToBean(Member.class));
 		
 		
 		List<Member> allMembers = criteria.list();
 		
 		
-		System.out.println(allMembers);
+	/*	System.out.println(allMembers);
 		for (Member member : allMembers) {
 			System.out.println(member.getEmail());
 			System.out.println(member.getMemberId());
 		}
-		
+		*/
 		
 		return   allMembers ;
 	}
@@ -81,7 +74,7 @@ public class MemberDaoImpl implements MemberDao {
 		System.out.println("in dao");
 		Session session=sessionFactory.getCurrentSession();
 		
-		String selectQuery="FROM Member where name LIKE '"+search+"%' OR email LIKE '"+search+"%' OR managerName LIKE '"+search+"%'";
+		String selectQuery="FROM Member where name LIKE '%"+search+"%' OR email LIKE '"+search+"%' OR managerName LIKE '%"+search+"%'";
 		Query query=session.createQuery(selectQuery);
 		List<Member> members=query.list();
 		for(Member membersList:members){
@@ -104,28 +97,35 @@ public class MemberDaoImpl implements MemberDao {
 	 */
 	public List<Member> blockUnblockMember(Member member) {
 	
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Member where memberId=?");
+		Member member1=(Member) query.setLong(0, member.getMemberId()).uniqueResult();
+
+		System.out.println(member1.getIsActive());
 		
-		if(member.getIsActive()==0){
+		if(member1.getIsActive()==0){
 			
-			Session session=sessionFactory.getCurrentSession();
-			Query query=session.createQuery("from Member where memberId=?");
-			Member member2=(Member) query.setLong(0, member.getMemberId());
-			member2.setIsActive(1);
-			session.saveOrUpdate(member2);
-			List<Member> members=query.list();
+			System.out.println("inside isactive");
+			member1.setIsActive(1);
+			session.saveOrUpdate(member1);
+			List<Member> members=showMembers();
 			return members;
 		}
 		else{
 			
-			Session session=sessionFactory.getCurrentSession();
-			Query query=session.createQuery("from Member where memberId=?");
-			Member member2=(Member) query.setLong(0, member.getMemberId());
-			member2.setIsActive(0);
-			session.saveOrUpdate(member2);
+			member1.setIsActive(0);
+			session.saveOrUpdate(member1);
+			List<Member> members=showMembers();
 			
-			List<Member> members=query.list();
+			for (Member member2 : members) {
+				System.out.println(member2.getEmail());
+				System.out.println(member2.getMemberId());
+			}
+			
 			return members;
+			
 		}
+		
 	
 	}
 

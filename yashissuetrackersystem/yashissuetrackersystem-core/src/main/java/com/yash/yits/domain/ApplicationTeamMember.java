@@ -33,7 +33,7 @@ public class ApplicationTeamMember implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Column(name="CREATED_DATE_TIME")
+	@Column(name="CREATED_DATETIME")
 	private Date createdDateTime;
 
 	private int isActive;

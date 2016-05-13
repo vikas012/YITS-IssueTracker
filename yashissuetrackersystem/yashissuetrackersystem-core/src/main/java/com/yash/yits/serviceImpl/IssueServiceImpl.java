@@ -2,56 +2,57 @@ package com.yash.yits.serviceImpl;
 
 
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+
 import java.util.Iterator;
 import java.util.List;
-
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.stereotype.Service;
+import java.util.Set;
+import java.util.Map;
+import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yash.yits.dao.IssueDao;
+
 import com.yash.yits.domain.Application;
+
 import com.yash.yits.domain.ApplicationEnvironment;
 import com.yash.yits.domain.ApplicationIssuePriority;
 import com.yash.yits.domain.ApplicationIssueStatus;
 import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.ApplicationTeamMember;
 import com.yash.yits.domain.Issue;
+
 import com.yash.yits.domain.Member;
+
 import com.yash.yits.form.ApplicationForm;
 import com.yash.yits.form.ApplicationTeamMemberForm;
-import com.yash.yits.form.IssueForm;
-import com.yash.yits.form.MemberForm;
-import com.yash.yits.dao.IssueDao;
-import com.yash.yits.domain.Issue;
 
+import com.yash.yits.form.ApplicationIssuePriorityForm;
+import com.yash.yits.form.ApplicationIssueStatusForm;
+import com.yash.yits.form.ApplicationIssueTypeForm;
+import com.yash.yits.form.ApplicationTeamMemberForm;
+
+import com.yash.yits.domain.Issue;
 
 import com.yash.yits.domain.Project;
+import com.yash.yits.form.ApplicationIssuePriorityForm;
+import com.yash.yits.form.ApplicationIssueTypeForm;
+
+
+import com.yash.yits.form.IssueForm;
+import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.ProjectForm;
-import com.yash.yits.dao.IssueDao;
-import com.yash.yits.domain.Issue;
 import com.yash.yits.service.IssueService;
 
 @Service
@@ -64,10 +65,36 @@ public class IssueServiceImpl implements IssueService{
 	private IssueDao issueDao;
 
 	
-	public List<Issue> getUnassignedIssues() {
-		List unassignedIssueList=issueDao.getUnassignedIssues();
+	public List<IssueForm> getUnassignedIssues() {
+
+		List<Issue> issueList=issueDao.getUnassignedIssues();
+		List<IssueForm> unassignedIssueList=new ArrayList<IssueForm>();
+		
+		for (Issue issue: issueList) {
+			
+			IssueForm issueForm=new IssueForm();
+			
+			ApplicationIssueTypeForm applicationIssueType=new ApplicationIssueTypeForm();
+			applicationIssueType.setType(issue.getApplicationIssueType().getType());
+			issueForm.setApplicationIssueType(applicationIssueType);
+			
+			issueForm.setSummary(issue.getSummary());
+			issueForm.setId(issue.getId());
+			
+			ApplicationIssuePriorityForm applicationIssuePriority=new ApplicationIssuePriorityForm();
+			applicationIssuePriority.setType(issue.getApplicationIssuePriority().getType());
+			issueForm.setApplicationIssuePriority(applicationIssuePriority);
+			
+			ProjectForm projectForm=new ProjectForm();
+			projectForm.setName(issue.getProject().getName());
+			issueForm.setProject(projectForm);
+			
+			unassignedIssueList.add(issueForm);
+			
+		}
 		return unassignedIssueList;
 	}
+
 
 	public List<IssueForm> getDefaultIssues() {
 		
@@ -77,7 +104,6 @@ public class IssueServiceImpl implements IssueService{
 	    int currentDay = localCalendar.get(Calendar.DATE);
 	    int currentDayOfWeek = localCalendar.get(Calendar.DAY_OF_WEEK);
 	    Date date=new Date();
-		
 		
 		Calendar cal = Calendar.getInstance();
 		Date dateBefore=new Date();
@@ -113,24 +139,8 @@ public class IssueServiceImpl implements IssueService{
 		cal.add(Calendar.DATE, +14);
 		Date dateAfter = cal.getTime();
 		
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<Issue> issues = issueDao.getDefaultIssues(dateBefore,dateAfter);
 		
-		String date1=df.format(dateBefore);
-		
-		String date2=df.format(dateAfter);
-		
-		
-		
-		Timestamp beforeTimestamp=new Timestamp(dateBefore.getTime());
-		
-		Timestamp afterTimestamp=new Timestamp(dateAfter.getTime());
-		
-		beforeTimestamp= Timestamp.valueOf(date1);
-		afterTimestamp= Timestamp.valueOf(date2);
-		
-		System.out.println(beforeTimestamp+ "----"+afterTimestamp);
-		
-		List<Issue> issues = issueDao.getDefaultIssues(beforeTimestamp,afterTimestamp);
 		
 		List<IssueForm> issueForms = new ArrayList<IssueForm>();
 		for (Issue issue : issues) {
@@ -138,13 +148,34 @@ public class IssueServiceImpl implements IssueService{
 			
 			IssueForm issueForm = new IssueForm();
 			
+			issueForm.setId(issue.getId());
+			issueForm.setCloseDate(issue.getCloseDate());
+			issueForm.setCreatedDateTime(issue.getCreatedDateTime());
+			issueForm.setDueDate(issue.getDueDate());
+			issueForm.setSummary(issue.getSummary());
+
+			ProjectForm projectForm=new ProjectForm();
+			projectForm.setName(issue.getProject().getName());
+			issueForm.setProject(projectForm);
 			
+			ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+			System.out.println(issue.getApplicationIssuePriority().getType());
+			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+			System.out.println(issueForm.getApplicationIssuePriority()+"issueForm");
+			
+			ApplicationIssueStatusForm applicationIssueStatusForm=new ApplicationIssueStatusForm();
+			applicationIssueStatusForm.setStatus(issue.getApplicationIssueStatus().getStatus());
+			issueForm.setApplicationIssueStatus(applicationIssueStatusForm);
+
+			ApplicationIssueTypeForm applicationIssueTypeForm=new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
+			issueForm.setApplicationIssueType(applicationIssueTypeForm);
+			
+			issueForms.add(issueForm);
 		}
 		
-		System.out.println(issueForms);
-		
 		return issueForms;
-		
 	}
 
 	
@@ -160,7 +191,6 @@ public class IssueServiceImpl implements IssueService{
 			projectForm.setName(project.getName());
 			projectForms.add(projectForm);
 		}
-		System.out.println("in service "+projectForms);
 		return projectForms;
 	}
 
@@ -192,11 +222,13 @@ public class IssueServiceImpl implements IssueService{
 		issue.setApplicationEnvironment(applicationEnvironment);
 		issue.setApplicationIssueType(applicationIssueType);
 		issue.setApplicationIssueStatus(applicationIssueStatus);
+
 		issue.setTaskProgressUpdate("Not Started");
 		issue.setCreatedDateTime(new Date());
 		issue.setIsActive(1);
 		
 		issueDao.createIssue(issue,createdBy,issueOwnerMemberId);
+
 }
 
 	
@@ -210,6 +242,7 @@ public class IssueServiceImpl implements IssueService{
 		return issueDao.getAllSelectFields(project,member);
 
 	}
+
 
 	public List<ApplicationForm> getApplicationNames() {
 		
@@ -227,5 +260,30 @@ public class IssueServiceImpl implements IssueService{
 		System.out.println("in service application"+applicationForms);
 		return applicationForms;
 	}
+	public List<String> getDefaultIssueTypes() {
+		
+		List<ApplicationIssueType> issueTypes=issueDao.getDefaultIssueTypes();
+		
+		List<String> issueTypesList=new ArrayList<String>();
+		
+		for (ApplicationIssueType issue : issueTypes) {
+			
+			String type=issue.getType();
+			issueTypesList.add(type);
+		}
+		
+		return issueTypesList;
+	}
+
+
+	public IssueForm fetchIssueDetails(int fetchId) {
+		System.out.println("prajvi service");
+		Issue fetchedIssue=issueDao.fetchIssueDetails(fetchId);
+		IssueForm fetchedIssueForm=new IssueForm();
+		return fetchedIssueForm;
+
+	}
+
+
 	
 }

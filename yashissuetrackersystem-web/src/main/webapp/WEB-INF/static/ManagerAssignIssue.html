@@ -1,91 +1,224 @@
+<html>
+<head>
 <style type="text/css">
-	
-	.container{
-	
-		width: 200px;
-		float: center;
-	}
-	
-	.input-group{
-		width: 300px;
-		float: center;
-		margin-left: 350px;
-	}
-	
-	#heading{
-		background-color: darkcyan;
-		color: white;
-		 font-size: 18px;
-		  font-family: "Times New Roman", Times, serif;
-	}
-	
-	.btn-primary{
-		background-color: darkcyan !important;
-	}
-	
+.container {
+	width: 170px;
+	float: center;
+}
+
+.input-group {
+	width: 300px;
+	float: center;
+	margin-left: 350px;
+}
+
+#heading {
+	background-color: darkcyan;
+	color: white;
+	font-size: 18px;
+	font-family: "Times New Roman", Times, serif;
+}
+
+.btn-primary {
+	background-color: darkcyan !important;
+}
+
+.headingFirst {
+	margin-bottom: 30px;
+	color: white;
+	text-align: center;
+}
+
+.paddingSearchbutton {
+	margin-left: 150px;
+}
+
+.logoutModification {
+	float: right;
+	margin-top: -28px;
+}
+
+.modal-dialog, .modal-content {
+	height: 100%;
+	width: 90%;
+}
+
+.modal-header {
+	background-color: darkcyan;
+	color: white;
+}
+
+#dark {
+	background-color: lightgrey;
+}
+
+.modal-footer {
+	background-color: darkcyan;
+}
 </style>
+
+
+
 </head>
 <body>
 
-<h4>Manager Assign Issue</h4>
-<form>
+	<h4>Assign Issue</h4>
+	<div>
+		<form>
 
-		<table  class="table table-striped table-bordered table-hover">
-			<thead class="thead-inverse">
-				<tr  id="heading">
-					<th>Select</th>
+			<table class="table table-striped table-bordered table-hover">
+				<thead class="thead-inverse">
+					<tr id="heading">
+						<th>Select</th>
+						<th>Type</th>
+						<th>Priority</th>
+						<th>Project Name</th>
+						<th>Summary</th>
+						<th colspan="2"><center>Action</center></th>
+					</tr>
+				</thead>
 
-					<th>Issue Type</th>
-					<th>Issue Creation Date</th>
-					<th>Issue Priority</th>
-					<th>Issue Summary</th>
-					<th>Assigned To</th>
-					<th>Issue Status</th>
-					<th>Project Name</th>
-					<th>Assigned Status</th>
-					<th colspan="2">Action</th>
+				<tr ng-repeat="issue in unassignedIssueList">
+					<td><input id='radio' name="issueId" type='radio' value="{{issue.id}}"></td>
+					<td>{{issue.applicationIssueType.type}}</td>
+					<td>{{issue.applicationIssuePriority.type}}</td>
+					<td>{{issue.project.name}}</td>
+					<td>{{issue.summary}}</td>
+					<td align="center">
+						<button type="button" class="btn btn-primary" data-toggle="modal"
+							data-target="#myModal" ng-click="fetchIssueDetails()">Assign</button>
+					</td>
+					<td align="center"><input type="button" value="View Details"
+						class="btn btn-primary" ng-click="viewIssue()"></td>
 				</tr>
-			</thead>
-		<!-- 	<tbody>
-			<c:forEach items="${issueList}" var="issue">
-			<tr id="datatable">
-				<td><input id='radio' type='radio' value="${issue.issueDetailId} "></td>
+			</table>
+		</form>
+	</div>
 
-				<td>${issue.issueType.issueType}</td>
-				<td>${issue.issueCreationDate}</td>
-				<td>${issue.issuePriority.issuePriorityType}</td>
-				<td>${issue.issueSummary}</td>
-				<td>${issue.user.userName}</td>
-				<td>${issue.issueStatus.issueStatusType}</td>
-				<td>${issue.project.projectName}</td>
-				<td>${issue.issueAssignedStatus.issueAssignmentStatus}</td>
-				<td><input type="button" value="Feed" class="btn btn-primary"></td>
-				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
-			</tr>
-			</c:forEach>
-			</tbody> -->
-	
-			<tr  ng-repeat="issue in issues">
-				<td><input type="radio" value={{issue.issueDetailId}} ></td>
+	<div class="popup">
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
 
-				<td>{{issue.issueType.issueType}}</td>
-				<td>{{issue.issueCreationDate}}</td>
-				<td>{{issue.issuePriority.issuePriorityType}}</td>
-				<td>{{issue.issueSummary}}</td>
-				<td>{{issue.user.userName}}</td>
-				<td>{{issue.issueStatus.issueStatusType}}</td>
-				<td>{{issue.project.projectName}}</td>
-				<td>{{issue.issueAssignedStatus.issueAssignmentStatus}}</td>
-				<td><input type="button" value="Feed" class="btn btn-primary"></td>
-				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
-			</tr>
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Assign Issue</h4>
+					</div>
+					<div class="modal-body">
 
-			<tbody>
+					
+							<form role="form" ng-submit="uc.add()">
+								<div class="box1">
 
-			</tbody>
-		</table>
-		
-		
-</form>
+									<div class="form-group col-sm-4">
+										<label for="issueProject">Project Name</label> 
+										<select ng-model="fetchedIssue.project.name" id="selectId">
+											
+										</select>
+									</div>
+
+									<div class="form-group col-sm-4">
+
+										<label for="issueType">IssueType</label> <select
+											ng-model="uc.createIssue.issueType.id"
+											class="dropDown form-control">
+											<option ng-repeat="issueType in issueTypeList"
+												value="{{issueType.id}}">{{issueType.type}}</option>
+										</select>
+									</div>
+
+									<div class="form-group col-sm-4">
+										<label for="issuePriority">IssuePriority</label> <select
+											ng-model="uc.createIssue.issuePriority.id"
+											class="dropDown form-control">
+											<option ng-repeat="priority in priorities"
+												value="{{priority.id}}">{{priority.type}}</option>
+										</select>
+									</div>
+
+								</div>
+
+
+								<div class="box2">
+									<div class="form-group col-sm-4">
+										<label for="component">Issue Component</label> <input
+											type="text" ng-model="uc.createIssue.component"
+											class="form-control" />
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="affectedVersion">Issue Affective Version</label> <input
+											type="text" ng-model="uc.createIssue.affectedVersion"
+											class="form-control" />
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="applicationEnvironment">ApplicationEnvironment</label>
+										<select ng-model="uc.createIssue.applicationEnvironment.id"
+											class="dropDown form-control">
+											<option ng-repeat="environment in environments"
+												value="{{environment.id}}">{{environment.environment}}</option>
+										</select>
+
+									</div>
+								</div>
+								<div class="form-group col-sm-12">
+									<label for="summary">Issue Summary</label> <input type="text"
+										ng-model="uc.createIssue.summary" class="form-control" />
+								</div>
+								<div class="box3">
+									<div class="form-group col-sm-12">
+										<label for="description">Issue Description</label>
+										<textarea class="form-control" rows="5"
+											ng-model="uc.createIssue.description" class="form-control"></textarea>
+									</div>
+								</div>
+								<div class="box4">
+									<div class="form-group col-sm-6">
+										<label for="issueTeamMember">IssueOwner</label> <select
+											class="dropDown form-control"
+											ng-model="uc.createIssue.owner.memberId" class="form-control">
+											<option value="{{owner.memberId}}"
+												ng-repeat="owner in applicationTeamMembers"
+												value="{{owner.memberId}}">{{owner.name}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="box5">
+									<div class="form-group col-sm-6">
+										<label for="environment">Original Estimate</label> <input
+											type="text" ng-model="uc.createIssue.applicationEnvironment"
+											class="form-control" />
+									</div>
+
+									<div class="form-group col-sm-6">
+										<label for="dueDate">IssueDueDate</label> <input type="date"
+											ng-model="uc.createIssue.originalEstimate"
+											class="form-control" />
+									</div>
+
+									<div class="form-group col-sm-6">
+										<label for="issueProject">IssueAssignee</label> <select
+											class="dropDown form-control" ng-model=""
+											class="form-control">
+											<option value="{{assignee.memberId}}"
+												ng-repeat="assignee in assigneeList"
+												value="{{assignee.memberId}}">{{assignee.name}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group submitButton">
+									<div >
+										<center><button type="submit" class="btn btn-primary">Save</button></center>
+									</div>
+								</div>
+							</form>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
 </body>
 </html>
