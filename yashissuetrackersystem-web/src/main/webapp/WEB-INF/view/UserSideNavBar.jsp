@@ -8,11 +8,11 @@
                         <a href="#/createIssue"><i class="glyphicon glyphicon-plus"></i>Create Issue</a>
                     </li>
                     <li>
-                        <a href="#"><i class="glyphicon glyphicon-pencil"></i> Edit Issue</a>
+                        <a href="#/editIssues"><i class="glyphicon glyphicon-pencil"></i> Edit Issue</a>
                     </li>
                    
                     <li>
-                        <a href="#"><i class="glyphicon glyphicon-search"></i> Search Issue</a>
+                        <a href="#/searchIssues"><i class="glyphicon glyphicon-search"></i> Search Issue</a>
                     </li>
                     <li>
                         <a href="#"><i class="glyphicon glyphicon-th-list"></i> Show Feed</a>

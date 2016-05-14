@@ -7,6 +7,17 @@ angular
 						'$http',
 						'managerService',
 						function($scope, $http, managerService, issueList) {
+							
+							$scope.issueList = [];
+
+							var issues = $http({
+								method : 'GET',
+								url : './defaultIssuesList'
+							}).success(function(data) {
+								alert("-------in controller-------" + data);
+								$scope.issueList = data;
+							})
+
 
 							$scope.members1 = [];
 
@@ -203,19 +214,10 @@ angular
 
 							})
 
-							$scope.defaultIssueTypes = [];
-							var issueType = $http({
-
-								method : 'GET',
-								url : '../defaultIssueTypes'
-							}).success(function(data) {
-
-								$scope.defaultIssueTypes = data;
-
-							})
+							
 
 							$scope.getSearchMember = function() {
-							
+
 								var searchText = $scope.searchText;
 
 								if (searchText == undefined) {
@@ -375,23 +377,72 @@ angular
 								}
 							}
 
-							this.selectType = function() {
+							
+							
+							$scope.showadvsearch = function() {
+								$('#advsearch').show();
+								$scope.isDisabled=true;
+							
+								managerService.getList()
+								.then(
+										function(data) {
+											alert(data);
+											$scope.applicationNames=data;
+										
+										},
+										function(errResponse) {
+											console
+													.error('Error while searching assigned issues');
+										})
+					}
+							
+							
+							
+							$scope.calldropdowns = function() {
+								var applicationid=this.application;
+								$scope.isDisabled=false;
+								managerService.getAllList(applicationid)
+								.then(
+										function(data) {
+											//$scope.application=data;
+											$scope.issuepriorities = data.priorities;
+											$scope.issuetype=data.issuetypes;
+											$scope.project=data.projects;
+										},
+										function(errResponse) {
+											console
+													.error('Error while searching assigned issues');
+										})
+					}
+							
+						
+							
+							$scope.searchFilter = function() {
+								var filterIssueType = $scope.advIssueType;
+								var filterProjectName = this.advProject;
+								var filterPriority = this.advPriority;
+								managerService.getadvSearchData(filterIssueType,filterProjectName,filterPriority)
+								.then(
+										function(data) {
+											alert(data);
+											$scope.defaultIssueList = data;
+											$('#advsearch').hide();
 
-								if (this.selectIssueType == "") {
-								} else {
-									var type = this.selectIssueType;
-									managerService
-											.searchByIssueType(type)
-											.then(
-													function(data) {
-														$scope.defaultIssueList = data;
-													},
-													function(errResponse) {
-														console
-																.error('Error while searching issues');
-													})
-
-								}
+										},
+										function(errResponse) {
+											console
+													.error('Error while searching assigned issues');
+										})
+								
+							
+							
 							}
+							
+							
+							
+							
+
+
+							
 
 						} ]);

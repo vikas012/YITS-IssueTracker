@@ -51,10 +51,10 @@ public class Issue implements Serializable {
 	private Date lastModifiedDateTime;
 
 	@Column(name="ORIGINAL_ESTIMATE")
-	private int originalEstimate;
+	private String originalEstimate;
 
 	@Column(name="REMAINING_ESTIMATE")
-	private int remainingEstimate;
+	private String remainingEstimate;
 	
 	@Column(name="TASK_PROGRESS_UPDATE")
 	private String taskProgressUpdate;
@@ -70,7 +70,7 @@ public class Issue implements Serializable {
 	private List<Conversation> conversations;*/
 
 	//bi-directional many-to-one association to ApplicationTeamMember
-	@ManyToOne
+	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn(name="OWNER")
 	private ApplicationTeamMember issueOwner;
 
@@ -191,19 +191,19 @@ public class Issue implements Serializable {
 		this.isActive = isActive;
 	}
 
-	public int getOriginalEstimate() {
+	public String getOriginalEstimate() {
 		return originalEstimate;
 	}
 
-	public void setOriginalEstimate(int originalEstimate) {
+	public void setOriginalEstimate(String originalEstimate) {
 		this.originalEstimate = originalEstimate;
 	}
 
-	public int getRemainingEstimate() {
+	public String getRemainingEstimate() {
 		return remainingEstimate;
 	}
 
-	public void setRemainingEstimate(int remainingEstimate) {
+	public void setRemainingEstimate(String remainingEstimate) {
 		this.remainingEstimate = remainingEstimate;
 	}
 
@@ -335,8 +335,12 @@ public class Issue implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	
-	
+
+	@Override
+	public String toString() {
+		return "Issue [dueDate=" + dueDate + ", summary=" + summary + ", applicationIssueType=" + applicationIssueType
+				+ "]";
+	}
 
 /*	public List<IssueActivityLog> getIssueActivityLogs() {
 		return issueActivityLogs;

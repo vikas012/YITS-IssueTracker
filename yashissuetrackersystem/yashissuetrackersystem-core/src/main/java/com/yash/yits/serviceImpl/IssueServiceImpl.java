@@ -1,6 +1,8 @@
 package com.yash.yits.serviceImpl;
 
 
+import java.util.List;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,15 +14,17 @@ import java.util.Date;
 import java.util.HashSet;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import org.apache.commons.beanutils.BeanUtils;
+
+import org.springframework.transaction.annotation.Transactional;
 import com.yash.yits.dao.IssueDao;
+import com.yash.yits.domain.Issue;
 
 import com.yash.yits.domain.Application;
 
@@ -29,23 +33,15 @@ import com.yash.yits.domain.ApplicationIssuePriority;
 import com.yash.yits.domain.ApplicationIssueStatus;
 import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.ApplicationTeamMember;
-import com.yash.yits.domain.Issue;
-
 import com.yash.yits.domain.Member;
-
-import com.yash.yits.form.ApplicationForm;
-import com.yash.yits.form.ApplicationTeamMemberForm;
 
 import com.yash.yits.form.ApplicationIssuePriorityForm;
 import com.yash.yits.form.ApplicationIssueStatusForm;
 import com.yash.yits.form.ApplicationIssueTypeForm;
 import com.yash.yits.form.ApplicationTeamMemberForm;
 
-import com.yash.yits.domain.Issue;
-
+import com.yash.yits.form.ApplicationForm;
 import com.yash.yits.domain.Project;
-import com.yash.yits.form.ApplicationIssuePriorityForm;
-import com.yash.yits.form.ApplicationIssueTypeForm;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.ProjectForm;
@@ -54,13 +50,52 @@ import com.yash.yits.service.IssueService;
 @Service
 @Transactional
 public class IssueServiceImpl implements IssueService{
-	
-
 
 	@Autowired
 	private IssueDao issueDao;
-
 	
+
+	public List<IssueForm> showIssuesList(long memberId) {
+		List<Issue> issuesList = issueDao.showIssuesList(memberId);
+		List<IssueForm> issueFormList = new ArrayList<IssueForm>();
+		
+		for (Issue issue : issuesList) {
+			IssueForm issueForm = new IssueForm();
+			
+			issueForm.setId(issue.getId());
+			issueForm.setSummary(issue.getSummary());
+			issueForm.setDueDate(issue.getDueDate());
+			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
+
+			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
+			issueForm.setApplicationIssueType(applicationIssueTypeForm);
+			
+			ApplicationIssuePriorityForm applicationIssuePriorityForm = new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+			
+			ApplicationTeamMemberForm applicationTeamMemberForm =new ApplicationTeamMemberForm();
+            MemberForm member=new MemberForm();
+            member.setName(issue.getIssueOwner().getMember().getName());
+            applicationTeamMemberForm.setMember(member);
+            issueForm.setIssueOwner(applicationTeamMemberForm);
+            
+            issueForm.setOriginalEstimate(issue.getOriginalEstimate());
+            issueForm.setRemainingEstimate(issue.getRemainingEstimate());
+            
+            ApplicationIssueStatusForm applicationIssueStatusForm = new ApplicationIssueStatusForm();
+            applicationIssueStatusForm.setStatus(issue.getApplicationIssueStatus().getStatus());
+            issueForm.setApplicationIssueStatus(applicationIssueStatusForm);
+            
+            issueFormList.add(issueForm);
+		}
+		
+	
+		return issueFormList;
+	}
+	
+
 	public List<IssueForm> getUnassignedIssues() {
 
 		List<Issue> issueList=issueDao.getUnassignedIssues();
@@ -88,6 +123,7 @@ public class IssueServiceImpl implements IssueService{
 			unassignedIssueList.add(issueForm);
 			
 		}
+
 		return unassignedIssueList;
 	}
 
@@ -196,18 +232,16 @@ public class IssueServiceImpl implements IssueService{
 		issueDao.createIssue(issue,createdBy,issueOwnerMemberId);
 
 }
+		public Map<String, Object> getAllSelectFields(ProjectForm projectForm, MemberForm member) {
 
+			Project project = new Project();
+			project.setId(projectForm.getId());
+			
 	
+			return issueDao.getAllSelectFields(project,member);
 
-	public Map<String, Object> getAllSelectFields(ProjectForm projectForm, MemberForm member) {
 
-		Project project = new Project();
-		project.setId(projectForm.getId());
-		
-
-		return issueDao.getAllSelectFields(project,member);
-
-	}
+		}
 
 
 	public List<ApplicationForm> getApplicationNames() {
@@ -226,27 +260,75 @@ public class IssueServiceImpl implements IssueService{
 		System.out.println("in service application"+applicationForms);
 		return applicationForms;
 	}
-	public List<String> getDefaultIssueTypes() {
+	
+	
+	public List<ApplicationIssueTypeForm> getDefaultIssueTypes(int applicationId) {
 		
-		List<ApplicationIssueType> issueTypes=issueDao.getDefaultIssueTypes();
+		List<ApplicationIssueType> issueTypes=issueDao.getDefaultIssueTypes(applicationId);
+	
+		List<ApplicationIssueTypeForm> applicationIssueTypeForms=new ArrayList<ApplicationIssueTypeForm>();
 		
-		List<String> issueTypesList=new ArrayList<String>();
-		
-		for (ApplicationIssueType issue : issueTypes) {
-			
-			String type=issue.getType();
-			issueTypesList.add(type);
+		for (ApplicationIssueType applicationIssueType : issueTypes) {
+			ApplicationIssueTypeForm applicationIssueTypeForm=new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setId(applicationIssueType.getId());
+			applicationIssueTypeForm.setType(applicationIssueType.getType());
+			applicationIssueTypeForms.add(applicationIssueTypeForm);
 		}
 		
-		return issueTypesList;
+	
+		
+		return applicationIssueTypeForms;
 	}
 
-	public List<IssueForm> searchIssueByType(String type) {
+	
+	public List<ApplicationIssuePriorityForm> getDefaultIssuePriorities(int applicationId) {
 		
-		List<Issue> issues=issueDao.searchIssueByType(type);
+		List<ApplicationIssuePriority> issuePriorities=issueDao.getDefaultIssuePriorities(applicationId);
+		List<ApplicationIssuePriorityForm> applicationIssuePriorityForms=new ArrayList<ApplicationIssuePriorityForm>();
+		for (ApplicationIssuePriority applicationIssuePriority : issuePriorities) {
+			ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setId(applicationIssuePriority.getId());
+			applicationIssuePriorityForm.setType(applicationIssuePriority.getType());
+			applicationIssuePriorityForms.add(applicationIssuePriorityForm);
+		}
+	
+		return applicationIssuePriorityForms;
+	}
+	
+	public List<ProjectForm> getDefaultProjectNames(int applicationId) {
 		
+		List<Project> issuePriorities=issueDao.getDefaultProjectNames(applicationId);
+		
+		List<ProjectForm> projectForms=new ArrayList<ProjectForm>();
+		for (Project project : issuePriorities) {
+			ProjectForm projectForm=new ProjectForm();
+			projectForm.setId(project.getId());
+			projectForm.setName(project.getName());
+			projectForms.add(projectForm);
+			
+		}
+	
+		return projectForms;
+	}
+	
+	
+
+
+	public IssueForm fetchIssueDetails(int fetchId) {
+		System.out.println("prajvi service");
+		Issue fetchedIssue=issueDao.fetchIssueDetails(fetchId);
+		IssueForm fetchedIssueForm=new IssueForm();
+		return fetchedIssueForm;
+
+	}
+
+
+	public List<IssueForm> getFilteredIssue(int issuepriorityId1, int issuetypeId1, int projectnameId) {
+		List<Issue> issues=issueDao.getFilteredIssue(issuepriorityId1, issuetypeId1, projectnameId);
 		List<IssueForm> issueForms = new ArrayList<IssueForm>();
-		for (Issue issue : issues) {
+		
+			for (Issue issue : issues) {
+
 
 			
 			IssueForm issueForm = new IssueForm();
@@ -277,15 +359,10 @@ public class IssueServiceImpl implements IssueService{
 		}
 		
 		return issueForms;
+		
+	
 	}
 
-	public IssueForm fetchIssueDetails(int fetchId) {
-		System.out.println("prajvi service");
-		Issue fetchedIssue=issueDao.fetchIssueDetails(fetchId);
-		IssueForm fetchedIssueForm=new IssueForm();
-		return fetchedIssueForm;
-
-	}
 
 	
 }

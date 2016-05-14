@@ -1,18 +1,22 @@
 package com.yash.yits.controller;
 
-import java.util.HashMap;
+
 import java.util.List;
+
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.MediaType;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -23,18 +27,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
+import com.yash.yits.domain.Issue;
+
+
+
 import com.yash.yits.form.ApplicationForm;
+
+import com.yash.yits.form.ApplicationIssuePriorityForm;
+import com.yash.yits.form.ApplicationIssueTypeForm;
+
+
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yash.yits.domain.Application;
 import com.yash.yits.domain.ApplicationTeamMember;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
+
 import com.google.gson.Gson;
 import com.yash.yits.form.ProjectForm;
-import com.yash.yits.domain.Issue;
 import com.yash.yits.service.IssueService;
 
 /**
@@ -44,10 +59,12 @@ import com.yash.yits.service.IssueService;
 
 @Controller
 public class IssueController {
+
 	
 
 	@Autowired
 	private IssueService issueService;
+
 
 	
 	@RequestMapping(value="/showCreateIssueForm")
@@ -57,9 +74,29 @@ public class IssueController {
 		return "redirect:/static/UserCreateIssueForm.html";
 	}
 	
-	
 
+	@RequestMapping(value="/showEditIssueForm")
+	public String showEditForm()
+	{
+		return "redirect:/static/UserEditIssue.html";
+	}
 	
+	@RequestMapping(value="/defaultIssuesList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<IssueForm> showIssuesList(HttpServletRequest httpServletRequest) throws ClassNotFoundException{
+		System.out.println("In controller");
+		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
+		System.out.println(memberId);
+		List<IssueForm> issuesList = issueService.showIssuesList(memberId);
+		return issuesList;
+	}
+
+	@RequestMapping(value="/editIssueForm")
+	public String showEditIssueForm()
+	{
+		return "redirect:/static/ManagerEditIssue.html";
+	}
+
 	
 
 	@RequestMapping(value="/issues",method=RequestMethod.GET)
@@ -76,23 +113,8 @@ public class IssueController {
 		return issues;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/defaultIssueTypes",method=RequestMethod.GET)
-	public List<String> defaultIssueTypes(){
+
 	
-		List<String> issueTypes=issueService.getDefaultIssueTypes();
-		
-		return issueTypes;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/searchIssue/{type}",method=RequestMethod.GET)
-	public List<IssueForm> searchIssueByType(@PathVariable("type") String type){
-		
-		List<IssueForm> issues=issueService.searchIssueByType(type);
-		
-		return issues;
-	}
 	
 	
 	@ResponseBody
@@ -182,5 +204,69 @@ public class IssueController {
 	}
 
 	
+	@ResponseBody
+	@RequestMapping(value="/getdropdowns/{applicationId}",produces=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.GET)
+	public Map<String,Object> getDropDownListForAdvSearch(@PathVariable("applicationId") int applicationId)
+	{
+		//System.out.println("in controller for show projects");
+		//List<ProjectForm> projectForms=issueService.getProjectNames();
+		
+		List<ApplicationIssuePriorityForm> issuePriority= issueService.getDefaultIssuePriorities(applicationId);
+		List<ProjectForm> project=issueService.getDefaultProjectNames(applicationId);
+		List<ApplicationIssueTypeForm> issueType=issueService.getDefaultIssueTypes(applicationId);
+		
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("priorities",issuePriority);
+		map.put("projects", project);
+		map.put("issuetypes", issueType);
+		
+		//System.out.println("Applications >>"+map.get("application"));
+		return map;
+
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/getadvsearchdata/{issuetype}/{projectname}/{priority}",method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<IssueForm> getFilteredFeedData(@PathVariable("issuetype") String issuetypeId,
+												@PathVariable("projectname") String projectnameId,@PathVariable("priority") String issuepriorityId ) {
+		
+		System.out.println("-------------------"+projectnameId);
+		System.out.println(issuetypeId);
+
+	if(issuetypeId.equals("undefined")){
+		issuetypeId="0";
+	}
+	int issuetypeId1=Integer.parseInt(issuetypeId);
+
+	if(issuepriorityId.equals("undefined")){
+		issuepriorityId="0";
+	}
+	int issuepriorityId1=Integer.parseInt(issuepriorityId);	
+		
+	if(projectnameId.equals("undefined")){
+		projectnameId="0";
+		}
+	int projectnameId1=Integer.parseInt(projectnameId);	
+	
+	
+		List<IssueForm> issueForms=	issueService.getFilteredIssue(issuepriorityId1, issuetypeId1, projectnameId1);
+		return issueForms;	
+	}	
+	
+	@ResponseBody
+	@RequestMapping(value="/getApplication",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<ApplicationForm> getApplicationName()
+	{
+		List<ApplicationForm> applications=issueService.getApplicationNames();
+		return applications;
+	}
+	
+	
+	
+	
+	
+
 
 }
