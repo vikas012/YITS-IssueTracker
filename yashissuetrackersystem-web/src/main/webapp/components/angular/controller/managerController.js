@@ -354,9 +354,8 @@ angular
 							
 							$scope.showadvsearch = function() {
 								$('#advsearch').show();
-								$('#issuetypesearch').hide();
 								$scope.isDisabled=true;
-								alert("hello");
+							
 								managerService.getList()
 								.then(
 										function(data) {
@@ -395,17 +394,12 @@ angular
 								var filterIssueType = $scope.advIssueType;
 								var filterProjectName = this.advProject;
 								var filterPriority = this.advPriority;
-								alert(filterIssueType);
-								alert(filterProjectName);
-								alert(filterPriority);
 								managerService.getadvSearchData(filterIssueType,filterProjectName,filterPriority)
 								.then(
 										function(data) {
 											alert(data);
 											$scope.defaultIssueList = data;
-										
 											$('#advsearch').hide();
-											$('#issuetypesearch').show();
 
 										},
 										function(errResponse) {
