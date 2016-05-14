@@ -165,8 +165,5 @@ public class MemberController {
 		
 		memberService.deleteMember(memberForm);
 		
-		
-		
-		
 	}
 }

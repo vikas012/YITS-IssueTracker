@@ -13,6 +13,7 @@ import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.ProjectForm;
 import com.yash.yits.domain.Application;
+import com.yash.yits.domain.Attachment;
 import com.yash.yits.domain.Member;
 
 
@@ -50,6 +51,6 @@ public interface IssueService {
 	
 	public List<IssueForm> getFilteredIssue(int issuepriorityId1,int issuetypeId1,int projectnameId);
 
-
+	public String saveFile(Attachment file);
 	
 }

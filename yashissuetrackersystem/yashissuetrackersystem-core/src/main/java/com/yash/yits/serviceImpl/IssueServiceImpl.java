@@ -33,6 +33,7 @@ import com.yash.yits.domain.ApplicationIssuePriority;
 import com.yash.yits.domain.ApplicationIssueStatus;
 import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.ApplicationTeamMember;
+import com.yash.yits.domain.Attachment;
 import com.yash.yits.domain.Member;
 
 import com.yash.yits.form.ApplicationIssuePriorityForm;
@@ -363,6 +364,14 @@ public class IssueServiceImpl implements IssueService{
 	
 	}
 
-
+	/**
+	 * File upload method--Takes file from controller and passes it to dao layer
+	 */
+	public String saveFile(Attachment file) {
+		file.setCreatedDateTime(new Date());
+		file.setLastModifiedDateTime(new Date());
+		return issueDao.saveFile(file);
+		 
+	}
 	
 }

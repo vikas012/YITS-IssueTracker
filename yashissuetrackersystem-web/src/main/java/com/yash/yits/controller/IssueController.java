@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,8 +27,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yash.yits.domain.Issue;
 
@@ -45,6 +48,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yash.yits.domain.Application;
 import com.yash.yits.domain.ApplicationTeamMember;
+import com.yash.yits.domain.Attachment;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
 
@@ -264,7 +268,25 @@ public class IssueController {
 	}
 	
 	
-	
+	/**
+	 * Function to upload file
+	 * Takes file from front-end and passes it to service layer
+	 */
+	@ResponseBody
+	@RequestMapping(value="/uploadFile",method=RequestMethod.POST)
+	public String saveFile(HttpServletRequest request,@RequestParam(value="file",required=false) MultipartFile uploadedFile) throws IOException{
+		 
+	     Attachment file1=new Attachment();
+	     file1.setFile(uploadedFile.getBytes());
+	     file1.setName(uploadedFile.getOriginalFilename());
+	     file1.setLabel(request.getParameter("attachmentLabel"));
+	    
+	     System.out.println("Albel"+file1.getLabel());
+	   
+	     return issueService.saveFile(file1);
+	        
+	        
+	}
 	
 	
 

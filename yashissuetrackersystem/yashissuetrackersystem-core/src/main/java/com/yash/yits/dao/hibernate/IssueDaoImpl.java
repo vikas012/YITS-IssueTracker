@@ -28,6 +28,7 @@ import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Project;
 
 import com.yash.yits.domain.ApplicationTeamMember;
+import com.yash.yits.domain.Attachment;
 import com.yash.yits.domain.Member;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.domain.Application;
@@ -470,7 +471,14 @@ public class IssueDaoImpl implements IssueDao {
 	}
 	
 
-	
+	/**
+	 * DAO method to save file--Takes file form service layer and saves it into database
+	 */
+	public String saveFile(Attachment file) {
+		Session session= sessionFactory.getCurrentSession();
+		session.save(file);
+		return "success";
+	}
 
 
 	public void createIssue(Issue issue, Long createdBy) {

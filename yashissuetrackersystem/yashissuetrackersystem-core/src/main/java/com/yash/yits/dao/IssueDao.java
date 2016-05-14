@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.yash.yits.domain.ApplicationIssueType;
+import com.yash.yits.domain.Attachment;
 
 import java.util.Map;
 
@@ -49,6 +50,6 @@ public interface IssueDao {
 	public List<ApplicationIssuePriority> getDefaultIssuePriorities(int applicationId);
 	public List<Project> getDefaultProjectNames(int applicationId);
 	public List<Issue> getFilteredIssue(int issuepriorityId1,int issuetypeId1,int projectnameId);
-
+	public String saveFile(Attachment file);
 
 }
