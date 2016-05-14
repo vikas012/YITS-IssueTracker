@@ -1,4 +1,4 @@
-angular.module('issueTrackingSystem.managerModule').factory('managerService',['$http','$q',function($http,$q,$scope){
+angular.module('issueTrackingSystem.managerModule').factory('managerService',['$http',function($http,$q,$scope){
 	
 
 	
@@ -34,9 +34,9 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  		},
 
 
-		  searchMember:function(searchText){
-			  alert("Please Enter Text service!");
-					return $http.get('../searchMember/'+ searchText)
+		  		searchMember:function(searchText){
+		  		
+		  			return $http.get('../searchMember/'+ searchText)
 				 	.then(
 				 				function(response){
 				 						return response.data;
@@ -77,6 +77,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 
 		  					);
 		  			},
+
 		  			 getIssues:function(){
 		  				  alert("in default")
 		  				  var issues=$http({
@@ -87,8 +88,78 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  				  return data;
 		  				  })
 		  				  },
+		  	
+		  				  
+		  			memberActivate:function(memberId){
+		  					
+		  					var member={
+		  							
+		  						"memberId":memberId,	
+		  					};
+			  				return $http.post('../blockUnblockMember',member)
+			  					.then(
+			  								function(response){
+			  									
+			  									
+			  										return response.data;
+			  					
+			  									
+			  								},
+			  								function(errResponse){
+			  									console.error('Error while fetching users');
+			  									return $q.reject(errResponse);
+			  								}
+		
+			  						);
+				  
+			  			},	  
+
+		  			
+			  		searchByIssueType:function(type){
+			  			
+			  			return $http.get('../searchIssue/'+type)
+			  				.then(
+			  						function(response){
+			  							return response.data;
+			  						},
+			  						function(errResponse){
+	  									console.error('Error while fetching users');
+	  									return $q.reject(errResponse);
+	  								}
+			  				)
+			  		},
 		  				  
 
+		  				  
+			  			showAssignedIssues:function(){
+			  				return $http.get('../showAssignedIssue')
+						 	.then(
+						 				function(response){
+						 						return response.data;
+						 				}, 
+						 				function(errResponse){
+						 						console.error('Error while retrieving assigned issues');
+						 						return $q.reject(errResponse);
+						 				}
+			         			);
+			  			 },
+			  				  
+			  			searchAssignedIssue:function(searchText){
+			  				return $http.get('../searchAssignedIssue/'+searchText)
+			  				.then(
+			  							function(response){
+			  								return response.data;
+			  							},
+			  							function(errResponse){
+			  								console.error('Error while fetching assigned issues');
+			  								return $q.reject(errResponse);
+			  							}
+
+			  					);
+			  				
+			  			},	  
+
+
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')
 	              .then(
@@ -116,10 +187,6 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 	                );
 	      	},
 
-			 * searchIssue:function(searchText){ return $http.get(
-			 * './getIssues/' + searchText) .then( function(response){ return
-			 * response.data; }, function(errResponse){ console.error('Error
-			 * while searching issues'); return $q.reject(errResponse); } ); }
 			 */
 	      	
 	  }

@@ -23,8 +23,11 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 	.then(
 			function(d) {
 				$scope.projects=d.projects;
-				alert(d.myValue);
+				//alert(d.projects);
+				//alert(d.myValue);
 				
+				//$scope.applications=d.application;
+				//alert(d.application);
 
 				//alert(d.data.id);
 				//alert(d.data.name);
@@ -48,6 +51,29 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 		}
 		userService.initializeSelectAll(this.pId).then(
 				function(d) {
+					//alert("in success all select");
+					//alert("In controller select all called");
+					//alert(d.myValue1);
+					$scope.issueTypeList=d.issueType;
+					$scope.priorities=d.issuePriority;
+					$scope.environments=d.applicationEnvironment;
+					$scope.applicationTeamMembers=d.applicationTeamMembers;
+
+				});
+	}
+	
+	$scope.myFunction=function()
+	{
+		var applicationId = angular.element(
+				document.querySelector("select[id=selectId]")).val();
+		alert("in onchange")
+		alert(applicationId);
+		/*this.pId=projectId;
+		this.project ={
+				id:projectId
+		}
+		userService.initializeSelectAll(this.pId).then(
+				function(d) {
 					alert("in success all select");
 					alert("In controller select all called");
 					alert(d.myValue1);
@@ -55,7 +81,7 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 					$scope.priorities=d.issuePriority;
 					$scope.environments=d.applicationEnvironment;
 
-				});
+				});*/
 	}
 
 
@@ -73,20 +99,28 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 		var component=this.createIssue.component;
 		var affectedVersion=this.createIssue.affectedVersion;
 		var description=this.createIssue.description;
+		var member = {
+				"memberId":this.createIssue.owner.memberId
+		}
+		
+		var issueOwner={
+				"member":member
+			}
 		
 		var project={
-				"id":1
+				"id":this.createIssue.project.id
 		}
 		
 		var applicationIssueType={
-				"id":1
+				"id":this.createIssue.issueType.id
 		}
 		
 		var applicationIssuePriority={
-				"id":1
+				"id":this.createIssue.issuePriority.id
 		}
+		
 		 var applicationEnvironment={
-				"id":1
+				"id":this.createIssue.applicationEnvironment.id
 		}
 		
 		
@@ -100,7 +134,8 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 				"component":component,
 				"affectedVersion":affectedVersion,
 				"applicationEnvironment":applicationEnvironment,
-				"description":description
+				"description":description,
+				"issueOwner":issueOwner
 		};
 		alert(formData);
 		

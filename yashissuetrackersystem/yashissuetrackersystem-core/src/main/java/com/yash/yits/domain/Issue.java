@@ -32,6 +32,14 @@ public class Issue implements Serializable {
 	@Column(name="CREATED_DATETIME")
 	private Date createdDateTime;
 
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
 	private String description;
 
 	@Column(name="DUE_DATE")
@@ -327,13 +335,12 @@ public class Issue implements Serializable {
 		this.createdBy = createdBy;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Issue [dueDate=" + dueDate + ", summary=" + summary + ", applicationIssueType=" + applicationIssueType
 				+ "]";
 	}
-	
-	
 
 /*	public List<IssueActivityLog> getIssueActivityLogs() {
 		return issueActivityLogs;

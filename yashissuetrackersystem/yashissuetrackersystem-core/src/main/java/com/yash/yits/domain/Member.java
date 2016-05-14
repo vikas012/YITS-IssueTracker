@@ -36,8 +36,8 @@ public class Member implements Serializable {
 
 	private Long contact;
 
-	@Column(name="CREATED_BY")
-	private int createdBy;
+	/*@Column(name="CREATED_BY")
+	private int createdBy;*/
 
 	@Column(name="CREATED_DATETIME")
 	private Date createdDateTime;
@@ -46,8 +46,8 @@ public class Member implements Serializable {
 
 	private int isActive;
 
-	@Column(name="LAST_MODIFIED_BY")
-	private int lastModifiedBy;
+//	@Column(name="LAST_MODIFIED_BY")
+//	private int lastModifiedBy;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
 	private Date lastModifiedDateTime;
@@ -86,14 +86,14 @@ public class Member implements Serializable {
 		this.contact = contact;
 	}
 
-	public int getCreatedBy() {
+	/*public int getCreatedBy() {
 		return createdBy;
 	}
 
 	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
-
+*/
 	public String getEmail() {
 		return email;
 	}
@@ -118,13 +118,13 @@ public class Member implements Serializable {
 		this.isActive = isActive;
 	}
 
-	public int getLastModifiedBy() {
+	/*public int getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
 	public void setLastModifiedBy(int lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
-	}
+	}*/
 
 	public Date getCreatedDateTime() {
 		return createdDateTime;
@@ -162,10 +162,9 @@ public class Member implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Member [contact=" + contact + ", email=" + email
-				+ ", memberId=" + memberId + ", managerId=" + managerId
-				+ ", managerName=" + managerName + ", managerEmail="
-				+ managerEmail + ", name=" + name + "]";
+		return "Member [id=" + id + ", contact=" + contact + ", email=" + email + ", memberId=" + memberId
+				+ ", managerId=" + managerId + ", managerName=" + managerName + ", managerEmail=" + managerEmail
+				+ ", name=" + name + "]";
 	}
 
 	public Long getManagerId() {
@@ -191,5 +190,7 @@ public class Member implements Serializable {
 	public void setManagerEmail(String managerEmail) {
 		this.managerEmail = managerEmail;
 	}
+	
+	
 
 }

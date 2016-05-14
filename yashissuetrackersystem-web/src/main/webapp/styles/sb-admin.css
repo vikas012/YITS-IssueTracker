@@ -274,3 +274,13 @@ a:active
         margin-left: 452px;
         margin-top: 254px;
 }
+
+.input-group {
+	width: 300px;
+	float: center;
+	margin-left: 350px;
+}
+
+.btn-primary {
+	background-color: darkcyan !important;
+}

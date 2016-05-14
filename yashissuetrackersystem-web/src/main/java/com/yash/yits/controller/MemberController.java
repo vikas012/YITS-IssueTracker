@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yash.yits.domain.Member;
+import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.LdapUser;
 import com.yash.yits.form.LoginForm;
 import com.yash.yits.form.MemberForm;
@@ -50,6 +51,12 @@ public class MemberController {
 	public String showSearchMember(){
 			
 		return "redirect:/static/showSearchMember.html" ;
+	}
+	
+	@RequestMapping(value="/showAssignedIssuePage")
+	public String showAssignedIssuePage(){
+			
+		return "redirect:/static/ShowAssignedIssue.html" ;
 	}
 
 	@ResponseBody
@@ -122,11 +129,28 @@ public class MemberController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/blockUnblockMember")
-	public List<Member> blockUnblockMember(MemberForm memberForm) {
-
-		List<Member> members=memberService.blockUnblockMember(memberForm);
-		return members;
+	public void blockUnblockMember(@RequestBody MemberForm memberForm) {
+		
+		System.out.println("in block unblock controller"+memberForm.getMemberId());
+		memberService.blockUnblockMember(memberForm);
+		
 	}
 	
+	/**
+	 * This method returns list of issues assigned to a members
+	 */
+	@ResponseBody
+	@RequestMapping(value="/showAssignedIssue")
+	public List<IssueForm> showAssignedIssue(){
+		return memberService.showAssignedIssue();
+	}
 	
+	/**
+	 * This method searches list of issues assigned to a members
+	 */
+	@ResponseBody
+	@RequestMapping(value="/searchAssignedIssue/{searchText}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<IssueForm> searchAssignedIssue(@PathVariable("searchText") String searchText){
+		return memberService.searchAssignedIssue(searchText);
+	}
 }

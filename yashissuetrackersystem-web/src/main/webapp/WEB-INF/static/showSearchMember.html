@@ -48,7 +48,8 @@
 					<th>Member Contact</th>
 					<th>Manager Name</th>
 					<th>Manager Email</th>
-					<th colspan="10">Action</th>
+					<th colspan="1">ACTIVE STATUS</th>
+					<th colspan="2">Action</th>
 				</tr>
 			</thead>
 			
@@ -59,9 +60,9 @@
 				<td>{{member.contact}}</td>
 				<td>{{member.managerName}}</td>
 				<td>{{member.managerEmail}}</td>
-				<td><input type="button" value="Block" class="btn btn-primary"></td>
-				<td><input type="button" value="Unblock" class="btn btn-primary"></td>
-				<td><input type="button" value="Delete" class="btn btn-primary"></td>
+				<td><button ng-click="memberActivateForSearch(member.memberId)" class="btn btn-default">{{member.isActive}}</button></td>
+				<td><input type="button" value="Delete" ng-click="delete(member.memberId)" class="btn btn-default"></td>
+				 
 			</tr>
 
 			<tbody>

@@ -28,11 +28,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yash.yits.dao.MemberDao;
+import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
+import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.LoginForm;
 
 
 import com.yash.yits.form.UserForm;
+import com.yash.yits.mapper.ApplicationTeamMemberMapper;
+import com.yash.yits.mapper.ProjectMapper;
 import com.yash.yits.service.MemberService;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.UserForm;
@@ -300,20 +304,60 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	
+	
 	/**
 	 *blockUnblockMember method is used to block or unblock the member
 	 * 
 	 */
-	public List<Member> blockUnblockMember(MemberForm memberForm) {
+	public void blockUnblockMember(MemberForm memberForm) {
 
 		Member member=new Member();
 		member.setMemberId(memberForm.getMemberId());
-		member.setManagerName(memberForm.getManagerName());
 		
-		List<Member> members=memberDao.blockUnblockMember(member);
-		return members;
+		memberDao.blockUnblockMember(member);
+		
 	}
 	
-	
+	/**
+	 * This method is responsible for returning list of assigned issues
+	 */
+	public List<IssueForm> showAssignedIssue() {
+		
+		List<Issue> issues = memberDao.showAssignedIssue();
+		List<IssueForm> issueForms = new ArrayList<IssueForm>();
+		for(Issue issue:issues) {
+			
+			IssueForm issueForm = new IssueForm();
+			
+			//mapping
+			issueForm.setAssignedUser(ApplicationTeamMemberMapper.domainForm(issue.getAssignedUser()));
+			issueForm.setProject(ProjectMapper.domainForm(issue.getProject()));
+			issueForm.setDescription(issue.getDescription());
+			issueForm.setSummary(issue.getSummary());
+			
+			issueForms.add(issueForm);
+		}
+		return issueForms;
+	}
+
+	public List<IssueForm> searchAssignedIssue(String searchText) {
+		
+		List<Issue> issues = memberDao.searchAssignedIssue(searchText);
+		List<IssueForm> issueForms = new ArrayList<IssueForm>();
+		for(Issue issue:issues) {
+			
+			IssueForm issueForm = new IssueForm();
+			
+			//mapping
+			issueForm.setAssignedUser(ApplicationTeamMemberMapper.domainForm(issue.getAssignedUser()));
+			issueForm.setProject(ProjectMapper.domainForm(issue.getProject()));
+			issueForm.setDescription(issue.getDescription());
+			issueForm.setSummary(issue.getSummary());
+			
+			issueForms.add(issueForm);
+		}
+		return issueForms;
+	}
 
 }
