@@ -83,7 +83,7 @@ public class MemberDaoImpl implements MemberDao {
 		System.out.println("in dao");
 		Session session=sessionFactory.getCurrentSession();
 		
-		String selectQuery="FROM Member where name LIKE '%"+search+"%' OR email LIKE '"+search+"%' OR managerName LIKE '%"+search+"%'";
+		String selectQuery="FROM Member where name LIKE '%"+search+"%' OR email LIKE '"+search+"%' OR managerName LIKE '%"+search+"%' OR memberId LIKE '%"+search+"%'";
 		Query query=session.createQuery(selectQuery);
 		List<Member> members=query.list();
 		for(Member membersList:members){
@@ -179,6 +179,49 @@ public class MemberDaoImpl implements MemberDao {
 		session.saveOrUpdate(member1);
 		
 		
+	}
+	public List<MemberType> memberType() {
+
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(MemberType.class)
 		
+		.setProjection(Projections.projectionList()
+				.add(Projections.property("memberType"),"memberType").add(Projections.property("id"),"id"))
+				.setResultTransformer(Transformers.aliasToBean(MemberType.class));
+				List<MemberType> memberTypes=criteria.list();
+				 
+		
+		for(MemberType membersTypeList:memberTypes){
+			
+			System.out.println(membersTypeList.getMemberType());
+			System.out.println(membersTypeList.getId());
+		}
+		return memberTypes;
+		
+	}
+
+	public List<Member> searchMemberType(int memberId) {
+		
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(Member.class)
+				
+				.setProjection(Projections.projectionList()
+				.add(Projections.property("memberId"),"memberId")
+				.add(Projections.property("name"),"name")
+				.add(Projections.property("email"),"email")
+				.add(Projections.property("contact"),"contact")
+				.add(Projections.property("managerName"),"managerName")
+				.add(Projections.property("managerEmail"),"managerEmail")
+				.add(Projections.property("memberType"),"memberType"))
+				.add(Restrictions.eq("memberType.id", memberId))
+				.setResultTransformer(Transformers.aliasToBean(Member.class));
+				List<Member> members=criteria.list();
+				for(Member membersList:members){
+					
+					System.out.println(membersList.getEmail());
+					System.out.println("------------------member type id----------"+membersList.getMemberType().getId());
+				}
+			
+		return members;
 	}
 }

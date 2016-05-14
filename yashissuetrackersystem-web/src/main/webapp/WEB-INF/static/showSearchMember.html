@@ -8,7 +8,7 @@
 }
 
 .input-group {
-	width: 300px;
+	
 	float: center;
 	margin-left: 350px;
 }
@@ -26,18 +26,26 @@
 </style>
 </head>
 <body>
+<h3 class="headerlabel">Search Members</h3><br>
 	<form>
-
-		<div class="input-group">
-			<input type="text" class="form-control" ng-model="searchText" placeholder="Name ,Email ,Manager name">
+	
+    	<div class="input-group" style="margin-left:250px;">
+			<input type="text" class="form-control" ng-model="searchText" placeholder="Member Name ,Member Email ,Manager name">
 			<div class="input-group-btn">
 				<button class="btn btn-primary" type="button" ng-click="getSearchMember()">
 					<i class="glyphicon glyphicon-search"></i>&nbsp; Search
 				</button>
 			</div>
+			
+			<div class="col-xs-4" style="margin-left:100px;">
+  				<select ng-model="memberType" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-change="getSearchedMemberType()">
+					<option ng-repeat="getMemberType in getMemberTypes" value="{{getMemberType}}">{{getMemberType}}</option>
+				</select>
+				
+			</div>
 		</div>
 
-		<br> <br> <br>
+		<br><br><br>
 
 		<table class="table table-striped table-bordered table-hover">
 			<thead class="thead-inverse">
@@ -48,7 +56,7 @@
 					<th>Member Contact</th>
 					<th>Manager Name</th>
 					<th>Manager Email</th>
-					<th colspan="1">ACTIVE STATUS</th>
+					<th colspan="1">Active Status</th>
 					<th colspan="2">Action</th>
 				</tr>
 			</thead>
@@ -60,9 +68,8 @@
 				<td>{{member.contact}}</td>
 				<td>{{member.managerName}}</td>
 				<td>{{member.managerEmail}}</td>
-				<td><button ng-click="memberActivateForSearch(member.memberId)" class="btn btn-default">{{member.isActive}}</button></td>
-				<td><input type="button" value="Delete" ng-click="delete(member.memberId)" class="btn btn-default"></td>
-				 
+				<td><button ng-click="memberActivate(member.memberId)" ng-disabled="member.memberType.id==3" class="btn btn-default">{{member.isActive}}</button></td>
+				<td><input type="button" ng-disabled="member.memberType.id==3" value="Delete" ng-click="memberDelete(member.memberId)" class="btn btn-default"></td>
 			</tr>
 
 			<tbody>

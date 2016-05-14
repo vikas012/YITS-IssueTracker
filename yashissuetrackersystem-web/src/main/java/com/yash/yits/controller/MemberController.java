@@ -166,7 +166,23 @@ public class MemberController {
 		memberService.deleteMember(memberForm);
 		
 		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/memberType",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<String> memberType(){
+		List<String> memberTypes=memberService.memberType();
 		
+		return memberTypes;
+	
+	}
+	@ResponseBody
+	@RequestMapping(value="/searchMemberType/{memberId}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Member> searchMemberType(@PathVariable("memberId") int memberId){
+		System.out.println("---MemberId---"+ memberId);
+		List<Member> memberTypeList=memberService.searchMemberType(memberId);
 		
+		return memberTypeList;
+	
 	}
 }

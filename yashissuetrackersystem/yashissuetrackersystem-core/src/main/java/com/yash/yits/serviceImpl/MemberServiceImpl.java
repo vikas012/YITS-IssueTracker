@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yash.yits.dao.MemberDao;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
+import com.yash.yits.domain.MemberType;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.LoginForm;
 
@@ -382,6 +383,27 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.deleteMember(member);
 		
 		
+	}
+	
+public List<String> memberType() {
+		
+		List<MemberType> memberTypes=memberDao.memberType();
+		
+		List<String> memberTypesList=new ArrayList<String>();
+		for (MemberType memberType : memberTypes) {
+			 
+			String type=memberType.getMemberType();
+			memberTypesList.add(type);
+			}
+		return memberTypesList;
+	
+			
+	}
+
+	public List<Member> searchMemberType(int memberId) {
+		List<Member> memberTypeList=memberDao.searchMemberType(memberId);
+		
+		return memberTypeList;
 	}
 
 }

@@ -33,5 +33,6 @@ public interface MemberService {
 	public void blockUnblockMember(MemberForm memberForm);
 	public List<IssueForm> showAssignedIssue();
 	public List<IssueForm> searchAssignedIssue(String searchText);
-	
+	public List<String> memberType();
+	public List<Member> searchMemberType(int memberId);
 }

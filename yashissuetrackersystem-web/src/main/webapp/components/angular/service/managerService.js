@@ -34,19 +34,19 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			  		},
 
 
-		  		searchMember:function(searchText){
-		  		
-		  			return $http.get('../searchMember/'+ searchText)
-				 	.then(
-				 				function(response){
-				 						return response.data;
-				 				}, 
-				 				function(errResponse){
-				 						console.error('Error while searching issues');
-				 						return $q.reject(errResponse);
-				 				}
-	         			);
-			},
+			  		 searchMember:function(searchText){
+						  alert("Please Enter Text service!");
+								return $http.get('../searchMember/'+ searchText)
+							 	.then(
+							 				function(response){
+							 						return response.data;
+							 				}, 
+							 				function(errResponse){
+							 						console.error('Error while searching issues');
+							 						return $q.reject(errResponse);
+							 				}
+				         			);
+						},
 
 		  			
 
@@ -202,7 +202,21 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 							
 						}, 
 			  			
-			  			
+						searchMemberType:function(memberId){
+							return $http.get('../searchMemberType/'+memberId)
+			  				.then(
+			  							function(response){
+			  								return response.data;
+			  							},
+			  							function(errResponse){
+			  								console.error('Error while getting member type in service');
+			  								return $q.reject(errResponse);
+			  							}
+
+			  					);
+							
+							
+						},
 
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')

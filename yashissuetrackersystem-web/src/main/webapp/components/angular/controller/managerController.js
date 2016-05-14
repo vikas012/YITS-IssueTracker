@@ -214,7 +214,16 @@ angular
 
 							})
 
-							
+							$scope.getMemberType = [];
+							var getMemberType = $http({
+
+								method : 'GET',
+								url : '../memberType'
+							}).success(function(data) {
+
+							$scope.getMemberTypes = data;
+
+							})
 
 							$scope.getSearchMember = function() {
 
@@ -256,6 +265,8 @@ angular
 
 							}
 
+							
+							
 							$scope.getDataAfterActiveStatus = function() {
 								
 								
@@ -439,6 +450,42 @@ angular
 							}
 							
 							
+							$scope.getSearchedMemberType = function() {	
+								var memberType = $scope.memberType;
+								var memberId=0;
+								if(memberType=="Yash"){
+									memberId=1;	
+								}
+								else if(memberType=="NonYash"){
+									memberId=2;
+								
+								}
+								else{
+									memberId=3;
+									
+								}
+								alert(memberId);
+								managerService.searchMemberType(memberId)
+											.then(
+													function(data) {
+														$scope.members = data;
+														console.log(members[0].memberType.id);
+														/*
+														angular.forEach($scope.members,function(value,key){
+															
+															console.log(value.memberType.id);
+															
+														});*/
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing search members');
+													}
+													
+											)
+								
+						
+							} 
 							
 							
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
+import com.yash.yits.domain.MemberType;
 
 /** This is an interface for MemberDaoImpl*/
 public interface MemberDao {
@@ -16,5 +17,6 @@ public interface MemberDao {
 	public void blockUnblockMember(Member member);
 	public List<Issue> showAssignedIssue();
 	public List<Issue> searchAssignedIssue(String searchText);
-	
+	public List<MemberType> memberType();
+	public List<Member> searchMemberType(int memberId);
 }
