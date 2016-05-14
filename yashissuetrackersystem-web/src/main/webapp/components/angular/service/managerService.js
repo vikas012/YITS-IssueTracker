@@ -202,6 +202,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 							
 						}, 
 			  			
+
 						searchMemberType:function(memberId){
 							return $http.get('../searchMemberType/'+memberId)
 			  				.then(
@@ -217,6 +218,33 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 							
 							
 						},
+
+						/*file upload*/
+			  			fileUpload:function(formData){
+		  					
+			  				var request = {
+									method : 'POST',
+									url : '../uploadFile',
+									data : formData,
+									headers : {
+										'Content-Type' : undefined
+									}
+								};
+								 $http(request).then(
+						 				function(response){
+						 					alert("Success");
+						 						return response.data;
+						 				}, 
+						 				function(errResponse){
+						 						console.error('Error while retrieving assigned issues');
+						 						return $q.reject(errResponse);
+						 				}
+			         			);
+			  				
+			  				
+				  
+			  			},	
+
 
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')

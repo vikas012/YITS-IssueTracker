@@ -183,6 +183,6 @@ public class MemberController {
 		List<Member> memberTypeList=memberService.searchMemberType(memberId);
 		
 		return memberTypeList;
-	
+
 	}
 }
