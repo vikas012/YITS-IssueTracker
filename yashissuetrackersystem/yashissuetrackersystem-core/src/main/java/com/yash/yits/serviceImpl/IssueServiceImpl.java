@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yash.yits.dao.IssueDao;
 
+import com.yash.yits.domain.Application;
+
 import com.yash.yits.domain.ApplicationEnvironment;
 import com.yash.yits.domain.ApplicationIssuePriority;
 import com.yash.yits.domain.ApplicationIssueStatus;
@@ -30,6 +32,10 @@ import com.yash.yits.domain.ApplicationTeamMember;
 import com.yash.yits.domain.Issue;
 
 import com.yash.yits.domain.Member;
+
+import com.yash.yits.form.ApplicationForm;
+import com.yash.yits.form.ApplicationTeamMemberForm;
+
 import com.yash.yits.form.ApplicationIssuePriorityForm;
 import com.yash.yits.form.ApplicationIssueStatusForm;
 import com.yash.yits.form.ApplicationIssueTypeForm;
@@ -38,8 +44,8 @@ import com.yash.yits.form.ApplicationTeamMemberForm;
 import com.yash.yits.domain.Issue;
 
 import com.yash.yits.domain.Project;
-
-
+import com.yash.yits.form.ApplicationIssuePriorityForm;
+import com.yash.yits.form.ApplicationIssueTypeForm;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.ProjectForm;
@@ -56,7 +62,7 @@ public class IssueServiceImpl implements IssueService{
 
 	
 	public List<IssueForm> getUnassignedIssues() {
-		System.out.println("prajvi service");
+
 		List<Issue> issueList=issueDao.getUnassignedIssues();
 		List<IssueForm> unassignedIssueList=new ArrayList<IssueForm>();
 		
@@ -69,6 +75,7 @@ public class IssueServiceImpl implements IssueService{
 			issueForm.setApplicationIssueType(applicationIssueType);
 			
 			issueForm.setSummary(issue.getSummary());
+			issueForm.setId(issue.getId());
 			
 			ApplicationIssuePriorityForm applicationIssuePriority=new ApplicationIssuePriorityForm();
 			applicationIssuePriority.setType(issue.getApplicationIssuePriority().getType());
@@ -90,7 +97,7 @@ public class IssueServiceImpl implements IssueService{
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 	    
 	    Date currentTime = localCalendar.getTime();
-		
+
 		Calendar cal = Calendar.getInstance();
 		Date dateBefore=new Date();
 		cal.setTime(currentTime);
@@ -154,9 +161,10 @@ public class IssueServiceImpl implements IssueService{
 	}
 
 
-	public void createIssue(IssueForm issueForm,Long createdBy) {
+	public void createIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId) {
 		Project project=new Project();
 		project.setId(issueForm.getProject().getId());
+		
 		
 		ApplicationEnvironment applicationEnvironment=new ApplicationEnvironment();
 		applicationEnvironment.setId(issueForm.getApplicationEnvironment().getId());
@@ -180,9 +188,13 @@ public class IssueServiceImpl implements IssueService{
 		issue.setApplicationEnvironment(applicationEnvironment);
 		issue.setApplicationIssueType(applicationIssueType);
 		issue.setApplicationIssueStatus(applicationIssueStatus);
+
+		issue.setTaskProgressUpdate("Not Started");
+		issue.setCreatedDateTime(new Date());
+		issue.setIsActive(1);
 		
-		
-		issueDao.createIssue(issue,createdBy);
+		issueDao.createIssue(issue,createdBy,issueOwnerMemberId);
+
 }
 
 	
@@ -197,6 +209,23 @@ public class IssueServiceImpl implements IssueService{
 
 	}
 
+
+	public List<ApplicationForm> getApplicationNames() {
+		
+		List<ApplicationForm> applicationForms= new ArrayList<ApplicationForm>();
+		List<Application> applications = issueDao.getApplicationNames();
+		System.out.println("Service getApplication names "+applications);
+		Iterator<Application>  iterator = applications.iterator();
+		while (iterator.hasNext()) {
+			Application application = (Application) iterator.next();
+			ApplicationForm applicationForm = new ApplicationForm();
+			applicationForm.setId(application.getId());
+			applicationForm.setName(application.getName());
+			applicationForms.add(applicationForm);
+		}
+		System.out.println("in service application"+applicationForms);
+		return applicationForms;
+	}
 	public List<String> getDefaultIssueTypes() {
 		
 		List<ApplicationIssueType> issueTypes=issueDao.getDefaultIssueTypes();
@@ -211,7 +240,6 @@ public class IssueServiceImpl implements IssueService{
 		
 		return issueTypesList;
 	}
-
 
 	public List<IssueForm> searchIssueByType(String type) {
 		
@@ -250,5 +278,14 @@ public class IssueServiceImpl implements IssueService{
 		
 		return issueForms;
 	}
+
+	public IssueForm fetchIssueDetails(int fetchId) {
+		System.out.println("prajvi service");
+		Issue fetchedIssue=issueDao.fetchIssueDetails(fetchId);
+		IssueForm fetchedIssueForm=new IssueForm();
+		return fetchedIssueForm;
+
+	}
+
 	
 }

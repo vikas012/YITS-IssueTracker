@@ -49,6 +49,10 @@ public class Application implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
+	
+	//bi-directional many-to-one association to ApplicationTeamMember
+	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
+	private List<ApplicationTeamMember> applicationTeamMembers;
 
 	/*//bi-directional many-to-one association to ApplicationEnvironment
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
@@ -84,6 +88,23 @@ public class Application implements Serializable {
 
 	public Application() {
 	}
+	
+	
+	
+
+	public List<ApplicationTeamMember> getApplicationTeamMembers() {
+		return applicationTeamMembers;
+	}
+
+
+
+
+	public void setApplicationTeamMembers(List<ApplicationTeamMember> applicationTeamMembers) {
+		this.applicationTeamMembers = applicationTeamMembers;
+	}
+
+
+
 
 	public int getId() {
 		return id;

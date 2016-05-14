@@ -162,10 +162,9 @@ public class Member implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Member [contact=" + contact + ", email=" + email
-				+ ", memberId=" + memberId + ", managerId=" + managerId
-				+ ", managerName=" + managerName + ", managerEmail="
-				+ managerEmail + ", name=" + name + "]";
+		return "Member [id=" + id + ", contact=" + contact + ", email=" + email + ", memberId=" + memberId
+				+ ", managerId=" + managerId + ", managerName=" + managerName + ", managerEmail=" + managerEmail
+				+ ", name=" + name + "]";
 	}
 
 	public Long getManagerId() {
@@ -191,5 +190,7 @@ public class Member implements Serializable {
 	public void setManagerEmail(String managerEmail) {
 		this.managerEmail = managerEmail;
 	}
+	
+	
 
 }

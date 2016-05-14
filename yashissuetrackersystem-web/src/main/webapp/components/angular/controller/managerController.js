@@ -72,6 +72,28 @@ angular
 								$scope.showNonYashRegisterForm = true;
 							}
 
+							$scope.fetchIssueDetails = function() {
+
+								var index = angular
+										.element(
+												document
+														.querySelector("input[id=radio]:checked"))
+										.val();
+								alert(index);
+
+								if (index == null) {
+									alert("Please select the entry you want to update!");
+								}
+
+								var fetchIssueDetails = $http({
+									method : 'GET',
+									url : '../fetchIssueDetails/{index}'
+								}).success(function(data) {
+									alert("success")
+									$scope.fetchedIssue = data;
+								})
+							}
+
 							$scope.checkUser = function() {
 
 								$scope.ldapUser.ldapName = $scope.ldapName;
@@ -178,11 +200,9 @@ angular
 							}).success(function(data) {
 
 								$scope.defaultIssueList = data;
-								
-								 
+
 							})
-							
-							
+
 							$scope.defaultIssueTypes = [];
 							var issueType = $http({
 
@@ -193,49 +213,44 @@ angular
 								$scope.defaultIssueTypes = data;
 
 							})
-							
-							this.selectType = function(){
-								
-								if(this.selectIssueType==""){
-								}
-								else{
-									var type=this.selectIssueType;
-									managerService
-										.searchByIssueType(type)
-										.then(
-												function(data){
-													$scope.defaultIssueList = data;
-												},
-												function(errResponse) {
-													console
-															.error('Error while searching issues');
-												})
 
-								}
-							}
-							
 							$scope.getSearchMember = function() {
 								alert("Please Enter Text controller!");
 								alert($scope.searchText);
 								var searchText = $scope.searchText;
 
-								if (searchText == "") {
+								if (searchText == undefined) {
 
-									if (searchText == undefined) {
+									alert("Please Enter Text!");
+								} else {
+									managerService
+											.searchMember(searchText)
+											.then(
+													function(data) {
+														$scope.members = data;
 
-										alert("Please Enter Text!");
-									} else {
-										managerService
-												.searchMember(searchText)
-												.then(
-														function(data) {
-															$scope.members = data;
-														},
-														function(errResponse) {
-															console
-																	.error('Error while showing search members');
-														})
-									}
+														angular
+																.forEach(
+																		$scope.members,
+																		function(
+																				value,
+																				key) {
+
+																			if (value.isActive == 0) {
+
+																				value.isActive = "Activate";
+																			} else {
+
+																				value.isActive = "DeActivate";
+																			}
+
+																		});
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing search members');
+													})
+
 								}
 
 							}
@@ -291,6 +306,77 @@ angular
 																.error('Error while showing member status');
 													})
 								}
-							};
+							}
+
+							$scope.memberActivateForSearch = function(memberId) {
+
+								if (memberId == "") {
+									alert("Please Select ID!");
+								} else {
+									managerService
+											.memberActivate(memberId)
+											.then(
+													function(data) {
+
+														$scope
+																.getSearchMember();
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing member status');
+													})
+								}
+							}
+
+							managerService
+									.showAssignedIssues()
+									.then(
+											function(data) {
+												$scope.assignedIssues = data;
+											},
+											function(errResponse) {
+												console
+														.error('Error while showing assigned issues');
+											})
+
+							$scope.getSearchAssignedIssue = function() {
+
+								var searchText = $scope.searchAssignedIssueText;
+
+								if (searchText == "") {
+
+									alert("Please Enter Text!");
+								} else {
+									managerService
+											.searchAssignedIssue(searchText)
+											.then(
+													function(data) {
+														$scope.assignedIssues = data;
+													},
+													function(errResponse) {
+														console
+																.error('Error while searching assigned issues');
+													})
+								}
+							}
+
+							this.selectType = function() {
+
+								if (this.selectIssueType == "") {
+								} else {
+									var type = this.selectIssueType;
+									managerService
+											.searchByIssueType(type)
+											.then(
+													function(data) {
+														$scope.defaultIssueList = data;
+													},
+													function(errResponse) {
+														console
+																.error('Error while searching issues');
+													})
+
+								}
+							}
 
 						} ]);

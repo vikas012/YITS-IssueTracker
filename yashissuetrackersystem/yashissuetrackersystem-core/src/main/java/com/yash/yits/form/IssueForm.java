@@ -1,37 +1,13 @@
 package com.yash.yits.form;
 
-import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import com.yash.yits.domain.ApplicationEnvironment;
-import com.yash.yits.domain.ApplicationIssuePriority;
-import com.yash.yits.domain.ApplicationIssueStatus;
-import com.yash.yits.domain.ApplicationIssueType;
-import com.yash.yits.domain.ApplicationRelease;
-import com.yash.yits.domain.ApplicationTeamMember;
-import com.yash.yits.domain.Attachment;
-import com.yash.yits.domain.Conversation;
-import com.yash.yits.domain.IssueActivityLog;
-import com.yash.yits.domain.Project;
-import com.yash.yits.domain.ProjectRelease;
 
 public class IssueForm {
 	
 	private int id;
 
-	private int assignedUser;
+	private ApplicationTeamMemberForm assignedUser;
 
 	private String affectedVersion;
 
@@ -85,11 +61,11 @@ public class IssueForm {
 		this.id = id;
 	}
 
-	public int getAssignedUser() {
+	public ApplicationTeamMemberForm getAssignedUser() {
 		return assignedUser;
 	}
 
-	public void setAssignedUser(int assignedUser) {
+	public void setAssignedUser(ApplicationTeamMemberForm assignedUser) {
 		this.assignedUser = assignedUser;
 	}
 

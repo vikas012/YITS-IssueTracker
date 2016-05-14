@@ -35,7 +35,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 
 
 		  		searchMember:function(searchText){
-			  alert("Please Enter Text service!");
+		  			alert("Please Enter Text service!");
 					return $http.get('../searchMember/'+ searchText)
 				 	.then(
 				 				function(response){
@@ -113,6 +113,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			  						);
 				  
 			  			},	  
+
 		  			
 			  		searchByIssueType:function(type){
 			  			
@@ -128,7 +129,36 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			  				)
 			  		},
 		  				  
+
 		  				  
+			  			showAssignedIssues:function(){
+			  				return $http.get('../showAssignedIssue')
+						 	.then(
+						 				function(response){
+						 						return response.data;
+						 				}, 
+						 				function(errResponse){
+						 						console.error('Error while retrieving assigned issues');
+						 						return $q.reject(errResponse);
+						 				}
+			         			);
+			  			 },
+			  				  
+			  			searchAssignedIssue:function(searchText){
+			  				return $http.get('../searchAssignedIssue/'+searchText)
+			  				.then(
+			  							function(response){
+			  								return response.data;
+			  							},
+			  							function(errResponse){
+			  								console.error('Error while fetching assigned issues');
+			  								return $q.reject(errResponse);
+			  							}
+
+			  					);
+			  				
+			  			},	  
+
 
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')

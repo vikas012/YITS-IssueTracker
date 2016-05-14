@@ -9,9 +9,7 @@
 	}
 	
 	.search-box{
-		width: 300px;
-		float: center;
-		margin-left: 250px;
+		
 	}
 	
 	#heading{
@@ -25,11 +23,15 @@
 		background-color: darkcyan !important;
 	}
 	
+	.advance-search-box{
+		float:right;
+	}
+	
 </style>
 </head>
 <body>
 
-<center><h1>Search Issue</h1></center>
+<h2 class="headerlabel">Search Issue</h2>
 
 <form>
 	
@@ -42,6 +44,10 @@
 			<option></option>
 			<option ng-repeat="issueType in defaultIssueTypes" value="{{issueType}}">{{issueType}}</option>
 		</select>
+		
+	<div class="advance-search-box">
+		<button class="btn-primary" type="button">Advance Search</button>
+	</div>
 	
     </div>
 	
@@ -79,25 +85,6 @@
 				<td>{{issue.summary}}</td>
 				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
 			</tr>
-			</tbody>
-	
-			<!-- <tr  ng-repeat="issue in issues">
-				<td><input type="radio" value={{issue.issueDetailId}} ></td>
-
-				<td>{{issue.issueType.issueType}}</td>
-				<td>{{issue.issueCreationDate}}</td>
-				<td>{{issue.issuePriority.issuePriorityType}}</td>
-				<td>{{issue.issueSummary}}</td>
-				<td>{{issue.user.userName}}</td>
-				<td>{{issue.issueStatus.issueStatusType}}</td>
-				<td>{{issue.project.projectName}}</td>
-				<td>{{issue.issueAssignedStatus.issueAssignmentStatus}}</td>
-				<td><input type="button" value="Feed" class="btn btn-primary"></td>
-				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
-			</tr> -->
-
-			<tbody>
-
 			</tbody>
 		</table>
 		

@@ -335,6 +335,9 @@ public class Issue implements Serializable {
 		this.createdBy = createdBy;
 	}
 
+	
+	
+
 /*	public List<IssueActivityLog> getIssueActivityLogs() {
 		return issueActivityLogs;
 	}

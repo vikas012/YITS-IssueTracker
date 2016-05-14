@@ -138,6 +138,13 @@ public class MemberForm {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return "MemberForm [id=" + id + ", email=" + email + ", memberId=" + memberId + ", name=" + name + "]";
+	}
+
+	
 	
 	
 }
