@@ -215,8 +215,7 @@ angular
 							})
 
 							$scope.getSearchMember = function() {
-								alert("Please Enter Text controller!");
-								alert($scope.searchText);
+							
 								var searchText = $scope.searchText;
 
 								if (searchText == undefined) {

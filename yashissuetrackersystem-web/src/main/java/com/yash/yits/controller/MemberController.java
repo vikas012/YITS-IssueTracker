@@ -129,11 +129,11 @@ public class MemberController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/blockUnblockMember")
-	public List<Member> blockUnblockMember(@RequestBody MemberForm memberForm) {
+	public void blockUnblockMember(@RequestBody MemberForm memberForm) {
 		
 		System.out.println("in block unblock controller"+memberForm.getMemberId());
-		List<Member> members=memberService.blockUnblockMember(memberForm);
-		return members;
+		memberService.blockUnblockMember(memberForm);
+		
 	}
 	
 	/**

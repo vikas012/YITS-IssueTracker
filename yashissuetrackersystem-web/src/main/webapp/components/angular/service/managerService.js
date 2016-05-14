@@ -35,8 +35,8 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 
 
 		  		searchMember:function(searchText){
-		  			alert("Please Enter Text service!");
-					return $http.get('../searchMember/'+ searchText)
+		  		
+		  			return $http.get('../searchMember/'+ searchText)
 				 	.then(
 				 				function(response){
 				 						return response.data;
