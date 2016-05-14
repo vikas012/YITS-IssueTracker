@@ -215,7 +215,7 @@ angular
 							})
 
 							$scope.getSearchMember = function() {
-							
+
 								var searchText = $scope.searchText;
 
 								if (searchText == undefined) {

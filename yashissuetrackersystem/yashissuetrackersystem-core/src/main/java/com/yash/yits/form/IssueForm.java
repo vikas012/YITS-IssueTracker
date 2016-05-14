@@ -27,9 +27,9 @@ public class IssueForm {
 
 	private Date lastModifiedDateTime;
 
-	private int originalEstimate;
+	private String originalEstimate;
 
-	private int remainingEstimate;
+	private String remainingEstimate;
 
 	private String summary;
 
@@ -144,19 +144,19 @@ public class IssueForm {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
-	public int getOriginalEstimate() {
+	public String getOriginalEstimate() {
 		return originalEstimate;
 	}
 
-	public void setOriginalEstimate(int originalEstimate) {
+	public void setOriginalEstimate(String originalEstimate) {
 		this.originalEstimate = originalEstimate;
 	}
 
-	public int getRemainingEstimate() {
+	public String getRemainingEstimate() {
 		return remainingEstimate;
 	}
 
-	public void setRemainingEstimate(int remainingEstimate) {
+	public void setRemainingEstimate(String remainingEstimate) {
 		this.remainingEstimate = remainingEstimate;
 	}
 
