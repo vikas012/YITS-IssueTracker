@@ -255,7 +255,8 @@ angular
 							}
 
 							$scope.getDataAfterActiveStatus = function() {
-
+								
+								
 								$http({
 									method : 'GET',
 									url : '../memberList'
@@ -297,8 +298,7 @@ angular
 											.then(
 													function(data) {
 
-														$scope
-																.getDataAfterActiveStatus();
+														$scope.getDataAfterActiveStatus();
 													},
 													function(errResponse) {
 														console
@@ -327,6 +327,22 @@ angular
 								}
 							}
 
+							$scope.memberDelete=function(indexId){
+								
+								managerService.memberDelete(indexId)
+								.then(
+										function(data){
+	
+											$scope.getDataAfterActiveStatus();
+										},
+										 function(errResponse)
+										 {
+											 console.error('Error while deleting members');
+										 }
+								)	
+								
+							}
+							
 							managerService
 									.showAssignedIssues()
 									.then(

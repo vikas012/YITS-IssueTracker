@@ -12,7 +12,7 @@ public interface MemberDao {
 	public Member addMember(Member member);
 	public List<Member> showMembers();
 	public List<Member> searchMembers(String search);
-	public List<Member> deleteMember(int memberId);
+	public void deleteMember(Member member);
 	public void blockUnblockMember(Member member);
 	public List<Issue> showAssignedIssue();
 	public List<Issue> searchAssignedIssue(String searchText);

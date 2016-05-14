@@ -3,6 +3,8 @@ package com.yash.yits.form;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import com.yash.yits.domain.MemberType;
+
 public class MemberForm {
 
 	private int id;
@@ -30,6 +32,16 @@ public class MemberForm {
 	private String managerEmail;
 
 	private String name;
+
+	private MemberType memberType;
+	
+	public MemberType getMemberType() {
+		return memberType;
+	}
+
+	public void setMemberType(MemberType memberType) {
+		this.memberType = memberType;
+	}
 
 	public int getId() {
 		return id;

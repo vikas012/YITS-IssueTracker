@@ -22,10 +22,10 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 
 
 		  		getMembers:function(){
-		              alert("shraddha");
+		              
 		              var issues=$http({
 		            	  				method:'GET',
-		            	  				url:'./memberList' //spring controller call, use @ResponseBody
+		            	  				url:'./memberList' 
 		              				})
 		             .success(function(data){
 		            	 	alert("Succeess");
@@ -159,6 +159,26 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			  				
 			  			},	  
 
+			  			memberDelete:function(indexId){
+							
+							
+							var member={
+									
+								"memberId":indexId,	
+									
+							};
+							return $http.post('../deleteMember/',member)
+						 	.then(
+						 				function(response){
+						 						return response.data;
+						 				}, 
+						 				function(errResponse){
+						 						console.error('Error while deleting member');
+						 						return $q.reject(errResponse);
+						 				}
+			         			);
+							
+						}, 
 
 		 /* initializeSelect: function() {
 	          return $http.get('./getPriority')

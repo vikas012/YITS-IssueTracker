@@ -45,11 +45,7 @@ managerModule.config(function($routeProvider) {
 		templateUrl : '../showMembersPage',
 
 		controller : 'managerController',
-		/*resolve : {
-			memberList : function(managerService) {
-				return managerService.getMembers();
-			}
-		}*/
+		
 	})
 	.when('/searchMembers',{
 				

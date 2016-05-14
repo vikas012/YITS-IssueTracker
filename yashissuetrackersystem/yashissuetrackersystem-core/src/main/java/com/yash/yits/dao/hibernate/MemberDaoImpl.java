@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.yash.yits.dao.MemberDao;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
+import com.yash.yits.domain.MemberType;
 
 /** This class interacts with database and provides the data for all member operations*/
 
@@ -44,13 +45,18 @@ public class MemberDaoImpl implements MemberDao {
 			return member;
 		}
 
+	 /**
+		 * This method shows member list.
+		 */
 	public List<Member> showMembers() {
 		System.out.println("dao members");
 		
 		Session session = sessionFactory.getCurrentSession();
 		
 		
+		
 		Criteria criteria =session.createCriteria(Member.class)
+				.add(Restrictions.ne("memberType.id", 3))
 				.setProjection(Projections.projectionList()		
 						.add(Projections.property("memberId"), "memberId")
 					      .add(Projections.property("name"), "name")
@@ -89,10 +95,7 @@ public class MemberDaoImpl implements MemberDao {
 		return members;
 	}
 
-	public List<Member> deleteMember(int memberId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	/**
 	 *blockUnblockMember method is used to block or unblock the member
@@ -161,5 +164,21 @@ public class MemberDaoImpl implements MemberDao {
 		criteria1.add(Restrictions.isNotNull("assignedUser"));
 		issues = criteria1.list();
 		return issues;
+	}
+
+	/**
+	 * This method delete member.
+	 */
+	public void deleteMember(Member member) {
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Member where memberId=?");
+		Member member1=(Member) query.setLong(0, member.getMemberId()).uniqueResult();
+		MemberType memberType=new MemberType();
+		memberType.setId(3);
+		member1.setMemberType(memberType);
+		session.saveOrUpdate(member1);
+		
+		
+		
 	}
 }

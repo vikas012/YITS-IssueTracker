@@ -268,6 +268,7 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberForm> searchMembers(String search) {
 		System.out.println("in service");
 		List<Member> members = memberDao.searchMembers(search);
+		
 		List<MemberForm> memberForms = new ArrayList<MemberForm>();
 		for (Member member : members) {
 
@@ -288,20 +289,34 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberForms;
 	}
-	public List<Member> showMembers() {
+	public List<MemberForm> showMembers() {
 
 	List<Member> memberList=memberDao.showMembers();
 		
-		return memberList;
-
-
-	}
-
 	
+	List<MemberForm> memberForms = new ArrayList<MemberForm>();
+	for (Member member : memberList) {
 
-	public List<Member> deleteMember(int memberId) {
+		MemberForm memberForm = new MemberForm();
 		
-		return null;
+		memberForm.setMemberId(member.getMemberId());
+		memberForm.setName(member.getName());
+		memberForm.setEmail(member.getEmail());
+		memberForm.setContact(member.getContact());
+		memberForm.setIsActive(member.getIsActive());
+		
+		
+		memberForms.add(memberForm);
+	}
+	
+	System.out.println(memberForms);
+	
+	
+	return memberForms;
+	
+		//return memberList;
+
+
 	}
 
 	
@@ -358,6 +373,15 @@ public class MemberServiceImpl implements MemberService {
 			issueForms.add(issueForm);
 		}
 		return issueForms;
+	}
+
+	public void deleteMember(MemberForm memberForm) {
+		
+		Member member=new Member();
+		member.setMemberId(memberForm.getMemberId());
+		memberDao.deleteMember(member);
+		
+		
 	}
 
 }

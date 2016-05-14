@@ -72,16 +72,18 @@ public class MemberController {
 			}
 		return members; 
 	}
-	
+	/**
+	 * This method searches member list .
+	 */
 	@ResponseBody
 	@RequestMapping(value="/memberList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Member> showMembersList(){
-		System.out.println("for member list");
-		List<Member> membersList=memberService.showMembers();
+	public List<MemberForm> showMembersList(){
 		
-	for (Member member : membersList) {
+		List<MemberForm> membersList=memberService.showMembers();
+		
+	/*for (MemberForm member : membersList) {
 		System.out.println(member.getName());
-	}
+	}*/
 		return membersList;
 		
 	}
@@ -152,5 +154,19 @@ public class MemberController {
 	@RequestMapping(value="/searchAssignedIssue/{searchText}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<IssueForm> searchAssignedIssue(@PathVariable("searchText") String searchText){
 		return memberService.searchAssignedIssue(searchText);
+	}
+	
+	/**
+	 * This method deletes member.
+	 */
+	@ResponseBody
+	@RequestMapping(value="/deleteMember",method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
+	public void deleteMember(@RequestBody MemberForm memberForm){
+		
+		memberService.deleteMember(memberForm);
+		
+		
+		
+		
 	}
 }

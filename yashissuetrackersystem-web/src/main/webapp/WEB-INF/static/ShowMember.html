@@ -51,7 +51,7 @@
 					<td>{{member.email}}</td>
 					<td>{{member.contact}}</td>
 					<td><button ng-click="memberActivate(member.memberId)" class="btn btn-default">{{member.isActive}}</button></td>
-					<td><input type="button" value="Delete" ng-click="delete(member.memberId)" class="btn btn-default"></td>
+					<td><input type="button" value="Delete" ng-click="memberDelete(member.memberId)" class="btn btn-default"></td>
 				 
 				</tr>
 

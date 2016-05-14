@@ -64,6 +64,18 @@ public class Member implements Serializable {
 	@Column(name="MANAGER_EMAIL")
 	private String managerEmail;
 
+	@ManyToOne
+	@JoinColumn(name="MEMBER_TYPE")
+	private MemberType memberType;
+	
+	public MemberType getMemberType() {
+		return memberType;
+	}
+
+	public void setMemberType(MemberType memberType) {
+		this.memberType = memberType;
+	}
+
 	private String name;
 
 
