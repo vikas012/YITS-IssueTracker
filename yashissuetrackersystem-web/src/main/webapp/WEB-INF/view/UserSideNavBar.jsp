@@ -12,7 +12,7 @@
                     </li>
                    
                     <li>
-                        <a href="#"><i class="glyphicon glyphicon-search"></i> Search Issue</a>
+                        <a href="#/searchIssues"><i class="glyphicon glyphicon-search"></i> Search Issue</a>
                     </li>
                     <li>
                         <a href="#"><i class="glyphicon glyphicon-th-list"></i> Show Feed</a>

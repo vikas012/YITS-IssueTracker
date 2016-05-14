@@ -5,6 +5,14 @@ userModule.config(function($routeProvider){
 				templateUrl:'showCreateIssueForm',
 				controller:'userController as uc'
 			})
+
+			.when('/searchIssues', {
+		templateUrl : '../issues',
+		controller : 'userController as uc',
+		
+	})
+		
+
 			
 
 			.when('/editIssues',{
@@ -13,5 +21,4 @@ userModule.config(function($routeProvider){
 			})
 			
 
-			
 	});
