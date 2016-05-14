@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -51,7 +52,7 @@ public class Application implements Serializable {
 	private ApplicationTeamMember createdBy;
 	
 	//bi-directional many-to-one association to ApplicationTeamMember
-	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="application", fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<ApplicationTeamMember> applicationTeamMembers;
 
 	/*//bi-directional many-to-one association to ApplicationEnvironment

@@ -31,18 +31,19 @@ public interface IssueDao {
 
 
 
-	public List<ApplicationIssueType> getDefaultIssueTypes();
+	public List<ApplicationIssueType> getDefaultIssueTypes(int applicationId);
 
 	public Map<String, Object> getAllSelectFields(Project project, MemberForm member);
+
+	public List<Issue> searchIssueByType(int type);
 
 	
 	public List<Application> getApplicationNames();
 
-
 	public Issue fetchIssueDetails(int fetchId);
-	public List<ApplicationIssuePriority> getDefaultIssuePriorities();
-	public List<Project> getDefaultProjectNames();
-
+	public List<ApplicationIssuePriority> getDefaultIssuePriorities(int applicationId);
+	public List<Project> getDefaultProjectNames(int applicationId);
+	public List<Issue> getFilteredIssue(int issuepriorityId1,int issuetypeId1,int projectnameId);
 
 
 }

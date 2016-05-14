@@ -2,8 +2,6 @@ package com.yash.yits.serviceImpl;
 
 
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,8 +46,6 @@ import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Project;
 import com.yash.yits.form.ApplicationIssuePriorityForm;
 import com.yash.yits.form.ApplicationIssueTypeForm;
-
-
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.ProjectForm;
@@ -101,43 +97,15 @@ public class IssueServiceImpl implements IssueService{
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 	    
 	    Date currentTime = localCalendar.getTime();
-	    int currentDay = localCalendar.get(Calendar.DATE);
-	    int currentDayOfWeek = localCalendar.get(Calendar.DAY_OF_WEEK);
-	    Date date=new Date();
-		
+
 		Calendar cal = Calendar.getInstance();
 		Date dateBefore=new Date();
 		cal.setTime(currentTime);
-		if(currentDayOfWeek==2){
-			cal.add(Calendar.DATE, -8);
+		
+			cal.add(Calendar.DATE, -15);
 			dateBefore = cal.getTime();
-		}
-		else if(currentDayOfWeek==3){
-			cal.add(Calendar.DATE, -9);
-			dateBefore = cal.getTime();
-		}
-		else if(currentDayOfWeek==4){
-			cal.add(Calendar.DATE, -10);
-			dateBefore = cal.getTime();
-		}
-		else if(currentDayOfWeek==5){
-			cal.add(Calendar.DATE, -11);
-			dateBefore = cal.getTime();
-		}
-		else if(currentDayOfWeek==6){
-			cal.add(Calendar.DATE, -12);
-			dateBefore = cal.getTime();
-		}
-		else if(currentDayOfWeek==7){
-			cal.add(Calendar.DATE, -13);
-			dateBefore = cal.getTime();
-		}
-		else{
-			cal.add(Calendar.DATE, -7);
-			dateBefore = cal.getTime();
-		}
-		cal.add(Calendar.DATE, +14);
-		Date dateAfter = cal.getTime();
+		
+		Date dateAfter = new Date();
 		
 		List<Issue> issues = issueDao.getDefaultIssues(dateBefore,dateAfter);
 		
@@ -160,9 +128,7 @@ public class IssueServiceImpl implements IssueService{
 			
 			ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
 			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
-			System.out.println(issue.getApplicationIssuePriority().getType());
 			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
-			System.out.println(issueForm.getApplicationIssuePriority()+"issueForm");
 			
 			ApplicationIssueStatusForm applicationIssueStatusForm=new ApplicationIssueStatusForm();
 			applicationIssueStatusForm.setStatus(issue.getApplicationIssueStatus().getStatus());
@@ -262,40 +228,98 @@ public class IssueServiceImpl implements IssueService{
 	}
 	
 	
-	public List<String> getDefaultIssueTypes() {
+	public List<ApplicationIssueTypeForm> getDefaultIssueTypes(int applicationId) {
 		
-		List<ApplicationIssueType> issueTypes=issueDao.getDefaultIssueTypes();
+		List<ApplicationIssueType> issueTypes=issueDao.getDefaultIssueTypes(applicationId);
+	
+		List<ApplicationIssueTypeForm> applicationIssueTypeForms=new ArrayList<ApplicationIssueTypeForm>();
 		
-		List<String> issueTypesList=new ArrayList<String>();
-		
-		for (ApplicationIssueType issue : issueTypes) {
-			
-			String type=issue.getType();
-			issueTypesList.add(type);
+		for (ApplicationIssueType applicationIssueType : issueTypes) {
+			ApplicationIssueTypeForm applicationIssueTypeForm=new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setId(applicationIssueType.getId());
+			applicationIssueTypeForm.setType(applicationIssueType.getType());
+			applicationIssueTypeForms.add(applicationIssueTypeForm);
 		}
 		
-		return issueTypesList;
-	}
 	
-	public List<ApplicationIssuePriorityForm> getDefaultIssuePriorities() {
 		
-		List<ApplicationIssuePriority> issuePriorities=issueDao.getDefaultIssuePriorities();
+		return applicationIssueTypeForms;
+	}
+
+	
+	public List<ApplicationIssuePriorityForm> getDefaultIssuePriorities(int applicationId) {
+		
+		List<ApplicationIssuePriority> issuePriorities=issueDao.getDefaultIssuePriorities(applicationId);
 		List<ApplicationIssuePriorityForm> applicationIssuePriorityForms=new ArrayList<ApplicationIssuePriorityForm>();
 		for (ApplicationIssuePriority applicationIssuePriority : issuePriorities) {
 			ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
 			applicationIssuePriorityForm.setId(applicationIssuePriority.getId());
 			applicationIssuePriorityForm.setType(applicationIssuePriority.getType());
+			applicationIssuePriorityForms.add(applicationIssuePriorityForm);
 		}
 	
 		return applicationIssuePriorityForms;
+	}
+	
+	public List<ProjectForm> getDefaultProjectNames(int applicationId) {
+		
+		List<Project> issuePriorities=issueDao.getDefaultProjectNames(applicationId);
+		
+		List<ProjectForm> projectForms=new ArrayList<ProjectForm>();
+		for (Project project : issuePriorities) {
+			ProjectForm projectForm=new ProjectForm();
+			projectForm.setId(project.getId());
+			projectForm.setName(project.getName());
+			projectForms.add(projectForm);
+			
+		}
+	
+		return projectForms;
 	}
 	
 	
 
 	
 	
-	
 
+	public List<IssueForm> searchIssueByType(int type) {
+		
+		List<Issue> issues=issueDao.searchIssueByType(type);
+		
+		List<IssueForm> issueForms = new ArrayList<IssueForm>();
+		for (Issue issue : issues) {
+
+
+			
+			IssueForm issueForm = new IssueForm();
+			
+			issueForm.setId(issue.getId());
+			issueForm.setCloseDate(issue.getCloseDate());
+			issueForm.setCreatedDateTime(issue.getCreatedDateTime());
+			issueForm.setDueDate(issue.getDueDate());
+			issueForm.setSummary(issue.getSummary());
+
+			ProjectForm projectForm=new ProjectForm();
+			projectForm.setName(issue.getProject().getName());
+			issueForm.setProject(projectForm);
+			
+			ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+			
+			ApplicationIssueStatusForm applicationIssueStatusForm=new ApplicationIssueStatusForm();
+			applicationIssueStatusForm.setStatus(issue.getApplicationIssueStatus().getStatus());
+			issueForm.setApplicationIssueStatus(applicationIssueStatusForm);
+
+			ApplicationIssueTypeForm applicationIssueTypeForm=new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
+			issueForm.setApplicationIssueType(applicationIssueTypeForm);
+			
+			issueForms.add(issueForm);
+		}
+		
+		return issueForms;
+	}
 
 	public IssueForm fetchIssueDetails(int fetchId) {
 		System.out.println("prajvi service");
@@ -305,6 +329,46 @@ public class IssueServiceImpl implements IssueService{
 
 	}
 
+
+	public List<IssueForm> getFilteredIssue(int issuepriorityId1, int issuetypeId1, int projectnameId) {
+		List<Issue> issues=issueDao.getFilteredIssue(issuepriorityId1, issuetypeId1, projectnameId);
+		List<IssueForm> issueForms = new ArrayList<IssueForm>();
+		
+			for (Issue issue : issues) {
+
+
+			
+			IssueForm issueForm = new IssueForm();
+			
+			issueForm.setId(issue.getId());
+			issueForm.setCloseDate(issue.getCloseDate());
+			issueForm.setCreatedDateTime(issue.getCreatedDateTime());
+			issueForm.setDueDate(issue.getDueDate());
+			issueForm.setSummary(issue.getSummary());
+
+			ProjectForm projectForm=new ProjectForm();
+			projectForm.setName(issue.getProject().getName());
+			issueForm.setProject(projectForm);
+			
+			ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+			
+			ApplicationIssueStatusForm applicationIssueStatusForm=new ApplicationIssueStatusForm();
+			applicationIssueStatusForm.setStatus(issue.getApplicationIssueStatus().getStatus());
+			issueForm.setApplicationIssueStatus(applicationIssueStatusForm);
+
+			ApplicationIssueTypeForm applicationIssueTypeForm=new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
+			issueForm.setApplicationIssueType(applicationIssueTypeForm);
+			
+			issueForms.add(issueForm);
+		}
+		
+		return issueForms;
+		
+	
+	}
 
 	
 }

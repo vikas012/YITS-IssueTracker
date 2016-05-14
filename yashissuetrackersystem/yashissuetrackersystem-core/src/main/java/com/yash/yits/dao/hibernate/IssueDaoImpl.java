@@ -1,16 +1,12 @@
 package com.yash.yits.dao.hibernate;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 
 import java.util.List;
-import java.util.Set;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -65,7 +61,6 @@ public class IssueDaoImpl implements IssueDao {
 	
 	public List<Application> getApplicationNames() {
 		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Application.class)
-				
 				.setProjection(Projections.projectionList()
 					      .add(Projections.property("id"), "id")
 					      .add(Projections.property("name"), "name"))
@@ -96,39 +91,21 @@ public class IssueDaoImpl implements IssueDao {
 
 		
 		Session session=sessionFactory.getCurrentSession();
-		/*Query query=session.createQuery("FROM Issue WHERE createdDateTime BETWEEN '"+date1+"' AND '"+date2+"'");
-		*/
-		//List<Issue> issues=query.list();
-		
-		
-		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Issue.class)
+
+		Criteria criteria=session.createCriteria(Issue.class)
 				.setProjection(Projections.projectionList()
 				.add(Projections.property("id"),"id")
 				.add(Projections.property("closeDate"),"closeDate")
 				.add(Projections.property("createdDateTime"),"createdDateTime")
 				.add(Projections.property("dueDate"),"dueDate")
-			//	.add(Projections.property("issueOwner"),"issueOwner")
 				.add(Projections.property("project"),"project")
 				.add(Projections.property("applicationIssuePriority"),"applicationIssuePriority")
 				.add(Projections.property("applicationIssueStatus"),"applicationIssueStatus")
-			//	.add(Projections.property("createdBy"),"createdBy")
-			//	.add(Projections.property("assignedUser"),"assignedUser")
 				.add( Projections.property("summary"), "summary")
 				.add(Projections.property("applicationIssueType"),"applicationIssueType"))
 				.add(Restrictions.between("createdDateTime", date1, date2))
 				.setResultTransformer(Transformers.aliasToBean(Issue.class));
 				List<Issue> issues=criteria.list();
-				
-		//criteria.add(Restrictions.between("createdDateTime", date1, date2));
-		
-		//List<Issue> issues=criteria.list();
-		
-		/*Query query=session.createSQLQuery("SELECT * from ISSUE where created_date_time between '"+date1+"' AND '"+date2+"'");*/
-		
-		//List<Issue> issues=query.list();
-		
-		System.out.println(issues+"issues!!");
-		
 		return issues;
 
 	}
@@ -295,13 +272,15 @@ public class IssueDaoImpl implements IssueDao {
 	
 
 
-	public List<ApplicationIssueType> getDefaultIssueTypes() {
-		
+	public List<ApplicationIssueType> getDefaultIssueTypes(int applicationId) {
+		Application application=new Application();
+		application.setId(applicationId);
 		Session session=sessionFactory.getCurrentSession();
 		Criteria criteria=session.createCriteria(ApplicationIssueType.class)
 				.setProjection(Projections.projectionList()
 						 .add(Projections.property("id"), "id")
 						.add(Projections.property("type"),"type"))
+				.add(Restrictions.eq("application", application))
 				.setResultTransformer(Transformers.aliasToBean(ApplicationIssueType.class));
 		List<ApplicationIssueType> issueTypes=criteria.list();
 		
@@ -310,26 +289,35 @@ public class IssueDaoImpl implements IssueDao {
 
 
 
-	public List<ApplicationIssuePriority> getDefaultIssuePriorities() {
+
+	public List<ApplicationIssuePriority> getDefaultIssuePriorities(int applicationId) {
+		
+		Application application=new Application();
+		application.setId(applicationId);
 		
 		Session session=sessionFactory.getCurrentSession();
 		Criteria criteria=session.createCriteria(ApplicationIssuePriority.class)
 				.setProjection(Projections.projectionList()
 						 .add(Projections.property("id"), "id")
 						.add(Projections.property("type"),"type"))
+				.add(Restrictions.eq("application", application))
 				.setResultTransformer(Transformers.aliasToBean(ApplicationIssuePriority.class));
+		
 		List<ApplicationIssuePriority> issuePriorities=criteria.list();
 		
 		return issuePriorities;
 	}
 
-	public List<Project> getDefaultProjectNames() {
+	public List<Project> getDefaultProjectNames(int applicationId) {
+		Application application=new Application();
+		application.setId(applicationId);
 		
 		Session session=sessionFactory.getCurrentSession();
 		Criteria criteria=session.createCriteria(Project.class)
 				.setProjection(Projections.projectionList()
 						 .add(Projections.property("id"), "id")
 						.add(Projections.property("name"),"name"))
+				.add(Restrictions.eq("application", application))
 				.setResultTransformer(Transformers.aliasToBean(Project.class));
 		List<Project> projects=criteria.list();
 		
@@ -343,12 +331,63 @@ public class IssueDaoImpl implements IssueDao {
 	
 	
 	
+
+
+	public List<Issue> searchIssueByType(int type) {
+		
+		Session session=sessionFactory.getCurrentSession();
+		
+		ApplicationIssueType applicationIssueType=new ApplicationIssueType();
+		applicationIssueType.setId(type);
+		
+		Criteria criteria=session.createCriteria(Issue.class)
+				.setProjection(Projections.projectionList()
+				.add(Projections.property("id"),"id")
+				.add(Projections.property("closeDate"),"closeDate")
+				.add(Projections.property("createdDateTime"),"createdDateTime")
+				.add(Projections.property("dueDate"),"dueDate")
+				.add(Projections.property("project"),"project")
+				.add(Projections.property("applicationIssuePriority"),"applicationIssuePriority")
+				.add(Projections.property("applicationIssueStatus"),"applicationIssueStatus")
+				.add( Projections.property("summary"), "summary")
+				.add(Projections.property("applicationIssueType"),"applicationIssueType"))
+				.add(Restrictions.eq("applicationIssueType", applicationIssueType))
+				.setResultTransformer(Transformers.aliasToBean(Issue.class));
+				List<Issue> issues=criteria.list();
+				
+		return issues;
+	}
+
 	public Issue fetchIssueDetails(int fetchId) {
 		System.out.println("prajvi dao");
 		Session session=sessionFactory.getCurrentSession();
 		Query query=session.createQuery("from Issue where id="+fetchId);
 		Issue issue=(Issue)query.uniqueResult();
 		return null;
+
+	}
+
+	public List<Issue> getFilteredIssue(int issuepriorityId, int issuetypeId, int projectnameId) {
+		Session session=sessionFactory.getCurrentSession();
+		
+		Criteria crit = session.createCriteria(Issue.class);
+	
+		if (issuetypeId != 0) {
+			Criteria issueTypeCrit = crit.createCriteria("applicationIssueType");
+			issueTypeCrit.add(Restrictions.eq("id", issuetypeId));
+		}
+		if (projectnameId != 0) {
+			Criteria projectCrit = crit.createCriteria("project");
+			projectCrit.add(Restrictions.eq("id", projectnameId));
+		}
+		if (issuepriorityId != 0) {
+			Criteria issuePriorityCrit = crit.createCriteria("applicationIssuePriority");
+			issuePriorityCrit.add(Restrictions.eq("id", issuepriorityId));
+		}
+		
+		
+		List<Issue> issues = crit.list();
+		return issues;
 	}
 	
 

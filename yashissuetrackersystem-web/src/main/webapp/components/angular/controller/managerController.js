@@ -71,25 +71,29 @@ angular
 								$scope.showRegisterForm = false;
 								$scope.showNonYashRegisterForm = true;
 							}
-							
-							$scope.fetchIssueDetails=function(){
-								
-								var index = angular.element(document.querySelector("input[id=radio]:checked")).val();
+
+							$scope.fetchIssueDetails = function() {
+
+								var index = angular
+										.element(
+												document
+														.querySelector("input[id=radio]:checked"))
+										.val();
 								alert(index);
-								
-								if(index==null){
+
+								if (index == null) {
 									alert("Please select the entry you want to update!");
 								}
-								
+
 								var fetchIssueDetails = $http({
 									method : 'GET',
 									url : '../fetchIssueDetails/{index}'
 								}).success(function(data) {
 									alert("success")
-											$scope.fetchedIssue = data;
+									$scope.fetchedIssue = data;
 								})
 							}
-							
+
 							$scope.checkUser = function() {
 
 								$scope.ldapUser.ldapName = $scope.ldapName;
@@ -209,41 +213,43 @@ angular
 								$scope.defaultIssueTypes = data;
 
 							})
+
 							$scope.getSearchMember = function() {
-								alert("Please Enter Text controller!");
-								alert($scope.searchText);
+							
 								var searchText = $scope.searchText;
 
+								if (searchText == undefined) {
 
-									if (searchText == undefined) {
-
-										alert("Please Enter Text!");
-									} else {
-										managerService
+									alert("Please Enter Text!");
+								} else {
+									managerService
 											.searchMember(searchText)
-												.then(
+											.then(
 													function(data) {
-													$scope.members= data;
-															
-													angular.forEach(
-														$scope.members,
-															function(value,key) {
+														$scope.members = data;
 
-																if (value.isActive == 0) {
+														angular
+																.forEach(
+																		$scope.members,
+																		function(
+																				value,
+																				key) {
 
-																	value.isActive = "Activate";
-																	} else {
+																			if (value.isActive == 0) {
 
-																	value.isActive = "DeActivate";
-																		}
+																				value.isActive = "Activate";
+																			} else {
 
-																	});
-														},
-														function(errResponse) {
-															console
-																	.error('Error while showing search members');
-														})
-									
+																				value.isActive = "DeActivate";
+																			}
+
+																		});
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing search members');
+													})
+
 								}
 
 							}
@@ -300,17 +306,19 @@ angular
 													})
 								}
 							}
-							
+
 							$scope.memberActivateForSearch = function(memberId) {
 
 								if (memberId == "") {
 									alert("Please Select ID!");
 								} else {
-									managerService.memberActivate(memberId)
+									managerService
+											.memberActivate(memberId)
 											.then(
 													function(data) {
 
-														$scope.getSearchMember();
+														$scope
+																.getSearchMember();
 													},
 													function(errResponse) {
 														console
@@ -319,21 +327,21 @@ angular
 								}
 							}
 
-							managerService.showAssignedIssues()
-							.then(
-									function(data) {
-										$scope.assignedIssues = data;
-									},
-									function(errResponse) {
-										console
-												.error('Error while showing assigned issues');
-									}
-							)
-							
+							managerService
+									.showAssignedIssues()
+									.then(
+											function(data) {
+												$scope.assignedIssues = data;
+											},
+											function(errResponse) {
+												console
+														.error('Error while showing assigned issues');
+											})
+
 							$scope.getSearchAssignedIssue = function() {
-								
+
 								var searchText = $scope.searchAssignedIssueText;
-								
+
 								if (searchText == "") {
 
 									alert("Please Enter Text!");
@@ -347,23 +355,100 @@ angular
 													function(errResponse) {
 														console
 																.error('Error while searching assigned issues');
-													}
-											)
+													})
 								}
 							}
+
 							
 							
 							$scope.showadvsearch = function() {
 								$('#advsearch').show();
+								$('#issuetypesearch').hide();
+								$scope.isDisabled=true;
+								alert("hello");
+								managerService.getList()
+								.then(
+										function(data) {
+											alert(data);
+											$scope.applicationNames=data;
+										
+										},
+										function(errResponse) {
+											console
+													.error('Error while searching assigned issues');
+										})
+					}
+							
+							
+							
+							$scope.calldropdowns = function() {
+								var applicationid=this.application;
+								$scope.isDisabled=false;
+								managerService.getAllList(applicationid)
+								.then(
+										function(data) {
+											//$scope.application=data;
+											$scope.issuepriorities = data.priorities;
+											$scope.issuetype=data.issuetypes;
+											$scope.project=data.projects;
+										},
+										function(errResponse) {
+											console
+													.error('Error while searching assigned issues');
+										})
+					}
+							
+						
+							
+							$scope.searchFilter = function() {
+								var filterIssueType = $scope.advIssueType;
+								var filterProjectName = this.advProject;
+								var filterPriority = this.advPriority;
+								alert(filterIssueType);
+								alert(filterProjectName);
+								alert(filterPriority);
+								managerService.getadvSearchData(filterIssueType,filterProjectName,filterPriority)
+								.then(
+										function(data) {
+											alert(data);
+											$scope.defaultIssueList = data;
+										
+											$('#advsearch').hide();
+											$('#issuetypesearch').show();
+
+										},
+										function(errResponse) {
+											console
+													.error('Error while searching assigned issues');
+										})
 								
-								/*$http.get("./getList").success(
-										function(formData) {
-											$scope.issuestatus = formData.getIssueStatusList;
-											$scope.issuetypes = formData.getIssueTypesList;
-											$scope.projectnames = formData.getProjectNamesList;
-											$scope.priorities = formData.getIssuePriorityList;
-										});*/
+							
+							
 							}
 							
 							
+							
+							
+
+
+							this.selectType = function() {
+
+								if (this.selectIssueType == "") {
+								} else {
+									var type = this.selectIssueType;
+									managerService
+											.searchByIssueType(type)
+											.then(
+													function(data) {
+														$scope.defaultIssueList = data;
+													},
+													function(errResponse) {
+														console
+																.error('Error while searching issues');
+													})
+
+								}
+							}
+
+
 						} ]);

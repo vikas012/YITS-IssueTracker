@@ -8,10 +8,8 @@
 		float: center;
 	}
 	
-	.input-group{
-		width: 300px;
-		float: center;
-		margin-left: 350px;
+	.search-box{
+		
 	}
 	
 	#heading{
@@ -25,59 +23,67 @@
 		background-color: darkcyan !important;
 	}
 	
+	.advance-search-box{
+		float:right;
+	}
+	
 </style>
 </head>
 <body>
 
+<h2 class="headerlabel">Search Issue</h2>
 
 <form>
 	
-
+	<br>
+	<br>
 	
-	<div class="input-group">
-		
-		<select>
+	<div class="search-box">
+		<div id="issuetypesearch">
+		<label>Select Issue Type: </label>
+		<select ng-model="mc.selectIssueType" ng-change="mc.selectType()">
 			<option></option>
-			<option ng-repeat="issueType in defaultIssueTypes" value="{{issueType}}">{{issueType}}</option>
+			<option ng-repeat="issueType in defaultIssueTypes" value="{{issueType.id}}">{{issueType.type}}</option>
 		</select>
-	
-    </div>
-	
-	<button ng-click="showadvsearch()" class="btn btn-info">
-				<span class="glyphicon glyphicon-search"></span> Advance Search
-			</button>
-	
+		</div>
+	<div class="advance-search-box">
+		<button  ng-click="showadvsearch()" class="btn btn-info"><span class="glyphicon glyphicon-search"></span>Advance Search</button>
+	</div>
 	
 			<div id="advsearch" hidden>
-				<!-- 	<h4>Filter FEEDS on the Basis of:</h4> -->
 				<br>
 				<br>
+					<div>
+					<div class="form-group col-sm-4">
+						<label>Application:</label> 
+						<select ng-model="application" class="dropDown form-control" ng-change="calldropdowns()">
+							<option ng-repeat="Application in applicationNames " value="{{Application.id}}">{{Application.name}}</option>
+						</select>
+					</div>
+				
 
 				<div>
 					<div class="form-group col-sm-4">
-						<label>Issue Status:</label> 
-						<select ng-model="filterUserName" class="dropDown form-control">
-							<option ng-repeat="IssueStatus in issuestatus " value={{IssueStatus.userId}}>{{IssueStatus.userName}}</option>
-						</select>
-					</div>
-					<div class="form-group col-sm-4">
 						<label>Issue Type:</label> 
-						<select ng-model="filterIssueType"class="dropDown form-control">
-							<option ng-repeat="IssueType in issuetypes " value={{IssueType.issueId}}>{{IssueType.issueType}}</option>
+						<select ng-model="advIssueType" class="dropDown form-control">
+							<option ng-repeat="IssueType in issuetype" ng-disabled="isDisabled" value="{{IssueType.id}}">{{IssueType.type}}</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-4">
 						<label> Project Name:</label>
-						 <select ng-model="filterProjectName" class="dropDown form-control">
-							<option ng-repeat="ProjecName in projectnames " value={{ProjecName.projectId}}>{{ProjecName.projectName}}</option>
+						 <select ng-model="advProject" class="dropDown form-control">
+							<option ng-repeat="ProjecName in project " ng-disabled="isDisabled" value="{{ProjecName.id}}">{{ProjecName.name}}</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-4">
 						<label>Priority:</label>
-						 <select ng-model="filterPriority" class="dropDown form-control">
-							<option ng-repeat="Priority in priorities " value={{Priority.issuePriorityId}}>{{Priority.issuePriorityType}}</option>
+						 <select ng-model="advPriority" class="dropDown form-control">
+							<option ng-repeat="Priority in issuepriorities " ng-disabled="isDisabled" value="{{Priority.id}}">{{Priority.type}}</option>
 						</select>
 					</div>
+				
+					
+					
 				</div>
 				<div>
 
@@ -90,13 +96,14 @@
 				 
 					
 			</div>
+			 </div>
 
 		<br>
 		<br>
 		<br>
 		
 		
-		<table class="table table-striped table-bordered table-hover" id="searchIssueTable">
+		<table datatable="ng" class="table table-striped table-bordered table-hover" id="searchIssueTable">
 			<thead class="thead-inverse">
 				<tr  id="heading">
 					<th>Select</th>
@@ -107,11 +114,11 @@
 					<th>Issue Status</th>
 					<th>Issue Priority</th>
 					<th>Issue Summary</th>
-					<th colspan="2">Action</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
-			<tr id="datatable" ng-repeat="issue in defaultIssueList">
+			<tr id="defaultTable" ng-repeat="issue in defaultIssueList">
 				<td><input id='radio' type='radio' value="{{issue.id}}"></td>
 				<td>{{issue.createdDateTime}}</td>
 				<td>{{issue.dueDate}}</td>
@@ -122,25 +129,6 @@
 				<td>{{issue.summary}}</td>
 				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
 			</tr>
-			</tbody>
-	
-			<!-- <tr  ng-repeat="issue in issues">
-				<td><input type="radio" value={{issue.issueDetailId}} ></td>
-
-				<td>{{issue.issueType.issueType}}</td>
-				<td>{{issue.issueCreationDate}}</td>
-				<td>{{issue.issuePriority.issuePriorityType}}</td>
-				<td>{{issue.issueSummary}}</td>
-				<td>{{issue.user.userName}}</td>
-				<td>{{issue.issueStatus.issueStatusType}}</td>
-				<td>{{issue.project.projectName}}</td>
-				<td>{{issue.issueAssignedStatus.issueAssignmentStatus}}</td>
-				<td><input type="button" value="Feed" class="btn btn-primary"></td>
-				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
-			</tr> -->
-
-			<tbody>
-
 			</tbody>
 		</table>
 		

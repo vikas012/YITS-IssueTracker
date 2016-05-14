@@ -30,7 +30,7 @@ public interface MemberService {
 	public List<Member> showMembers();
 	public List<MemberForm> searchMembers(String search);
 	public List<Member> deleteMember(int memberId);
-	public List<Member> blockUnblockMember(MemberForm memberForm);
+	public void blockUnblockMember(MemberForm memberForm);
 	public List<IssueForm> showAssignedIssue();
 	public List<IssueForm> searchAssignedIssue(String searchText);
 	

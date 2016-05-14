@@ -310,13 +310,13 @@ public class MemberServiceImpl implements MemberService {
 	 *blockUnblockMember method is used to block or unblock the member
 	 * 
 	 */
-	public List<Member> blockUnblockMember(MemberForm memberForm) {
+	public void blockUnblockMember(MemberForm memberForm) {
 
 		Member member=new Member();
 		member.setMemberId(memberForm.getMemberId());
 		
-		List<Member> members=memberDao.blockUnblockMember(member);
-		return members;
+		memberDao.blockUnblockMember(member);
+		
 	}
 	
 	/**
