@@ -8,10 +8,10 @@
 		float: center;
 	}
 	
-	.input-group{
+	.search-box{
 		width: 300px;
 		float: center;
-		margin-left: 350px;
+		margin-left: 250px;
 	}
 	
 	#heading{
@@ -29,14 +29,16 @@
 </head>
 <body>
 
+<center><h1>Search Issue</h1></center>
 
 <form>
 	
-
+	<br>
+	<br>
 	
-	<div class="input-group">
-		
-		<select>
+	<div class="search-box">
+		<label>Select Issue Type: </label>
+		<select ng-model="mc.selectIssueType" ng-change="mc.selectType()">
 			<option></option>
 			<option ng-repeat="issueType in defaultIssueTypes" value="{{issueType}}">{{issueType}}</option>
 		</select>
@@ -51,7 +53,7 @@
 		<br>
 		
 		
-		<table class="table table-striped table-bordered table-hover" id="searchIssueTable">
+		<table datatable="ng" class="table table-striped table-bordered table-hover" id="searchIssueTable">
 			<thead class="thead-inverse">
 				<tr  id="heading">
 					<th>Select</th>
@@ -62,11 +64,11 @@
 					<th>Issue Status</th>
 					<th>Issue Priority</th>
 					<th>Issue Summary</th>
-					<th colspan="2">Action</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
-			<tr id="datatable" ng-repeat="issue in defaultIssueList">
+			<tr id="defaultTable" ng-repeat="issue in defaultIssueList">
 				<td><input id='radio' type='radio' value="{{issue.id}}"></td>
 				<td>{{issue.createdDateTime}}</td>
 				<td>{{issue.dueDate}}</td>

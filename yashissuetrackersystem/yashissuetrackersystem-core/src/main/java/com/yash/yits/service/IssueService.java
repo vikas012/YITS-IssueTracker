@@ -27,5 +27,7 @@ public interface IssueService {
 	public void createIssue(IssueForm issueForm,Long createdBy);
 
 	public List<String> getDefaultIssueTypes();
+
+	public List<IssueForm> searchIssueByType(String type);
 	
 }

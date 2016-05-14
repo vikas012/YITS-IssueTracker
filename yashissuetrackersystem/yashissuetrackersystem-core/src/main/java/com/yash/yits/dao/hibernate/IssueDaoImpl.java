@@ -228,4 +228,34 @@ public class IssueDaoImpl implements IssueDao {
 		return issueTypes;
 	}
 
+
+	public List<Issue> searchIssueByType(String type) {
+		
+		Session session=sessionFactory.getCurrentSession();
+		
+		Query query=session.createQuery("from ApplicationIssueType where type LIKE '"+type+"'");
+		
+		ApplicationIssueType applicationIssueType=(ApplicationIssueType)query.uniqueResult();
+		
+		Criteria criteria=session.createCriteria(Issue.class)
+				.setProjection(Projections.projectionList()
+				.add(Projections.property("id"),"id")
+				.add(Projections.property("closeDate"),"closeDate")
+				.add(Projections.property("createdDateTime"),"createdDateTime")
+				.add(Projections.property("dueDate"),"dueDate")
+				.add(Projections.property("project"),"project")
+				.add(Projections.property("applicationIssuePriority"),"applicationIssuePriority")
+				.add(Projections.property("applicationIssueStatus"),"applicationIssueStatus")
+				.add( Projections.property("summary"), "summary")
+				.add(Projections.property("applicationIssueType"),"applicationIssueType"))
+				.add(Restrictions.eq("applicationIssueType", applicationIssueType))
+				.setResultTransformer(Transformers.aliasToBean(Issue.class));
+				List<Issue> issues=criteria.list();
+				
+				
+				
+		
+		return issues;
+	}
+
 }

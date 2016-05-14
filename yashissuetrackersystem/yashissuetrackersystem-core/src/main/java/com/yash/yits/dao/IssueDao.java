@@ -33,6 +33,8 @@ public interface IssueDao {
 
 	public Map<String, Object> getAllSelectFields(Project project, MemberForm member);
 
+	public List<Issue> searchIssueByType(String type);
+
 
 
 }

@@ -178,9 +178,11 @@ angular
 							}).success(function(data) {
 
 								$scope.defaultIssueList = data;
-
+								
+								 
 							})
-
+							
+							
 							$scope.defaultIssueTypes = [];
 							var issueType = $http({
 
@@ -191,6 +193,27 @@ angular
 								$scope.defaultIssueTypes = data;
 
 							})
+							
+							this.selectType = function(){
+								
+								if(this.selectIssueType==""){
+								}
+								else{
+									var type=this.selectIssueType;
+									managerService
+										.searchByIssueType(type)
+										.then(
+												function(data){
+													$scope.defaultIssueList = data;
+												},
+												function(errResponse) {
+													console
+															.error('Error while searching issues');
+												})
+
+								}
+							}
+							
 							$scope.getSearchMember = function() {
 								alert("Please Enter Text controller!");
 								alert($scope.searchText);
