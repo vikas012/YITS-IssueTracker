@@ -78,18 +78,6 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  					);
 		  			},
 
-		  			 getIssues:function(){
-		  				  alert("in default")
-		  				  var issues=$http({
-		  				  method:'GET',
-		  				      url:'../defaultIssues'
-		  				  }).success(function(data){
-		  				  alert(data);
-		  				  return data;
-		  				  })
-		  				  },
-		  	
-		  				  
 		  			memberActivate:function(memberId){
 		  					
 		  					var member={

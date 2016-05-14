@@ -1,18 +1,22 @@
 package com.yash.yits.controller;
 
-import java.util.HashMap;
+
 import java.util.List;
+
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.MediaType;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -23,9 +27,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
+import com.yash.yits.domain.Issue;
+
+
+
 import com.yash.yits.form.ApplicationForm;
+
 import com.yash.yits.form.ApplicationIssuePriorityForm;
 import com.yash.yits.form.ApplicationIssueTypeForm;
+
+
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 
@@ -35,9 +47,9 @@ import com.yash.yits.domain.Application;
 import com.yash.yits.domain.ApplicationTeamMember;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
+
 import com.google.gson.Gson;
 import com.yash.yits.form.ProjectForm;
-import com.yash.yits.domain.Issue;
 import com.yash.yits.service.IssueService;
 
 /**
@@ -47,10 +59,12 @@ import com.yash.yits.service.IssueService;
 
 @Controller
 public class IssueController {
+
 	
 
 	@Autowired
 	private IssueService issueService;
+
 
 	
 	@RequestMapping(value="/showCreateIssueForm")
@@ -60,6 +74,24 @@ public class IssueController {
 		return "redirect:/static/UserCreateIssueForm.html";
 	}
 	
+
+	@RequestMapping(value="/showEditIssueForm")
+	public String showEditForm()
+	{
+		return "redirect:/static/EditIssue.html";
+	}
+	
+	@RequestMapping(value="/defaultIssuesList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<IssueForm> showIssuesList(HttpServletRequest httpServletRequest) throws ClassNotFoundException{
+		System.out.println("In controller");
+		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
+		System.out.println(memberId);
+		List<IssueForm> issuesList = issueService.showIssuesList(memberId);
+		
+		return issuesList;
+	}
+
 	
 
 	
@@ -241,5 +273,6 @@ public class IssueController {
 	
 	
 	
+
 
 }

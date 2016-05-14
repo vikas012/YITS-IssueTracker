@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+
 
 
 /**
@@ -106,7 +109,7 @@ public class ApplicationTeamMember implements Serializable {
 	private List<ApplicationSeverity> applicationSeverities2;*/
 
 	//bi-directional many-to-one association to Member
-	@ManyToOne
+	@ManyToOne (cascade = CascadeType.ALL)
 	private Member member;
 
 	//bi-directional many-to-one association to Application
@@ -210,7 +213,6 @@ public class ApplicationTeamMember implements Serializable {
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
 	}
-
 
 
 	/*public List<Application> getApplications1() {
