@@ -1,16 +1,25 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
 import java.sql.Timestamp;
-import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * The persistent class for the member database table.
@@ -30,8 +39,8 @@ public class Member implements Serializable {
 	@Column(name="CREATED_BY")
 	private int createdBy;
 
-	@Column(name="CREATED_DATE_TIME")
-	private Timestamp createdDateTime;
+	@Column(name="CREATED_DATETIME")
+	private Date createdDateTime;
 
 	private String email;
 
@@ -41,19 +50,11 @@ public class Member implements Serializable {
 	private int lastModifiedBy;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	@Column(name="MEMBER_ID")
 	private Long memberId;
 	
-	public Long getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
-	}
-
 	@Column(name="MANAGER_ID")
 	private Long managerId;
 	
@@ -65,9 +66,6 @@ public class Member implements Serializable {
 
 	private String name;
 
-	//bi-directional many-to-one association to ApplicationTeamMember
-	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
-	private List<ApplicationTeamMember> applicationTeamMembers;
 
 	public Member() {
 	}
@@ -96,22 +94,20 @@ public class Member implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	
-
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
-
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Long getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Long memberId) {
+		this.memberId = memberId;
 	}
 
 	public int getIsActive() {
@@ -130,15 +126,21 @@ public class Member implements Serializable {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
-
-	
 
 	public String getName() {
 		return name;
@@ -148,14 +150,14 @@ public class Member implements Serializable {
 		this.name = name;
 	}
 
-	public List<ApplicationTeamMember> getApplicationTeamMembers() {
+/*	public List<ApplicationTeamMember> getApplicationTeamMembers() {
 		return applicationTeamMembers;
 	}
 
 	public void setApplicationTeamMembers(List<ApplicationTeamMember> applicationTeamMembers) {
 		this.applicationTeamMembers = applicationTeamMembers;
 	}
-
+*/
 	
 
 	@Override

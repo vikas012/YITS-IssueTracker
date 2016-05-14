@@ -1,9 +1,20 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -20,26 +31,26 @@ public class Application implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	private String name;
-
+	
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
 	private ApplicationTeamMember lastModifiedBy;
-
+	
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
 
-	//bi-directional many-to-one association to ApplicationEnvironment
+	/*//bi-directional many-to-one association to ApplicationEnvironment
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
 	private List<ApplicationEnvironment> applicationEnvironments;
 
@@ -69,7 +80,7 @@ public class Application implements Serializable {
 
 	//bi-directional many-to-one association to Project
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
-	private List<Project> projects;
+	private List<Project> projects;*/
 
 	public Application() {
 	}
@@ -82,55 +93,27 @@ public class Application implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
 	public void setCreatedDateTime(Timestamp createdDateTime) {
 		this.createdDateTime = createdDateTime;
 	}
-
-	public int getIsActive() {
-		return isActive;
+	
+	public Date getCreatedDateTime() {
+		return createdDateTime;
 	}
 
-	public void setIsActive(int isActive) {
-		this.isActive = isActive;
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public ApplicationTeamMember getLastModifiedBy() {
-		return lastModifiedBy;
-	}
-
-	public void setLastModifiedBy(ApplicationTeamMember lastModifiedBy) {
-		this.lastModifiedBy = lastModifiedBy;
-	}
-
-	public ApplicationTeamMember getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(ApplicationTeamMember createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public List<ApplicationEnvironment> getApplicationEnvironments() {
+	/*public List<ApplicationEnvironment> getApplicationEnvironments() {
 		return applicationEnvironments;
 	}
 
@@ -192,7 +175,50 @@ public class Application implements Serializable {
 
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
+	}*/
+
+	public int getIsActive() {
+		return isActive;
 	}
 
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
+	}
+
+	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public ApplicationTeamMember getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(ApplicationTeamMember lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public ApplicationTeamMember getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(ApplicationTeamMember createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	@Override
+	public String toString() {
+		return "Application [id=" + id + ", name=" + name + "]";
+	}
+	
+	
+	
 	
 }

@@ -3,6 +3,7 @@ package com.yash.yits.domain;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -22,12 +23,12 @@ public class IssueActivityLog implements Serializable {
 	private String action;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	//bi-directional many-to-one association to Issue
 	@ManyToOne
@@ -37,6 +38,14 @@ public class IssueActivityLog implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="LAST_MODIFIED_BY")
 	private ApplicationTeamMember lastModifiedBy;
+	
+	//bi-directional many-to-one association to ApplicationTeamMember
+	@ManyToOne
+	@JoinColumn(name="CREATED_BY")
+	private ApplicationTeamMember createdBy;
+
+	public IssueActivityLog() {
+	}
 
 	public int getId() {
 		return id;
@@ -54,28 +63,12 @@ public class IssueActivityLog implements Serializable {
 		this.action = action;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
-
 	public int getIsActive() {
 		return isActive;
 	}
 
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
-	}
-
-	public Timestamp getLastModifiedDateTime() {
-		return lastModifiedDateTime;
-	}
-
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
-		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public Issue getIssue() {
@@ -102,13 +95,23 @@ public class IssueActivityLog implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	//bi-directional many-to-one association to ApplicationTeamMember
-	@ManyToOne
-	@JoinColumn(name="CREATED_BY")
-	private ApplicationTeamMember createdBy;
-
-	public IssueActivityLog() {
+	public Date getCreatedDateTime() {
+		return createdDateTime;
 	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
+		return lastModifiedDateTime;
+	}
+
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
+	}
+
+
 	
 	
 }

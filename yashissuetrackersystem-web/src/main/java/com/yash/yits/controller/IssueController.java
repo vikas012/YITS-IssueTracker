@@ -1,17 +1,33 @@
 package com.yash.yits.controller;
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yash.yits.domain.Issue;
+
+
+import com.yash.yits.form.IssueForm;
+import com.yash.yits.form.MemberForm;
+
+import com.google.gson.Gson;
+import com.yash.yits.form.ProjectForm;
 import com.yash.yits.service.IssueService;
 
 /**
@@ -21,8 +37,13 @@ import com.yash.yits.service.IssueService;
 
 @Controller
 public class IssueController {
+
+	
+
 	@Autowired
-	IssueService issueService;
+	private IssueService issueService;
+
+
 	
 	@RequestMapping(value="/showCreateIssueForm")
 	public String getCreateIssueForm()
@@ -31,6 +52,7 @@ public class IssueController {
 		return "redirect:/static/UserCreateIssueForm.html";
 	}
 	
+
 	@RequestMapping(value="/showEditIssueForm")
 	public String showEditForm()
 	{
@@ -39,11 +61,109 @@ public class IssueController {
 	
 	@RequestMapping(value="/defaultIssuesList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Issue> showIssuesList(HttpServletRequest httpServletRequest){
+	public List<IssueForm> showIssuesList(HttpServletRequest httpServletRequest) throws ClassNotFoundException{
 		System.out.println("In controller");
 		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
 		System.out.println(memberId);
-		List<Issue> issuesList = issueService.showIssuesList(memberId);
+		List<IssueForm> issuesList = issueService.showIssuesList(memberId);
+		
 		return issuesList;
 	}
+
+	
+
+	
+	
+
+	@RequestMapping(value="/issues",method=RequestMethod.GET)
+	public String showIssuePage(){
+		System.out.println("issuePage");
+		return"redirect:/static/ManagerSearchIssue.html";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/defaultIssues",method=RequestMethod.GET)
+	public List<IssueForm> defaultIssues(){
+		List<IssueForm> issues=issueService.getDefaultIssues();
+
+		return issues;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getProjects",produces=MediaType.APPLICATION_JSON_VALUE)
+	public Map<String,Object> getProjects()
+	{
+		System.out.println("in controller for show projects");
+		List<ProjectForm> projectForms=issueService.getProjectNames();
+		System.out.println(projectForms);
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("projects", projectForms);
+		map.put("myValue", "Hie there");
+		return map;
+
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/getAllSelectFields/{projectId}",produces=MediaType.APPLICATION_JSON_VALUE)
+	public String getAllSelectFields(@PathVariable("projectId") int projectId,HttpServletRequest httpServletRequest )
+	{
+		System.out.println("project Id>>>>"+projectId);
+		MemberForm member = new MemberForm();
+		ProjectForm projectForm = new ProjectForm();
+		projectForm.setId(projectId);
+		member.setMemberId((Long)httpServletRequest.getSession().getAttribute("memberId"));
+		System.out.println("Member ID>>>> "+member.getMemberId());
+		Map<String,Object> map1 = new HashMap<String, Object>();
+		map1 = issueService.getAllSelectFields(projectForm,member);
+		System.out.println("Map value  "+map1.get("issueType"));
+		map1.put("myValue1", "Hello there");
+		Gson gson= new Gson();
+		return gson.toJson(map1);
+
+	}
+
+	@RequestMapping(value="/getAssignIssueForm")
+	public String getAssignIssueForm()
+	{
+		return "redirect:/static/ManagerAssignIssue.html";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/issue/assign")
+	public List<Issue> getUnassignedIssues(){
+		System.out.println("unassigned controller");
+		List unassignedIssueList=issueService.getUnassignedIssues();
+		return unassignedIssueList;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/createIssue",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.POST)
+	public String createIssue(@RequestBody IssueForm issueForm,HttpServletRequest httpServletRequest){
+		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
+		
+		
+		System.out.println(createdBy);
+		//issueForm.setCreatedBy(createdBy);
+		System.out.println(issueForm);
+		System.out.println(issueForm.getProject());
+		System.out.println(issueForm.getApplicationIssuePriority());
+		System.out.println(issueForm.getComponent());
+		System.out.println(issueForm.getDescription());
+		System.out.println(issueForm.getSummary());
+		System.out.println("in create issue");
+		
+		//System.out.println(issue);
+		//System.out.println(issue.getComponent());
+		issueService.createIssue(issueForm,createdBy);
+		System.out.println("in controller for show projects");
+		return null;
+
+	}
+
+	
+
+
 }

@@ -21,13 +21,13 @@ public class ApplicationRelease implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Column(name="CREATED_DATE_TIME")
-	private Timestamp createdDateTime;
+	@Column(name="CREATED_DATETIME")
+	private Date createdDateTime;
 
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="RELEASE_DATE")
@@ -49,9 +49,9 @@ public class ApplicationRelease implements Serializable {
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
 
-	//bi-directional many-to-one association to Issue
+	/*//bi-directional many-to-one association to Issue
 	@OneToMany(mappedBy="applicationRelease", fetch=FetchType.EAGER)
-	private List<Issue> issues;
+	private List<Issue> issues;*/
 
 	public ApplicationRelease() {
 	}
@@ -64,14 +64,6 @@ public class ApplicationRelease implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
-
 	public int getIsActive() {
 		return isActive;
 	}
@@ -80,11 +72,19 @@ public class ApplicationRelease implements Serializable {
 		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
@@ -128,12 +128,12 @@ public class ApplicationRelease implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public List<Issue> getIssues() {
+	/*public List<Issue> getIssues() {
 		return issues;
 	}
 
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
-	}
+	}*/
 
 }

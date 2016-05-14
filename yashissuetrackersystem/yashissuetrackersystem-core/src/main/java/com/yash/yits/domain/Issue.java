@@ -20,9 +20,6 @@ public class Issue implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Column(name="ASSIGNED_USER")
-	private int assignedUser;
-
 	@Column(name="AFFECTED_VERSION")
 	private String affectedVersion;
 
@@ -32,40 +29,40 @@ public class Issue implements Serializable {
 
 	private String component;
 
-	@Column(name="CREATED_DATE_TIME")
-	private Timestamp createdDateTime;
+	@Column(name="CREATED_DATETIME")
+	private Date createdDateTime;
 
 	private String description;
-	
-	private String taskProgressUpdate;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="DUE_DATE")
 	private Date dueDate;
 
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	@Column(name="ORIGINAL_ESTIMATE")
-	private int originalEstimate;
+	private String originalEstimate;
 
 	@Column(name="REMAINING_ESTIMATE")
-	private int remainingEstimate;
+	private String remainingEstimate;
+	
+	@Column(name="TASK_PROGRESS_UPDATE")
+	private String taskProgressUpdate;
 
 	private String summary;
 
-	//bi-directional many-to-one association to Attachment
+	/*//bi-directional many-to-one association to Attachment
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
 	private List<Attachment> attachments;
 
 	//bi-directional many-to-one association to Conversation
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
-	private List<Conversation> conversations;
+	private List<Conversation> conversations;*/
 
 	//bi-directional many-to-one association to ApplicationTeamMember
-	@ManyToOne
+	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn(name="OWNER")
 	private ApplicationTeamMember issueOwner;
 
@@ -113,10 +110,19 @@ public class Issue implements Serializable {
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
 
-	//bi-directional many-to-one association to IssueActivityLog
+/*	//bi-directional many-to-one association to IssueActivityLog
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
-	private List<IssueActivityLog> issueActivityLogs;
-
+	private List<IssueActivityLog> issueActivityLogs;*/
+	
+	//bi-directional many-to-one association to ApplicationTeamMember
+	@ManyToOne
+	@JoinColumn(name="ASSIGNED_USER")
+	private ApplicationTeamMember assignedUser;
+	
+/*	//bi-directional many-to-one association to IssuePauseReason
+	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
+	private List<IssuePauseReason> issuePauseReasons;*/
+	
 	public Issue() {
 	}
 
@@ -153,14 +159,6 @@ public class Issue implements Serializable {
 		this.component = component;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -185,27 +183,19 @@ public class Issue implements Serializable {
 		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
-		return lastModifiedDateTime;
-	}
-
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
-		this.lastModifiedDateTime = lastModifiedDateTime;
-	}
-
-	public int getOriginalEstimate() {
+	public String getOriginalEstimate() {
 		return originalEstimate;
 	}
 
-	public void setOriginalEstimate(int originalEstimate) {
+	public void setOriginalEstimate(String originalEstimate) {
 		this.originalEstimate = originalEstimate;
 	}
 
-	public int getRemainingEstimate() {
+	public String getRemainingEstimate() {
 		return remainingEstimate;
 	}
 
-	public void setRemainingEstimate(int remainingEstimate) {
+	public void setRemainingEstimate(String remainingEstimate) {
 		this.remainingEstimate = remainingEstimate;
 	}
 
@@ -217,7 +207,7 @@ public class Issue implements Serializable {
 		this.summary = summary;
 	}
 
-	public List<Attachment> getAttachments() {
+	/*public List<Attachment> getAttachments() {
 		return attachments;
 	}
 
@@ -231,15 +221,23 @@ public class Issue implements Serializable {
 
 	public void setConversations(List<Conversation> conversations) {
 		this.conversations = conversations;
-	}
+	}*/
 
-	public int getAssignedUser() {
+	public ApplicationTeamMember getAssignedUser() {
 		return assignedUser;
 	}
 
-	public void setAssignedUser(int assignedUser) {
+	public void setAssignedUser(ApplicationTeamMember assignedUser) {
 		this.assignedUser = assignedUser;
 	}
+
+	/*public List<IssuePauseReason> getIssuePauseReasons() {
+		return issuePauseReasons;
+	}
+
+	public void setIssuePauseReasons(List<IssuePauseReason> issuePauseReasons) {
+		this.issuePauseReasons = issuePauseReasons;
+	}*/
 
 	public String getTaskProgressUpdate() {
 		return taskProgressUpdate;
@@ -329,12 +327,20 @@ public class Issue implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public List<IssueActivityLog> getIssueActivityLogs() {
+	@Override
+	public String toString() {
+		return "Issue [dueDate=" + dueDate + ", summary=" + summary + ", applicationIssueType=" + applicationIssueType
+				+ "]";
+	}
+	
+	
+
+/*	public List<IssueActivityLog> getIssueActivityLogs() {
 		return issueActivityLogs;
 	}
 
 	public void setIssueActivityLogs(List<IssueActivityLog> issueActivityLogs) {
 		this.issueActivityLogs = issueActivityLogs;
-	}
+	}*/
 
 }

@@ -1,9 +1,21 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -21,18 +33,14 @@ public class ApplicationSeverity implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	private String name;
-
-	//bi-directional many-to-one association to ApplicationIssuePriority
-	@OneToMany(mappedBy="applicationSeverity", fetch=FetchType.EAGER)
-	private List<ApplicationIssuePriority> applicationIssuePriorities;
 
 	//bi-directional many-to-one association to ApplicationTeamMember
 	@ManyToOne
@@ -44,6 +52,10 @@ public class ApplicationSeverity implements Serializable {
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
 
+	/*//bi-directional many-to-one association to ApplicationIssuePriority
+		@OneToMany(mappedBy="applicationSeverity", fetch=FetchType.EAGER)
+		private List<ApplicationIssuePriority> applicationIssuePriorities;
+	*/
 	public ApplicationSeverity() {
 	}
 
@@ -55,28 +67,12 @@ public class ApplicationSeverity implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
-
 	public int getIsActive() {
 		return isActive;
 	}
 
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
-	}
-
-	public Timestamp getLastModifiedDateTime() {
-		return lastModifiedDateTime;
-	}
-
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
-		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
 	public String getName() {
@@ -87,13 +83,13 @@ public class ApplicationSeverity implements Serializable {
 		this.name = name;
 	}
 
-	public List<ApplicationIssuePriority> getApplicationIssuePriorities() {
+/*	public List<ApplicationIssuePriority> getApplicationIssuePriorities() {
 		return applicationIssuePriorities;
 	}
 
 	public void setApplicationIssuePriorities(List<ApplicationIssuePriority> applicationIssuePriorities) {
 		this.applicationIssuePriorities = applicationIssuePriorities;
-	}
+	}*/
 
 	public ApplicationTeamMember getLastModifiedBy() {
 		return lastModifiedBy;

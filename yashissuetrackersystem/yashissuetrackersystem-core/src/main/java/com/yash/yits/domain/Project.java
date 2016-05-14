@@ -1,10 +1,24 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -21,7 +35,7 @@ public class Project implements Serializable {
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="END_DATE")
@@ -30,7 +44,7 @@ public class Project implements Serializable {
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	private String name;
 
@@ -38,10 +52,10 @@ public class Project implements Serializable {
 	@Column(name="START_DATE")
 	private Date startDate;
 
-	//bi-directional many-to-one association to Issue
+/*	//bi-directional many-to-one association to Issue
 	@OneToMany(mappedBy="project", fetch=FetchType.EAGER)
 	private List<Issue> issues;
-
+*/
 	//bi-directional many-to-one association to Application
 	@ManyToOne
 	private Application application;
@@ -79,9 +93,9 @@ public class Project implements Serializable {
 		)
 	private List<ApplicationTeamMember> applicationTeamMembers;
 
-	//bi-directional many-to-one association to ProjectRelease
+/*	//bi-directional many-to-one association to ProjectRelease
 	@OneToMany(mappedBy="project", fetch=FetchType.EAGER)
-	private List<ProjectRelease> projectReleases;
+	private List<ProjectRelease> projectReleases;*/
 
 	public Project() {
 	}
@@ -94,13 +108,6 @@ public class Project implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
 
 	public Date getEndDate() {
 		return endDate;
@@ -117,12 +124,20 @@ public class Project implements Serializable {
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
 	}
+	
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
 
-	public Timestamp getLastModifiedDateTime() {
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
@@ -142,13 +157,13 @@ public class Project implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public List<Issue> getIssues() {
+/*	public List<Issue> getIssues() {
 		return issues;
 	}
 
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
-	}
+	}*/
 
 	public Application getApplication() {
 		return application;
@@ -198,12 +213,20 @@ public class Project implements Serializable {
 		this.applicationTeamMembers = applicationTeamMembers;
 	}
 
-	public List<ProjectRelease> getProjectReleases() {
+/*	public List<ProjectRelease> getProjectReleases() {
 		return projectReleases;
 	}
 
 	public void setProjectReleases(List<ProjectRelease> projectReleases) {
 		this.projectReleases = projectReleases;
+	}*/
+
+	@Override
+	public String toString() {
+		return "Project [id=" + id + ", name=" + name + "]";
 	}
+	
+	
+	
 
 }

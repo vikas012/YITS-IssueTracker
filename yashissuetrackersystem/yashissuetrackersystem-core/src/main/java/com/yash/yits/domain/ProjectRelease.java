@@ -21,23 +21,23 @@ public class ProjectRelease implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Column(name="CREATED_DATE_TIME")
-	private Timestamp createdDateTime;
+	@Column(name="CREATED_DATETIME")
+	private Date createdDateTime;
 
 	private int isActive;
 
 	@Column(name="LAST_MODIFIED_DATETIME")
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="RELEASE_DATE")
 	private Date releaseDate;
 
 	private String version;
-
+/*
 	//bi-directional many-to-one association to Issue
 	@OneToMany(mappedBy="projectRelease", fetch=FetchType.EAGER)
-	private List<Issue> issues;
+	private List<Issue> issues;*/
 
 	//bi-directional many-to-one association to Project
 	@ManyToOne
@@ -64,13 +64,6 @@ public class ProjectRelease implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
 
 	public int getIsActive() {
 		return isActive;
@@ -80,11 +73,20 @@ public class ProjectRelease implements Serializable {
 		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
@@ -104,13 +106,13 @@ public class ProjectRelease implements Serializable {
 		this.version = version;
 	}
 
-	public List<Issue> getIssues() {
+/*	public List<Issue> getIssues() {
 		return issues;
 	}
 
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
-	}
+	}*/
 
 	public Project getProject() {
 		return project;

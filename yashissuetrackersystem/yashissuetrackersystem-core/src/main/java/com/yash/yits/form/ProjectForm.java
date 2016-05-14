@@ -27,13 +27,13 @@ public class ProjectForm{
 
 	private int id;
 
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private Date endDate;
 
 	private int isActive;
 
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	private String name;
 
@@ -57,13 +57,6 @@ public class ProjectForm{
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
 
 	public Date getEndDate() {
 		return endDate;
@@ -81,11 +74,21 @@ public class ProjectForm{
 		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+	
+
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 
@@ -144,5 +147,12 @@ public class ProjectForm{
 	public void setCreatedBy(ApplicationTeamMemberForm createdBy) {
 		this.createdBy = createdBy;
 	}
+
+	@Override
+	public String toString() {
+		return "ProjectForm [id=" + id + ", name=" + name + "]";
+	}
+	
+	
 
 }

@@ -1,16 +1,17 @@
 package com.yash.yits.form;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class ApplicationSeverityForm {
 	
 	private int id;
 
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private int isActive;
 
-	private Timestamp lastModifiedDateTime;
+	private Date lastModifiedDateTime;
 
 	private String name;
 
@@ -26,13 +27,7 @@ public class ApplicationSeverityForm {
 		this.id = id;
 	}
 
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
+	
 
 	public int getIsActive() {
 		return isActive;
@@ -42,11 +37,21 @@ public class ApplicationSeverityForm {
 		this.isActive = isActive;
 	}
 
-	public Timestamp getLastModifiedDateTime() {
+
+
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getLastModifiedDateTime() {
 		return lastModifiedDateTime;
 	}
 
-	public void setLastModifiedDateTime(Timestamp lastModifiedDateTime) {
+	public void setLastModifiedDateTime(Date lastModifiedDateTime) {
 		this.lastModifiedDateTime = lastModifiedDateTime;
 	}
 

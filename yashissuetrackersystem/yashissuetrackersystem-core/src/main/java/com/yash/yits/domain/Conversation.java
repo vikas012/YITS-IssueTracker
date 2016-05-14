@@ -1,9 +1,20 @@
 package com.yash.yits.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -14,13 +25,12 @@ import java.util.List;
 @NamedQuery(name="Conversation.findAll", query="SELECT c FROM Conversation c")
 public class Conversation implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Column(name="CREATED_DATETIME")
-	private Timestamp createdDateTime;
+	private Date createdDateTime;
 
 	private int isActive;
 
@@ -39,6 +49,11 @@ public class Conversation implements Serializable {
 	@JoinColumn(name="CREATED_BY")
 	private ApplicationTeamMember createdBy;
 
+	/*//bi-directional many-to-one association to Attachment
+	@OneToMany(mappedBy="conversation", fetch=FetchType.EAGER)
+	private List<Attachment> attachments;
+*/
+
 	public Conversation() {
 	}
 
@@ -48,14 +63,6 @@ public class Conversation implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Timestamp getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Timestamp createdDateTime) {
-		this.createdDateTime = createdDateTime;
 	}
 
 	public int getIsActive() {
@@ -74,13 +81,13 @@ public class Conversation implements Serializable {
 		this.message = message;
 	}
 
-	public List<Attachment> getAttachments() {
+/*	public List<Attachment> getAttachments() {
 		return attachments;
 	}
 
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
-	}
+	}*/
 
 	public Issue getIssue() {
 		return issue;
