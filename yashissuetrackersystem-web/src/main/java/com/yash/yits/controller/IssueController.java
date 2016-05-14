@@ -78,7 +78,7 @@ public class IssueController {
 	@RequestMapping(value="/showEditIssueForm")
 	public String showEditForm()
 	{
-		return "redirect:/static/EditIssue.html";
+		return "redirect:/static/UserEditIssue.html";
 	}
 	
 	@RequestMapping(value="/defaultIssuesList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
@@ -88,13 +88,15 @@ public class IssueController {
 		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
 		System.out.println(memberId);
 		List<IssueForm> issuesList = issueService.showIssuesList(memberId);
-		
 		return issuesList;
 	}
 
-	
+	@RequestMapping(value="/editIssueForm")
+	public String showEditIssueForm()
+	{
+		return "redirect:/static/ManagerEditIssue.html";
+	}
 
-	
 	
 
 	@RequestMapping(value="/issues",method=RequestMethod.GET)

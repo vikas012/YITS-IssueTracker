@@ -7,6 +7,17 @@ angular
 						'$http',
 						'managerService',
 						function($scope, $http, managerService, issueList) {
+							
+							$scope.issueList = [];
+
+							var issues = $http({
+								method : 'GET',
+								url : './defaultIssuesList'
+							}).success(function(data) {
+								alert("-------in controller-------" + data);
+								$scope.issueList = data;
+							})
+
 
 							$scope.members1 = [];
 

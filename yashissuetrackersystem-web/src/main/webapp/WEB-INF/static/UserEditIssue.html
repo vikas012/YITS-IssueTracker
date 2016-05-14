@@ -56,7 +56,7 @@
 			<td>{{issues.originalEstimate}}</td>
 			<td>{{issues.remainingEstimate}}</td>
 			<td>{{issues.applicationIssueStatus.status}}</td>
-			<td><input type="button" value="Edit" class="btn btn-primary"></td>
+			<td><input type="button" value="Edit" data-toggle="modal" data-target="#myModal" class="btn btn-primary" ng-click="editIssue()"></td>
 			<td><input type="button" value="Start" class="btn btn-primary"></td>
 			<td><input type="button" value="Stop" class="btn btn-primary"></td>
 			<td><input type="button" value="Pause" class="btn btn-primary"></td>
@@ -64,5 +64,30 @@
 		
 	</table>
  </form>
+ 
+ <div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form">
+        	<div class="form-group">
+    			<label for="taskprogressupdate">Task ProgressUpdate:</label>
+   				<input type="text" class="form-control" id="taskProgressUpdate">
+  			</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 </body>
