@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 import com.yash.yits.domain.Application;
-
+import com.yash.yits.domain.ApplicationIssuePriority;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Project;
 import com.yash.yits.form.IssueForm;
@@ -40,6 +40,8 @@ public interface IssueDao {
 
 
 	public Issue fetchIssueDetails(int fetchId);
+	public List<ApplicationIssuePriority> getDefaultIssuePriorities();
+	public List<Project> getDefaultProjectNames();
 
 
 

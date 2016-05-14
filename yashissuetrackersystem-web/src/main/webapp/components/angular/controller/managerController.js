@@ -352,4 +352,18 @@ angular
 								}
 							}
 							
+							
+							$scope.showadvsearch = function() {
+								$('#advsearch').show();
+								
+								/*$http.get("./getList").success(
+										function(formData) {
+											$scope.issuestatus = formData.getIssueStatusList;
+											$scope.issuetypes = formData.getIssueTypesList;
+											$scope.projectnames = formData.getProjectNamesList;
+											$scope.priorities = formData.getIssuePriorityList;
+										});*/
+							}
+							
+							
 						} ]);

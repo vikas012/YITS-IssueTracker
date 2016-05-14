@@ -172,5 +172,27 @@ public class IssueController {
 	}
 
 	
+	@ResponseBody
+	@RequestMapping(value="/getdropdowns",produces=MediaType.APPLICATION_JSON_VALUE)
+	public Map<String,Object> getDropDownListForAdvSearch()
+	{
+		System.out.println("in controller for show projects");
+		List<ProjectForm> projectForms=issueService.getProjectNames();
+		System.out.println(projectForms);
+		
+		
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		List<ApplicationForm> applicationForms = issueService.getApplicationNames();
+		map.put("application",applicationForms);
+		map.put("projects", projectForms);
+		map.put("myValue", "Hie there");
+		
+		//System.out.println("Applications >>"+map.get("application"));
+		return map;
+
+	}
+	
+	
 
 }

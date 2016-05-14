@@ -300,6 +300,7 @@ public class IssueDaoImpl implements IssueDao {
 		Session session=sessionFactory.getCurrentSession();
 		Criteria criteria=session.createCriteria(ApplicationIssueType.class)
 				.setProjection(Projections.projectionList()
+						 .add(Projections.property("id"), "id")
 						.add(Projections.property("type"),"type"))
 				.setResultTransformer(Transformers.aliasToBean(ApplicationIssueType.class));
 		List<ApplicationIssueType> issueTypes=criteria.list();
@@ -308,6 +309,40 @@ public class IssueDaoImpl implements IssueDao {
 	}
 
 
+
+	public List<ApplicationIssuePriority> getDefaultIssuePriorities() {
+		
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(ApplicationIssuePriority.class)
+				.setProjection(Projections.projectionList()
+						 .add(Projections.property("id"), "id")
+						.add(Projections.property("type"),"type"))
+				.setResultTransformer(Transformers.aliasToBean(ApplicationIssuePriority.class));
+		List<ApplicationIssuePriority> issuePriorities=criteria.list();
+		
+		return issuePriorities;
+	}
+
+	public List<Project> getDefaultProjectNames() {
+		
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(Project.class)
+				.setProjection(Projections.projectionList()
+						 .add(Projections.property("id"), "id")
+						.add(Projections.property("name"),"name"))
+				.setResultTransformer(Transformers.aliasToBean(Project.class));
+		List<Project> projects=criteria.list();
+		
+		return projects;
+	}
+
+	
+	
+	
+	
+	
+	
+	
 	public Issue fetchIssueDetails(int fetchId) {
 		System.out.println("prajvi dao");
 		Session session=sessionFactory.getCurrentSession();
@@ -315,5 +350,8 @@ public class IssueDaoImpl implements IssueDao {
 		Issue issue=(Issue)query.uniqueResult();
 		return null;
 	}
+	
+
+	
 
 }

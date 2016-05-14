@@ -260,6 +260,8 @@ public class IssueServiceImpl implements IssueService{
 		System.out.println("in service application"+applicationForms);
 		return applicationForms;
 	}
+	
+	
 	public List<String> getDefaultIssueTypes() {
 		
 		List<ApplicationIssueType> issueTypes=issueDao.getDefaultIssueTypes();
@@ -274,6 +276,25 @@ public class IssueServiceImpl implements IssueService{
 		
 		return issueTypesList;
 	}
+	
+	public List<ApplicationIssuePriorityForm> getDefaultIssuePriorities() {
+		
+		List<ApplicationIssuePriority> issuePriorities=issueDao.getDefaultIssuePriorities();
+		List<ApplicationIssuePriorityForm> applicationIssuePriorityForms=new ArrayList<ApplicationIssuePriorityForm>();
+		for (ApplicationIssuePriority applicationIssuePriority : issuePriorities) {
+			ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setId(applicationIssuePriority.getId());
+			applicationIssuePriorityForm.setType(applicationIssuePriority.getType());
+		}
+	
+		return applicationIssuePriorityForms;
+	}
+	
+	
+
+	
+	
+	
 
 
 	public IssueForm fetchIssueDetails(int fetchId) {
