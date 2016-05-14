@@ -50,6 +50,20 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	      	
 	  
 	      	
-	      	}
+	      	},
+	      	
+	      	searchByIssueType:function(type){
+	  			
+	  			return $http.get('../searchIssue/'+type)
+	  				.then(
+	  						function(response){
+	  							return response.data;
+	  						},
+	  						function(errResponse){
+									console.error('Error while fetching users');
+									return $q.reject(errResponse);
+								}
+	  				)
+	  		}
 	  }
 }]);

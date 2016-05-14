@@ -134,7 +134,46 @@ angular.module('issueTrackingSystem.userModule').controller('userController',['$
 				});
 	}
 	
+	$scope.defaultIssueList = [];
+
+	var issueList = $http({
+		method : 'GET',
+		url : '../defaultIssues'
+	}).success(function(data) {
+
+		$scope.defaultIssueList = data;
+
+	})
+
+	$scope.defaultIssueTypes = [];
+	var issueType = $http({
+
+		method : 'GET',
+		url : '../defaultIssueTypes'
+	}).success(function(data) {
+
+		$scope.defaultIssueTypes = data;
+
+	})
 	
+	this.selectType = function() {
+
+								if (this.selectIssueType == "") {
+								} else {
+									var type = this.selectIssueType;
+									managerService
+											.searchByIssueType(type)
+											.then(
+													function(data) {
+														$scope.defaultIssueList = data;
+													},
+													function(errResponse) {
+														console
+																.error('Error while searching issues');
+													})
+
+								}
+							}
 	
 	
 	
