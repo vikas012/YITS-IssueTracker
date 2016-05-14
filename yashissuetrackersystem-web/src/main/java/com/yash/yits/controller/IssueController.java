@@ -88,14 +88,7 @@ public class IssueController {
 		return issueTypes;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/searchIssue/{type}",method=RequestMethod.GET)
-	public List<IssueForm> searchIssueByType(@PathVariable("type") int type){
-		
-		List<IssueForm> issues=issueService.searchIssueByType(type);
-		
-		return issues;
-	}
+	
 	
 	
 	@ResponseBody

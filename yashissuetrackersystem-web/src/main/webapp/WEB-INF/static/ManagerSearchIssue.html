@@ -39,13 +39,7 @@
 	<br>
 	
 	<div class="search-box">
-		<div id="issuetypesearch">
-		<label>Select Issue Type: </label>
-		<select ng-model="mc.selectIssueType" ng-change="mc.selectType()">
-			<option></option>
-			<option ng-repeat="issueType in defaultIssueTypes" value="{{issueType.id}}">{{issueType.type}}</option>
-		</select>
-		</div>
+	
 	<div class="advance-search-box">
 		<button  ng-click="showadvsearch()" class="btn btn-info"><span class="glyphicon glyphicon-search"></span>Advance Search</button>
 	</div>
