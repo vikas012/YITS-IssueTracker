@@ -313,47 +313,6 @@ public class IssueServiceImpl implements IssueService{
 	
 	
 
-	
-	
-
-	public List<IssueForm> searchIssueByType(int type) {
-		
-		List<Issue> issues=issueDao.searchIssueByType(type);
-		
-		List<IssueForm> issueForms = new ArrayList<IssueForm>();
-		for (Issue issue : issues) {
-
-
-			
-			IssueForm issueForm = new IssueForm();
-			
-			issueForm.setId(issue.getId());
-			issueForm.setCloseDate(issue.getCloseDate());
-			issueForm.setCreatedDateTime(issue.getCreatedDateTime());
-			issueForm.setDueDate(issue.getDueDate());
-			issueForm.setSummary(issue.getSummary());
-
-			ProjectForm projectForm=new ProjectForm();
-			projectForm.setName(issue.getProject().getName());
-			issueForm.setProject(projectForm);
-			
-			ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
-			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
-			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
-			
-			ApplicationIssueStatusForm applicationIssueStatusForm=new ApplicationIssueStatusForm();
-			applicationIssueStatusForm.setStatus(issue.getApplicationIssueStatus().getStatus());
-			issueForm.setApplicationIssueStatus(applicationIssueStatusForm);
-
-			ApplicationIssueTypeForm applicationIssueTypeForm=new ApplicationIssueTypeForm();
-			applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
-			issueForm.setApplicationIssueType(applicationIssueTypeForm);
-			
-			issueForms.add(issueForm);
-		}
-		
-		return issueForms;
-	}
 
 	public IssueForm fetchIssueDetails(int fetchId) {
 		System.out.println("prajvi service");

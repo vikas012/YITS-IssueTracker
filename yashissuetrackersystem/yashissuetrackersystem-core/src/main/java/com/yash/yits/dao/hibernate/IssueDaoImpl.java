@@ -479,11 +479,6 @@ public class IssueDaoImpl implements IssueDao {
 	}
 
 
-	public List<Issue> searchIssueByType(String type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 
 

@@ -111,15 +111,7 @@ public class IssueController {
 		return issues;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/defaultIssueTypes",method=RequestMethod.GET)
-	public List<ApplicationIssueTypeForm> defaultIssueTypes(){
-	
-		List<ApplicationIssueTypeForm> issueTypes=issueService.getDefaultIssueTypes(0);
-		
-		return issueTypes;
-	}
-	
+
 	
 	
 	

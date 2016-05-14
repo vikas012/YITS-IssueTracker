@@ -41,7 +41,6 @@ public interface IssueService {
 
 	public List<ApplicationIssueTypeForm> getDefaultIssueTypes(int applicationId);
 
-	public List<IssueForm> searchIssueByType(int type);
 
 	public IssueForm fetchIssueDetails(int fetchId);
 	
