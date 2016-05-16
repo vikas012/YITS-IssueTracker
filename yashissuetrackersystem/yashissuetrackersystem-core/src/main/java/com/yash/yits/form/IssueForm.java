@@ -1,6 +1,7 @@
 package com.yash.yits.form;
 
 import java.util.Date;
+import java.util.List;
 
 
 public class IssueForm {
@@ -52,6 +53,16 @@ public class IssueForm {
 	private ApplicationIssueStatusForm applicationIssueStatus;
 
 	private ApplicationTeamMemberForm createdBy;
+	
+	private List<AttachmentForm> attachmentForms;
+
+	public List<AttachmentForm> getAttachmentForms() {
+		return attachmentForms;
+	}
+
+	public void setAttachmentForms(List<AttachmentForm> attachmentForms) {
+		this.attachmentForms = attachmentForms;
+	}
 
 	public int getId() {
 		return id;

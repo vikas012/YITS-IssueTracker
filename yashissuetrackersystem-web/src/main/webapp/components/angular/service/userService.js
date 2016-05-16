@@ -48,9 +48,30 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 		                );
 
 		      	},	 
-
+		      	
+		      	fetchIssueDetailsConv:function(id){
+					
+					alert(id);
+//					var issueId={
+//							
+//						"issueId":id,	
+//							
+//					};
+					return $http.post('../fetchIssueDetailsConv/'+id)
+				 	.then(
+				 				function(response){
+				 						return response.data;
+				 				}, 
+				 				function(errResponse){
+				 						console.error('Error while fetchIssueDetails member');
+				 						return $q.reject(errResponse);
+				 				}
+	         			);
+					
+				}, 
+		      	
 	      	EditIssue:function(){
-	      		return $http.get('./defaultIssuesList')
+	      		return $http.get('../defaultIssuesList')
 	      		.then(
 	                      function(response){
 	                          return response.data;
@@ -77,7 +98,54 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 									return $q.reject(errResponse);
 								}
 	  				)
-	  		}
+	  		},
+	  		
+	  		getList:function(){
+  				return $http.get('../getApplication')
+  				.then(
+  							function(response){
+  								return response.data;
+  							},
+  							function(errResponse){
+  								console.error('Error while fetching assigned issues');
+  								return $q.reject(errResponse);
+  							}
+
+  					);
+  				
+  			},	
+  			
+  			
+  			getAllList:function(applicationid){
+  				return $http.get('../getdropdowns/'+applicationid)
+  				.then(
+  							function(response){
+  								return response.data;
+  							},
+  							function(errResponse){
+  								console.error('Error while fetching assigned issues');
+  								return $q.reject(errResponse);
+  							}
+
+  					);
+  				
+  			},
+  			
+  			
+  			getadvSearchData:function(filterIssueType,filterProjectName,filterPriority){
+  				return $http.post('../getadvsearchdata/'+filterIssueType+'/'+filterProjectName+'/'+filterPriority)
+  				.then(
+  							function(response){
+  								return response.data;
+  							},
+  							function(errResponse){
+  								console.error('Error while fetching assigned issues');
+  								return $q.reject(errResponse);
+  							}
+
+  					);
+  				
+  			}	
 	  
 
 	      	

@@ -126,7 +126,7 @@ angular
 
 							var issues = $http({
 								method : 'GET',
-								url : './defaultIssuesList'
+								url : '../defaultIssuesList'
 							}).success(function(data) {
 								$scope.issueList = data;
 							})
@@ -834,12 +834,55 @@ angular
 								});*/
 							}
 
+
+							$scope.viewIssue = function(){
+								
+								var id = angular.element(document.querySelector("input[id=radio]:checked")).val();
+								
+								alert("our id "+id);
+								managerService.viewIssueDetails(id)
+								.then(
+									function(data){
+										alert(data);
+										
+										$scope.issueDetails=data.issueobject;
+										$scope.attachments=data.listOfAttachment;
+										
+									},
+									 function(errResponse){
+												 console.error('Error while showing Issue details');
+											 }
+									)	
+								
+								
+							};
+							
+							$scope.download = function(id){
+								
+								
+								alert(id);
+									managerService.download(id)
+									.then(
+										function(data){
+									
+											
+										},
+										 function(errResponse){
+													 console.error('Error while showing Issue details');
+												 }
+										)	
+									
+									
+								};
+							
+
 							$scope.exportData = function () {
 						        var blob = new Blob([document.getElementById('exportable').innerHTML], {
 						            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
 						        });
 						        saveAs(blob, "ListOfMembers.xls");
 						    };
+
 
 
 							
