@@ -245,7 +245,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 				  
 			  			},	
 			  			
-download:function(id){
+			  			download:function(id){
 			  				
 			  				return $http.get('../download/'+id)
 			  				.then(

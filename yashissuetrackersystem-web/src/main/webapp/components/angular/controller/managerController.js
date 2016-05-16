@@ -722,7 +722,7 @@ angular
 							}
 
 
-$scope.viewIssue = function(){
+							$scope.viewIssue = function(){
 								
 								var id = angular.element(document.querySelector("input[id=radio]:checked")).val();
 								
@@ -751,7 +751,7 @@ $scope.viewIssue = function(){
 									managerService.download(id)
 									.then(
 										function(data){
-											alert("szdf");
+									
 											
 										},
 										 function(errResponse){
