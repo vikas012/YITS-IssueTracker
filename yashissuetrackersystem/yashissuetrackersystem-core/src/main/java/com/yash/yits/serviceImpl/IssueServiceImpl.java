@@ -374,4 +374,9 @@ public class IssueServiceImpl implements IssueService{
 		 
 	}
 	
+	public List<Issue> getConversationList(long createdBy) {
+		List<Issue> chats=issueDao.getConversationList(createdBy);
+		return chats;
+	}
+	
 }

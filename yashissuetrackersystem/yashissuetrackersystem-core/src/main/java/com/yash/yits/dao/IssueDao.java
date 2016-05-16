@@ -51,5 +51,5 @@ public interface IssueDao {
 	public List<Project> getDefaultProjectNames(int applicationId);
 	public List<Issue> getFilteredIssue(int issuepriorityId1,int issuetypeId1,int projectnameId);
 	public String saveFile(Attachment file);
-
+	public List<Issue> getConversationList(long createdBy);
 }

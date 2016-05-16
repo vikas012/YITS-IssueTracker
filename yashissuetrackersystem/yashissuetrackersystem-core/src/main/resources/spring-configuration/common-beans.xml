@@ -27,7 +27,6 @@
 
 
 
-
 	<import resource="classpath*:spring-configuration/persistence-orm.xml" />
 
 	<!-- <context:property-placeholder location="classpath*:/config/*.properties" 

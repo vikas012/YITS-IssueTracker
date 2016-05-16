@@ -52,5 +52,8 @@ public interface IssueService {
 	public List<IssueForm> getFilteredIssue(int issuepriorityId1,int issuetypeId1,int projectnameId);
 
 	public String saveFile(Attachment file);
+	public List<Issue> getConversationList(long createdBy);
+
+
 	
 }

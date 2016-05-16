@@ -50,6 +50,6 @@
 	</bean>
 
 
-	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/MyLocalDB" />
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/issuetrackerDB" />
 
 </beans>

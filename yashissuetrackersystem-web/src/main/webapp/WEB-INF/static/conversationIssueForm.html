@@ -23,34 +23,36 @@
 </style>
 
 <div>
-	<form>
 
+		<br>
 
 		<div
-			style="border-radius: 10px; padding: 20px; width: 100%; height: 100px; margin-bottom: 25px;"
+			style="border-radius: 10px; padding: 20px; width: 100%; height: 100px; margin-bottom: 90px;"
 			ng-repeat="issues in conversationList">
-		
+			<br>
 			<div>
 				<strong>Issue Summary: </strong>{{issues.summary}}<br> 
 				<strong>Owner_ID:</strong>{{issues.issueOwner.member.memberId}}<br> 
 				<strong>TaskProgressUpdate:</strong>{{issues.taskProgressUpdate}}<br>
 				<strong>Issue Type:</strong>{{issues.applicationIssueType.type}}<br>
-				<strong>Issue Priority:</strong>{{issues.applicationIssuePriority.type}}<br>
-				<strong>Created By:</strong>{{issues.issueOwner.member.name}}
-				<strong>On: </strong>{{issues.createdDateTime}}
-				<button class="btn btn-primary btn-sm">Reassign</button><br>
+				<strong>Issue Priority:</strong>{{issues.applicationIssuePriority.type}}<br> 
+				<strong>Created By:</strong>{{issues.issueOwner.member.name}}<br>
+				<strong>Create Date:</strong>{{issues.createdDateTime}}<br>
+				
 				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#myModal">ReAssign</button>
+					data-target="#myModal">ReAssign</button><br><br>
+					
 			</div>
-		</div>
+			<br>
+		
 
 	
 	<div class="popup">
-		Modal
+		
 		<div class="modal fade" id="myModal" role="dialog">
 			<div class="modal-dialog">
 
-				Modal content
+				
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -146,11 +148,11 @@
 							<div class="form-group submitButton">
 								<div>
 									<center>
-										<button type="submit" class="btn btn-primary">Assign</button>
+										<button type="submit" class="btn btn-primary" ng-click="fetchIssueDetailsConv(issues.id)">Assign</button>
 									</center>
 								</div>
 							</div>
-						</form>
+						
 					</div>
 
 				</div>
@@ -159,4 +161,5 @@
 		</div>
 	</div>
 
+</div>
 </div>
