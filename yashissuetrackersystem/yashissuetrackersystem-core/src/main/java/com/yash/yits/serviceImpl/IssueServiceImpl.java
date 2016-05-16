@@ -773,6 +773,190 @@ public class IssueServiceImpl implements IssueService{
 		return memberForms;
 		}
 
+	/**
+	 * implementation of startTask() method to get issuedetailId received from controller by calling the IssueDaoImpl Object.
+	 * @param issuedetailId
+	 */
+	public List<IssueForm> startTask(int id,long memberId) {
+		//logger.info("inside startTask() of IssueProgressServiceImpl");
+		List<Issue> issuesList=issueDao.startTask(id,memberId);
+		List<IssueForm> issueFormList = new ArrayList<IssueForm>();
+		for (Issue issue : issuesList) {
+			IssueForm issueForm = new IssueForm();
+			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+			Date date=issue.getDueDate();
+			format2.format(date);
+			issueForm.setId(issue.getId());
+			issueForm.setSummary(issue.getSummary());
+			issueForm.setDueDate(format2.format(date));
+			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
 
+			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
+			issueForm.setApplicationIssueType(applicationIssueTypeForm);
+			
+			ApplicationIssuePriorityForm applicationIssuePriorityForm = new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+			
+			ApplicationTeamMemberForm applicationTeamMemberForm =new ApplicationTeamMemberForm();
+            MemberForm member=new MemberForm();
+            member.setName(issue.getIssueOwner().getMember().getName());
+            applicationTeamMemberForm.setMember(member);
+            issueForm.setIssueOwner(applicationTeamMemberForm);
+            
+            issueForm.setOriginalEstimate(issue.getOriginalEstimate());
+            issueForm.setRemainingEstimate(issue.getRemainingEstimate());
+            
+            ApplicationIssueStatusForm applicationIssueStatusForm = new ApplicationIssueStatusForm();
+            applicationIssueStatusForm.setStatus(issue.getApplicationIssueStatus().getStatus());
+            issueForm.setApplicationIssueStatus(applicationIssueStatusForm);
+            
+            issueFormList.add(issueForm);
+		}
+		
+	
+		return issueFormList;
+	}
+
+	/**
+	 * implementation of startTaskPending() method to get issuedetailId received from controller by calling the IssueDaoImpl Object.
+	 * @param issuedetailId
+	 */
+	public List<IssueForm> startTaskPending(int id,long memberId) {
+		//logger.info("inside startTaskPending() of IssueProgressServiceImpl");
+		List<Issue> issuesList=issueDao.startTaskPending(id,memberId);
+		List<IssueForm> issueFormList = new ArrayList<IssueForm>();
+		for (Issue issue : issuesList) {
+			IssueForm issueForm = new IssueForm();
+			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+			Date date=issue.getDueDate();
+			format2.format(date);
+			issueForm.setId(issue.getId());
+			issueForm.setSummary(issue.getSummary());
+			issueForm.setDueDate(format2.format(date));
+			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
+
+			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
+			issueForm.setApplicationIssueType(applicationIssueTypeForm);
+			
+			ApplicationIssuePriorityForm applicationIssuePriorityForm = new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+			
+			ApplicationTeamMemberForm applicationTeamMemberForm =new ApplicationTeamMemberForm();
+            MemberForm member=new MemberForm();
+            member.setName(issue.getIssueOwner().getMember().getName());
+            applicationTeamMemberForm.setMember(member);
+            issueForm.setIssueOwner(applicationTeamMemberForm);
+            
+            issueForm.setOriginalEstimate(issue.getOriginalEstimate());
+            issueForm.setRemainingEstimate(issue.getRemainingEstimate());
+            
+            ApplicationIssueStatusForm applicationIssueStatusForm = new ApplicationIssueStatusForm();
+            applicationIssueStatusForm.setStatus(issue.getApplicationIssueStatus().getStatus());
+            issueForm.setApplicationIssueStatus(applicationIssueStatusForm);
+            
+            issueFormList.add(issueForm);
+		}
+		
+	
+		return issueFormList;
+	}
+
+	/**
+	 * implementation of stopTask() method to get issuedetailId received from controller by calling the IssueDaoImpl Object.
+	 * @param issuedetailId
+	 */
+	public List<IssueForm> stopTask(int id,long memberId) {
+		//logger.info("inside stopTask() of IssueProgressServiceImpl");
+		List<Issue> issuesList=issueDao.stopTask(id,memberId);
+		List<IssueForm> issueFormList = new ArrayList<IssueForm>();
+		for (Issue issue : issuesList) {
+			IssueForm issueForm = new IssueForm();
+			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+			Date date=issue.getDueDate();
+			format2.format(date);
+			issueForm.setId(issue.getId());
+			issueForm.setSummary(issue.getSummary());
+			issueForm.setDueDate(format2.format(date));
+			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
+
+			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
+			issueForm.setApplicationIssueType(applicationIssueTypeForm);
+			
+			ApplicationIssuePriorityForm applicationIssuePriorityForm = new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+			
+			ApplicationTeamMemberForm applicationTeamMemberForm =new ApplicationTeamMemberForm();
+            MemberForm member=new MemberForm();
+            member.setName(issue.getIssueOwner().getMember().getName());
+            applicationTeamMemberForm.setMember(member);
+            issueForm.setIssueOwner(applicationTeamMemberForm);
+            
+            issueForm.setOriginalEstimate(issue.getOriginalEstimate());
+            issueForm.setRemainingEstimate(issue.getRemainingEstimate());
+            
+            ApplicationIssueStatusForm applicationIssueStatusForm = new ApplicationIssueStatusForm();
+            applicationIssueStatusForm.setStatus(issue.getApplicationIssueStatus().getStatus());
+            issueForm.setApplicationIssueStatus(applicationIssueStatusForm);
+            
+            issueFormList.add(issueForm);
+		}
+		
+	
+		return issueFormList;
+	}
+
+	/**
+	 * implementation of pauseTask() method to get issuedetailId and reason received from controller by calling the IssueDaoImpl Object.
+	 * @param issuedetailId
+	 * @param reason
+	 */
+	public List<IssueForm> pauseTask(int id,String reason,long memberId) {
+		//logger.info("inside pauseTask() of IssueProgressServiceImpl");
+		List<Issue> issuesList=issueDao.pauseTask(id,reason,memberId);
+		List<IssueForm> issueFormList = new ArrayList<IssueForm>();
+		for (Issue issue : issuesList) {
+			IssueForm issueForm = new IssueForm();
+			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+			Date date=issue.getDueDate();
+			format2.format(date);
+			issueForm.setId(issue.getId());
+			issueForm.setSummary(issue.getSummary());
+			issueForm.setDueDate(format2.format(date));
+			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
+
+			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
+			issueForm.setApplicationIssueType(applicationIssueTypeForm);
+			
+			ApplicationIssuePriorityForm applicationIssuePriorityForm = new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+			issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+			
+			ApplicationTeamMemberForm applicationTeamMemberForm =new ApplicationTeamMemberForm();
+            MemberForm member=new MemberForm();
+            member.setName(issue.getIssueOwner().getMember().getName());
+            applicationTeamMemberForm.setMember(member);
+            issueForm.setIssueOwner(applicationTeamMemberForm);
+            
+            issueForm.setOriginalEstimate(issue.getOriginalEstimate());
+            issueForm.setRemainingEstimate(issue.getRemainingEstimate());
+            
+            ApplicationIssueStatusForm applicationIssueStatusForm = new ApplicationIssueStatusForm();
+            applicationIssueStatusForm.setStatus(issue.getApplicationIssueStatus().getStatus());
+            issueForm.setApplicationIssueStatus(applicationIssueStatusForm);
+            
+            issueFormList.add(issueForm);
+		}
+		
+	
+		return issueFormList;
+	}
+	
 	
 }

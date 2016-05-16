@@ -17,7 +17,7 @@ import org.springframework.http.MediaType;
 import java.io.File;
 
 import java.text.ParseException;
-
+import java.text.SimpleDateFormat;
 import java.io.FileOutputStream;
 
 import java.io.IOException;
@@ -28,8 +28,8 @@ import java.io.OutputStream;
 
 
 import java.text.ParseException;
-
-
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -240,7 +240,7 @@ public class IssueController {
 		List<ApplicationForm> applicationForms = issueService.getApplicationNames();
 		map.put("application", applicationForms);
 		map.put("projects", projectForms);
-		map.put("myValue", "Hie there");
+		
 
 		// System.out.println("Applications >>"+map.get("application"));
 		return map;
@@ -482,6 +482,60 @@ public class IssueController {
 		fos.close();
 		return "index";
 
+	}
+	
+	/**
+	 * Method to handle requests coming from /issue/starttask url and providing updated list of issues to view.
+	 */
+	@RequestMapping(value="/starttask/{id}/{dueDate}")
+	@ResponseBody
+	public List<IssueForm> startTask(@PathVariable("id") int id,@PathVariable("dueDate") Date dueDate, HttpServletRequest httpServletRequest) throws ParseException {
+		//logger.info("inside startTask() of IssueController");
+		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
+/*		 this is current date*/		
+		Calendar calendar=Calendar.getInstance();
+		SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+		String currentddate = format2.format(calendar.getTime());			//current date
+		Date currentddateparsed = format2.parse(currentddate);		//current date after parsing
+	
+		if((dueDate.after(currentddateparsed) || dueDate.equals(currentddateparsed))){
+			List<IssueForm> issues = issueService.startTask(id,memberId);
+
+			return issues;
+		}
+		else{
+			List<IssueForm> issues = issueService.startTaskPending(id,memberId);
+
+			return issues;
+
+
+		}
+		
+	}
+	/**
+	 * Method to handle requests coming from /issue/stoptask url and providing updated list of issues to view.
+	 */
+	@RequestMapping(value="/stoptask/{id}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<IssueForm> stopTask(@PathVariable("id") int id, HttpServletRequest httpServletRequest) {
+		
+		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
+		List<IssueForm> issues = issueService.stopTask(id,memberId);
+		
+		return issues;
+	}
+	
+	/**
+	 * Method to handle requests coming from /issue/pausetask url and providing updated list of issues to view.
+	 */
+	@RequestMapping(value="/pausetask/{id}/{reason}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<IssueForm> pauseTask(@PathVariable("id") int id,@PathVariable("reason") String reason, HttpServletRequest httpServletRequest) {
+		
+		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
+		List<IssueForm> issues = issueService.pauseTask(id,reason,memberId);
+		
+		return issues;
 	}
 
 }

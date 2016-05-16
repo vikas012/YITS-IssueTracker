@@ -97,8 +97,8 @@ input[type="password"] {
 
 
 	<center>
-		<a href="./managerWelcome">Manager Dashboard</a>
-		<a href="./userWelcome">User Dashboard</a>
+ 		<a href="./managerWelcome">Manager Dashboard</a> 
+	<!-- 	<a href="./userWelcome">User Dashboard</a> -->
 	</center>
 	<div class="header header-color">
 		<h2 class="h2-tag">YITS</h2>

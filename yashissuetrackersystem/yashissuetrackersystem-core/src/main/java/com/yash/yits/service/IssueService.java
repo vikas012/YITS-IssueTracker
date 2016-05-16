@@ -75,5 +75,24 @@ public interface IssueService {
 
 	public List<MemberForm> getMemberListConv();
 
-	
+	/**
+	 * startTask received from controller by calling the IssueDaoImpl Object.
+	 * @param issuestatusId
+	 */
+	public List<IssueForm> startTask(int issuestatusId,long memberId);
+	/**
+	 * 
+	 * @param issuestatuslId
+	 */
+	public List<IssueForm> stopTask(int issuestatusId,long memberId);
+	/**
+	 * 
+	 * @param issuestatuslId
+	 */
+	public List<IssueForm> pauseTask(int issuestatusId,String reason,long memberId);
+	/**
+	 * 
+	 * @param issuestatusId
+	 */
+	public List<IssueForm> startTaskPending(int issuestatusId,long memberId);
 }

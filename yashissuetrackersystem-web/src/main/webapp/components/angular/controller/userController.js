@@ -193,7 +193,7 @@ angular
 										function(data) {
 											
 											$scope.defaultIssueSearchList = data;
-											$('#advsearch').hide();
+									
 
 
 												},
@@ -295,17 +295,17 @@ angular
 							
 
 								$scope.fetchIssueDetailsConv=function(id){
-									alert(id);
+								
 									userService.fetchIssueDetailsConv(id)
 									.then(
 											function(data){
-												alert(data);
+											
 												$scope.fetchedIssue = data;
 									
 												userService.getMemberListConv()
 												.then(
 														function(data){
-															alert(data);
+										
 															$scope.fetchedMember = data;
 														},	
 														 function(errResponse)

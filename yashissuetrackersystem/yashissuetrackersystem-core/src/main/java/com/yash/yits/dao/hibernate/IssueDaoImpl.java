@@ -1,41 +1,44 @@
 package com.yash.yits.dao.hibernate;
 
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
-
-import java.util.List;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
-
-import org.hibernate.criterion.Criterion;
-
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import com.yash.yits.dao.IssueDao;
-import com.yash.yits.domain.Issue;
-
-import com.yash.yits.domain.Project;
-
-import com.yash.yits.domain.ApplicationTeamMember;
-import com.yash.yits.domain.Attachment;
-import com.yash.yits.domain.Member;
-import com.yash.yits.form.MemberForm;
 import com.yash.yits.domain.Application;
 import com.yash.yits.domain.ApplicationEnvironment;
 import com.yash.yits.domain.ApplicationIssuePriority;
 import com.yash.yits.domain.ApplicationIssueStatus;
 import com.yash.yits.domain.ApplicationIssueType;
+import com.yash.yits.domain.ApplicationTeamMember;
+import com.yash.yits.domain.Attachment;
+import com.yash.yits.domain.Issue;
+import com.yash.yits.domain.IssuePauseReason;
+import com.yash.yits.domain.Member;
+import com.yash.yits.domain.Project;
+import com.yash.yits.form.MemberForm;
 
 @Repository
 public class IssueDaoImpl implements IssueDao {
@@ -676,5 +679,207 @@ Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 	 * 
 	 * } return id; }
 	 */
+	
+	/**
+	 * Method to execute on a fixed schedule, based on a Spring cron expression.
+	 * Run every 10 seconds when task is started by member.
+	 * automatically updates the remaining estimate of each task assigned.
+	 * this will be executed asynchronously.
+	 * This method enables task scheduling, which automatically updates IssueRemainingestimate and status of issue assigned.
+	 * Without it, nothing gets scheduled. 
+	 */
+	/*Run every 10 seconds  */ 
+	@Async // this will be executed asynchronously.
+	@Scheduled(cron="*/10 * * * * ?")
+	public void scheduleTask() throws ParseException{
+	
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		Query query = session.createQuery("from Issue");
+		List<Issue> issues = query.list();
+		
+
+		/* this is current date*/
+		//Date date=new Date(); 
+		Calendar calendar=Calendar.getInstance();
+		SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+		String currentddate = format2.format(calendar.getTime());			//current date
+		Date currentddateparsed = format2.parse(currentddate);		//current date after parsing
+		
+		
+		for(Issue issue:issues){
+			
+			Date issueDuedate=issue.getDueDate();
+			
+			
+		
+			long issueRemainingestimate=issueDuedate.getTime()-currentddateparsed.getTime();
+			
+			//long diffInHour = issueRemainingestimate / (60 * 60 * 1000);
+			long days = TimeUnit.MILLISECONDS.toDays(issueRemainingestimate);
+			
+			int issueRemainingestimateFinal=(int) days;
+			
+			issueRemainingestimateFinal=issueRemainingestimateFinal+1;
+			
+			
+			
+			int currentStatusId=issue.getApplicationIssueStatus().getId();
+			
+		
+			if(issueRemainingestimateFinal>=0 && currentStatusId==2){
+				//issue.setIssueRemainingestimate(issueRemainingestimateFinal);
+				String oldRemainingEstimate=issue.getRemainingEstimate();
+				SimpleDateFormat format4 = new SimpleDateFormat("HH:mm:ss"); 
+				Date date1 = format4.parse(oldRemainingEstimate);
+				Date date2 = format4.parse("00:00:10");
+				
+				long remainder = date1.getTime() - date2.getTime();
+				String remainder1=DurationFormatUtils.formatDuration(remainder, "HH:mm:ss");
+				
+				issue.setRemainingEstimate(remainder1);
+				
+				session.update(issue);
+				//sessionFactory.evict(Issue.class,issue.getid());
+				session.flush();
+				session.clear();
+
+				if(remainder1.equals("00:00:00")){
+					int statusId=issue.getApplicationIssueStatus().getId();
+					statusId=3;
+					ApplicationIssueStatus issueStatus=new ApplicationIssueStatus();
+					issueStatus.setId(statusId);
+					issue.setApplicationIssueStatus(issueStatus);
+					//session1.clear();
+					session.update(issue);
+
+					
+				}
+
+			}
+			
+			if(issueRemainingestimateFinal==0){
+				int statusId=issue.getApplicationIssueStatus().getId();
+				statusId=3;
+				ApplicationIssueStatus issueStatus=new ApplicationIssueStatus();
+				issueStatus.setId(statusId);
+				issue.setApplicationIssueStatus(issueStatus);
+				//session1.clear();
+				session.update(issue);
+
+				
+			}
+			}
+		transaction.commit();
+	}
+
+	/**
+	 * Method to update status of assigned issue when it is started.
+	 * It returns updated list of Issue on User console.
+	 * @param id
+	 */
+	public List<Issue> startTask(int id,long memberId) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query query = session.createQuery("from Issue where id=?");
+		query.setInteger(0, id).list();
+		Issue issue2=(Issue)query.uniqueResult();
+		int statusId=issue2.getApplicationIssueStatus().getId();
+		statusId=2;
+		ApplicationIssueStatus issueStatus=new ApplicationIssueStatus();
+		issueStatus.setId(statusId);
+		issue2.setApplicationIssueStatus(issueStatus);
+		session.clear();
+		session.update(issue2);
+
+		List<Issue> issues1=showIssuesList(memberId);
+		return issues1;
+
+	}
+
+	/**
+	 * Method to update status of assigned issue when it is started but not completed within given Duedate.
+	 * It returns updated list of Issue on User console. 
+	 * @param id
+	 */
+	public List<Issue> startTaskPending(int id,long memberId) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query query = session.createQuery("from Issue where id=?");
+		query.setInteger(0, id).list();
+		Issue issue2=(Issue)query.uniqueResult();
+		int statusId=issue2.getApplicationIssueStatus().getId();
+		statusId=3;
+		ApplicationIssueStatus issueStatus=new ApplicationIssueStatus();
+		issueStatus.setId(statusId);
+		issue2.setApplicationIssueStatus(issueStatus);
+		session.clear();
+		session.update(issue2);
+
+		List<Issue> issues1=showIssuesList(memberId);
+		
+		return issues1;
+
+	}
+
+	/**
+	 * Method to update status of assigned issue when it is completed and stopped.
+	 * It returns updated list of Issue on User console. 
+	 * @param id
+	 */
+	public List<Issue> stopTask(int id,long memberId) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query query = session.createQuery("from Issue where id=?");
+		query.setInteger(0, id).list();
+		Issue issue2=(Issue)query.uniqueResult();
+		int statusId=issue2.getApplicationIssueStatus().getId();
+		statusId=4;
+		ApplicationIssueStatus issueStatus=new ApplicationIssueStatus();
+		issueStatus.setId(statusId);
+		issue2.setApplicationIssueStatus(issueStatus);
+		session.clear();
+		session.update(issue2);
+
+		List<Issue> issues1=showIssuesList(memberId);
+		
+		return issues1;
+	}
+
+	/**
+	 * Method to change status of assigned issue when it is paused. In case of pause,
+	 * reason should be mentioned and updated.
+	 * It returns updated list of Issue on User console. 
+	 * @param id
+	 * @param reason
+	 */
+	public List<Issue> pauseTask(int id,String reason,long memberId) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query query = session.createQuery("from Issue where id=?");
+		query.setInteger(0, id).list();
+		Issue issue2=(Issue)query.uniqueResult();
+		int statusId=issue2.getApplicationIssueStatus().getId();
+		statusId=5;
+		ApplicationIssueStatus issueStatus=new ApplicationIssueStatus();
+		issueStatus.setId(statusId);
+		issue2.setApplicationIssueStatus(issueStatus);
+		session.clear();
+		session.update(issue2);
+
+		IssuePauseReason issuePauseReason=new IssuePauseReason();
+		issue2.setId(id);
+		issuePauseReason.setIssue(issue2);
+		issuePauseReason.setReason(reason);
+		session.save(issuePauseReason);
+		
+		List<Issue> issues1=showIssuesList(memberId);
+		
+		return issues1;
+	}
 
 }

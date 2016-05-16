@@ -63,4 +63,28 @@ public interface IssueDao {
 	public Issue fetchIssueDetailsConv(int id);
 
 	public List<Member> getMemberListConv();
+	
+	/**
+	 * 
+	 * @param id
+	 */
+	public List<Issue> startTask(int id,long memberId);
+
+	/**
+	 * 
+	 * @param id
+	 */
+	public List<Issue> stopTask(int id,long memberId);
+
+	/**
+	 * 
+	 * @param id
+	 */
+	public List<Issue> pauseTask(int id,String reason,long memberId);
+	
+	/**
+	 * 
+	 * @param id
+	 */
+	public List<Issue> startTaskPending(int id,long memberId);
 }
