@@ -19,6 +19,10 @@ userModule.config(function($routeProvider){
 				templateUrl:'showEditIssueForm',
 				controller:'userController as uc'
 			})
+			.when('/showConversation',{
+				templateUrl:'../showConversationForm',
+				controller:'userController as uc'
+			})
 			
 
 	});

@@ -48,7 +48,28 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 		                );
 
 		      	},	 
-
+		      	
+		      	fetchIssueDetailsConv:function(id){
+					
+					alert(id);
+//					var issueId={
+//							
+//						"issueId":id,	
+//							
+//					};
+					return $http.post('../fetchIssueDetailsConv/'+id)
+				 	.then(
+				 				function(response){
+				 						return response.data;
+				 				}, 
+				 				function(errResponse){
+				 						console.error('Error while fetchIssueDetails member');
+				 						return $q.reject(errResponse);
+				 				}
+	         			);
+					
+				}, 
+		      	
 	      	EditIssue:function(){
 	      		return $http.get('../defaultIssuesList')
 	      		.then(

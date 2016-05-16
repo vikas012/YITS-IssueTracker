@@ -54,12 +54,17 @@ public interface IssueService {
 
 	public String saveFile(Attachment file);
 
+	public List<Issue> getConversationList(long createdBy);
 
 
-	AttachmentForm getAttachment(int id);
 
 
 
-	Map<String, Object> showIssueDetails(int id);
+	public AttachmentForm getAttachment(int id);
+
+
+
+	public Map<String, Object> showIssueDetails(int id);
+
 	
 }

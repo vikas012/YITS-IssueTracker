@@ -374,6 +374,11 @@ public class IssueServiceImpl implements IssueService{
 		 
 	}
 
+	public List<Issue> getConversationList(long createdBy) {
+		List<Issue> chats=issueDao.getConversationList(createdBy);
+		return chats;
+	}
+
 
 	public AttachmentForm getAttachment(int id) {
 		Attachment attachment=issueDao.getAttachment(id);
@@ -390,7 +395,7 @@ public class IssueServiceImpl implements IssueService{
 
 
 	public Map<String, Object> showIssueDetails(int id) {
-		
+
 		Issue issue =issueDao.showIssueDetails(id);
 		
 		
@@ -456,6 +461,7 @@ public class IssueServiceImpl implements IssueService{
 		
 	
 		return issueDetails;
+
 	}
 	
 }

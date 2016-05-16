@@ -230,14 +230,12 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 										'Content-Type' : undefined
 									}
 								};
-								 $http(request).then(
+								 $http(request)
+								 .then(
 						 				function(response){
-						 					alert("Success");
-						 						return response.data;
+						 					alert("File uploaded successfully");
 						 				}, 
 						 				function(errResponse){
-						 						console.error('Error while retrieving assigned issues');
-						 						return $q.reject(errResponse);
 						 				}
 			         			);
 			  				

@@ -90,6 +90,20 @@ public class IssueController {
 		return "redirect:/static/UserEditIssue.html";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/fetchIssueDetailsConv/{id}",method=RequestMethod.POST)
+	public void fetchIssueDetailsConv(@PathVariable("id") int id){
+		
+		System.out.println("-------in conversation--------"+id);
+		//issueService.fetchIssueDetailsConv(int id);
+		
+		/*userService.fetchIssueDetailsConv(issueId);*/
+		
+		
+	}
+	
+	
+	
 	@RequestMapping(value="/defaultIssuesList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<IssueForm> showIssuesList(HttpServletRequest httpServletRequest) throws ClassNotFoundException{
@@ -106,7 +120,12 @@ public class IssueController {
 		return "redirect:/static/ManagerEditIssue.html";
 	}
 
-	
+	@RequestMapping(value="/showConversationForm")
+	public String showConversationForm()
+	{
+		System.out.println("---getConversationIssueForm----");
+		return "redirect:/static/conversationIssueForm.html";
+	}
 
 	@RequestMapping(value="/issues",method=RequestMethod.GET)
 	public String showIssuePage(){
@@ -128,9 +147,28 @@ public class IssueController {
 		return issues;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping(value="/conversationList",produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Issue> getConversationList(HttpServletRequest httpServletRequest){
+		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
+		System.out.println("in metjhod");
+		
+		System.out.println("--------"+createdBy);
+		List<Issue> chats=issueService.getConversationList(createdBy);
+		for (Issue issue : chats) {
+			System.out.println("-----------------"+issue.getApplicationIssueType().getType());
+			System.out.println("-----------------"+issue.getSummary());
+			System.out.println("-----memeber name"+issue.getIssueOwner().getMember().getName());
+			System.out.println("-----------created date time----"+issue.getCreatedDateTime());
+		}
+		
+		System.out.println("in return controller");
+		System.out.println(chats);
+		return chats;
+		
 
-	
-	
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="/getProjects",produces=MediaType.APPLICATION_JSON_VALUE)
