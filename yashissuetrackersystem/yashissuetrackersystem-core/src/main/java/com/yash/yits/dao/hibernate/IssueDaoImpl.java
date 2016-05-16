@@ -28,6 +28,7 @@ import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Project;
 
 import com.yash.yits.domain.ApplicationTeamMember;
+import com.yash.yits.domain.Attachment;
 import com.yash.yits.domain.Member;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.domain.Application;
@@ -138,7 +139,6 @@ public class IssueDaoImpl implements IssueDao {
 	
 	public List<Application> getApplicationNames() {
 		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Application.class)
-				
 				.setProjection(Projections.projectionList()
 					      .add(Projections.property("id"), "id")
 					      .add(Projections.property("name"), "name"))
@@ -357,12 +357,15 @@ public class IssueDaoImpl implements IssueDao {
 	
 
 
-	public List<ApplicationIssueType> getDefaultIssueTypes() {
-		
+	public List<ApplicationIssueType> getDefaultIssueTypes(int applicationId) {
+		Application application=new Application();
+		application.setId(applicationId);
 		Session session=sessionFactory.getCurrentSession();
 		Criteria criteria=session.createCriteria(ApplicationIssueType.class)
 				.setProjection(Projections.projectionList()
+						 .add(Projections.property("id"), "id")
 						.add(Projections.property("type"),"type"))
+				.add(Restrictions.eq("application", application))
 				.setResultTransformer(Transformers.aliasToBean(ApplicationIssueType.class));
 		List<ApplicationIssueType> issueTypes=criteria.list();
 		
@@ -371,13 +374,56 @@ public class IssueDaoImpl implements IssueDao {
 
 
 
-	public List<Issue> searchIssueByType(String type) {
+
+	public List<ApplicationIssuePriority> getDefaultIssuePriorities(int applicationId) {
+		
+		Application application=new Application();
+		application.setId(applicationId);
+		
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(ApplicationIssuePriority.class)
+				.setProjection(Projections.projectionList()
+						 .add(Projections.property("id"), "id")
+						.add(Projections.property("type"),"type"))
+				.add(Restrictions.eq("application", application))
+				.setResultTransformer(Transformers.aliasToBean(ApplicationIssuePriority.class));
+		
+		List<ApplicationIssuePriority> issuePriorities=criteria.list();
+		
+		return issuePriorities;
+	}
+
+	public List<Project> getDefaultProjectNames(int applicationId) {
+		Application application=new Application();
+		application.setId(applicationId);
+		
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(Project.class)
+				.setProjection(Projections.projectionList()
+						 .add(Projections.property("id"), "id")
+						.add(Projections.property("name"),"name"))
+				.add(Restrictions.eq("application", application))
+				.setResultTransformer(Transformers.aliasToBean(Project.class));
+		List<Project> projects=criteria.list();
+		
+		return projects;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+
+
+	public List<Issue> searchIssueByType(int type) {
 		
 		Session session=sessionFactory.getCurrentSession();
 		
-		Query query=session.createQuery("from ApplicationIssueType where type LIKE '"+type+"'");
-		
-		ApplicationIssueType applicationIssueType=(ApplicationIssueType)query.uniqueResult();
+		ApplicationIssueType applicationIssueType=new ApplicationIssueType();
+		applicationIssueType.setId(type);
 		
 		Criteria criteria=session.createCriteria(Issue.class)
 				.setProjection(Projections.projectionList()
@@ -396,6 +442,7 @@ public class IssueDaoImpl implements IssueDao {
 				
 		return issues;
 	}
+
 	public Issue fetchIssueDetails(int fetchId) {
 		System.out.println("prajvi dao");
 		Session session=sessionFactory.getCurrentSession();
@@ -404,6 +451,40 @@ public class IssueDaoImpl implements IssueDao {
 		return null;
 
 
+	}
+
+
+	public List<Issue> getFilteredIssue(int issuepriorityId, int issuetypeId, int projectnameId) {
+		Session session=sessionFactory.getCurrentSession();
+		
+		Criteria crit = session.createCriteria(Issue.class);
+	
+		if (issuetypeId != 0) {
+			Criteria issueTypeCrit = crit.createCriteria("applicationIssueType");
+			issueTypeCrit.add(Restrictions.eq("id", issuetypeId));
+		}
+		if (projectnameId != 0) {
+			Criteria projectCrit = crit.createCriteria("project");
+			projectCrit.add(Restrictions.eq("id", projectnameId));
+		}
+		if (issuepriorityId != 0) {
+			Criteria issuePriorityCrit = crit.createCriteria("applicationIssuePriority");
+			issuePriorityCrit.add(Restrictions.eq("id", issuepriorityId));
+		}
+		
+		
+		List<Issue> issues = crit.list();
+		return issues;
+	}
+	
+
+	/**
+	 * DAO method to save file--Takes file form service layer and saves it into database
+	 */
+	public String saveFile(Attachment file) {
+		Session session= sessionFactory.getCurrentSession();
+		session.save(file);
+		return "success";
 	}
 
 
@@ -417,6 +498,9 @@ public class IssueDaoImpl implements IssueDao {
 		return members;
 		
 	}
+
+
+
 
 
 	public int managerCreateIssue(Issue issue, Long createdBy, Long issueOwnerMemberId) {
@@ -462,4 +546,5 @@ public class IssueDaoImpl implements IssueDao {
 		return id;
 	}
 */
+
 }

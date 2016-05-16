@@ -8,10 +8,13 @@ import java.util.Set;
 import java.util.Map;
 
 import com.yash.yits.form.ApplicationForm;
+import com.yash.yits.form.ApplicationIssuePriorityForm;
+import com.yash.yits.form.ApplicationIssueTypeForm;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.ProjectForm;
 import com.yash.yits.domain.Application;
+import com.yash.yits.domain.Attachment;
 import com.yash.yits.domain.Member;
 
 
@@ -38,12 +41,17 @@ public interface IssueService {
 	
 	public List<ApplicationForm> getApplicationNames();
 
-	public List<String> getDefaultIssueTypes();
+	public List<ApplicationIssueTypeForm> getDefaultIssueTypes(int applicationId);
 
-	public List<IssueForm> searchIssueByType(String type);
 
 	public IssueForm fetchIssueDetails(int fetchId);
+	
+	public List<ApplicationIssuePriorityForm> getDefaultIssuePriorities(int applicationId);
+	
+	public List<ProjectForm> getDefaultProjectNames(int applicationId);
+	
+	public List<IssueForm> getFilteredIssue(int issuepriorityId1,int issuetypeId1,int projectnameId);
 
-
+	public String saveFile(Attachment file);
 	
 }

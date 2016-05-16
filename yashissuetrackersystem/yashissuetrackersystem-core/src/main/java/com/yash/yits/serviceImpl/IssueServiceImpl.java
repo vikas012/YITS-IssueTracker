@@ -33,6 +33,7 @@ import com.yash.yits.domain.ApplicationIssuePriority;
 import com.yash.yits.domain.ApplicationIssueStatus;
 import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.ApplicationTeamMember;
+import com.yash.yits.domain.Attachment;
 import com.yash.yits.domain.Member;
 
 import com.yash.yits.form.ApplicationIssuePriorityForm;
@@ -261,27 +262,75 @@ public class IssueServiceImpl implements IssueService{
 		System.out.println("in service application"+applicationForms);
 		return applicationForms;
 	}
-	public List<String> getDefaultIssueTypes() {
+	
+	
+	public List<ApplicationIssueTypeForm> getDefaultIssueTypes(int applicationId) {
 		
-		List<ApplicationIssueType> issueTypes=issueDao.getDefaultIssueTypes();
+		List<ApplicationIssueType> issueTypes=issueDao.getDefaultIssueTypes(applicationId);
+	
+		List<ApplicationIssueTypeForm> applicationIssueTypeForms=new ArrayList<ApplicationIssueTypeForm>();
 		
-		List<String> issueTypesList=new ArrayList<String>();
-		
-		for (ApplicationIssueType issue : issueTypes) {
-			
-			String type=issue.getType();
-			issueTypesList.add(type);
+		for (ApplicationIssueType applicationIssueType : issueTypes) {
+			ApplicationIssueTypeForm applicationIssueTypeForm=new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setId(applicationIssueType.getId());
+			applicationIssueTypeForm.setType(applicationIssueType.getType());
+			applicationIssueTypeForms.add(applicationIssueTypeForm);
 		}
 		
-		return issueTypesList;
+	
+		
+		return applicationIssueTypeForms;
 	}
 
-	public List<IssueForm> searchIssueByType(String type) {
+	
+	public List<ApplicationIssuePriorityForm> getDefaultIssuePriorities(int applicationId) {
 		
-		List<Issue> issues=issueDao.searchIssueByType(type);
+		List<ApplicationIssuePriority> issuePriorities=issueDao.getDefaultIssuePriorities(applicationId);
+		List<ApplicationIssuePriorityForm> applicationIssuePriorityForms=new ArrayList<ApplicationIssuePriorityForm>();
+		for (ApplicationIssuePriority applicationIssuePriority : issuePriorities) {
+			ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setId(applicationIssuePriority.getId());
+			applicationIssuePriorityForm.setType(applicationIssuePriority.getType());
+			applicationIssuePriorityForms.add(applicationIssuePriorityForm);
+		}
+	
+		return applicationIssuePriorityForms;
+	}
+	
+	public List<ProjectForm> getDefaultProjectNames(int applicationId) {
 		
+		List<Project> issuePriorities=issueDao.getDefaultProjectNames(applicationId);
+		
+		List<ProjectForm> projectForms=new ArrayList<ProjectForm>();
+		for (Project project : issuePriorities) {
+			ProjectForm projectForm=new ProjectForm();
+			projectForm.setId(project.getId());
+			projectForm.setName(project.getName());
+			projectForms.add(projectForm);
+			
+		}
+	
+		return projectForms;
+	}
+	
+	
+
+
+	public IssueForm fetchIssueDetails(int fetchId) {
+		System.out.println("prajvi service");
+		Issue fetchedIssue=issueDao.fetchIssueDetails(fetchId);
+		IssueForm fetchedIssueForm=new IssueForm();
+		return fetchedIssueForm;
+
+	}
+
+
+	public List<IssueForm> getFilteredIssue(int issuepriorityId1, int issuetypeId1, int projectnameId) {
+		List<Issue> issues=issueDao.getFilteredIssue(issuepriorityId1, issuetypeId1, projectnameId);
 		List<IssueForm> issueForms = new ArrayList<IssueForm>();
-		for (Issue issue : issues) {
+		
+			for (Issue issue : issues) {
+
 
 			
 			IssueForm issueForm = new IssueForm();
@@ -312,15 +361,11 @@ public class IssueServiceImpl implements IssueService{
 		}
 		
 		return issueForms;
+		
+	
 	}
 
-	public IssueForm fetchIssueDetails(int fetchId) {
-		System.out.println("prajvi service");
-		Issue fetchedIssue=issueDao.fetchIssueDetails(fetchId);
-		IssueForm fetchedIssueForm=new IssueForm();
-		return fetchedIssueForm;
 
-	}
 
 
 	public int managerCreateIssue(IssueForm issueForm, Long createdBy, Long issueOwnerMemberId) throws ParseException {
@@ -374,6 +419,17 @@ public class IssueServiceImpl implements IssueService{
 		return issueId;
 	}
 
+
+
+	/**
+	 * File upload method--Takes file from controller and passes it to dao layer
+	 */
+	public String saveFile(Attachment file) {
+		file.setCreatedDateTime(new Date());
+		file.setLastModifiedDateTime(new Date());
+		return issueDao.saveFile(file);
+		 
+	}
 
 	
 }

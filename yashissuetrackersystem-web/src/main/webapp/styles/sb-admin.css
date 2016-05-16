@@ -15,6 +15,27 @@ body {
 	color:#009999;
 	text-align: center;
 }
+#r2corners {
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px; 
+    width: 800px;
+    height: 100px; 
+}
+#r3corners {
+    border-radius: 25px;
+    border: 2px solid  #73AD21;
+    padding: 20px; 
+    width: 400px;
+    height: 300px; 
+}
+#r4corners {
+    border-radius: 25px;
+    border: 2px solid  #73AD21;
+    padding: 20px; 
+    width: 400px;
+    height: 350px; 
+}
 .box{
 	background-color: white;
 	border-color: white;
@@ -283,4 +304,53 @@ a:active
 
 .btn-primary {
 	background-color: darkcyan !important;
+}
+
+/*Attachment*/
+.attach1 {
+	position: absolute;	
+	left: 380px;
+}
+
+.attach2 {
+	position: absolute;	
+	left: 380px;
+}
+
+.attach3 {
+	position: absolute;	
+	left: 380px;
+}
+
+#textarea1, #textarea2, #textarea3 {
+	margin-left: 114px;
+	max-width: 280px;
+}
+
+#textarea_character_limit1, #textarea_character_limit2,
+	#textarea_character_limit3 {
+	margin-left: 114px;
+	font-size: 12px;
+}
+
+.modalHeader {
+	background: darkcyan;
+}
+
+.close {
+	color: #fff;
+	opacity: 1;
+}
+
+.modalTitle {
+	color: white;
+}
+
+
+
+#heading {
+	background-color: darkcyan;
+	color: white;
+	font-size: 17px;
+	font-family: "Times New Roman", Times, serif;
 }

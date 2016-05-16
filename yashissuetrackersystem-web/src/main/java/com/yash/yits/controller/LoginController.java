@@ -3,6 +3,9 @@
  */
 package com.yash.yits.controller;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import javax.naming.NamingException;
 import javax.naming.directory.InitialDirContext;
 import javax.servlet.http.HttpServletRequest;
@@ -40,31 +43,44 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/loginUser",method=RequestMethod.POST)
-	public String validateUser(@ModelAttribute LoginForm loginForm,HttpServletRequest httpServletRequest) throws NamingException{
+	public String validateUser(@ModelAttribute LoginForm loginForm,HttpServletRequest httpServletRequest) throws NamingException, IOException{
 		
 		System.out.println("in controller");
+		
+		Properties properties= new Properties();
+		properties.load(getClass().getResourceAsStream("UserTitle.properties"));
+		String title=(String) properties.get("Title");
+		
+		
+		
 		
 		InitialDirContext intialDirContext=loginService.checkUser(loginForm);
 		
 		int position=loginForm.getUsername().indexOf("@");
+		
 		//retrieve the substring before the '@'
 		String username=loginForm.getUsername().substring(0,position);
 		
 		UserForm userForm=loginService.fetchAttributes(intialDirContext,username);
 		
 		httpServletRequest.getSession().setAttribute("memberId",userForm.getUserId());
-		httpServletRequest.getSession().setAttribute("username",loginForm.getUsername());
-		httpServletRequest.getSession().setAttribute("password",loginForm.getPassword());
 		
-		System.out.println(userForm.getUserJobTitle());
-		if(userForm.getUserJobTitle().equals("Trainee Programmer"))
+		
+		
+		httpServletRequest.getSession().setAttribute("IntialDirContext",intialDirContext);
+		
+		
+		if(userForm.getUserJobTitle().equals(title))
 		{	
 			return "redirect:/static/UserDashboard.html";
 		}
 		else
 		{
-			return "redirect:/static/ManagerDashboard";
+
+			return "redirect:/static/ManagerDashboard.html";
+
 		}
 	}
+
 
 }

@@ -1,11 +1,8 @@
 angular.module('issueTrackingSystem.userModule').controller('userController',['$scope','$http','userService', function($scope,$http,userService,issuesList){
 
 
- 
 
- 
 $scope.issueList = [];
- 
 var issues = $http({
    method : 'GET',
    url : './defaultIssuesList'
@@ -17,27 +14,22 @@ $scope.issueList = data;
 
  
 
- 
 userService.initializeSelect()
 .then(
 function(d) {
 $scope.projects=d.projects;
 //alert(d.projects);
 //alert(d.myValue);
- 
 //$scope.applications=d.application;
 //alert(d.application);
 
 //alert(d.data.id);
 //alert(d.data.name);
- 
 
 
 
 }
- 
 );
- 
 $scope.myFunc=function()
 {
 var projectId = angular.element(
@@ -60,7 +52,6 @@ $scope.applicationTeamMembers=d.applicationTeamMembers;
 
 });
 }
- 
 $scope.myFunction=function()
 {
 var applicationId = angular.element(
@@ -101,30 +92,21 @@ var description=this.createIssue.description;
 var member = {
 "memberId":this.createIssue.owner.memberId
 }
- 
 var issueOwner={
 "member":member
 }
- 
 var project={
 "id":this.createIssue.project.id
 }
- 
 var applicationIssueType={
 "id":this.createIssue.issueType.id
 }
- 
 var applicationIssuePriority={
 "id":this.createIssue.issuePriority.id
 }
- 
 var applicationEnvironment={
 "id":this.createIssue.applicationEnvironment.id
 }
- 
- 
- 
- 
 var formData={
 "project":project,
 "applicationIssueType":applicationIssueType,
@@ -137,8 +119,6 @@ var formData={
 "issueOwner":issueOwner
 };
 alert(formData);
- 
- 
 userService.submitCreateIssue(formData)
 .then(
 function(formData) {
@@ -149,48 +129,6 @@ function(errResponse)
 console.error('Error while searching issues');
 });
 }
- 
-$scope.defaultSearchIssueList = [];
-
-var searchIssueList = $http({
-	method : 'GET',
-	url : '../defaultIssues'
-}).success(function(data) {
-
-	$scope.defaultIssueList = data;
-
-})
-
-$scope.defaultIssueTypes = [];
-var issueType = $http({
-
-	method : 'GET',
-	url : '../defaultIssueTypes'
-}).success(function(data) {
-
-	$scope.defaultIssueTypes = data;
-
-})
-
-this.selectType = function() {
-
-							if (this.selectIssueType == "") {
-							} else {
-								var type = this.selectIssueType;
-								managerService
-										.searchByIssueType(type)
-										.then(
-												function(data) {
-													$scope.defaultIssueList = data;
-												},
-												function(errResponse) {
-													console
-															.error('Error while searching issues');
-												})
-
-							}
-							}
-
 /*issueService returns list to populate drop-down*/
 /*userService.initializeSelect()
         .then(
@@ -220,15 +158,14 @@ this.selectType = function() {
                       console.error('Error while fetching');
                   }
              );
- 
 this.createIssue={};
 this.add=function(){
- 
 // call service to persist in db
 userService.submitCreateIssue(this.createIssue);
        .then(
                 function(d) {
-                 
+               
+ 
                 },
                  function(errResponse){
                      console.error('Error while fetching');

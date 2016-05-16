@@ -4,49 +4,25 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<style>
-#rcorners2 {
-    border-radius: 25px;
-    border: 2px solid #73AD21;
-    padding: 20px; 
-    width: 800px;
-    height: 100px; 
-}
-#rcorners3 {
-    border-radius: 25px;
-    border: 2px solid #73AD21;
-    padding: 20px; 
-    width: 400px;
-    height: 300px; 
-}
-#rcorners4 {
-    border-radius: 25px;
-    border: 2px solid #73AD21;
-    padding: 20px; 
-    width: 400px;
-    height: 350px; 
-}
-
-</style>
- 
-  </head>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 </head>
-<body ng-controller="managerController as mc">
-<script type="text/javascript">
+</head>
+<body ng-controller="managerController as mc" >
+<!--  <script type="text/javascript">
     
         $("document").ready(function() {
-        	alert("in ready");
+        	
             $('#includedContent').load('header.html');
-            alert("finished");
+            
         });
-    </script>
-  <div id="includedContent"></div> 
+    </script> 
+  <div id="includedContent"></div>  -->
  
-  <h4 style="margin-top: -25px;">Add Member</h4>
+  <h2 class="headerlabel">Add Member</h4>
   <hr>
 	<center>
 		<div class="container">
-				<label><input type="radio" name="optradio" ng-click="showLookForm()">Yash</label>
+				<label ><input type="radio" name="optradio" ng-click="showLookForm()">Yash</label>
 			    &nbsp;&nbsp;&nbsp;&nbsp;   
 			    &nbsp;&nbsp;&nbsp;&nbsp;   
 			    &nbsp;&nbsp;&nbsp;&nbsp;
@@ -61,16 +37,18 @@
 	<br>
 	<br> 			
 	<center>
-	<div class="container" ng-show="showLookUpForm" id="rcorners2">
-	  <form class="form-inline" role="form">
+	<div class="container" ng-show="showLookUpForm" id="r2corners" >
+	  <form class="form-inline" role="form" name="myForm" >
 	    <div class="form-group">
 	      <label for="name">Name:</label>
-	      <input type="text" class="form-control" id="name" placeholder="Enter name" ng-model="ldapName">
+	      <input type="text" class="form-control"  name="ldapName" placeholder="Enter name" ng-model="ldapName">
+	      <!-- <span ng-show="myForm.ldapName.$error.required">The name is required.</span> -->
 	    </div>
 	     &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
 	    <div class="form-group">
 	      <label for="email">Email:</label>
-	      <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="ldapEmail" >
+	      <input type="email" class="form-control"  placeholder="Enter email" ng-model="ldapEmail" name="ldapEmail">
+	      <!-- <span ng-show="myForm.ldapEmail.$error.email">Invalid email address.</span> -->
 	    </div>
 	    &nbsp;&nbsp;&nbsp;&nbsp; 
 	    &nbsp;&nbsp;&nbsp;&nbsp; 
@@ -79,7 +57,7 @@
 	</div>
 	</center>
 	<center>
-		<div class="container" ng-show="showRegisterForm" id="rcorners3">
+		<div class="container" ng-show="showRegisterForm" id="r3corners">
 		  <form class="form-inline" role="form">
 		    
 		    <div class="form-group">
@@ -127,13 +105,13 @@
 		</div>
 
   	</div>
-	<div class="container" ng-show="showNonYashRegisterForm" id="rcorners4">
+	<div class="container" ng-show="showNonYashRegisterForm" id="r4corners">
 		  <form class="form-inline" role="form">
 		    
 		     <div class="form-group">
 		      <label class="control-label col-sm-4" for="Id">Id:</label>
 		      <div class="col-sm-8">
-		             <input type="text" class="form-control" id="Id"  ng-model="userId">
+		             <input type="text" class="form-control" id="Id"  ng-model="userId" ng-disabled="true">
 		      </div>
 		    </div>
 		    
@@ -184,7 +162,12 @@
 
   	</div>
 	
-	
+	<div class="alert alert-success" ng-show="showRegistrationMessaage">
+  			<strong>{{member.name}}</strong> Is Successfully register with Yash Issue Tracker System.
+	</div>
+	<div class="alert alert-danger" ng-show="memberAlreadyInDatabase">
+  			<strong>{{member.name}}</strong> Is Already register with Yash Issue Tracker System.
+	</div>
 	
 	
 	

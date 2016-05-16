@@ -88,7 +88,12 @@ managerModule.config(function($routeProvider) {
 
 		templateUrl : '../showAssignedIssuePage',
 		controller : 'managerController',
-	});
+	})
+	
+	.when('/editIssues',{
+		templateUrl:'editIssueForm',
+		controller:'managerController as mc'
+	})
 	
 });
 

@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yash.yits.dao.MemberDao;
 import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
+import com.yash.yits.domain.MemberType;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.LoginForm;
 
@@ -223,7 +224,7 @@ public class MemberServiceImpl implements MemberService {
 			return searchResult;
 	 }
 
-	 public Member addMember(MemberForm memberForm) {
+	 public boolean addMember(MemberForm memberForm) {
 			
 			member.setMemberId(memberForm.getMemberId());
 			member.setName(memberForm.getName());
@@ -234,10 +235,10 @@ public class MemberServiceImpl implements MemberService {
 			member.setManagerEmail(memberForm.getManagerEmail());
 			member.setCreatedDateTime(new Date());
 			member.setLastModifiedDateTime(new Date());
-			memberDao.addMember(member);
+			boolean result=memberDao.addMember(member);
 			
 			
-			/*ApplicationContext context=ContextAware.getApplicationContext();
+			ApplicationContext context=ContextAware.getApplicationContext();
 			System.out.println("object of application context"+context);
 			JavaMailSenderImpl javamailsender=(JavaMailSenderImpl) context.getBean("mailSender");
 			
@@ -258,16 +259,17 @@ public class MemberServiceImpl implements MemberService {
 			
 			simpleMailMessage.setText(message);
 			
-			javaMailSender.send(simpleMailMessage);*/
+			javaMailSender.send(simpleMailMessage);
 
 			
 			
-			return member;
+			return result;
 		}
 
 	public List<MemberForm> searchMembers(String search) {
 		System.out.println("in service");
 		List<Member> members = memberDao.searchMembers(search);
+		
 		List<MemberForm> memberForms = new ArrayList<MemberForm>();
 		for (Member member : members) {
 
@@ -288,20 +290,34 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberForms;
 	}
-	public List<Member> showMembers() {
+	public List<MemberForm> showMembers() {
 
 	List<Member> memberList=memberDao.showMembers();
 		
-		return memberList;
-
-
-	}
-
 	
+	List<MemberForm> memberForms = new ArrayList<MemberForm>();
+	for (Member member : memberList) {
 
-	public List<Member> deleteMember(int memberId) {
+		MemberForm memberForm = new MemberForm();
 		
-		return null;
+		memberForm.setMemberId(member.getMemberId());
+		memberForm.setName(member.getName());
+		memberForm.setEmail(member.getEmail());
+		memberForm.setContact(member.getContact());
+		memberForm.setIsActive(member.getIsActive());
+		
+		
+		memberForms.add(memberForm);
+	}
+	
+	System.out.println(memberForms);
+	
+	
+	return memberForms;
+	
+		//return memberList;
+
+
 	}
 
 	
@@ -335,6 +351,8 @@ public class MemberServiceImpl implements MemberService {
 			issueForm.setProject(ProjectMapper.domainForm(issue.getProject()));
 			issueForm.setDescription(issue.getDescription());
 			issueForm.setSummary(issue.getSummary());
+			issueForm.setAffectedVersion(issue.getAffectedVersion());
+			issueForm.setComponent(issue.getComponent());
 			
 			issueForms.add(issueForm);
 		}
@@ -358,6 +376,36 @@ public class MemberServiceImpl implements MemberService {
 			issueForms.add(issueForm);
 		}
 		return issueForms;
+	}
+
+	public void deleteMember(MemberForm memberForm) {
+		
+		Member member=new Member();
+		member.setMemberId(memberForm.getMemberId());
+		memberDao.deleteMember(member);
+		
+		
+	}
+	
+public List<String> memberType() {
+		
+		List<MemberType> memberTypes=memberDao.memberType();
+		
+		List<String> memberTypesList=new ArrayList<String>();
+		for (MemberType memberType : memberTypes) {
+			 
+			String type=memberType.getMemberType();
+			memberTypesList.add(type);
+			}
+		return memberTypesList;
+	
+			
+	}
+
+	public List<Member> searchMemberType(int memberId) {
+		List<Member> memberTypeList=memberDao.searchMemberType(memberId);
+		
+		return memberTypeList;
 	}
 
 }
