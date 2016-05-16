@@ -8,7 +8,6 @@ angular
 						'managerService',
 						function($scope, $http, managerService, issueList) {
 
-<<<<<<< HEAD
 							$scope.issueList = [];
 
 							// alert("in member controller");
@@ -126,7 +125,7 @@ angular
 							}).success(function(data) {
 								$scope.issueList = data;
 							})
-=======
+
 							
 							$scope.issueList = [];
 
@@ -249,7 +248,7 @@ angular
 							})
 
 
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
+
 
 							var members = $http({
 								method : 'GET',
@@ -356,7 +355,7 @@ angular
 									alert("success")
 									$scope.fetchedIssue = data;
 								})
-							}
+							};
 
 							$scope.checkUser = function() {
 
@@ -400,7 +399,7 @@ angular
 												}
 
 										)
-							}
+							};
 
 							$scope.registerMember = function() {
 
@@ -431,7 +430,7 @@ angular
 										)
 
 
-							}
+							};
 
 							$scope.registerNonYashMember = function() {
 
@@ -464,7 +463,7 @@ angular
 										)
 
 
-							}
+							};
 							$scope.defaultIssueList = [];
 
 							var issueList = $http({
@@ -525,7 +524,7 @@ angular
 
 								}
 
-							}
+							};
 
 							
 							
@@ -580,7 +579,7 @@ angular
 																.error('Error while showing member status');
 													})
 								}
-							}
+							};
 							$scope.memberActivateForSearch = function(memberId) {
 
 								if (memberId == "") {
@@ -599,7 +598,7 @@ angular
 																.error('Error while showing member status');
 													})
 								}
-							}
+							};
 							$scope.memberDelete=function(indexId){
 								
 								managerService.memberDelete(indexId)
@@ -614,7 +613,7 @@ angular
 										 }
 								)	
 								
-							}
+							};
 							
 							managerService
 									.showAssignedIssues()
@@ -646,13 +645,13 @@ angular
 																.error('Error while searching assigned issues');
 													})
 								}
-							}
+							};
 
 							
 							
 							$scope.showadvsearch = function() {
 								$('#advsearch').show();
-<<<<<<< HEAD
+
 								$scope.isDisabled = true;
 
 								managerService
@@ -667,27 +666,12 @@ angular
 													console
 															.error('Error while searching assigned issues');
 												})
-							}
+							};
 
-=======
-								$scope.isDisabled=true;
-							
-								managerService.getList()
-								.then(
-										function(data) {
-											alert(data);
-											$scope.applicationNames=data;
-										
-										},
-										function(errResponse) {
-											console
-													.error('Error while searching assigned issues');
-										})
-					}
+
 							
 							
-							
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
+
 							$scope.calldropdowns = function() {
 								var applicationid=this.application;
 								$scope.isDisabled=false;
@@ -703,7 +687,7 @@ angular
 											console
 													.error('Error while searching assigned issues');
 										})
-					}
+					};
 							
 						
 							
@@ -711,7 +695,7 @@ angular
 								var filterIssueType = $scope.advIssueType;
 								var filterProjectName = this.advProject;
 								var filterPriority = this.advPriority;
-<<<<<<< HEAD
+
 								managerService
 										.getadvSearchData(filterIssueType,
 												filterProjectName,
@@ -720,15 +704,7 @@ angular
 												function(data) {
 
 													$scope.defaultIssueList = data;
-													$('#advsearch').hide();
-=======
-								managerService.getadvSearchData(filterIssueType,filterProjectName,filterPriority)
-								.then(
-										function(data) {
-											alert(data);
-											$scope.defaultIssueList = data;
-											$('#advsearch').hide();
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
+
 
 										},
 										function(errResponse) {
@@ -738,7 +714,7 @@ angular
 								
 							
 							
-							}
+							};
 							
 							
 							
@@ -778,7 +754,7 @@ angular
 											)
 								
 						
-							}
+							};
 
 							/**
 							 * Upload file
@@ -857,7 +833,6 @@ angular
 									attachmentFile: $scope.file1Name,
 									
 								});
-<<<<<<< HEAD
 
 								managerService
 										.fileUpload(formData)
@@ -956,7 +931,7 @@ angular
 								 * 
 								 * });
 								 */
-							}
+							};
 
 							$scope.viewIssue = function() {
 
@@ -1070,7 +1045,7 @@ angular
 									$scope.fetchedIssue = data;
 								})
 							};
-=======
+
 								
 								managerService
 								.fileUpload(formData)
@@ -1082,139 +1057,8 @@ angular
 										}
 								)
 
-							/*$scope.uploadFile2 = function() {
-
-								var fileInput = $('#selectFile2');
-								var maxSize = fileInput.data('max-size');
-								var fileSize=$scope.file2Size;
-								var fileName=$scope.file2Name;
-								var ext = fileName.split('.').pop();
-								
-								var formData = new FormData();
-								var attachmentLabel= $scope.attachmentLabel2;
-								formData.append("file", $scope.file2); 
-								formData.append("attachmentLabel", attachmentLabel);
-								
-								switch (ext) {
-						       		case 'jpg':
-						       	 	case 'jpeg':
-						       	 	case 'png':
-						        	case 'gif':
-						        	case 'doc':
-						        	case 'docx':
-						        	case 'txt':
-						        	case 'pdf':
-						        	case 'xls':
-						        	case 'xlsx':
-						        	case 'sql':
-						        	 case 'java':
-						        	case 'xml': 
-						            	break;
-						        	default:
-						        		alert('File type not allowed.');
-						        		$("#selectFile2").val("");
-					            		return false;
-						    	}
-								
-								if(fileSize>maxSize){
-						                alert(' Too big file size ! Size should be less than 1 MB');
-						                $("#selectFile2").val("");
-						                return false;
-						            }
-								
-								$scope.attachments.push({ 
-									attachmentFile: $scope.file2Name,
-								
-								});
-								
-								var request = {
-									method : 'POST',
-									url : '../uploadFile',
-									data : formData,
-									headers : {
-										'Content-Type' : undefined
-									}
-								};
 							
-								$http(request).success(function(data, status) {
-									alert("File Uploaded Successfully ... " + status);
-
-								}).error(function(data, status) {
-									
-								});
-							}
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
-
-<<<<<<< HEAD
-							$scope.exportData = function() {
-								var blob = new Blob(
-										[ document.getElementById('exportable').innerHTML ],
-										{
-											type : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-										});
-								saveAs(blob, "ListOfMembers.xls");
-							};
-=======
-							$scope.uploadFile3 = function() {
-								
-								var fileInput = $('#selectFile3');
-								var maxSize = fileInput.data('max-size');
-								var fileSize=$scope.file3Size;
-								var fileName=$scope.file3Name;
-								var ext = fileName.split('.').pop();
-								
-								var formData = new FormData();
-								var attachmentLabel = $scope.attachmentLabel3;
-								formData.append("file", $scope.file3);
-								formData.append("attachmentLabel", attachmentLabel);
-								
-								switch (ext) {
-						        	case 'jpg':
-						       	 	case 'jpeg':
-						        	case 'png':
-						        	case 'gif':
-						        	case 'doc':
-						        	case 'docx':
-						        	case 'txt':
-						        	case 'pdf':
-						        	case 'xls':
-						        	case 'xlsx':
-						        	case 'sql':
-						        	 case 'java':
-						        	case 'xml': 
-						            	break;
-						       	 	default:
-						            	alert('File type not allowed.');
-						        		$("#selectFile3").val("");
-					            		return false;
-						    	}
-
-								if(fileSize>maxSize){
-						            alert(' Too big file size ! Size should be less than 1 MB');
-						            $("#selectFile3").val("");
-						            return false;
-						         }
-								
-								$scope.attachments.push({ 
-									attachmentFile:$scope.file3Name,
-									
-								});
-								
-								var request = {
-									method : 'POST',
-									url : '../uploadFile',
-									data : formData,
-									headers : {
-										'Content-Type' : undefined
-									}
-								};
-								$http(request).success(function(data, status) {
-									alert("File Uploaded Successfully ... " + status);
-									
-								}).error(function(data, status) {
-									
-								});*/
-							}
+							
 
 
 							$scope.viewIssue = function(){
@@ -1267,7 +1111,7 @@ angular
 
 
 
-$scope.issueList = [];
+							$scope.issueList = [];
 
 
 							
@@ -1418,6 +1262,6 @@ $scope.issueList = [];
 
 											})
 							
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
+
 
 						} ]);
