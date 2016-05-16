@@ -1,5 +1,6 @@
 package com.yash.yits.service;
 
+import java.text.ParseException;
 import java.util.List;
 import com.yash.yits.domain.Issue;
 
@@ -22,9 +23,14 @@ import com.yash.yits.domain.Member;
 public interface IssueService {
 
 
-	List<IssueForm> showIssuesList(long memberId);
+	public List<IssueForm> showIssuesList(long memberId);
 
+	public IssueForm fetchIssueDetails(int fetchId);
 
+	public List<MemberForm> getMemberList();
+
+	public void assignIssue(IssueForm issueForm, int fetchId) throws ParseException;
+	
 
 	public List<IssueForm> getDefaultIssues();
 
@@ -43,8 +49,6 @@ public interface IssueService {
 
 	public List<ApplicationIssueTypeForm> getDefaultIssueTypes(int applicationId);
 
-
-	public IssueForm fetchIssueDetails(int fetchId);
 	
 	public List<ApplicationIssuePriorityForm> getDefaultIssuePriorities(int applicationId);
 	

@@ -41,6 +41,7 @@ import com.yash.yits.form.ApplicationIssueStatusForm;
 import com.yash.yits.form.ApplicationIssueTypeForm;
 import com.yash.yits.form.ApplicationTeamMemberForm;
 import com.yash.yits.form.AttachmentForm;
+import com.yash.yits.form.ApplicationEnvironmentForm;
 import com.yash.yits.form.ApplicationForm;
 import com.yash.yits.domain.Project;
 import com.yash.yits.form.IssueForm;
@@ -65,7 +66,7 @@ public class IssueServiceImpl implements IssueService{
 			
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
-			issueForm.setDueDate(issue.getDueDate());
+			/*issueForm.setDueDate(issue.getDueDate());*/
 			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
 
 			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
@@ -156,7 +157,7 @@ public class IssueServiceImpl implements IssueService{
 			issueForm.setId(issue.getId());
 			issueForm.setCloseDate(issue.getCloseDate());
 			issueForm.setCreatedDateTime(issue.getCreatedDateTime());
-			issueForm.setDueDate(issue.getDueDate());
+		/*	issueForm.setDueDate(issue.getDueDate());*/
 			issueForm.setSummary(issue.getSummary());
 
 			ProjectForm projectForm=new ProjectForm();
@@ -311,33 +312,19 @@ public class IssueServiceImpl implements IssueService{
 	
 		return projectForms;
 	}
-	
-	
-
-
-	public IssueForm fetchIssueDetails(int fetchId) {
-		System.out.println("prajvi service");
-		Issue fetchedIssue=issueDao.fetchIssueDetails(fetchId);
-		IssueForm fetchedIssueForm=new IssueForm();
-		return fetchedIssueForm;
-
-	}
-
 
 	public List<IssueForm> getFilteredIssue(int issuepriorityId1, int issuetypeId1, int projectnameId) {
 		List<Issue> issues=issueDao.getFilteredIssue(issuepriorityId1, issuetypeId1, projectnameId);
 		List<IssueForm> issueForms = new ArrayList<IssueForm>();
 		
 			for (Issue issue : issues) {
-
-
 			
 			IssueForm issueForm = new IssueForm();
 			
 			issueForm.setId(issue.getId());
 			issueForm.setCloseDate(issue.getCloseDate());
 			issueForm.setCreatedDateTime(issue.getCreatedDateTime());
-			issueForm.setDueDate(issue.getDueDate());
+
 			issueForm.setSummary(issue.getSummary());
 
 			ProjectForm projectForm=new ProjectForm();
@@ -390,11 +377,8 @@ public class IssueServiceImpl implements IssueService{
 
 
 	public Map<String, Object> showIssueDetails(int id) {
-Issue issue =issueDao.showIssueDetails(id);
 		
-		
-		
-		
+		Issue issue =issueDao.showIssueDetails(id);
 		
 		/*issueDetails.put("affectedVersion", issue.getAffectedVersion());
 		issueDetails.put("component", issue.getComponent());
@@ -533,6 +517,91 @@ Issue issue =issueDao.showIssueDetails(id);
 			
 		}*/
 		return issueDetails;
+	}
+	
+	public IssueForm fetchIssueDetails(int fetchId) {
+
+		Issue fetchedIssue = issueDao.fetchIssueDetails(fetchId);
+		IssueForm fetchedIssueForm = new IssueForm();
+
+		ProjectForm projectForm = new ProjectForm();
+		projectForm.setName(fetchedIssue.getProject().getName());
+		fetchedIssueForm.setProject(projectForm);
+
+		ApplicationIssuePriorityForm applicationIssuePriorityForm = new ApplicationIssuePriorityForm();
+		applicationIssuePriorityForm.setType(fetchedIssue.getApplicationIssuePriority().getType());
+		fetchedIssueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+
+		ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
+		applicationIssueTypeForm.setType(fetchedIssue.getApplicationIssueType().getType());
+		fetchedIssueForm.setApplicationIssueType(applicationIssueTypeForm);
+
+		fetchedIssueForm.setAffectedVersion(fetchedIssue.getAffectedVersion());
+
+		fetchedIssueForm.setComponent(fetchedIssue.getComponent());
+
+		fetchedIssueForm.setSummary(fetchedIssue.getSummary());
+
+		fetchedIssueForm.setDescription(fetchedIssue.getDescription());
+
+		ApplicationEnvironmentForm applicationEnvironmentForm = new ApplicationEnvironmentForm();
+		applicationEnvironmentForm.setEnvironment(fetchedIssue.getApplicationEnvironment().getEnvironment());
+		fetchedIssueForm.setApplicationEnvironment(applicationEnvironmentForm);
+
+		ApplicationTeamMemberForm applicationTeamMemberForm = new ApplicationTeamMemberForm();
+		MemberForm member = new MemberForm();
+		member.setName(fetchedIssue.getIssueOwner().getMember().getName());
+		applicationTeamMemberForm.setMember(member);
+		fetchedIssueForm.setIssueOwner(applicationTeamMemberForm);
+
+		ApplicationTeamMemberForm applicationTeamMemberForm1 = new ApplicationTeamMemberForm();
+		MemberForm member1 = new MemberForm();
+		member1.setName(fetchedIssue.getCreatedBy().getMember().getName());
+		applicationTeamMemberForm1.setMember(member1);
+		fetchedIssueForm.setCreatedBy(applicationTeamMemberForm1);
+
+		return fetchedIssueForm;
+	}
+
+	public List<MemberForm> getMemberList() {
+
+		List<Member> members = issueDao.getMemberList();
+		List<MemberForm> memberForms = new ArrayList<MemberForm>();
+
+		for (Member member : members) {
+
+			MemberForm memberForm = new MemberForm();
+			memberForm.setName(member.getName());
+			memberForm.setId(member.getId());
+			memberForms.add(memberForm);
+		}
+		return memberForms;
+	}
+
+	public void assignIssue(IssueForm issueForm, int fetchId) throws ParseException {
+
+		Issue issue = new Issue();
+		issue.setId(issueForm.getId());
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
+
+		String newDate = issueForm.getDueDate();
+		Date date = formatter.parse(newDate);
+		issue.setDueDate(date);
+		
+		issue.setOriginalEstimate(issueForm.getOriginalEstimate());
+		issue.setRemainingEstimate(issueForm.getRemainingEstimate());
+
+		ApplicationTeamMemberForm applicationTeamMemberForm = issueForm.getAssignedUser();
+
+		Member member = new Member();
+		member.setId(issueForm.getAssignedUser().getMember().getId());
+		ApplicationTeamMember applicationTeamMember = new ApplicationTeamMember();
+		applicationTeamMember.setMember(member);
+		issue.setAssignedUser(applicationTeamMember);
+
+		issueDao.assignIssue(issue, fetchId);
+
 	}
 	
 }

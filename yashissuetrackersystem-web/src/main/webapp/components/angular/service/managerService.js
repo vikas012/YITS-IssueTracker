@@ -48,7 +48,18 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 				         			);
 						},
 
-		  			
+						fetchIssueDetails:function(fetchId){
+							
+							return $http.get('../fetchIssueDetails/{fetchId}')
+							.then(function(response){
+	  										return response.data;
+	  								},
+	  								function(errResponse){
+	  									console.error('Error while fetching issue');
+	  									return $q.reject(errResponse);
+	  								}
+	  						);
+						},
 
 		  			
 		  			registerMember:function(member){
@@ -77,7 +88,22 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 
 		  					);
 		  			},
-
+		  			
+		  			submitAssignedIssue:function(assignedIssue){
+				  		
+		  				return $http.post('../assignIssue',assignedIssue)
+			              .then(
+			                      function(response){
+			                    	  alert(response.data);
+			                          return response.data;
+			                      }/*, 
+			                      function(errResponse){
+			                          console.error('Error while assigning issue');
+			                              return $q.reject(errResponse);
+			                      }*/
+			                );
+		  			},
+		  			
 		  			memberActivate:function(memberId){
 		  					
 		  					var member={
@@ -102,10 +128,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 				  
 			  			},	  
 
-		  			
-	
-
-		  				  
+  
 			  			showAssignedIssues:function(){
 			  				return $http.get('../showAssignedIssue')
 						 	.then(
