@@ -49,7 +49,9 @@ angular
 
 							$scope.showLookUpForm = false;
 							$scope.showRegisterForm = false;
-							$scope.showNonYashRegisterForm = false;
+							$scope.showNonYashRegisterForm=false;
+							$scope.showRegistrationMessaage=false;
+							$scope.memberAlreadyInDatabase=false;
 
 							$scope.ldapUser = {
 								ldapName : "",
@@ -71,15 +73,25 @@ angular
 							$scope.showLookForm = function() {
 
 								$scope.showLookUpForm = true;
-								$scope.showNonYashRegisterForm = false;
+								$scope.showRegisterForm = false;
+								$scope.showNonYashRegisterForm =false;
+								$scope.showRegistrationMessaage=false;
+								$scope.memberAlreadyInDatabase=false;
 
 							}
 
 							$scope.showRegisterationForm = function() {
 
-								$scope.showLookUpForm = false;
+								$scope.showLookUpForm =false;
 								$scope.showRegisterForm = false;
 								$scope.showNonYashRegisterForm = true;
+								$scope.showRegistrationMessaage=false;
+								$scope.memberAlreadyInDatabase=false;
+								$scope.userId =" ";
+								$scope.userName =" ";
+								$scope.userEmail =" ";
+								$scope.userMobile =" ";
+								$scope.managerEmail =" ";
 							}
 
 							$scope.fetchIssueDetails = function() {
@@ -156,7 +168,26 @@ angular
 								$scope.member.contact = $scope.userMobile;
 								$scope.showRegisterForm = false;
 
-								managerService.registerMember($scope.member);
+								managerService.registerMember($scope.member)
+								.then(
+												function(d) {
+													if(d==false)
+													{
+														$scope.memberAlreadyInDatabase=true;
+													}
+													else
+													{
+														$scope.showRegistrationMessaage=true;
+													}
+
+												},
+
+												function(errResponse) {
+													console.error('Error while fetching');
+												}
+
+										)
+
 
 							}
 
@@ -169,8 +200,27 @@ angular
 								$scope.member.managerEmail = $scope.managerEmail;
 								$scope.showNonYashRegisterForm = false;
 
-								managerService
-										.registerNonYashMember($scope.member);
+								managerService.registerNonYashMember($scope.member)
+								.then(
+												function(d) {
+													
+													if(d==false)
+													{
+														$scope.memberAlreadyInDatabase=true;
+													}
+													else
+													{
+														$scope.showRegistrationMessaage=true;
+													}
+
+												},
+
+												function(errResponse) {
+													console.error('Error while fetching');
+												}
+
+										)
+
 
 							}
 							$scope.defaultIssueList = [];
