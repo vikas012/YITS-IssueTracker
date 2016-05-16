@@ -384,7 +384,6 @@ public class IssueController {
 	     file1.setName(uploadedFile.getOriginalFilename());
 	     file1.setLabel(request.getParameter("attachmentLabel"));
 	    
-	     System.out.println("Albel"+file1.getLabel());
 	   
 	     return issueService.saveFile(file1);
 	        
