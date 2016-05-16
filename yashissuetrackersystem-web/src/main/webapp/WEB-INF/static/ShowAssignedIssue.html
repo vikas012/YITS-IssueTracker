@@ -13,14 +13,15 @@
 	<br> <br> <br>
 	
 	<div>
-		<table id="listOfMembers" class="table table-striped">
-			<tr>
-				<th>MEMBER</th>				
-				<th>PROJECT</th>
-				<th>SUMMARY</th>
-				<th>DISCRIPTION</th>
-			</tr>
-	
+		<table id="listOfMembers" class="table table-striped table-bordered table-hover">
+			<thead class="thead-inverse">
+				<tr id="heading">
+					<th>MEMBER</th>				
+					<th>PROJECT</th>
+					<th>SUMMARY</th>
+					<th>DISCRIPTION</th>
+				</tr>
+			</thead>
 			<tr ng-repeat="assignedIssue in assignedIssues">			
 				<td>{{assignedIssue.assignedUser.member.name}}</td>
 				<td>{{assignedIssue.project.name}}</td>

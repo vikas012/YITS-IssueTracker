@@ -14,12 +14,11 @@ angular
 								method : 'GET',
 								url : './defaultIssuesList'
 							}).success(function(data) {
-								alert("-------in controller-------" + data);
 								$scope.issueList = data;
 							})
 
 
-							$scope.members1 = [];
+							/*$scope.members1 = [];*/
 
 							var members = $http({
 								method : 'GET',
@@ -90,7 +89,7 @@ angular
 												document
 														.querySelector("input[id=radio]:checked"))
 										.val();
-								alert(index);
+								/*alert(index);*/
 
 								if (index == null) {
 									alert("Please select the entry you want to update!");
@@ -125,35 +124,6 @@ angular
 
 								$scope.unassignedIssueList = data;
 							})
-
-							$scope.members1 = [];
-
-							var issues = $http({
-								method : 'GET',
-								url : '../memberList'
-							})
-									.success(
-											function(data) {
-
-												$scope.members1 = data;
-
-												angular
-														.forEach(
-																$scope.members1,
-																function(value,
-																		key) {
-
-																	if (value.isActive == 0) {
-
-																		value.isActive = "Activate";
-																	} else {
-
-																		value.isActive = "DeActivate";
-																	}
-
-																});
-
-											})
 
 							$scope.checkUserInLdap = function(ldapUser) {
 

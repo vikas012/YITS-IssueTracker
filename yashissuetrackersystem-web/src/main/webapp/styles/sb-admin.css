@@ -324,3 +324,12 @@ a:active
 .modalTitle {
 	color: white;
 }
+
+
+
+#heading {
+	background-color: darkcyan;
+	color: white;
+	font-size: 17px;
+	font-family: "Times New Roman", Times, serif;
+}
