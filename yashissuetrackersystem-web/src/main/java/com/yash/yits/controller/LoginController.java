@@ -76,7 +76,9 @@ public class LoginController {
 		}
 		else
 		{
+
 			return "redirect:/static/ManagerDashboard.html";
+
 		}
 	}
 
