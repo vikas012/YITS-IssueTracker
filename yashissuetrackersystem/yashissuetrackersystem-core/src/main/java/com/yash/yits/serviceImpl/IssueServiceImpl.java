@@ -585,6 +585,69 @@ public class IssueServiceImpl implements IssueService{
 		issueDao.assignIssue(issue, fetchId);
 
 	}
+	
+	public IssueForm fetchIssueDetailsConv(int id) {
+		 
+		 
+		Issue fetchedIssue=issueDao.fetchIssueDetailsConv(id);
+		IssueForm fetchedIssueForm=new IssueForm();
+		 
+		ProjectForm projectForm=new ProjectForm();
+		projectForm.setName(fetchedIssue.getProject().getName());
+		fetchedIssueForm.setProject(projectForm);
+		 
+		ApplicationIssuePriorityForm applicationIssuePriorityForm=new ApplicationIssuePriorityForm();
+		applicationIssuePriorityForm.setType(fetchedIssue.getApplicationIssuePriority().getType());
+		fetchedIssueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+		 
+		ApplicationIssueTypeForm applicationIssueTypeForm=new ApplicationIssueTypeForm();
+		applicationIssueTypeForm.setType(fetchedIssue.getApplicationIssueType().getType());
+		fetchedIssueForm.setApplicationIssueType(applicationIssueTypeForm);
+		 
+		fetchedIssueForm.setAffectedVersion(fetchedIssue.getAffectedVersion());
+		 
+		fetchedIssueForm.setComponent(fetchedIssue.getComponent());
+		 
+		fetchedIssueForm.setSummary(fetchedIssue.getSummary());
+		 
+		fetchedIssueForm.setDescription(fetchedIssue.getDescription());
+		 
+		ApplicationEnvironmentForm applicationEnvironmentForm=new ApplicationEnvironmentForm();
+		applicationEnvironmentForm.setEnvironment(fetchedIssue.getApplicationEnvironment().getEnvironment());
+		fetchedIssueForm.setApplicationEnvironment(applicationEnvironmentForm);
+		 
+		ApplicationTeamMemberForm applicationTeamMemberForm =new ApplicationTeamMemberForm();
+		        MemberForm member=new MemberForm();
+		        member.setName(fetchedIssue.getIssueOwner().getMember().getName());
+		        applicationTeamMemberForm.setMember(member);
+		        fetchedIssueForm.setIssueOwner(applicationTeamMemberForm);
+		        
+		        ApplicationTeamMemberForm applicationTeamMemberForm1 =new ApplicationTeamMemberForm();
+		        MemberForm member1=new MemberForm();
+		        member1.setName(fetchedIssue.getCreatedBy().getMember().getName());
+		        applicationTeamMemberForm1.setMember(member1);
+		        fetchedIssueForm.setCreatedBy(applicationTeamMemberForm1);
+
+
+		return fetchedIssueForm;
+		}
+
+
+	public List<MemberForm> getMemberListConv() {
+	
+		List<Member> members = issueDao.getMemberListConv();
+		List<MemberForm> memberForms = new ArrayList<MemberForm>();
+
+		for (Member member : members) {
+
+		MemberForm memberForm = new MemberForm();
+		memberForm.setName(member.getName());
+		memberForm.setId(member.getId());
+		memberForms.add(memberForm);
+		}
+		return memberForms;
+		}
+
 
 	
 }

@@ -195,7 +195,7 @@ angular
 								},
 
 								initializeSelect : function() {
-									alert("in service for Projects get")
+								
 									return $http
 											.get('../getProjects')
 											.then(

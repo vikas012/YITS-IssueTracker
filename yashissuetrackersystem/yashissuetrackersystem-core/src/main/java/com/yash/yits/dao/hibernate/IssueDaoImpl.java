@@ -676,7 +676,26 @@ public class IssueDaoImpl implements IssueDao {
 		issue2.setDueDate(issue.getDueDate());
 		session.update(issue2);
 	}
+	
+	public Issue fetchIssueDetailsConv(int id) {
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Issue where id="+id);
+		Issue issue=(Issue)query.uniqueResult();
+		return issue;
+	}
 
+
+	public List<Member> getMemberListConv() {
+		
+
+			Session session = sessionFactory.getCurrentSession();
+			Criteria criteria = session.createCriteria(Member.class)
+			.setProjection(Projections.projectionList().add(Projections.property("id"), "id")
+			.add(Projections.property("name"), "name"))
+			.setResultTransformer(Transformers.aliasToBean(Member.class));
+			List<Member> members = criteria.list();
+			return members;
+			}
 	/*public int getIssueId(long memberId) {
 		int id=0;
 		

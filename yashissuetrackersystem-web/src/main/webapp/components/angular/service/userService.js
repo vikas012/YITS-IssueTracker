@@ -49,17 +49,33 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 
 		      	},	 
 		      	
-		      	fetchIssueDetailsConv:function(id){
+fetchIssueDetailsConv:function(id){
 					
 					alert(id);
-//					var issueId={
-//							
-//						"issueId":id,	
-//							
-//					};
+					
 					return $http.post('../fetchIssueDetailsConv/'+id)
 				 	.then(
 				 				function(response){
+				 					alert(response.data);
+				 						return response.data;
+				 				}, 
+				 				function(errResponse){
+				 						console.error('Error while fetchIssueDetails member');
+				 						return $q.reject(errResponse);
+				 				}
+	         			);
+					
+				}, 
+				
+				
+				getMemberListConv:function(){
+					
+					alert("in service assigne");
+					
+					return $http.get('../getMemberListConv')
+				 	.then(
+				 				function(response){
+				 					alert(response.data);
 				 						return response.data;
 				 				}, 
 				 				function(errResponse){

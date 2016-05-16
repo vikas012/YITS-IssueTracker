@@ -294,22 +294,32 @@ angular
 								};
 							
 
-							$scope.fetchIssueDetailsConv=function(id){
-							
-								userService.fetchIssueDetailsConv(id)
-								.then(
-										function(data){
+								$scope.fetchIssueDetailsConv=function(id){
+									alert(id);
+									userService.fetchIssueDetailsConv(id)
+									.then(
+											function(data){
+												alert(data);
+												$scope.fetchedIssue = data;
 									
-										},
-										 function(errResponse)
-										 {
-											console.error('Error while fetchIssueDetails members');
-										 }
-								)
-								
-								
-							};
-							
+												userService.getMemberListConv()
+												.then(
+														function(data){
+															alert(data);
+															$scope.fetchedMember = data;
+														},	
+														 function(errResponse)
+														 {
+															console.error('Error while getMemberListConv members');
+														 }
+												)	
+											},
+											 function(errResponse)
+											 {
+												console.error('Error while fetchIssueDetails members');
+											 }
+									)	
+								};
 
 							/* issueService returns list to populate drop-down */
 							/*

@@ -65,6 +65,12 @@ public interface IssueService {
 
 
 	public Map<String, Object> showIssueDetails(int id);
+	
+	public IssueForm fetchIssueDetailsConv(int id);
+
+
+
+	public List<MemberForm> getMemberListConv();
 
 	
 }

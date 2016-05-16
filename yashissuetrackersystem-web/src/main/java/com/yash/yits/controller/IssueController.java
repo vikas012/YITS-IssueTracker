@@ -93,14 +93,25 @@ public class IssueController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/fetchIssueDetailsConv/{id}", method = RequestMethod.POST)
-	public void fetchIssueDetailsConv(@PathVariable("id") int id) {
+	@RequestMapping(value="/fetchIssueDetailsConv/{id}",method=RequestMethod.POST)
+	public IssueForm fetchIssueDetailsConv(@PathVariable("id") int id){
+		
+		System.out.println("-------in conversation--------"+id);
+		IssueForm issueForm=issueService.fetchIssueDetailsConv(id);
+		System.out.println(issueForm);
+		return issueForm;
+		/*userService.fetchIssueDetailsConv(issueId);*/
+		
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getMemberListConv",method=RequestMethod.GET)
+	public List<MemberForm> getMemberListConv(){
+		List<MemberForm> issues=issueService.getMemberListConv();
+		System.out.println("in get member list");
 
-		System.out.println("-------in conversation--------" + id);
-		// issueService.fetchIssueDetailsConv(int id);
-
-		/* userService.fetchIssueDetailsConv(issueId); */
-
+		return issues;
 	}
 
 	@ResponseBody
