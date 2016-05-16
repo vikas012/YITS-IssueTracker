@@ -428,7 +428,7 @@ Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 	 */
 	public String saveFile(Attachment file) {
 		Session session = sessionFactory.getCurrentSession();
-		session.persist(file);
+		session.save(file);
 		return "success";
 	}
 

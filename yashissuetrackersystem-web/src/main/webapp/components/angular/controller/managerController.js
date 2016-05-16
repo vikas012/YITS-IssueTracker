@@ -654,6 +654,7 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								formData.append("file", $scope.file1); 
 								formData.append("attachmentLabel", attachmentLabel);
 								
+							
 							    switch (ext) {
 							        case 'jpg':
 							        case 'jpeg':
