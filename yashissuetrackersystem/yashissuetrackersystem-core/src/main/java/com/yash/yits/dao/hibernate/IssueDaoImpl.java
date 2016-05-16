@@ -443,16 +443,6 @@ public class IssueDaoImpl implements IssueDao {
 		return issues;
 	}
 
-	public Issue fetchIssueDetails(int fetchId) {
-		System.out.println("prajvi dao");
-		Session session=sessionFactory.getCurrentSession();
-		Query query=session.createQuery("from Issue where id="+fetchId);
-		Issue issue=(Issue)query.uniqueResult();
-		return null;
-
-
-	}
-
 
 	public List<Issue> getFilteredIssue(int issuepriorityId, int issuetypeId, int projectnameId) {
 		Session session=sessionFactory.getCurrentSession();
@@ -652,6 +642,39 @@ public class IssueDaoImpl implements IssueDao {
 		
 		
 		return issueId;
+	}
+	public Issue fetchIssueDetails(int fetchId) {
+
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Issue where id=" + fetchId);
+		Issue issue = (Issue) query.uniqueResult();
+		return issue;
+	}
+
+	public List<Member> getMemberList() {
+
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Member.class)
+				.setProjection(Projections.projectionList().add(Projections.property("id"), "id")
+						.add(Projections.property("name"), "name"))
+				.setResultTransformer(Transformers.aliasToBean(Member.class));
+		List<Member> members = criteria.list();
+		return members;
+	}
+
+	public void assignIssue(Issue issue, int fetchId) {
+
+		Session session = sessionFactory.getCurrentSession();
+		System.out.println(issue.getOriginalEstimate());
+		System.out.println(issue.getRemainingEstimate());
+		System.out.println(issue.getAssignedUser());
+		
+		Issue issue2 = session.get(Issue.class, issue.getId());
+		issue2.setOriginalEstimate(issue.getOriginalEstimate());
+		issue2.setRemainingEstimate(issue.getRemainingEstimate());
+		issue2.setAssignedUser(issue.getAssignedUser());
+		issue2.setDueDate(issue.getDueDate());
+		session.update(issue2);
 	}
 
 	/*public int getIssueId(long memberId) {

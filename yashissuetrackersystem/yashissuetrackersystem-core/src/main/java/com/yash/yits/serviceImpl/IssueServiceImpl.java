@@ -1,48 +1,39 @@
 package com.yash.yits.serviceImpl;
 
 
-import java.util.List;
-
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import org.apache.commons.beanutils.BeanUtils;
-
 import org.springframework.transaction.annotation.Transactional;
+
 import com.yash.yits.dao.IssueDao;
-import com.yash.yits.domain.Issue;
-
 import com.yash.yits.domain.Application;
-
 import com.yash.yits.domain.ApplicationEnvironment;
 import com.yash.yits.domain.ApplicationIssuePriority;
 import com.yash.yits.domain.ApplicationIssueStatus;
 import com.yash.yits.domain.ApplicationIssueType;
 import com.yash.yits.domain.ApplicationTeamMember;
 import com.yash.yits.domain.Attachment;
+import com.yash.yits.domain.Issue;
 import com.yash.yits.domain.Member;
-
+import com.yash.yits.domain.Project;
+import com.yash.yits.form.ApplicationEnvironmentForm;
+import com.yash.yits.form.ApplicationForm;
 import com.yash.yits.form.ApplicationIssuePriorityForm;
 import com.yash.yits.form.ApplicationIssueStatusForm;
 import com.yash.yits.form.ApplicationIssueTypeForm;
 import com.yash.yits.form.ApplicationTeamMemberForm;
 import com.yash.yits.form.AttachmentForm;
-import com.yash.yits.form.ApplicationForm;
-import com.yash.yits.domain.Project;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.ProjectForm;
@@ -312,17 +303,6 @@ public class IssueServiceImpl implements IssueService{
 	
 		return projectForms;
 	}
-	
-	
-
-
-	public IssueForm fetchIssueDetails(int fetchId) {
-		System.out.println("prajvi service");
-		Issue fetchedIssue=issueDao.fetchIssueDetails(fetchId);
-		IssueForm fetchedIssueForm=new IssueForm();
-		return fetchedIssueForm;
-
-	}
 
 
 	public List<IssueForm> getFilteredIssue(int issuepriorityId1, int issuetypeId1, int projectnameId) {
@@ -518,6 +498,91 @@ public class IssueServiceImpl implements IssueService{
 		
 	
 		return issueDetails;
+
+	}
+	
+	public IssueForm fetchIssueDetails(int fetchId) {
+
+		Issue fetchedIssue = issueDao.fetchIssueDetails(fetchId);
+		IssueForm fetchedIssueForm = new IssueForm();
+
+		ProjectForm projectForm = new ProjectForm();
+		projectForm.setName(fetchedIssue.getProject().getName());
+		fetchedIssueForm.setProject(projectForm);
+
+		ApplicationIssuePriorityForm applicationIssuePriorityForm = new ApplicationIssuePriorityForm();
+		applicationIssuePriorityForm.setType(fetchedIssue.getApplicationIssuePriority().getType());
+		fetchedIssueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+
+		ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
+		applicationIssueTypeForm.setType(fetchedIssue.getApplicationIssueType().getType());
+		fetchedIssueForm.setApplicationIssueType(applicationIssueTypeForm);
+
+		fetchedIssueForm.setAffectedVersion(fetchedIssue.getAffectedVersion());
+
+		fetchedIssueForm.setComponent(fetchedIssue.getComponent());
+
+		fetchedIssueForm.setSummary(fetchedIssue.getSummary());
+
+		fetchedIssueForm.setDescription(fetchedIssue.getDescription());
+
+		ApplicationEnvironmentForm applicationEnvironmentForm = new ApplicationEnvironmentForm();
+		applicationEnvironmentForm.setEnvironment(fetchedIssue.getApplicationEnvironment().getEnvironment());
+		fetchedIssueForm.setApplicationEnvironment(applicationEnvironmentForm);
+
+		ApplicationTeamMemberForm applicationTeamMemberForm = new ApplicationTeamMemberForm();
+		MemberForm member = new MemberForm();
+		member.setName(fetchedIssue.getIssueOwner().getMember().getName());
+		applicationTeamMemberForm.setMember(member);
+		fetchedIssueForm.setIssueOwner(applicationTeamMemberForm);
+
+		ApplicationTeamMemberForm applicationTeamMemberForm1 = new ApplicationTeamMemberForm();
+		MemberForm member1 = new MemberForm();
+		member1.setName(fetchedIssue.getCreatedBy().getMember().getName());
+		applicationTeamMemberForm1.setMember(member1);
+		fetchedIssueForm.setCreatedBy(applicationTeamMemberForm1);
+
+		return fetchedIssueForm;
+	}
+
+	public List<MemberForm> getMemberList() {
+
+		List<Member> members = issueDao.getMemberList();
+		List<MemberForm> memberForms = new ArrayList<MemberForm>();
+
+		for (Member member : members) {
+
+			MemberForm memberForm = new MemberForm();
+			memberForm.setName(member.getName());
+			memberForm.setId(member.getId());
+			memberForms.add(memberForm);
+		}
+		return memberForms;
+	}
+
+	public void assignIssue(IssueForm issueForm, int fetchId) throws ParseException {
+
+		Issue issue = new Issue();
+		issue.setId(issueForm.getId());
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
+
+		String newDate = issueForm.getDueDate();
+		Date date = formatter.parse(newDate);
+		issue.setDueDate(date);
+		
+		issue.setOriginalEstimate(issueForm.getOriginalEstimate());
+		issue.setRemainingEstimate(issueForm.getRemainingEstimate());
+
+		ApplicationTeamMemberForm applicationTeamMemberForm = issueForm.getAssignedUser();
+
+		Member member = new Member();
+		member.setId(issueForm.getAssignedUser().getMember().getId());
+		ApplicationTeamMember applicationTeamMember = new ApplicationTeamMember();
+		applicationTeamMember.setMember(member);
+		issue.setAssignedUser(applicationTeamMember);
+
+		issueDao.assignIssue(issue, fetchId);
 
 	}
 

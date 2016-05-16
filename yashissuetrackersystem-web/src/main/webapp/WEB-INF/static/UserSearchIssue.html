@@ -120,7 +120,7 @@
 				<tr  id="heading">
 					<th>Select</th>
 					<th>Creation Date</th>
-					<th>Due Date</th>
+					<!-- <th>Due Date</th> -->
 					<th>Project Name</th>
 					<th>Issue Type</th>
 					<th>Issue Status</th>
@@ -133,7 +133,7 @@
 			<tr id="defaultTable" ng-repeat="issue in defaultIssueSearchList">
 				<td><input id='radio' type='radio' name="issueId" value="{{issue.id}}"></td>
 				<td>{{issue.createdDateTime}}</td>
-				<td>{{issue.dueDate}}</td>
+				<!-- <td>{{issue.dueDate}}</td> -->
 				<td>{{issue.project.name}}</td>
 				<td>{{issue.applicationIssueType.type}}</td>
 				<td>{{issue.applicationIssueStatus.status}}</td>

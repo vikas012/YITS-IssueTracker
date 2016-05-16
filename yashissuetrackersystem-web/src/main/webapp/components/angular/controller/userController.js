@@ -19,13 +19,7 @@ angular
 
 							userService.initializeSelect().then(function(d) {
 								$scope.projects = d.projects;
-								// alert(d.projects);
-								// alert(d.myValue);
-								// $scope.applications=d.application;
-								// alert(d.application);
-
-								// alert(d.data.id);
-								// alert(d.data.name);
+							
 
 							});
 							$scope.myFunc = function() {
@@ -44,11 +38,7 @@ angular
 										.initializeSelectAll(this.pId)
 										.then(
 												function(d) {
-													// alert("in success all
-													// select");
-													// alert("In controller
-													// select all called");
-													// alert(d.myValue1);
+											
 													$scope.issueTypeList = d.issueType;
 													$scope.priorities = d.issuePriority;
 													$scope.environments = d.applicationEnvironment;
@@ -116,7 +106,7 @@ angular
 								var applicationEnvironment = {
 									"id":this.createIssue.applicationEnvironment.id
 }
-var formData={
+								var formData={
 									"project" : project,
 									"applicationIssueType" : applicationIssueType,
 									"applicationIssuePriority" : applicationIssuePriority,
@@ -127,7 +117,7 @@ var formData={
 									"description" : description,
 									"issueOwner" : issueOwner
 								};
-								alert(formData);
+								
 								userService
 										.submitCreateIssue(formData)
 										.then(
@@ -244,7 +234,7 @@ var formData={
 										.download(id)
 										.then(
 												function(data) {
-
+													alert("File downloaded successfully!");
 												},
 												function(errResponse) {
 													console
@@ -253,13 +243,12 @@ var formData={
 
 							};
 							
-							alert("conversation user controller");
+							
 							var conversation = $http({
 								method : 'GET',
 								url : '../conversationList'
 							}).success(function(data) {
-								alert(data);
-
+								
 								$scope.conversationList = data;
 							})
 							
@@ -306,7 +295,7 @@ var formData={
 							
 
 							$scope.fetchIssueDetailsConv=function(id){
-								alert(id);
+							
 								userService.fetchIssueDetailsConv(id)
 								.then(
 										function(data){

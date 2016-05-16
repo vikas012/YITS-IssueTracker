@@ -3,20 +3,15 @@ package com.yash.yits.dao;
 
 import java.util.Date;
 import java.util.List;
-
-import com.yash.yits.domain.ApplicationIssueType;
-import com.yash.yits.domain.Attachment;
-
 import java.util.Map;
 
-
+import com.yash.yits.domain.Application;
 import com.yash.yits.domain.Application;
 import com.yash.yits.domain.ApplicationIssuePriority;
-
-
-
+import com.yash.yits.domain.ApplicationIssueType;
+import com.yash.yits.domain.Attachment;
 import com.yash.yits.domain.Issue;
-import com.yash.yits.domain.Application;
+import com.yash.yits.domain.Member;
 import com.yash.yits.domain.Project;
 import com.yash.yits.form.MemberForm;
 
@@ -40,12 +35,7 @@ public interface IssueDao {
 
 	public Map<String, Object> getAllSelectFields(Project project, MemberForm member);
 
-
-
-
 	public List<Application> getApplicationNames();
-
-	public Issue fetchIssueDetails(int fetchId);
 
 	public List<ApplicationIssuePriority> getDefaultIssuePriorities(int applicationId);
 	public List<Project> getDefaultProjectNames(int applicationId);
@@ -59,5 +49,9 @@ public interface IssueDao {
 
 	public Attachment getAttachment(int id);
 
+	public Issue fetchIssueDetails(int fetchId);
 
+	public List<Member> getMemberList();
+
+	public void assignIssue(Issue issue, int fetchId);
 }

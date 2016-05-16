@@ -43,9 +43,6 @@ public interface IssueService {
 	public List<ApplicationForm> getApplicationNames();
 
 	public List<ApplicationIssueTypeForm> getDefaultIssueTypes(int applicationId);
-
-
-	public IssueForm fetchIssueDetails(int fetchId);
 	
 	public List<ApplicationIssuePriorityForm> getDefaultIssuePriorities(int applicationId);
 	
@@ -57,10 +54,12 @@ public interface IssueService {
 
 	public List<Issue> getConversationList(long createdBy);
 
+	public IssueForm fetchIssueDetails(int fetchId);
 
+	public List<MemberForm> getMemberList();
 
-
-
+	public void assignIssue(IssueForm issueForm, int fetchId) throws ParseException;
+	
 	public AttachmentForm getAttachment(int id);
 
 
