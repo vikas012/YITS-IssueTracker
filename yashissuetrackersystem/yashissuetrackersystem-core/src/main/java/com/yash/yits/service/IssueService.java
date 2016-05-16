@@ -9,6 +9,7 @@ import java.util.Map;
 import com.yash.yits.form.ApplicationForm;
 import com.yash.yits.form.ApplicationIssuePriorityForm;
 import com.yash.yits.form.ApplicationIssueTypeForm;
+import com.yash.yits.form.AttachmentForm;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 import com.yash.yits.form.ProjectForm;
@@ -52,5 +53,13 @@ public interface IssueService {
 	public List<IssueForm> getFilteredIssue(int issuepriorityId1,int issuetypeId1,int projectnameId);
 
 	public String saveFile(Attachment file);
+
+
+
+	AttachmentForm getAttachment(int id);
+
+
+
+	Map<String, Object> showIssueDetails(int id);
 	
 }

@@ -1,4 +1,4 @@
-var userModule = angular.module('issueTrackingSystem.userModule',['ngRoute']);
+var userModule = angular.module('issueTrackingSystem.userModule',['ngRoute','datatables']);
 userModule.config(function($routeProvider){
 		$routeProvider
 			.when('/createIssue',{
@@ -7,7 +7,7 @@ userModule.config(function($routeProvider){
 			})
 
 			.when('/searchIssues', {
-		templateUrl : '../issues',
+		templateUrl : '../userIssues',
 		controller : 'userController as uc',
 		
 	})

@@ -487,6 +487,31 @@ public class IssueDaoImpl implements IssueDao {
 	}
 
 
+	public Issue showIssueDetails(int id) {
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Issue.class);
+		criteria.add(Restrictions.eq("id", id));
+		
+		Issue issues=(Issue)criteria.uniqueResult();
+		
+		
+		
+		
+		return issues;
+	}
+
+
+	public Attachment getAttachment(int id) {
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Attachment.class);
+		criteria.add(Restrictions.eq("id", id));
+		
+		
+		Attachment attachment=(Attachment)criteria.uniqueResult();
+		return attachment;
+	}
+
+
 
 
 

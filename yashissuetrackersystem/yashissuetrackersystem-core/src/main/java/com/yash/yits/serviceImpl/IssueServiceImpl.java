@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.HashMap;
 import java.util.HashSet;
 
 import java.util.Iterator;
@@ -40,7 +40,7 @@ import com.yash.yits.form.ApplicationIssuePriorityForm;
 import com.yash.yits.form.ApplicationIssueStatusForm;
 import com.yash.yits.form.ApplicationIssueTypeForm;
 import com.yash.yits.form.ApplicationTeamMemberForm;
-
+import com.yash.yits.form.AttachmentForm;
 import com.yash.yits.form.ApplicationForm;
 import com.yash.yits.domain.Project;
 import com.yash.yits.form.IssueForm;
@@ -372,6 +372,167 @@ public class IssueServiceImpl implements IssueService{
 		file.setLastModifiedDateTime(new Date());
 		return issueDao.saveFile(file);
 		 
+	}
+
+
+	public AttachmentForm getAttachment(int id) {
+		Attachment attachment=issueDao.getAttachment(id);
+		System.out.println(attachment.getName());
+		System.out.println(attachment.getLabel());
+		AttachmentForm attachmentForm=new AttachmentForm();
+			attachmentForm.setFile(attachment.getFile());
+			attachmentForm.setLabel(attachment.getLabel());
+			attachmentForm.setName(attachmentForm.getName());
+		System.out.println(attachmentForm.getName());
+		System.out.println(attachmentForm.getLabel());
+		return attachmentForm;
+	}
+
+
+	public Map<String, Object> showIssueDetails(int id) {
+Issue issue =issueDao.showIssueDetails(id);
+		
+		
+		
+		
+		
+		/*issueDetails.put("affectedVersion", issue.getAffectedVersion());
+		issueDetails.put("component", issue.getComponent());
+		issueDetails.put("description", issue.getDescription());
+		issueDetails.put("originalEstimate", issue.getOriginalEstimate());
+		issueDetails.put("remainingEstimate", issue.getRemainingEstimate());
+		issueDetails.put("taskProgressUpdate", issue.getTaskProgressUpdate());
+		
+		ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
+		applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
+		issueDetails.put("issueType", applicationIssueTypeForm);
+		
+		ApplicationIssuePriorityForm applicationIssuePriorityForm = new ApplicationIssuePriorityForm();
+		applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+		issueDetails.put("issuePriority", applicationIssuePriorityForm);
+		
+		ApplicationTeamMemberForm applicationTeamMemberForm =new ApplicationTeamMemberForm();
+		MemberForm member=new MemberForm();
+		member.setName(issue.getIssueOwner().getMember().getName());
+		applicationTeamMemberForm.setMember(member);
+		issueDetails.put("owner", applicationTeamMemberForm);
+		
+		ApplicationTeamMemberForm applicationTeamMemberForm2=new ApplicationTeamMemberForm();
+		MemberForm createdBy=new MemberForm();
+		createdBy.setName(issue.getCreatedBy().getMember().getName());
+		applicationTeamMemberForm2.setMember(createdBy);
+		issueDetails.put("createdBy", applicationTeamMemberForm2);
+		
+		issueDetails.put("closeDate", issue.getCloseDate());
+		issueDetails.put("createdDateTime", issue.getCreatedDateTime());
+		issueDetails.put("dueDate", issue.getDueDate());
+		
+		List<Attachment> listOfIssueForm= issue.getAttachments();
+		issueDetails.put("attachments", listOfIssueForm);
+		*/
+		IssueForm issueForm = new IssueForm();
+		
+		issueForm.setAffectedVersion(issue.getAffectedVersion());
+		issueForm.setComponent(issue.getComponent());
+		issueForm.setDescription(issue.getDescription());
+		issueForm.setOriginalEstimate(issue.getOriginalEstimate());
+		issueForm.setRemainingEstimate(issue.getRemainingEstimate());
+		issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
+		issueForm.setCloseDate(issue.getCloseDate());
+		issueForm.setCreatedDateTime(issue.getCreatedDateTime());
+		
+		ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
+		applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
+		issueForm.setApplicationIssueType(applicationIssueTypeForm);
+		
+		ApplicationIssuePriorityForm applicationIssuePriorityForm = new ApplicationIssuePriorityForm();
+		applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+		issueForm.setApplicationIssuePriority(applicationIssuePriorityForm);
+		
+		ApplicationTeamMemberForm applicationTeamMemberForm =new ApplicationTeamMemberForm();
+		MemberForm member=new MemberForm();
+		member.setName(issue.getIssueOwner().getMember().getName());
+		applicationTeamMemberForm.setMember(member);
+		issueForm.setIssueOwner(applicationTeamMemberForm);
+		
+		ApplicationTeamMemberForm applicationTeamMemberForm2=new ApplicationTeamMemberForm();
+		MemberForm createdBy=new MemberForm();
+		createdBy.setName(issue.getCreatedBy().getMember().getName());
+		applicationTeamMemberForm2.setMember(createdBy);
+		issueForm.setCreatedBy(applicationTeamMemberForm2);
+		
+		ApplicationTeamMemberForm applicationTeamMemberForm3=new ApplicationTeamMemberForm();
+		MemberForm lastModifiedBy = new MemberForm();
+		//member.setName(issue.getLastModifiedBy().getMember().getName());
+		applicationTeamMemberForm3.setMember(lastModifiedBy);
+		issueForm.setLastModifiedBy(applicationTeamMemberForm3);
+		
+		List<Attachment> listOfIssueForm= issue.getAttachments();
+		
+		List<AttachmentForm> listOfAttachmentForm = new ArrayList<AttachmentForm>();
+			
+		for (Attachment attachment : listOfIssueForm) {
+			AttachmentForm attachmentForm = new AttachmentForm();
+			System.out.println("----"+attachment.getId());
+				attachmentForm.setFile( attachment.getFile());
+				attachmentForm.setId(attachment.getId());
+				attachmentForm.setLabel(attachment.getLabel());
+				attachmentForm.setName(attachment.getName());
+				listOfAttachmentForm.add(attachmentForm);
+			}
+			
+	
+		System.out.println("asjhdjkashdugtja"+listOfAttachmentForm);
+		issueForm.setAttachmentForms(listOfAttachmentForm);
+		System.out.println(issueForm.getAttachmentForms());
+		
+		Map<String,Object> issueDetails = new HashMap<String, Object>();
+		issueDetails.put("listOfAttachment", listOfAttachmentForm);
+		issueDetails.put("issueobject", issueForm);
+		
+	/*	issueDetails.put("component", issue.getComponent());*/
+		
+		
+		/*for (Issue issue : listOfIssues) {
+			IssueForm form = new IssueForm();
+			
+			form.setAffectedVersion(issue.getAffectedVersion());
+			form.setComponent(issue.getComponent());
+			form.setDescription(issue.getDescription());
+			form.setOriginalEstimate(issue.getOriginalEstimate());
+			form.setRemainingEstimate(issue.getRemainingEstimate());
+			form.setTaskProgressUpdate(issue.getTaskProgressUpdate());
+			
+			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
+			applicationIssueTypeForm.setType(issue.getApplicationIssueType().getType());
+			form.setApplicationIssueType(applicationIssueTypeForm);
+			
+			ApplicationIssuePriorityForm applicationIssuePriorityForm = new ApplicationIssuePriorityForm();
+			applicationIssuePriorityForm.setType(issue.getApplicationIssuePriority().getType());
+			form.setApplicationIssuePriority(applicationIssuePriorityForm);
+			
+			
+			ApplicationTeamMemberForm applicationTeamMemberForm =new ApplicationTeamMemberForm();
+			MemberForm member=new MemberForm();
+			member.setName(issue.getIssueOwner().getMember().getName());
+			applicationTeamMemberForm.setMember(member);
+			form.setIssueOwner(applicationTeamMemberForm);
+			
+			ApplicationTeamMemberForm applicationTeamMemberForm2=new ApplicationTeamMemberForm();
+			MemberForm createdBy=new MemberForm();
+			createdBy.setName(issue.getCreatedBy().getMember().getName());
+			applicationTeamMemberForm2.setMember(createdBy);
+			form.setCreatedBy(applicationTeamMemberForm2);
+			listOfIssueForm.add(form);
+			
+			AttachmentForm attachmentForm = new AttachmentForm();
+			form.setId(id);
+			attachmentForm.setIssue(form);
+			
+			
+			
+		}*/
+		return issueDetails;
 	}
 	
 }

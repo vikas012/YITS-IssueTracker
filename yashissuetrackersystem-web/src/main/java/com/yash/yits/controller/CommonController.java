@@ -14,7 +14,7 @@ public class CommonController {
 	
 	@RequestMapping(value="/userWelcome")
 	public String userDashboard(){
-		return "UserDashboard";
+		return "redirect:/static/UserDashboard.html";
 	}
 	
 	@RequestMapping(value="/managerWelcome")

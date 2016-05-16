@@ -52,4 +52,8 @@ public interface IssueDao {
 	public List<Issue> getFilteredIssue(int issuepriorityId1,int issuetypeId1,int projectnameId);
 	public String saveFile(Attachment file);
 
+	public Issue showIssueDetails(int id);
+
+	public Attachment getAttachment(int id);
+
 }

@@ -127,10 +127,21 @@ public class Issue implements Serializable {
 	@JoinColumn(name="ASSIGNED_USER")
 	private ApplicationTeamMember assignedUser;
 	
+	@OneToMany(mappedBy="issue")
+	private List<Attachment> attachments;
+	
 /*	//bi-directional many-to-one association to IssuePauseReason
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
 	private List<IssuePauseReason> issuePauseReasons;*/
 	
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<Attachment> attachments) {
+		this.attachments = attachments;
+	}
+
 	public Issue() {
 	}
 
