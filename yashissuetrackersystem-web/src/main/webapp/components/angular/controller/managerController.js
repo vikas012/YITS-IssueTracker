@@ -896,5 +896,78 @@ angular
 										});
 								saveAs(blob, "ListOfMembers.xls");
 							};
+							
+							
+							 /**
+							  * File Upload
+							  */
+							$scope.attachments=[{ attachmentFile:''}];
+							$scope.getTheFile1 = function($files) {
+								
+							/*	angular.forEach($files, function(value, key) {*/
+									 $scope.file1 = $files[0];
+									 $scope.file1Name = $files[0].name; 
+									 $scope.file1Size = $files[0].size;
+							/*	});*/
+								console.log($scope.file1,$scope.file1Name,$scope.file1Size);
+							}
+							
+							
+							$scope.uploadFile1 = function() {
+								var fileInput = $('#selectFile1');
+								var maxSize = fileInput.data('max-size');
+								var fileSize=$scope.file1Size;
+								var fileName=$scope.file1Name;
+								var ext = fileName.split('.').pop();
+
+								var attachmentLabel= $scope.attachmentLabel1;
+								var formData = new FormData();
+								formData.append("file", $scope.file1); 
+								formData.append("attachmentLabel", attachmentLabel);
+								
+							
+							    switch (ext) {
+							        case 'jpg':
+							        case 'jpeg':
+							        case 'png':
+							        case 'gif':
+							        case 'doc':
+							        case 'docx':
+							        case 'txt':
+							        case 'pdf':
+							        case 'xls':
+							        case 'xlsx':
+							        case 'sql':
+							        case 'java':
+						        	case 'xml': 
+							            break;
+							        default:
+							        	alert('File type not allowed.');
+							        	$("#selectFile1").val("");
+					                	return false;
+							    }
+							   
+								if(fileSize>maxSize){
+						                alert('File size is too big ! Size should be less than 1 MB');
+						                $("#selectFile1").val("");
+						                return false;
+						            }
+								$scope.attachments.push({ 
+									attachmentFile: $scope.file1Name,
+									
+								});
+								
+								managerService
+								.fileUpload(formData)
+								.then(
+										function(data) {
+										},
+										function(errResponse) {
+											
+										}
+								)
+
+							
+							}
 
 						} ]);

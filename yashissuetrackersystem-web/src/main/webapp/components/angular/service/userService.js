@@ -86,18 +86,18 @@ fetchIssueDetailsConv:function(id){
 					
 				}, 
 		      	
-	      	EditIssue:function(){
-	      		return $http.get('../defaultIssuesList')
-	      		.then(
-	                      function(response){
-	                          return response.data;
-	                      }, 
-	                      function(errResponse){
-	                          console.error('Error while fetching users');
-	                              return $q.reject(errResponse);
-	                      }
-	                );
-	      	},
+				EditIssue:function(){
+		      		return $http.get('./defaultIssuesList')
+		      		.then(
+		                      function(response){
+		                          return response.data;
+		                      }, 
+		                      function(errResponse){
+		                          console.error('Error while fetching users');
+		                              return $q.reject(errResponse);
+		                      }
+		                );
+		      	},
 	  
 	      	
 
@@ -224,10 +224,61 @@ fetchIssueDetailsConv:function(id){
   				
 	  
   			},	
+  			
+  			
+  			
+startTask:function(id,dueDate){
+	  			
+	  			
+	  			
+	  			
+	  			return $http.get('../starttask/'+id+"/"+dueDate)
+					.then(
+	  						function(response){
+	  							return response.data;
+	  						},
+	  						function(errResponse){
+									console.error('Error while fetching users');
+									return $q.reject(errResponse);
+								}
+	  				)
+	  		
+	      	
+	  },
+	  
+	  stopTask:function(id){
+			
+			return 	$http.get('../stoptask/'+id)
+				.then(
+						function(response){
+							return response.data;
+						},
+						function(errResponse){
+								console.error('Error while fetching users');
+								return $q.reject(errResponse);
+							}
+				)
+		},
+		
+		pauseTask:function(id,reason){
+			
+			return 	$http.get('../pausetask/'+id+'/'+reason)
+				.then(
+						function(response){
+							return response.data;
+						},
+						function(errResponse){
+								console.error('Error while fetching users');
+								return $q.reject(errResponse);
+							}
+				)
+		},
+		
+}
 	  
 
 	      	
-	  }
+	  
 	  
 
 }]);

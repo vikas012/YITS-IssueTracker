@@ -112,13 +112,14 @@ public class IssueController {
 
 
 	
-	@RequestMapping(value="/showEditIssueForm")
+	@RequestMapping(value="/displayEditIssueForm")
 	public String showEditForm()
 	{
-
+	System.out.println("user edit issue");
 		return "redirect:/static/UserEditIssue.html";
 	}
-
+	
+	
 	@ResponseBody
 	@RequestMapping(value="/fetchIssueDetailsConv/{id}",method=RequestMethod.POST)
 	public IssueForm fetchIssueDetailsConv(@PathVariable("id") int id){
@@ -580,7 +581,6 @@ public class IssueController {
 		}
 		
 	}
-
 	/**
 	 * Method to handle requests coming from /issue/stoptask url and providing updated list of issues to view.
 	 */
@@ -606,6 +606,5 @@ public class IssueController {
 		
 		return issues;
 	}
-
 
 }

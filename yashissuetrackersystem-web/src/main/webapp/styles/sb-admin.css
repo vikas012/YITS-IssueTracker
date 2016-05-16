@@ -358,3 +358,34 @@ a:active
 	font-size: 17px;
 	font-family: "Times New Roman", Times, serif;
 }
+
+.modal-header
+ {
+     padding:9px 15px;
+     border-bottom:1px solid #eee;
+     background-color: #66b3ff;
+ }
+ 
+
+
+ .modal-dialog modal-sm,
+    .modal-content {
+    
+    height: 150%;
+    width: 150%;
+}
+
+.modal-body {
+
+    /* 100% = dialog height, 120px = header + footer */
+    max-height: calc(100% - 150px);
+    max-width: calc(100% - 150px);
+}
+
+
+.search-input{
+
+	top:180px;
+	left:300px;
+	position:absolute;
+}

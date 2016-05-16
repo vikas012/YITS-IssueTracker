@@ -12,11 +12,11 @@ angular
 							var issues = $http({
 								method : 'GET',
 								url : '../defaultIssuesList'
-							}).success(function(data) {
+							})
+							.success(function(data) {
 								
 								$scope.issueList = data;
 							})
-
 							userService.initializeSelect().then(function(d) {
 								$scope.projects = d.projects;
 							
@@ -453,6 +453,101 @@ angular
 										}
 								)
 							};
+							
+							$scope.searchAllIssues = function(){
+								
+								$http.get('../defaultIssuesList').success(function(data) {
+												
+												
+									$scope.issueList = data;
+											
+											
+												});
+
+										};
+							
+							
+							
+							
+							
+							$scope.startTask = function(index){
+
+								var id=angular.element(document.querySelector("input[id=radio]:checked")).val();	
+								
+								var dueDate = $scope.issueList[index].dueDate;
+								var date1 = new Date(dueDate);
+							    var dd = date1.getDate();
+							    var mm = date1.getMonth()+1; //January is 0!
+								var yyyy = date1.getFullYear();
+							    var date2 = mm+'/'+dd+'/'+yyyy;
+								
+									userService.startTask(id,dueDate)
+											.then(
+													function(data) {
+														$scope.searchAllIssues();
+														
+														
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing startTask members');
+													})
+
+								
+
+							};
+							
+							
+							$scope.stopTask = function(){
+
+								
+								var id=angular.element(document.querySelector("input[id=radio]:checked")).val();	
+							
+									userService.stopTask(id)
+											.then(
+													function(data) {
+														$scope.searchAllIssues();
+														
+													},
+													function(errResponse) {
+														console.error('Error while showing stopTask members');
+													});
+
+								
+
+							};
+							
+							
+							$scope.pauseTask = function(){
+								
+								var id=angular.element(document.querySelector("input[id=radio]:checked")).val();	
+								
+								var reason=$scope.reason;
+									
+								userService.pauseTask(id,reason)
+								.then(
+										function(data) {
+											$scope.searchAllIssues(); 
+											
+										},
+										function(errResponse) {
+											console.error('Error while showing pauseTask members');
+										});
+								
+										};
+							
+								$scope.refresh = function(){
+											
+									$scope.searchAllIssues();
+													};
+													
+													$scope.exportData = function () {
+												        var blob = new Blob([document.getElementById('someInfo').innerHTML], {
+												            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+												        });
+												        saveAs(blob, "Report.xls");
+												    };
+							
 							/*$scope.uploadFile2 = function() {
 
 								var fileInput = $('#selectFile2');

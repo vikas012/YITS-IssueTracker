@@ -52,15 +52,19 @@ public class IssueServiceImpl implements IssueService{
 	private IssueDao issueDao;
 	
 
+
 	public List<IssueForm> showIssuesList(long memberId) {
 		List<Issue> issuesList = issueDao.showIssuesList(memberId);
 		List<IssueForm> issueFormList = new ArrayList<IssueForm>();
 		
 		for (Issue issue : issuesList) {
 			IssueForm issueForm = new IssueForm();
-			
+			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+			Date date=issue.getDueDate();
+			System.out.println(date);
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
+			issueForm.setDueDate(format2.format(date));
 			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
 
 			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
@@ -785,7 +789,6 @@ public class IssueServiceImpl implements IssueService{
 			IssueForm issueForm = new IssueForm();
 			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 			Date date=issue.getDueDate();
-			format2.format(date);
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
 			issueForm.setDueDate(format2.format(date));
@@ -831,7 +834,7 @@ public class IssueServiceImpl implements IssueService{
 			IssueForm issueForm = new IssueForm();
 			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 			Date date=issue.getDueDate();
-			format2.format(date);
+			
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
 			issueForm.setDueDate(format2.format(date));
@@ -877,7 +880,7 @@ public class IssueServiceImpl implements IssueService{
 			IssueForm issueForm = new IssueForm();
 			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 			Date date=issue.getDueDate();
-			format2.format(date);
+		
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
 			issueForm.setDueDate(format2.format(date));
@@ -924,7 +927,7 @@ public class IssueServiceImpl implements IssueService{
 			IssueForm issueForm = new IssueForm();
 			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 			Date date=issue.getDueDate();
-			format2.format(date);
+			
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
 			issueForm.setDueDate(format2.format(date));
