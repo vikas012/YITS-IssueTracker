@@ -1,12 +1,6 @@
-angular
-		.module('issueTrackingSystem.managerModule')
-		.controller(
-				'managerController',
-				[
-						'$scope',
-						'$http',
-						'managerService',
+angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',
 						function($scope, $http, managerService, issueList) {
+
 							
 							$scope.issueList = [];
 
@@ -119,9 +113,6 @@ angular
 										console.error('Error while searching issues');
 										});
 							}
-							
-							
-							
 							$scope.members1 = [];
 
 							var issues = $http({
@@ -266,16 +257,13 @@ angular
 												},
 
 												function(errResponse) {
-													console
-															.error('Error while fetching');
+													console.error('Error while fetching');
 												}
 
 										)
-							};
+							}
 
 							$scope.registerMember = function() {
-
-								$scope.member.memberId = $scope.userId;
 								$scope.member.name = $scope.userName;
 								$scope.member.email = $scope.userEmail;
 								$scope.member.contact = $scope.userMobile;
@@ -452,7 +440,6 @@ angular
 													})
 								}
 							}
-
 							$scope.memberActivateForSearch = function(memberId) {
 
 								if (memberId == "") {
@@ -472,7 +459,6 @@ angular
 													})
 								}
 							}
-
 							$scope.memberDelete=function(indexId){
 								
 								managerService.memberDelete(indexId)
@@ -620,7 +606,7 @@ angular
 											)
 								
 						
-							} 
+							}
 
 							/**
 							 * Upload file
@@ -634,7 +620,7 @@ angular
 									 $scope.file1Size = $files[0].size;
 							/*	});*/
 								console.log($scope.file1,$scope.file1Name,$scope.file1Size);
-							};
+							}
 							/*$scope.getTheFile2 = function($files) {
 								
 								angular.forEach($files, function(value, key) {
@@ -853,7 +839,7 @@ angular
 									)	
 								
 								
-							};
+							}
 							
 							$scope.download = function(id){
 								
@@ -871,7 +857,7 @@ angular
 										)	
 									
 									
-								};
+								}
 							
 
 							$scope.exportData = function () {
@@ -879,10 +865,160 @@ angular
 						            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
 						        });
 						        saveAs(blob, "ListOfMembers.xls");
-						    };
+						    }
 
 
 
+$scope.issueList = [];
+
+
+							
+                  
+							
+							this.createIssue={};
+							managerService.initializeSelect()
+							.then(
+									function(d) {
+										
+										$scope.projects=d.projects;
+										
+									}
+									
+							)
+							
+							$scope.myFunc=function()
+							{
+								var projectId = angular.element(
+										document.querySelector("select[id=selectId]")).val();
+								
+								
+								this.pId=projectId;
+								this.project ={
+										id:projectId
+								}
+								managerService.initializeSelectAll(this.pId).then(
+										function(d) {
+											//alert("in success all select");
+											//alert("In controller select all called");
+											//alert(d.myValue1);
+											$scope.issueTypeList=d.issueType;
+											$scope.priorities=d.issuePriority;
+											$scope.environments=d.applicationEnvironment;
+											$scope.assigneeList=d.applicationTeamMembers;
+
+										});
+							}
+							
+							this.add = function() {
+								
+								
+								var summary =this.createIssue.summary;
+								var component=this.createIssue.component;
+								var affectedVersion=this.createIssue.affectedVersion;
+								var description=this.createIssue.description;
+								var member = {
+										"memberId":this.createIssue.owner.memberId
+								}
+								
+								var issueOwner={
+										"member":member
+									}
+								
+								var project={
+										"id":this.createIssue.project.id
+								}
+								
+								var applicationIssueType={
+										"id":this.createIssue.issueType.id
+								}
+								
+								var applicationIssuePriority={
+										"id":this.createIssue.issuePriority.id
+								}
+								
+								 var applicationEnvironment={
+										"id":this.createIssue.applicationEnvironment.id
+								}
+								
+								var dueDate= this.createIssue.dueDate;
+								
+								
+								var date=new Date(dueDate);
+								var year=date.getFullYear();
+								var month=date.getMonth()+1;
+								var day=date.getDate();
+								var newDate=year+"/"+month+"/"+day;
+								
+								var originalEstimate=this.createIssue.originalEstimate;
+								
+								var formData={
+										"project":project,
+										"applicationIssueType":applicationIssueType,
+										"applicationIssuePriority":applicationIssuePriority,
+										"summary":summary,
+										"component":component,
+										"affectedVersion":affectedVersion,
+										"applicationEnvironment":applicationEnvironment,
+										"description":description,
+										"issueOwner":issueOwner,
+										"dueDate":newDate,
+										"originalEstimate":originalEstimate
+									
+										
+								};
+								
+								
+								
+								managerService.submitCreateIssue(formData)
+								.then(
+										function(formData) {
+												alert("REgistered");
+										},
+										function(errResponse)
+										{
+										console.error('Error while searching issues');
+										});
+							}
+							$scope.members1 = [];
+
+							var issues = $http({
+								method : 'GET',
+								url : '../defaultIssuesList'
+							}).success(function(data) {
+								$scope.issueList = data;
+							})
+
+
+							/* $scope.members1 = []; */
+
+
+
+							var members = $http({
+								method : 'GET',
+								url : '../memberList'
+							})
+									.success(
+											function(data) {
+
+												$scope.members1 = data;
+
+												angular
+														.forEach(
+																$scope.members1,
+																function(value,
+																		key) {
+
+																	if (value.isActive == 0) {
+
+																		value.isActive = "Activate";
+																	} else {
+
+																		value.isActive = "DeActivate";
+																	}
+
+																});
+
+											})
 							
 
 						} ]);

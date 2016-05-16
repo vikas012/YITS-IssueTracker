@@ -93,7 +93,7 @@ public class MemberController {
 	@RequestMapping(value="/checkMemberInLdap" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
 	public UserForm checkMemberInLdap(@RequestBody LdapUser ldapUser,HttpServletRequest httpServletRequest) throws NamingException{
 			
-/*System.out.println("inside controller--------checkUserInLdap!!!!!!-----"+httpServletRequest.getSession().getAttribute("username"));*/
+		/*System.out.println("inside controller--------checkUserInLdap!!!!!!-----"+httpServletRequest.getSession().getAttribute("username"));*/
 		
 		/*loginForm.setUsername((String) httpServletRequest.getSession().getAttribute("username"));
 		loginForm.setPassword((String) httpServletRequest.getSession().getAttribute("password"));*/
@@ -119,6 +119,8 @@ public class MemberController {
 		memberForm.setManagerEmail(userForm.getUserManagerEmail());
 		memberForm.setManagerName(userForm.getUserManagerName());
 		memberForm.setManagerId(userForm.getUserManagerId());
+		memberType.setId(1);
+		memberForm.setMemberType(memberType);
 		return memberService.addMember(memberForm);
 			
 	}
@@ -126,7 +128,8 @@ public class MemberController {
 	@RequestMapping(value="/registerMember" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
 	public boolean registerNonYashMember(@RequestBody MemberForm memberForm){
 		
-		System.out.println("in side register "+ memberForm.getEmail()+"------"+memberForm.getContact());
+		memberType.setId(2);
+		memberForm.setMemberType(memberType);
 		return memberService.addMember(memberForm);
 			
 	}
