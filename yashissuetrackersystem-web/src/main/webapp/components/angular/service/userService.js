@@ -1,8 +1,8 @@
-angular.module('issueTrackingSystem.userModule').factory('userService',['$http',function($http){
+angular.module('issueTrackingSystem.userModule').factory('userService',['$http',function($http,$q){
 	  return {
 		  
 		  initializeSelect: function() {
-	          return $http.get('./getProjects')
+	          return $http.get('../getProjects')
 	              .then(
 	                      function(response){
 	                    	  //alert("in service for projects");
@@ -21,7 +21,7 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	      	initializeSelectAll:function(projectId){
 	      		alert("in service Select All");
 	      		alert(projectId);
-	      		return $http.get('./getAllSelectFields/'+projectId)
+	      		return $http.get('../getAllSelectFields/'+projectId)
 	              .then(
 	                      function(response){
 	                    	 // alert("in service for all");
@@ -34,7 +34,7 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	                );
 	      	},
 	      	submitCreateIssue: function(createIssue) {
-		          return $http.post('./createIssue',createIssue)
+		          return $http.post('../createIssue',createIssue)
 
 		              .then(
 		                      function(response){

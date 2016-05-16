@@ -45,11 +45,7 @@ managerModule.config(function($routeProvider) {
 		templateUrl : '../showMembersPage',
 
 		controller : 'managerController',
-		/*resolve : {
-			memberList : function(managerService) {
-				return managerService.getMembers();
-			}
-		}*/
+		
 	})
 	.when('/searchMembers',{
 				
@@ -57,17 +53,19 @@ managerModule.config(function($routeProvider) {
 				controller:'managerController'
 			})
 
-
+			
 	
 	.when('/createIssueManager', {
-		templateUrl : '../showCreateIssueForm',
+		templateUrl : '../managerShowCreateIssueForm',
 		controller : 'managerController as mc'
 
-	}).when('/issues', {
+	})
+	.when('/issues', {
 		templateUrl : '../issues',
 		controller : 'managerController as mc',
 		
-	}).when('/assignIssue', {
+	})
+	.when('/assignIssue', {
 		templateUrl : '../getAssignIssueForm',
 		controller : 'managerController as mc',
 	})

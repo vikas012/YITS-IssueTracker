@@ -1,5 +1,6 @@
 package com.yash.yits.service;
 
+import java.text.ParseException;
 import java.util.List;
 import com.yash.yits.domain.Issue;
 
@@ -20,7 +21,7 @@ public interface IssueService {
 
 	List<IssueForm> showIssuesList(long memberId);
 
-
+	public int managerCreateIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId)throws ParseException ;
 
 	public List<IssueForm> getDefaultIssues();
 
@@ -33,7 +34,7 @@ public interface IssueService {
 	public Map<String, Object> getAllSelectFields(ProjectForm projectForm, MemberForm member);
 	
 
-	public void createIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId);
+	public int createIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId);
 	
 	public List<ApplicationForm> getApplicationNames();
 

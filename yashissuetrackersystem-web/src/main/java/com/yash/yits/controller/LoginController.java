@@ -59,11 +59,11 @@ public class LoginController {
 		System.out.println(userForm.getUserJobTitle());
 		if(userForm.getUserJobTitle().equals("Trainee Programmer"))
 		{	
-			return "UserDashboard";
+			return "redirect:/static/UserDashboard.html";
 		}
 		else
 		{
-			return "ManagerDashboard";
+			return "redirect:/static/ManagerDashboard";
 		}
 	}
 

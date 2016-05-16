@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +63,13 @@ public class IssueController {
 	{
 		System.out.println("---getCreateIssueForm----");
 		return "redirect:/static/UserCreateIssueForm.html";
+	}
+	
+	@RequestMapping(value="/managerShowCreateIssueForm")
+	public String getManagerCreateIssueForm()
+	{
+		System.out.println("---getCreateIssueForm----");
+		return "redirect:/static/ManagerIssueCreateForm.html";
 	}
 	
 
@@ -198,8 +207,48 @@ public class IssueController {
 		System.out.println("in create issue");
 		System.out.println("Application Issue Owner   "+issueForm.getIssueOwner().getMember());
 		Long issueOwnerMemberId = issueForm.getIssueOwner().getMember().getMemberId();
+		System.out.println("ISSUE OWNER MEMBER ID >>>"+issueOwnerMemberId);
+		int issueId=0;
+		try
+		{
+			issueId=issueService.createIssue(issueForm,createdBy,issueOwnerMemberId);
+		} catch (Exception e) {
+			System.out.println("Excption "+e);
+		}
 		
-		issueService.createIssue(issueForm,createdBy,issueOwnerMemberId);
+		System.out.println("in controller for show projects");
+		return null;
+
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/managerCreateIssue",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.POST)
+	public String managerCreateIssue(@RequestBody IssueForm issueForm,HttpServletRequest httpServletRequest) throws ParseException{
+		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
+		
+		//long createdBy = 1004683;
+		System.out.println("Create Issue "+createdBy);
+		//issueForm.setCreatedBy(createdBy);
+		System.out.println(issueForm);
+		System.out.println("Project createIssue "+issueForm.getProject());
+		System.out.println(issueForm.getApplicationIssuePriority());
+		System.out.println(issueForm.getComponent());
+		System.out.println(issueForm.getDescription());
+		System.out.println(issueForm.getSummary());
+		System.out.println("Application Issue type "+issueForm.getApplicationIssueType());
+		System.out.println("in create issue");
+		System.out.println("Application Issue Owner   "+issueForm.getIssueOwner().getMember().getMemberId());
+		Long issueOwnerMemberId = issueForm.getIssueOwner().getMember().getMemberId();
+		System.out.println("DUE DATE  >>>"+issueForm.getDueDate());
+		System.out.println("Original estimate >>>"+issueForm.getOriginalEstimate());
+		int issueId=0;
+		try {
+		 issueId=issueService.managerCreateIssue(issueForm, createdBy, issueOwnerMemberId);
+		} catch (Exception e) {
+			System.out.println("Excption "+e);
+		}
+		
+		
 		System.out.println("in controller for show projects");
 		return null;
 
