@@ -18,13 +18,17 @@
 				<tr id="heading">
 					<th>MEMBER</th>				
 					<th>PROJECT</th>
+					<th>COMPONENT</th>
+					<th>AFFECTED VERSION</th>
 					<th>SUMMARY</th>
-					<th>DISCRIPTION</th>
+					<th>DESCRIPTION</th>
 				</tr>
 			</thead>
 			<tr ng-repeat="assignedIssue in assignedIssues">			
 				<td>{{assignedIssue.assignedUser.member.name}}</td>
 				<td>{{assignedIssue.project.name}}</td>
+				<td>{{assignedIssue.component}}</td>
+				<td>{{assignedIssue.affectedVersion}}</td>
 				<td>{{assignedIssue.summary}}</td>
 				<td>{{assignedIssue.description}}</td>
 			</tr>
