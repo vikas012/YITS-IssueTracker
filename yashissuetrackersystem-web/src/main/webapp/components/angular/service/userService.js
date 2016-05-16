@@ -145,7 +145,33 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 
   					);
   				
-  			}	
+  			},
+  			
+  			/**
+			 * File Upload
+			 */
+  			fileUpload:function(formData){
+				alert("userService");	
+  				var request = {
+						method : 'POST',
+						url : '../uploadFile',
+						data : formData,
+						headers : {
+							'Content-Type' : undefined
+						}
+					};
+					 $http(request)
+					 .then(
+			 				function(response){
+			 					alert("File uploaded successfully");
+			 				}, 
+			 				function(errResponse){
+			 				}
+         			);
+  				
+  				
+	  
+  			},	
 	  
 
 	      	

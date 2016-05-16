@@ -219,7 +219,9 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 							
 						},
 
-						/*file upload*/
+						/**
+						 * File Upload
+						 */
 			  			fileUpload:function(formData){
 		  					
 			  				var request = {
