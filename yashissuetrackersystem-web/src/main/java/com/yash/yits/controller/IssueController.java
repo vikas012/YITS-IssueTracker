@@ -26,6 +26,10 @@ import java.io.InputStream;
 
 import java.io.OutputStream;
 
+
+import java.text.ParseException;
+
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,7 +117,7 @@ public class IssueController {
 
 		return issues;
 	}
-
+/*
 	@ResponseBody
 	@RequestMapping(value = "/getMembers")
 	public List<MemberForm> getMemberList() {
@@ -135,7 +139,7 @@ public class IssueController {
 		int fetchId = issueForm.getAssignedUser().getMember().getId();
 		System.out.println("CONTROLLER " + fetchId);
 		issueService.assignIssue(issueForm, fetchId);
-	}
+	}*/
 
 	@RequestMapping(value = "/defaultIssuesList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -198,6 +202,33 @@ public class IssueController {
 		return chats;
 
 	}
+	@ResponseBody
+	@RequestMapping(value="/getMembers")
+	public List<MemberForm> getMemberList(){
+		List<MemberForm> memberList=issueService.getMemberList();
+		return memberList;
+
+	}
+
+	
+	@ResponseBody
+	@RequestMapping(value="/fetchIssueDetails/{fetchId}")
+	public IssueForm fetchIssueDetails(@PathVariable int fetchId){
+
+		IssueForm issueForm=issueService.fetchIssueDetails(fetchId);
+		return issueForm;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/assignIssue",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	public void assignIssue(@RequestBody IssueForm issueForm)throws ParseException{
+		int fetchId=issueForm.getAssignedUser().getMember().getId();
+		System.out.println("CONTROLLER "+fetchId);
+		issueService.assignIssue(issueForm, fetchId);
+	}
+	
+
+	
 
 	@ResponseBody
 	@RequestMapping(value = "/getProjects", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -246,6 +277,26 @@ public class IssueController {
 		return unassignedIssueList;
 	}
 
+	
+/*	@ResponseBody
+	@RequestMapping(value="/createIssue",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.POST)
+	public String createIssue(@RequestBody IssueForm issueForm,HttpServletRequest httpServletRequest){
+		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
+		
+		Long issueOwnerMemberId = issueForm.getIssueOwner().getMember().getMemberId();
+		System.out.println("ISSUE OWNER MEMBER ID >>>"+issueOwnerMemberId);
+		int issueId=0;
+		try
+		{
+			issueId=issueService.createIssue(issueForm,createdBy,issueOwnerMemberId);
+		} catch (Exception e) {
+			System.out.println("Excption "+e);
+		}
+		
+		System.out.println("in controller for show projects");
+		return null;
+
+	}*/
 	@ResponseBody
 	@RequestMapping(value = "/createIssue", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	public String createIssue(@RequestBody IssueForm issueForm, HttpServletRequest httpServletRequest) {

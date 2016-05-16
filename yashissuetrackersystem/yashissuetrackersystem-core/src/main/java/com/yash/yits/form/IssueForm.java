@@ -55,6 +55,16 @@ public class IssueForm {
 	private ApplicationTeamMemberForm createdBy;
 	
 	private List<AttachmentForm> attachmentForms;
+	
+	
+
+	public String getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
 
 	public List<AttachmentForm> getAttachmentForms() {
 		return attachmentForms;
@@ -120,16 +130,7 @@ public class IssueForm {
 
 	public void setTaskProgressUpdate(String taskProgressUpdate) {
 		this.taskProgressUpdate = taskProgressUpdate;
-	}
 
-	
-
-	public String getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(String dueDate) {
-		this.dueDate = dueDate;
 	}
 
 	public int getIsActive() {

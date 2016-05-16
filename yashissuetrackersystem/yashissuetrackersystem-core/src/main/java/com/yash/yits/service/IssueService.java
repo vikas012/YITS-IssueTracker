@@ -23,7 +23,10 @@ import com.yash.yits.domain.Member;
 public interface IssueService {
 
 
-	List<IssueForm> showIssuesList(long memberId);
+	public List<IssueForm> showIssuesList(long memberId);
+
+
+	
 
 	public int managerCreateIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId)throws ParseException ;
 
@@ -43,7 +46,7 @@ public interface IssueService {
 	public List<ApplicationForm> getApplicationNames();
 
 	public List<ApplicationIssueTypeForm> getDefaultIssueTypes(int applicationId);
-	
+
 	public List<ApplicationIssuePriorityForm> getDefaultIssuePriorities(int applicationId);
 	
 	public List<ProjectForm> getDefaultProjectNames(int applicationId);
