@@ -16,8 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -319,8 +321,7 @@ public class IssueController {
 	@RequestMapping(value="/download/{id}",method=RequestMethod.GET)
 	public String download(@PathVariable("id") int id,HttpServletResponse response)throws IOException{
 			
-		/* private static final String EXTERNAL_FILE_PATH="C:/mytemp/SpringMVCHibernateManyToManyCRUDExample.zip";
-	     */
+		
 		
 
 		AttachmentForm attachmentForm=issueService.getAttachment(id);
@@ -334,7 +335,7 @@ public class IssueController {
 	        System.out.println("mimetype : "+mimeType);
 	         
 	        response.setContentType(mimeType);*/
-		System.out.println("-----------label----------"+attachmentForm.getLabel());
+		
 		 response.setHeader("Content-Disposition","attachment; filename=\"" + attachmentForm.getName() +"\"");
 		 OutputStream out = response.getOutputStream();
 	        try {
@@ -343,14 +344,14 @@ public class IssueController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	       /* File  file =new File("C:\Users\shalini.yadav\DownloattachmentForm.getLabel());
-*/	        
+	      
+        
 	        FileOutputStream fos = new FileOutputStream(attachmentForm.getLabel()+".jpg");
 	        fos.write(attachmentForm.getFile());
 	        fos.close();
 	        return "index";
 		 
-		
+	       
 		
 	}
 
