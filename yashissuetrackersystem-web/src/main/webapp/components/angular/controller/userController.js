@@ -1,11 +1,17 @@
-angular.module('issueTrackingSystem.userModule').controller('userController',['$scope','$http','userService', function($scope,$http,userService,issuesList){
+angular
+		.module('issueTrackingSystem.userModule')
+		.controller(
+				'userController',
+				[
+						'$scope',
+						'$http',
+						'userService',
+						function($scope, $http, userService, issuesList) {
 
-
-							
-$scope.issueList = [];
+							$scope.issueList = [];
 							var issues = $http({
 								method : 'GET',
-								url : './defaultIssuesList'
+								url : '../defaultIssuesList'
 							}).success(function(data) {
 								alert("-------in controller-------" + data);
 								$scope.issueList = data;
@@ -72,33 +78,6 @@ $scope.issueList = [];
 								 * });
 								 */
 							}
-							
-							$scope.fetchIssueDetailsConv=function(id){
-								alert(id);
-								userService.fetchIssueDetailsConv(id)
-								.then(
-										function(data){
-									
-										},
-										 function(errResponse)
-										 {
-											console.error('Error while fetchIssueDetails members');
-										 }
-								)	
-								
-								
-							}
-							
-							/*$scope.conversationList = [];*/
-							alert("conversation user controller");
-							var conversation = $http({
-								method : 'GET',
-								url : '../conversationList'
-							}).success(function(data) {
-								alert(data);
-
-								$scope.conversationList = data;
-							})
 
 							this.add = function() {
 								alert("hello");
@@ -159,12 +138,144 @@ var formData={
 												function(errResponse) {
 													console
 															.error('Error while searching issues');
-												}
-									);
+												});
 							}
+
+							$scope.defaultIssueSearchList = [];
+
+							var issueSearchList = $http({
+
+								method : 'GET',
+								url : '../defaultIssues'
+							}).success(function(data) {
+								alert("searchUser")
+								$scope.defaultIssueSearchList = data;
+
+							})
+
+							$scope.showadvsearch = function() {
+								$('#advsearch').show();
+								$scope.isDisabled = true;
+
+								userService
+										.getList()
+										.then(
+												function(data) {
+													alert(data);
+													$scope.applicationNames = data;
+
+												},
+												function(errResponse) {
+													console
+															.error('Error while searching assigned issues');
+												})
+							}
+
+							$scope.calldropdowns = function() {
+								var applicationid = this.application;
+								$scope.isDisabled = false;
+								userService
+										.getAllList(applicationid)
+										.then(
+												function(data) {
+													// $scope.application=data;
+													$scope.issuepriorities = data.priorities;
+													$scope.issuetype = data.issuetypes;
+													$scope.project = data.projects;
+												},
+												function(errResponse) {
+													console
+															.error('Error while searching assigned issues');
+												})
+							}
+
+							$scope.searchFilter = function() {
+								var filterIssueType = $scope.advIssueType;
+								var filterProjectName = this.advProject;
+								var filterPriority = this.advPriority;
+								userService
+										.getadvSearchData(filterIssueType,
+												filterProjectName,
+												filterPriority)
+										.then(
+												function(data) {
+													alert(data);
+													$scope.defaultIssueSearchList = data;
+													$('#advsearch').hide();
+
+												},
+												function(errResponse) {
+													console
+															.error('Error while searching assigned issues');
+												})
+
+							}
+
+							$scope.viewIssue = function() {
+
+								var id = angular
+										.element(
+												document
+														.querySelector("input[id=radio]:checked"))
+										.val();
+
+								userService
+										.viewIssueDetails(id)
+										.then(
+												function(data) {
+
+													$scope.issueDetails = data.issueobject;
+													$scope.attachments = data.listOfAttachment;
+
+												},
+												function(errResponse) {
+													console
+															.error('Error while showing Issue details');
+												})
+
+							};
+
+							$scope.download = function(id) {
+
+								userService
+										.download(id)
+										.then(
+												function(data) {
+
+												},
+												function(errResponse) {
+													console
+															.error('Error while showing Issue details');
+												})
+
+							};
 							
+							alert("conversation user controller");
+							var conversation = $http({
+								method : 'GET',
+								url : '../conversationList'
+							}).success(function(data) {
+								alert(data);
+
+								$scope.conversationList = data;
+							})
 							
-							
+							$scope.fetchIssueDetailsConv=function(id){
+								alert(id);
+								userService.fetchIssueDetailsConv(id)
+								.then(
+										function(data){
+									
+										},
+										 function(errResponse)
+										 {
+											console.error('Error while fetchIssueDetails members');
+										 }
+								)	
+								
+								
+							}
+
 							/* issueService returns list to populate drop-down */
 							/*
 							 * userService.initializeSelect() .then( function(d) {
@@ -176,17 +287,15 @@ var formData={
 							 * case 0: $scope.priorities=value; break; case 1:
 							 * $scope.assigneeList=value; break; case 2:
 							 * $scope.issueTypeList=value; break; case 3:
-							 * $scope.projects=value; break; } });
-							 *  }, function(errResponse){ console.error('Error
-							 * while fetching'); } ); this.createIssue={};
+							 * $scope.projects=value; break; } }); },
+							 * function(errResponse){ console.error('Error while
+							 * fetching'); } ); this.createIssue={};
 							 * this.add=function(){ // call service to persist
 							 * in db
 							 * userService.submitCreateIssue(this.createIssue);
 							 * .then( function(d) {
-							 * 
 							 *  }, function(errResponse){ console.error('Error
 							 * while fetching'); } ); this.createIssue={}; };
 							 */
 
-							
-						}]);
+						} ]);

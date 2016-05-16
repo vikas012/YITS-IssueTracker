@@ -224,7 +224,7 @@ public class MemberServiceImpl implements MemberService {
 			return searchResult;
 	 }
 
-	 public Member addMember(MemberForm memberForm) {
+	 public boolean addMember(MemberForm memberForm) {
 			
 			member.setMemberId(memberForm.getMemberId());
 			member.setName(memberForm.getName());
@@ -235,10 +235,10 @@ public class MemberServiceImpl implements MemberService {
 			member.setManagerEmail(memberForm.getManagerEmail());
 			member.setCreatedDateTime(new Date());
 			member.setLastModifiedDateTime(new Date());
-			memberDao.addMember(member);
+			boolean result=memberDao.addMember(member);
 			
 			
-			/*ApplicationContext context=ContextAware.getApplicationContext();
+			ApplicationContext context=ContextAware.getApplicationContext();
 			System.out.println("object of application context"+context);
 			JavaMailSenderImpl javamailsender=(JavaMailSenderImpl) context.getBean("mailSender");
 			
@@ -259,11 +259,11 @@ public class MemberServiceImpl implements MemberService {
 			
 			simpleMailMessage.setText(message);
 			
-			javaMailSender.send(simpleMailMessage);*/
+			javaMailSender.send(simpleMailMessage);
 
 			
 			
-			return member;
+			return result;
 		}
 
 	public List<MemberForm> searchMembers(String search) {
@@ -351,6 +351,8 @@ public class MemberServiceImpl implements MemberService {
 			issueForm.setProject(ProjectMapper.domainForm(issue.getProject()));
 			issueForm.setDescription(issue.getDescription());
 			issueForm.setSummary(issue.getSummary());
+			issueForm.setAffectedVersion(issue.getAffectedVersion());
+			issueForm.setComponent(issue.getComponent());
 			
 			issueForms.add(issueForm);
 		}

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -15,11 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,8 +43,7 @@ import com.yash.yits.form.ApplicationForm;
 
 import com.yash.yits.form.ApplicationIssuePriorityForm;
 import com.yash.yits.form.ApplicationIssueTypeForm;
-
-
+import com.yash.yits.form.AttachmentForm;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.MemberForm;
 
@@ -126,6 +129,12 @@ public class IssueController {
 	public String showIssuePage(){
 		System.out.println("issuePage");
 		return"redirect:/static/ManagerSearchIssue.html";
+	}
+	
+	@RequestMapping(value="/userIssues",method=RequestMethod.GET)
+	public String showUserIssuePage(){
+		System.out.println("issuePage");
+		return"redirect:/static/UserSearchIssue.html";
 	}
 	
 	@ResponseBody
@@ -326,7 +335,62 @@ public class IssueController {
 	        
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/showIssueDetails/{id}",method=RequestMethod.GET)
+	public Map<String, Object> showIssueDetails(@PathVariable("id") int id){
+			
+		System.out.println("in controller" +id);
+		Map<String, Object> issues =  issueService.showIssueDetails(id);
+		
+		/*List<AttachmentForm> attachmentForms=issues.getAttachmentForms();
+		for (AttachmentForm attachmentForm : attachmentForms) {
+			System.out.println("--------"+attachmentForm.getId());
+		}*/
+		
+		System.out.println("issueController"+ issues);
+		return issues; 
+	}
 	
+
+
+	
+	@RequestMapping(value="/download/{id}",method=RequestMethod.GET)
+	public String download(@PathVariable("id") int id,HttpServletResponse response)throws IOException{
+			
+		/* private static final String EXTERNAL_FILE_PATH="C:/mytemp/SpringMVCHibernateManyToManyCRUDExample.zip";
+	     */
+		
+
+		AttachmentForm attachmentForm=issueService.getAttachment(id);
+		
+		/* String mimeType= URLConnection.guessContentTypeFromName(attachmentForm.getName());
+	        if(mimeType==null){
+	            System.out.println("mimetype is not detectable, will take default");
+	            mimeType = "application/octet-stream";
+	        }
+	         
+	        System.out.println("mimetype : "+mimeType);
+	         
+	        response.setContentType(mimeType);*/
+		System.out.println("---------------------"+attachmentForm.getLabel());
+		 response.setHeader("Content-Disposition","attachment; filename=\"" + attachmentForm.getName() +"\"");
+		 OutputStream out = response.getOutputStream();
+	        try {
+				FileCopyUtils.copy(attachmentForm.getFile(), response.getOutputStream());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	       /* File  file =new File("C:\Users\shalini.yadav\DownloattachmentForm.getLabel());
+*/	        
+	        FileOutputStream fos = new FileOutputStream(attachmentForm.getLabel()+".jpg");
+	        fos.write(attachmentForm.getFile());
+	        fos.close();
+	        return "index";
+		 
+		
+		
+	}
 
 
 }

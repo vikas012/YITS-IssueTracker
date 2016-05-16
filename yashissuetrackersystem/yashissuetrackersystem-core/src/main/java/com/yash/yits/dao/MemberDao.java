@@ -10,7 +10,7 @@ import com.yash.yits.domain.MemberType;
 public interface MemberDao {
 
 	
-	public Member addMember(Member member);
+	public boolean addMember(Member member);
 	public List<Member> showMembers();
 	public List<Member> searchMembers(String search);
 	public void deleteMember(Member member);

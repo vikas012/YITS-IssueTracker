@@ -244,6 +244,43 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			  				
 				  
 			  			},	
+			  			
+			  			download:function(id){
+			  				
+			  				return $http.get('../download/'+id)
+			  				.then(
+			  						
+			  						function(response){
+			  							
+			  							return response.data;
+			  						},
+			  						
+			  						function(errRespnse){
+			  							
+			  							console.error('Error while showing Issue details');
+			  							return $q.reject(errResponse);
+			  						}
+			  				);
+			  				
+			  			},
+		  				  
+			  		  
+			  			viewIssueDetails:function(id){
+			  				return $http.get('../showIssueDetails/'+id)
+		  					//return $http({  url: '../showIssueDetails', method: "GET", params: {id: id} })
+				  					.then(
+				  								function(response){
+				  									
+				  								  return response.data;
+				  								},
+				  								function(errResponse){
+				  									console.error('Error while showing Issue details');
+				  									return $q.reject(errResponse);
+				  								}
+			
+				  						);
+					  
+		  				},
 
 
 		 /* initializeSelect: function() {

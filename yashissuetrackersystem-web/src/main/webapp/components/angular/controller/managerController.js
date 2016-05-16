@@ -12,14 +12,13 @@ angular
 
 							var issues = $http({
 								method : 'GET',
-								url : './defaultIssuesList'
+								url : '../defaultIssuesList'
 							}).success(function(data) {
-								alert("-------in controller-------" + data);
 								$scope.issueList = data;
 							})
 
 
-							$scope.members1 = [];
+							/*$scope.members1 = [];*/
 
 							var members = $http({
 								method : 'GET',
@@ -50,7 +49,9 @@ angular
 
 							$scope.showLookUpForm = false;
 							$scope.showRegisterForm = false;
-							$scope.showNonYashRegisterForm = false;
+							$scope.showNonYashRegisterForm=false;
+							$scope.showRegistrationMessaage=false;
+							$scope.memberAlreadyInDatabase=false;
 
 							$scope.ldapUser = {
 								ldapName : "",
@@ -72,15 +73,25 @@ angular
 							$scope.showLookForm = function() {
 
 								$scope.showLookUpForm = true;
-								$scope.showNonYashRegisterForm = false;
+								$scope.showRegisterForm = false;
+								$scope.showNonYashRegisterForm =false;
+								$scope.showRegistrationMessaage=false;
+								$scope.memberAlreadyInDatabase=false;
 
 							}
 
 							$scope.showRegisterationForm = function() {
 
-								$scope.showLookUpForm = false;
+								$scope.showLookUpForm =false;
 								$scope.showRegisterForm = false;
 								$scope.showNonYashRegisterForm = true;
+								$scope.showRegistrationMessaage=false;
+								$scope.memberAlreadyInDatabase=false;
+								$scope.userId =" ";
+								$scope.userName =" ";
+								$scope.userEmail =" ";
+								$scope.userMobile =" ";
+								$scope.managerEmail =" ";
 							}
 
 							$scope.fetchIssueDetails = function() {
@@ -90,7 +101,7 @@ angular
 												document
 														.querySelector("input[id=radio]:checked"))
 										.val();
-								alert(index);
+								/*alert(index);*/
 
 								if (index == null) {
 									alert("Please select the entry you want to update!");
@@ -126,35 +137,6 @@ angular
 								$scope.unassignedIssueList = data;
 							})
 
-							$scope.members1 = [];
-
-							var issues = $http({
-								method : 'GET',
-								url : '../memberList'
-							})
-									.success(
-											function(data) {
-
-												$scope.members1 = data;
-
-												angular
-														.forEach(
-																$scope.members1,
-																function(value,
-																		key) {
-
-																	if (value.isActive == 0) {
-
-																		value.isActive = "Activate";
-																	} else {
-
-																		value.isActive = "DeActivate";
-																	}
-
-																});
-
-											})
-
 							$scope.checkUserInLdap = function(ldapUser) {
 
 								managerService
@@ -186,7 +168,26 @@ angular
 								$scope.member.contact = $scope.userMobile;
 								$scope.showRegisterForm = false;
 
-								managerService.registerMember($scope.member);
+								managerService.registerMember($scope.member)
+								.then(
+												function(d) {
+													if(d==false)
+													{
+														$scope.memberAlreadyInDatabase=true;
+													}
+													else
+													{
+														$scope.showRegistrationMessaage=true;
+													}
+
+												},
+
+												function(errResponse) {
+													console.error('Error while fetching');
+												}
+
+										)
+
 
 							}
 
@@ -199,8 +200,27 @@ angular
 								$scope.member.managerEmail = $scope.managerEmail;
 								$scope.showNonYashRegisterForm = false;
 
-								managerService
-										.registerNonYashMember($scope.member);
+								managerService.registerNonYashMember($scope.member)
+								.then(
+												function(d) {
+													
+													if(d==false)
+													{
+														$scope.memberAlreadyInDatabase=true;
+													}
+													else
+													{
+														$scope.showRegistrationMessaage=true;
+													}
+
+												},
+
+												function(errResponse) {
+													console.error('Error while fetching');
+												}
+
+										)
+
 
 							}
 							$scope.defaultIssueList = [];
@@ -701,8 +721,55 @@ angular
 								});*/
 							}
 
+
+							$scope.viewIssue = function(){
+								
+								var id = angular.element(document.querySelector("input[id=radio]:checked")).val();
+								
+								alert("our id "+id);
+								managerService.viewIssueDetails(id)
+								.then(
+									function(data){
+										alert(data);
+										
+										$scope.issueDetails=data.issueobject;
+										$scope.attachments=data.listOfAttachment;
+										
+									},
+									 function(errResponse){
+												 console.error('Error while showing Issue details');
+											 }
+									)	
+								
+								
+							};
 							
+							$scope.download = function(id){
+								
+								
+								alert(id);
+									managerService.download(id)
+									.then(
+										function(data){
+									
+											
+										},
+										 function(errResponse){
+													 console.error('Error while showing Issue details');
+												 }
+										)	
+									
+									
+								};
 							
+
+							$scope.exportData = function () {
+						        var blob = new Blob([document.getElementById('exportable').innerHTML], {
+						            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+						        });
+						        saveAs(blob, "ListOfMembers.xls");
+						    };
+
 
 
 							

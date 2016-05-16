@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yash.yits.domain.Member;
+import com.yash.yits.domain.MemberType;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.LdapUser;
 import com.yash.yits.form.LoginForm;
@@ -34,6 +35,7 @@ public class MemberController {
 	
 	LoginForm loginForm=new LoginForm();
 	UserForm userForm=null;
+	MemberType memberType=new MemberType();
 	
 	@RequestMapping(value="/showYashForm")
 	public String getCreateIssueForm(){
@@ -91,11 +93,14 @@ public class MemberController {
 	@RequestMapping(value="/checkMemberInLdap" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
 	public UserForm checkMemberInLdap(@RequestBody LdapUser ldapUser,HttpServletRequest httpServletRequest) throws NamingException{
 			
-		System.out.println("inside controller--------checkUserInLdap!!!!!!-----"+httpServletRequest.getSession().getAttribute("username"));
-		loginForm.setUsername((String) httpServletRequest.getSession().getAttribute("username"));
-		loginForm.setPassword((String) httpServletRequest.getSession().getAttribute("password"));
+/*System.out.println("inside controller--------checkUserInLdap!!!!!!-----"+httpServletRequest.getSession().getAttribute("username"));*/
 		
-		InitialDirContext intialDirContext=memberService.checkUser(loginForm);
+		/*loginForm.setUsername((String) httpServletRequest.getSession().getAttribute("username"));
+		loginForm.setPassword((String) httpServletRequest.getSession().getAttribute("password"));*/
+		
+		InitialDirContext intialDirContext=(InitialDirContext) httpServletRequest.getSession().getAttribute("IntialDirContext");
+		
+		/*InitialDirContext intialDirContext=memberService.checkUser(loginForm);*/
 		
 		int position=ldapUser.getLdapEmail().indexOf("@");
 		
@@ -103,25 +108,26 @@ public class MemberController {
 		
 		userForm=memberService.fetchAttributes(intialDirContext,username);
 		
+		
 		return userForm;
 	}
 	@ResponseBody 
 	@RequestMapping(value="/registerYashMember" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void registerMember(@RequestBody MemberForm memberForm){
+	public boolean registerMember(@RequestBody MemberForm memberForm){
 		
 		System.out.println("in side register "+ memberForm.getEmail()+"------"+memberForm.getContact());
 		memberForm.setManagerEmail(userForm.getUserManagerEmail());
 		memberForm.setManagerName(userForm.getUserManagerName());
 		memberForm.setManagerId(userForm.getUserManagerId());
-		memberService.addMember(memberForm);
+		return memberService.addMember(memberForm);
 			
 	}
 	@ResponseBody 
 	@RequestMapping(value="/registerMember" ,method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void registerNonYashMember(@RequestBody MemberForm memberForm){
+	public boolean registerNonYashMember(@RequestBody MemberForm memberForm){
 		
 		System.out.println("in side register "+ memberForm.getEmail()+"------"+memberForm.getContact());
-		memberService.addMember(memberForm);
+		return memberService.addMember(memberForm);
 			
 	}
 	

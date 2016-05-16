@@ -26,7 +26,7 @@ public interface MemberService {
 	
 	public InitialDirContext  checkUser(LoginForm loginForm);
 	public UserForm fetchAttributes(InitialDirContext intialDirContext,String name) throws NamingException;
-	public Member addMember(MemberForm memberForm);
+	public boolean addMember(MemberForm memberForm);
 	public List<MemberForm> showMembers();
 	public List<MemberForm> searchMembers(String search);
 	public void deleteMember(MemberForm memberForm);
