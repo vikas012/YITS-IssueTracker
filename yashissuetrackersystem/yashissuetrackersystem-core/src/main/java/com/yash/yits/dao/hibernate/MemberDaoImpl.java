@@ -27,7 +27,7 @@ public class MemberDaoImpl implements MemberDao {
 	 @Autowired
 	 private SessionFactory sessionFactory;
 
-	 public Member addMember(Member member) {
+	 public boolean addMember(Member member) {
 			Session session=sessionFactory.getCurrentSession();
 			System.out.println(member);
 			Criteria criteria = session.createCriteria(Member.class);
@@ -36,13 +36,15 @@ public class MemberDaoImpl implements MemberDao {
 			if(listOfMember.size()==1){
 				
 				System.out.println("User Already in database");
+				return false;
 			}
 			else{
 					
 				System.out.println("not in database");
 				session.save(member);
+				return true;
 			}
-			return member;
+			
 		}
 
 	 /**
@@ -132,6 +134,7 @@ public class MemberDaoImpl implements MemberDao {
 		criteria.add(Restrictions.isNotNull("closeDate"));
 		
 		List<Issue> issues = criteria.list();
+		
 		return issues;
 	}
 
