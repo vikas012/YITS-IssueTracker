@@ -22,7 +22,7 @@ public class IssueForm {
 	
 	private String taskProgressUpdate;
 
-	private Date dueDate;
+	private String dueDate;
 
 	private int isActive;
 
@@ -122,11 +122,13 @@ public class IssueForm {
 		this.taskProgressUpdate = taskProgressUpdate;
 	}
 
-	public Date getDueDate() {
+	
+
+	public String getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
 	}
 

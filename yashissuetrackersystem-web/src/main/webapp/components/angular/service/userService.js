@@ -1,4 +1,4 @@
-angular.module('issueTrackingSystem.userModule').factory('userService',['$http',function($http){
+angular.module('issueTrackingSystem.userModule').factory('userService',['$http',function($http,$q){
 	  return {
 		  
 		  initializeSelect: function() {
@@ -34,7 +34,7 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	                );
 	      	},
 	      	submitCreateIssue: function(createIssue) {
-		          return $http.post('./createIssue',createIssue)
+		          return $http.post('../createIssue',createIssue)
 
 		              .then(
 		                      function(response){

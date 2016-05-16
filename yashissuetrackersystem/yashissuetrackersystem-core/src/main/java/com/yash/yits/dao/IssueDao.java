@@ -30,11 +30,11 @@ public interface IssueDao {
 
 	public List<Issue> getUnassignedIssues();
 
-	public void createIssue(Issue issue,Long createdBy);
+	public int managerCreateIssue(Issue issue,Long createdBy,Long issueOwnerMemberId);
 
 	List<Issue> showIssuesList(long memberId);
 
-	public void createIssue(Issue issue,Long createdBy,Long issueOwnerMemberId);
+	public int createIssue(Issue issue,Long createdBy,Long issueOwnerMemberId);
 
 	public List<ApplicationIssueType> getDefaultIssueTypes(int applicationId);
 

@@ -65,7 +65,7 @@ public class IssueServiceImpl implements IssueService{
 			
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
-			issueForm.setDueDate(issue.getDueDate());
+			//issueForm.setDueDate(issue.getDueDate());
 			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
 
 			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
@@ -156,7 +156,7 @@ public class IssueServiceImpl implements IssueService{
 			issueForm.setId(issue.getId());
 			issueForm.setCloseDate(issue.getCloseDate());
 			issueForm.setCreatedDateTime(issue.getCreatedDateTime());
-			issueForm.setDueDate(issue.getDueDate());
+			//issueForm.setDueDate(issue.getDueDate());
 			issueForm.setSummary(issue.getSummary());
 
 			ProjectForm projectForm=new ProjectForm();
@@ -198,7 +198,7 @@ public class IssueServiceImpl implements IssueService{
 	}
 
 
-	public void createIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId) {
+	public int createIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId) {
 		Project project=new Project();
 		project.setId(issueForm.getProject().getId());
 		
@@ -230,7 +230,8 @@ public class IssueServiceImpl implements IssueService{
 		issue.setCreatedDateTime(new Date());
 		issue.setIsActive(1);
 		
-		issueDao.createIssue(issue,createdBy,issueOwnerMemberId);
+		int issueId=issueDao.createIssue(issue,createdBy,issueOwnerMemberId);
+		return issueId;
 
 }
 		public Map<String, Object> getAllSelectFields(ProjectForm projectForm, MemberForm member) {
@@ -337,7 +338,7 @@ public class IssueServiceImpl implements IssueService{
 			issueForm.setId(issue.getId());
 			issueForm.setCloseDate(issue.getCloseDate());
 			issueForm.setCreatedDateTime(issue.getCreatedDateTime());
-			issueForm.setDueDate(issue.getDueDate());
+			//issueForm.setDueDate(issue.getDueDate());
 			issueForm.setSummary(issue.getSummary());
 
 			ProjectForm projectForm=new ProjectForm();
@@ -363,6 +364,62 @@ public class IssueServiceImpl implements IssueService{
 		
 	
 	}
+
+
+
+
+	public int managerCreateIssue(IssueForm issueForm, Long createdBy, Long issueOwnerMemberId) throws ParseException {
+		Project project=new Project();
+		project.setId(issueForm.getProject().getId());
+		int issueId=0;
+		Application application = new Application();
+		
+		//application.setId(1);
+		
+		ApplicationEnvironment applicationEnvironment=new ApplicationEnvironment();
+		applicationEnvironment.setId(issueForm.getApplicationEnvironment().getId());
+		
+		
+		
+		ApplicationIssuePriority applicationIssuePriority=new ApplicationIssuePriority();
+		applicationIssuePriority.setId(issueForm.getApplicationIssuePriority().getId());
+		
+		
+		ApplicationIssueType applicationIssueType=new ApplicationIssueType();
+		applicationIssueType.setId(issueForm.getApplicationIssueType().getId());
+		
+		
+		ApplicationIssueStatus applicationIssueStatus=new ApplicationIssueStatus();
+		applicationIssueStatus.setId(1);
+		
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
+		
+		String newDate = issueForm.getDueDate();
+		System.out.println(" Date  in service ::"+newDate);
+		Date date = formatter.parse(newDate);
+		
+		Issue issue=new Issue();
+		issue.setDueDate(date);
+		issue.setAffectedVersion(issueForm.getAffectedVersion());
+		issue.setComponent(issueForm.getComponent());
+		issue.setDescription(issueForm.getDescription());
+		issue.setSummary(issueForm.getSummary());
+		issue.setProject(project);
+		issue.setApplicationIssuePriority(applicationIssuePriority);
+		issue.setApplicationEnvironment(applicationEnvironment);
+		issue.setApplicationIssueType(applicationIssueType);
+		issue.setApplicationIssueStatus(applicationIssueStatus);
+		issue.setOriginalEstimate(issueForm.getOriginalEstimate());
+		issue.setTaskProgressUpdate("Not Started");
+		issue.setCreatedDateTime(new Date());
+		issue.setIsActive(1);
+		
+		issueId=issueDao.managerCreateIssue(issue, createdBy, issueOwnerMemberId);
+		return issueId;
+	}
+
+
 
 	/**
 	 * File upload method--Takes file from controller and passes it to dao layer
@@ -463,5 +520,6 @@ public class IssueServiceImpl implements IssueService{
 		return issueDetails;
 
 	}
+
 	
 }

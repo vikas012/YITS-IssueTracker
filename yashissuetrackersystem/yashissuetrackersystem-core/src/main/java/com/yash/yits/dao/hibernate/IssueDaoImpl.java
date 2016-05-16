@@ -16,7 +16,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -191,7 +191,7 @@ public class IssueDaoImpl implements IssueDao {
 
 
 
-	public void createIssue(Issue issue,Long createdBy,Long issueOwnerMemberId) {
+	public int createIssue(Issue issue,Long createdBy,Long issueOwnerMemberId) {
 
 		Session session=sessionFactory.getCurrentSession();
 		int createdBy1=findMemberId(createdBy);
@@ -204,9 +204,9 @@ public class IssueDaoImpl implements IssueDao {
 		applicationTeamMember2.setId(findMemberId(issueOwnerMemberId));
 		
 		issue.setIssueOwner(applicationTeamMember2);
-		
-		session.saveOrUpdate(issue);
-		
+		int issueId=0;
+		issueId=(Integer) session.save(issue);
+		return issueId;
 		
 	}
 	
@@ -266,8 +266,13 @@ public class IssueDaoImpl implements IssueDao {
 		
 		List<Member> members = getApplicationMembers(application);
 		
+		List<Member> allMembers = getAllMembers();
+		
+		System.out.println("Select all Members "+allMembers);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("applicationTeamMembers", members);
+		map.put("allMembers", allMembers);
 		map.put("issuePriority", applicationIssuePriority);
 		map.put("issueType", applicationIssueType);
 		map.put("applicationEnvironment",applicationEnvironment);
@@ -287,6 +292,8 @@ public class IssueDaoImpl implements IssueDao {
 		
 		List<ApplicationTeamMember> applicationTeamMembers = application.getApplicationTeamMembers();
 		System.out.println("ApplicationTeam Member "+applicationTeamMembers);
+		
+		
 		
 		Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 		List<Member> members = new ArrayList<Member>();
@@ -481,8 +488,14 @@ public class IssueDaoImpl implements IssueDao {
 	}
 
 
-	public void createIssue(Issue issue, Long createdBy) {
-		// TODO Auto-generated method stub
+	public List<Member> getAllMembers() {
+		
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(Member.class);
+				
+		List<Member> members=criteria.list();
+		
+		return members;
 		
 	}
 
@@ -611,6 +624,35 @@ public class IssueDaoImpl implements IssueDao {
 
 
 
+
+	public int managerCreateIssue(Issue issue, Long createdBy, Long issueOwnerMemberId) {
+		
+		int issueId =0;
+		Session session=sessionFactory.getCurrentSession();
+		try {
+		int createdBy1=findMemberId(createdBy);
+		
+		
+		ApplicationTeamMember applicationTeamMember=new ApplicationTeamMember();
+		applicationTeamMember.setId(createdBy1);
+		issue.setCreatedBy(applicationTeamMember);
+		
+		
+		ApplicationTeamMember applicationTeamMember2 = new ApplicationTeamMember();
+		applicationTeamMember2.setId(findMemberId(issueOwnerMemberId));
+		
+		
+		issue.setIssueOwner(applicationTeamMember2);
+		
+		
+		issueId=(Integer) session.save(issue);
+		} catch (Exception e) {
+			System.out.println("Exception "+e);
+		}
+		
+		
+		return issueId;
+	}
 
 	/*public int getIssueId(long memberId) {
 		int id=0;
