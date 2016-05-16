@@ -151,7 +151,6 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 			 * File Upload
 			 */
   			fileUpload:function(formData){
-				alert("userService");	
   				var request = {
 						method : 'POST',
 						url : '../uploadFile',

@@ -323,11 +323,11 @@ var formData={
 
 							$scope.getTheFile1 = function($files) {
 								
-								angular.forEach($files, function(value, key) {
+								/*angular.forEach($files, function(value, key) {*/
 									 $scope.file1 = $files[0];
 									 $scope.file1Name = $files[0].name; 
 									 $scope.file1Size = $files[0].size;
-								});
+								/*});*/
 								console.log($scope.file1,$scope.file1Name,$scope.file1Size);
 							};
 							/*$scope.getTheFile2 = function($files) {
@@ -358,7 +358,6 @@ var formData={
 								var fileSize=$scope.file1Size;
 								var fileName=$scope.file1Name;
 								var ext = fileName.split('.').pop();
-								
 								var formData = new FormData();
 								var attachmentLabel= $scope.attachmentLabel1;
 								formData.append("file", $scope.file1); 
@@ -395,15 +394,14 @@ var formData={
 									
 								});
 								
-								managerService
+								userService
 								.fileUpload(formData)
 								.then(
-										function(data) {
-											$scope.assignedIssues = data;
+										function() {
+											
 										},
 										function(errResponse) {
-											console
-													.error('Error while searching assigned issues');
+											
 										}
 								)
 
