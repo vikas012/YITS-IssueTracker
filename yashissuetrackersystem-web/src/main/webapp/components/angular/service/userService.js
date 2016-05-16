@@ -1,4 +1,4 @@
-angular.module('issueTrackingSystem.userModule').factory('userService',['$http',function($http){
+angular.module('issueTrackingSystem.userModule').factory('userService',['$http',function($http,$q){
 	  return {
 		  
 		  initializeSelect: function() {
@@ -34,7 +34,7 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	                );
 	      	},
 	      	submitCreateIssue: function(createIssue) {
-		          return $http.post('./createIssue',createIssue)
+		          return $http.post('../createIssue',createIssue)
 
 		              .then(
 		                      function(response){
@@ -48,7 +48,28 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 		                );
 
 		      	},	 
-
+		      	
+		      	fetchIssueDetailsConv:function(id){
+					
+					alert(id);
+//					var issueId={
+//							
+//						"issueId":id,	
+//							
+//					};
+					return $http.post('../fetchIssueDetailsConv/'+id)
+				 	.then(
+				 				function(response){
+				 						return response.data;
+				 				}, 
+				 				function(errResponse){
+				 						console.error('Error while fetchIssueDetails member');
+				 						return $q.reject(errResponse);
+				 				}
+	         			);
+					
+				}, 
+		      	
 	      	EditIssue:function(){
 	      		return $http.get('../defaultIssuesList')
 	      		.then(

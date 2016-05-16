@@ -1,7 +1,7 @@
 
-  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
 
 <style>
 .clear{
@@ -22,13 +22,13 @@ width:50%;
 </style> 
 <!-- ng-controller="userController as uc" -->
 <div class="container">
-  <form role="form" ng-submit="uc.add()">
+  <form role="form" ng-submit="mc.add()">
 <div class="box1">
 	
 <div class="form-group col-sm-4">
 	
 	<label for="issueProject">Project Name</label>
-	<select ng-model="uc.createIssue.project.id" class="dropDown form-control" ng-change="myFunc()" id="selectId">
+	<select ng-model="mc.createIssue.project.id" class="dropDown form-control" ng-change="myFunc()" id="selectId">
 	<option ng-repeat="project in projects" value="{{project.id}}" >{{project.name}}</option>
 	</select>
   </div>
@@ -36,14 +36,14 @@ width:50%;
   <div class="form-group col-sm-4">
 
 	<label for="issueType">IssueType</label>
-	<select ng-model="uc.createIssue.issueType.id" class="dropDown form-control">
+	<select ng-model="mc.createIssue.issueType.id" class="dropDown form-control">
 	<option ng-repeat="issueType in issueTypeList" value="{{issueType.id}}" >{{issueType.type}}</option>
 	</select>
   </div>
   
   <div class="form-group col-sm-4">
 <label for="issuePriority">IssuePriority</label>
-<select ng-model="uc.createIssue.issuePriority.id" class="dropDown form-control">
+<select ng-model="mc.createIssue.issuePriority.id" class="dropDown form-control">
 <option ng-repeat="priority in priorities" value="{{priority.id}}">{{priority.type}}</option>
 </select>
   </div>
@@ -58,15 +58,15 @@ width:50%;
  <div class="box2">
   <div class="form-group col-sm-4">
 <label for="component">Issue Component</label>
-<input type="text" ng-model="uc.createIssue.component" class="form-control" />
+<input type="text" ng-model="mc.createIssue.component" class="form-control" />
  </div>
  <div class="form-group col-sm-4">
 <label for="affectedVersion">Issue Affective Version</label>
-<input type="text" ng-model="uc.createIssue.affectedVersion" class="form-control" />
+<input type="text" ng-model="mc.createIssue.affectedVersion" class="form-control" />
  </div>
  <div class="form-group col-sm-4">
  <label for="applicationEnvironment">ApplicationEnvironment</label>
-<select ng-model="uc.createIssue.applicationEnvironment.id" class="dropDown form-control">
+<select ng-model="mc.createIssue.applicationEnvironment.id" class="dropDown form-control">
 <option ng-repeat="environment in environments" value="{{environment.id}}">{{environment.environment}}</option>
 </select>
 	
@@ -74,22 +74,32 @@ width:50%;
  </div>
  	<div class="form-group col-sm-12">
 		<label for="summary">Issue Summary</label>
-		<input type="text" ng-model="uc.createIssue.summary" class="form-control" />
+		<input type="text" ng-model="mc.createIssue.summary" class="form-control" />
     </div>
     <div class="box3">
 		<div class="form-group col-sm-12">
 			<label for="description">Issue Description</label>
-			<textarea class="form-control" rows="5" ng-model="uc.createIssue.description" class="form-control" ></textarea>
+			<textarea class="form-control" rows="5" ng-model="mc.createIssue.description" class="form-control" ></textarea>
 		</div>
 	</div>
    <div class="box4">
  		<div class="form-group col-sm-6">
-		<label for="issueTeamMember">IssueOwner</label>
-			<select class="dropDown form-control" ng-model="uc.createIssue.owner.memberId" class="form-control">
-				<option value="{{owner.memberId}}" ng-repeat="owner in applicationTeamMembers" value="{{owner.memberId}}">{{owner.name}}</option>
+			<label for="dueDate">Due Date</label>
+			<input type="date" ng-model="mc.createIssue.dueDate" class="form-control" />
+		</div>
+		 <div class="form-group col-sm-6">
+			<label for="issueTeamMember">IssueOwner</label>
+			<select class="dropDown form-control" ng-model="mc.createIssue.owner.memberId" class="form-control">
+				<option value="{{owner.memberId}}" ng-repeat="owner in assigneeList" value="{{owner.memberId}}">{{owner.name}}</option>
 			</select>
   	  </div>
- </div> 
+   </div> 
+  <div class="box5">
+		<div class="form-group col-sm-4">
+		<label for="environment">Original Estimate</label> 
+		<input type="text" ng-model="mc.createIssue.originalEstimate" class="form-control" placeholder="(in form of HH:mm:ss)"/>
+		</div>
+  </div>
  <div class="form-group submitButton">        
       <div class="col-sm-offset-2 col-sm-10">
        <button type="submit" class="btn btn-primary">Save</button>

@@ -16,10 +16,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+
+
 import java.text.ParseException;
+
+
+import java.io.FileOutputStream;
+
+import java.io.IOException;
+
+
+import java.io.OutputStream;
+
+import java.text.ParseException;
+
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,12 +93,33 @@ public class IssueController {
 		return "redirect:/static/UserCreateIssueForm.html";
 	}
 	
+	@RequestMapping(value="/managerShowCreateIssueForm")
+	public String getManagerCreateIssueForm()
+	{
+		System.out.println("---getCreateIssueForm----");
+		return "redirect:/static/ManagerIssueCreateForm.html";
+	}
+	
 
 	@RequestMapping(value="/showEditIssueForm")
 	public String showEditForm()
 	{
 		return "redirect:/static/UserEditIssue.html";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/fetchIssueDetailsConv/{id}",method=RequestMethod.POST)
+	public void fetchIssueDetailsConv(@PathVariable("id") int id){
+		
+		System.out.println("-------in conversation--------"+id);
+		//issueService.fetchIssueDetailsConv(int id);
+		
+		/*userService.fetchIssueDetailsConv(issueId);*/
+		
+		
+	}
+	
+	
 	
 	@RequestMapping(value="/defaultIssuesList",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -105,7 +137,12 @@ public class IssueController {
 		return "redirect:/static/ManagerEditIssue.html";
 	}
 
-	
+	@RequestMapping(value="/showConversationForm")
+	public String showConversationForm()
+	{
+		System.out.println("---getConversationIssueForm----");
+		return "redirect:/static/conversationIssueForm.html";
+	}
 
 	@RequestMapping(value="/issues",method=RequestMethod.GET)
 	public String showIssuePage(){
@@ -127,7 +164,26 @@ public class IssueController {
 		return issues;
 	}
 	
-
+	
+	@ResponseBody
+	@RequestMapping(value="/conversationList",produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Issue> getConversationList(HttpServletRequest httpServletRequest){
+		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
+		System.out.println("in metjhod");
+		
+		System.out.println("--------"+createdBy);
+		List<Issue> chats=issueService.getConversationList(createdBy);
+		for (Issue issue : chats) {
+			System.out.println("-----------------"+issue.getApplicationIssueType().getType());
+			System.out.println("-----------------"+issue.getSummary());
+			System.out.println("-----memeber name"+issue.getIssueOwner().getMember().getName());
+			System.out.println("-----------created date time----"+issue.getCreatedDateTime());
+		}
+		
+		System.out.println("in return controller");
+		System.out.println(chats);
+		return chats;
+	}
 	@ResponseBody
 	@RequestMapping(value="/getMembers")
 	public List<MemberForm> getMemberList(){
@@ -151,6 +207,7 @@ public class IssueController {
 		issueService.assignIssue(issueForm, fetchId);
 	}
 	
+
 	
 	@ResponseBody
 	@RequestMapping(value="/getProjects",produces=MediaType.APPLICATION_JSON_VALUE)
@@ -211,8 +268,48 @@ public class IssueController {
 		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
 		
 		Long issueOwnerMemberId = issueForm.getIssueOwner().getMember().getMemberId();
+		System.out.println("ISSUE OWNER MEMBER ID >>>"+issueOwnerMemberId);
+		int issueId=0;
+		try
+		{
+			issueId=issueService.createIssue(issueForm,createdBy,issueOwnerMemberId);
+		} catch (Exception e) {
+			System.out.println("Excption "+e);
+		}
 		
-		issueService.createIssue(issueForm,createdBy,issueOwnerMemberId);
+		System.out.println("in controller for show projects");
+		return null;
+
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/managerCreateIssue",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.POST)
+	public String managerCreateIssue(@RequestBody IssueForm issueForm,HttpServletRequest httpServletRequest) throws ParseException{
+		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
+		
+		//long createdBy = 1004683;
+		System.out.println("Create Issue "+createdBy);
+		//issueForm.setCreatedBy(createdBy);
+		System.out.println(issueForm);
+		System.out.println("Project createIssue "+issueForm.getProject());
+		System.out.println(issueForm.getApplicationIssuePriority());
+		System.out.println(issueForm.getComponent());
+		System.out.println(issueForm.getDescription());
+		System.out.println(issueForm.getSummary());
+		System.out.println("Application Issue type "+issueForm.getApplicationIssueType());
+		System.out.println("in create issue");
+		System.out.println("Application Issue Owner   "+issueForm.getIssueOwner().getMember().getMemberId());
+		Long issueOwnerMemberId = issueForm.getIssueOwner().getMember().getMemberId();
+		System.out.println("DUE DATE  >>>"+issueForm.getDueDate());
+		System.out.println("Original estimate >>>"+issueForm.getOriginalEstimate());
+		int issueId=0;
+		try {
+		 issueId=issueService.managerCreateIssue(issueForm, createdBy, issueOwnerMemberId);
+		} catch (Exception e) {
+			System.out.println("Excption "+e);
+		}
+		
+		
 		System.out.println("in controller for show projects");
 		return null;
 

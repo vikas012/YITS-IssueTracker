@@ -2,7 +2,7 @@ var userModule = angular.module('issueTrackingSystem.userModule',['ngRoute','dat
 userModule.config(function($routeProvider){
 		$routeProvider
 			.when('/createIssue',{
-				templateUrl:'showCreateIssueForm',
+				templateUrl:'../showCreateIssueForm',
 				controller:'userController as uc'
 			})
 
@@ -17,6 +17,10 @@ userModule.config(function($routeProvider){
 
 			.when('/editIssues',{
 				templateUrl:'showEditIssueForm',
+				controller:'userController as uc'
+			})
+			.when('/showConversation',{
+				templateUrl:'../showConversationForm',
 				controller:'userController as uc'
 			})
 			

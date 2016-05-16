@@ -15,6 +15,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
+import org.hibernate.criterion.Criterion;
+
 import org.hibernate.criterion.Projections;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,11 +182,12 @@ public class IssueDaoImpl implements IssueDao {
 
 	}
 
-	public void createIssue(Issue issue, Long createdBy, Long issueOwnerMemberId) {
+	public int createIssue(Issue issue,Long createdBy,Long issueOwnerMemberId) {
 
-		Session session = sessionFactory.getCurrentSession();
-		int createdBy1 = findMemberId(createdBy);
-		ApplicationTeamMember applicationTeamMember = new ApplicationTeamMember();
+		Session session=sessionFactory.getCurrentSession();
+		int createdBy1=findMemberId(createdBy);
+		ApplicationTeamMember applicationTeamMember=new ApplicationTeamMember();
+
 		applicationTeamMember.setId(createdBy1);
 
 		issue.setCreatedBy(applicationTeamMember);
@@ -195,6 +198,10 @@ public class IssueDaoImpl implements IssueDao {
 		issue.setIssueOwner(applicationTeamMember2);
 
 		session.saveOrUpdate(issue);
+		int issueId=0;
+		issueId=(Integer) session.save(issue);
+		return issueId;
+		
 
 	}
 
@@ -246,8 +253,14 @@ public class IssueDaoImpl implements IssueDao {
 
 		List<Member> members = getApplicationMembers(application);
 
+		
+		List<Member> allMembers = getAllMembers();
+		
+		System.out.println("Select all Members "+allMembers);
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("applicationTeamMembers", members);
+		map.put("allMembers", allMembers);
 		map.put("issuePriority", applicationIssuePriority);
 		map.put("issueType", applicationIssueType);
 		map.put("applicationEnvironment", applicationEnvironment);
@@ -260,12 +273,10 @@ public class IssueDaoImpl implements IssueDao {
 		Criteria criteria5 = session.createCriteria(Application.class);
 		criteria5.add(Restrictions.eq("id", application.getId()));
 		List<Application> applications = criteria5.list();
-		System.out.println("ApplicationTeamMember " + applications);
 
 		List<ApplicationTeamMember> applicationTeamMembers = application.getApplicationTeamMembers();
-		System.out.println("ApplicationTeam Member " + applicationTeamMembers);
 
-		Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
+Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 		List<Member> members = new ArrayList<Member>();
 
 		while (iterator.hasNext()) {
@@ -275,7 +286,7 @@ public class IssueDaoImpl implements IssueDao {
 
 		}
 
-		System.out.println("Members member " + members);
+
 
 		return members;
 
@@ -421,9 +432,113 @@ public class IssueDaoImpl implements IssueDao {
 		return "success";
 	}
 
-	public void createIssue(Issue issue, Long createdBy) {
-		// TODO Auto-generated method stub
 
+	public List<Member> getAllMembers() {
+		
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(Member.class);
+				
+		List<Member> members=criteria.list();
+		
+		return members;
+		
+
+	}
+
+
+	public List<Issue> getConversationList(long createdBy) {
+		//String query="SELECT * FROM Issue WHERE OWNER=(SELECT member_Id FROM application_team_member WHERE member_id=(SELECT Id FROM member WHERE member_Id="+1004686+"));";
+		Session session=sessionFactory.getCurrentSession();
+		Query query = session.createSQLQuery("SELECT * FROM Issue WHERE Assigned_User=(SELECT member_Id FROM application_team_member WHERE member_id=(SELECT Id FROM member WHERE member_Id="+createdBy+"))");
+		//query.setParameter(0, createdBy);
+		 
+		
+		Iterator iterator=query.list().iterator();
+		List<Issue> listOfIssues=new ArrayList<Issue>();
+		List<Member> listOfMember=new ArrayList<Member>();
+		Member member3=null;
+		while(iterator.hasNext()){
+		 
+		Object[] object=(Object[])iterator.next();
+		Issue issue=new Issue();
+		 
+		issue.setId((Integer)object[0]);
+		 
+		issue.setSummary((String)object[1]);
+		issue.setCreatedDateTime((Date)object[22]);
+		issue.setDueDate((Date)object[2]);
+		System.out.println("----DUE DATE-----"+issue.getDueDate());
+		System.out.println("=====dao==="+issue.getCreatedDateTime());
+		
+		Member member=new Member();
+		int memberId1=(Integer)object[8];
+		Query query3=session.createSQLQuery("Select member_Id  from member where Id=(Select member_Id from application_team_member where id="+memberId1 +")");
+		 
+		Iterator iterator2=query3.list().iterator();
+		 
+		while(iterator2.hasNext()){
+		 
+		BigInteger bigInteger=(BigInteger)iterator2.next();
+		 
+		System.out.println("-------hello---------"+bigInteger.longValue());
+		 
+		member.setMemberId(bigInteger.longValue());
+		
+		 
+		Query query4=session.createSQLQuery("Select Name from member where id IN (Select member_Id from application_team_member where id IN (Select CREATED_BY from Issue where Assigned_User = (Select id  from member where member_Id="+createdBy+")))");
+		
+		Iterator iterator4=query4.list().iterator();
+		while(iterator4.hasNext()){
+			String createdUserName=(String)iterator4.next();
+			member.setName(createdUserName);
+		}
+		}
+		
+		ApplicationTeamMember applicationTeamMember= new ApplicationTeamMember();
+		applicationTeamMember.setMember(member);
+		 
+		issue.setIssueOwner(applicationTeamMember);
+		 
+		issue.setDueDate((Date)object[2]);
+		 
+		issue.setTaskProgressUpdate((String)object[11]);
+		 
+		ApplicationIssueType applicationIssueType= new ApplicationIssueType();
+		 
+		int id=(Integer)object[13];
+		 
+		Query query1=session.createQuery("from ApplicationIssueType where Id=?");
+		 
+		query1.setInteger(0, id);
+		 
+		List<ApplicationIssueType> listOfApplicationIssueType=query1.list();
+		for (ApplicationIssueType applicationIssueType2 : listOfApplicationIssueType) {
+		 
+		applicationIssueType.setType(applicationIssueType2.getType());
+		 
+		}
+		issue.setApplicationIssueType(applicationIssueType);
+		 
+		ApplicationIssuePriority applicationIssuePriority=new ApplicationIssuePriority();
+		int prirorityId=(Integer)object[14];
+		 
+		Query query2=session.createQuery("from ApplicationIssuePriority where Id=?");
+		 
+		query2.setInteger(0, prirorityId);
+		 
+		List<ApplicationIssuePriority> listOfApplicationIssuePriority=query2.list();
+		for (ApplicationIssuePriority applicationIssuePriority2 : listOfApplicationIssuePriority) {
+		 
+		applicationIssuePriority.setType(applicationIssuePriority2.getType());
+		 
+		}
+		 
+		issue.setApplicationIssuePriority(applicationIssuePriority);
+		listOfIssues.add(issue);
+		 
+		}
+		 
+		return listOfIssues;
 	}
 
 	public Issue showIssueDetails(int id) {
@@ -447,23 +562,43 @@ public class IssueDaoImpl implements IssueDao {
 
 	public Issue fetchIssueDetails(int fetchId) {
 
+
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from Issue where id=" + fetchId);
 		Issue issue = (Issue) query.uniqueResult();
 		return issue;
+
 	}
 
-	public List<Member> getMemberList() {
 
-		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(Member.class)
-				.setProjection(Projections.projectionList().add(Projections.property("id"), "id")
-						.add(Projections.property("name"), "name"))
-				.setResultTransformer(Transformers.aliasToBean(Member.class));
-		List<Member> members = criteria.list();
-		return members;
+	public int managerCreateIssue(Issue issue, Long createdBy, Long issueOwnerMemberId) {
+		
+		int issueId =0;
+		Session session=sessionFactory.getCurrentSession();
+		try {
+		int createdBy1=findMemberId(createdBy);
+		
+		
+		ApplicationTeamMember applicationTeamMember=new ApplicationTeamMember();
+		applicationTeamMember.setId(createdBy1);
+		issue.setCreatedBy(applicationTeamMember);
+		
+		
+		ApplicationTeamMember applicationTeamMember2 = new ApplicationTeamMember();
+		applicationTeamMember2.setId(findMemberId(issueOwnerMemberId));
+		
+		
+		issue.setIssueOwner(applicationTeamMember2);
+		
+		
+		issueId=(Integer) session.save(issue);
+		} catch (Exception e) {
+			System.out.println("Exception "+e);
+		}
+		
+		
+		return issueId;
 	}
-
 	public void assignIssue(Issue issue, int fetchId) {
 
 		Session session = sessionFactory.getCurrentSession();
@@ -479,6 +614,35 @@ public class IssueDaoImpl implements IssueDao {
 		issue2.setDueDate(issue.getDueDate());
 		session.update(issue2);
 	}
+	public List<Member> getMemberList() {
+
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Member.class)
+				.setProjection(Projections.projectionList().add(Projections.property("id"), "id")
+						.add(Projections.property("name"), "name"))
+				.setResultTransformer(Transformers.aliasToBean(Member.class));
+		List<Member> members = criteria.list();
+		return members;
+	}
+
+	/*public int getIssueId(long memberId) {
+		int id=0;
+		
+		Query query = sessionFactory.getCurrentSession().createQuery("from Member where managerId=?");
+		query.setParameter(0, memberId);
+		List<Member> members = query.list();
+		
+		for (Member member : members) {
+			id = member.getId();
+			
+		}
+		return id;
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
+	}
+
+
+
+	
 
 	/*
 	 * public int getIssueId(long memberId) { int id=0;

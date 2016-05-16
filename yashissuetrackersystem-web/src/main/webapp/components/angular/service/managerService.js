@@ -156,6 +156,55 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			  					);
 			  				
 			  			},	  
+			  			
+			  			initializeSelect: function() {
+			  				alert("in service for Projects get")
+			  	          return $http.get('../getProjects')
+			  	              .then(
+			  	                      function(response){
+			  	                    	  //alert("in service for projects");
+			  	                          return response.data;
+			  	                      }, 
+			  	                      function(errResponse){
+			  	                          console.error('Error while fetching users');
+			  	                              return $q.reject(errResponse);
+			  	                      }
+			  	                );
+			  	      	},
+			  	      initializeSelectAll:function(projectId){
+				      		//alert("in service Select All");
+				      		alert(projectId);
+				      		return $http.get('../getAllSelectFields/'+projectId)
+				              .then(
+				                      function(response){
+				                    	 // alert("in service for all");
+				                          return response.data;
+				                      }, 
+				                      function(errResponse){
+				                          console.error('Error while fetching users');
+				                              return $q.reject(errResponse);
+				                      }
+				                );
+				      	},
+				      	
+				      	submitCreateIssue: function(createIssue) {
+					          return $http.post('../managerCreateIssue',createIssue)
+
+					              .then(
+					                      function(response){
+					                    	  alert(response.data);
+					                          return response.data;
+					                      }, 
+					                      function(errResponse){
+					                          console.error('Error while fetching users');
+					                              return $q.reject(errResponse);
+					                      }
+					                );
+				      	
+				  
+				      	
+				      	},
+			  	      
 
 			  			getList:function(){
 			  				return $http.get('../getApplication')
@@ -253,14 +302,12 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 										'Content-Type' : undefined
 									}
 								};
-								 $http(request).then(
+								 $http(request)
+								 .then(
 						 				function(response){
-						 					alert("Success");
-						 						return response.data;
+						 					alert("File uploaded successfully");
 						 				}, 
 						 				function(errResponse){
-						 						console.error('Error while retrieving assigned issues');
-						 						return $q.reject(errResponse);
 						 				}
 			         			);
 			  				
