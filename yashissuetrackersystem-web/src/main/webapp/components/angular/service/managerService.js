@@ -1,6 +1,6 @@
 angular.module('issueTrackingSystem.managerModule').factory('managerService',['$http',function($http,$q,$scope){
 	
-
+	var memberid=1605100;
 	
 	  return {
 		  
@@ -76,6 +76,8 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 		  					);
 		  			},
 		  			registerNonYashMember:function(member){
+		  				memberid=memberid+1;
+		  				member.memberId=memberid;
 		  				return $http.post('../registerMember',member)
 		  				.then(
 		  							function(response){
@@ -158,7 +160,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			  			},	  
 			  			
 			  			initializeSelect: function() {
-			  				alert("in service for Projects get")
+			  				
 			  	          return $http.get('../getProjects')
 			  	              .then(
 			  	                      function(response){
@@ -172,8 +174,8 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			  	                );
 			  	      	},
 			  	      initializeSelectAll:function(projectId){
-				      		//alert("in service Select All");
-				      		alert(projectId);
+				      		
+				      		
 				      		return $http.get('../getAllSelectFields/'+projectId)
 				              .then(
 				                      function(response){

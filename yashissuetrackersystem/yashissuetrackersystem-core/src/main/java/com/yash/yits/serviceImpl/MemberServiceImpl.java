@@ -226,40 +226,43 @@ public class MemberServiceImpl implements MemberService {
 
 	 public boolean addMember(MemberForm memberForm) {
 			
-			member.setMemberId(memberForm.getMemberId());
+		 member.setMemberId(memberForm.getMemberId());
 			member.setName(memberForm.getName());
 			member.setEmail(memberForm.getEmail());
 			member.setContact(memberForm.getContact());
 			member.setManagerId(memberForm.getManagerId());
 			member.setManagerName(memberForm.getManagerName());
 			member.setManagerEmail(memberForm.getManagerEmail());
+			member.setMemberType(memberForm.getMemberType());
 			member.setCreatedDateTime(new Date());
 			member.setLastModifiedDateTime(new Date());
 			boolean result=memberDao.addMember(member);
 			
-			
-			ApplicationContext context=ContextAware.getApplicationContext();
-			System.out.println("object of application context"+context);
-			JavaMailSenderImpl javamailsender=(JavaMailSenderImpl) context.getBean("mailSender");
-			
-			System.out.println(javamailsender.getHost()+"  "+javamailsender.getPort());
-			SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
-			
-			simpleMailMessage.setFrom(javamailsender.getUsername());
-			simpleMailMessage.setTo(memberForm.getEmail());
-			simpleMailMessage.setCc(memberForm.getManagerEmail());
-			String subject="Successful Registration In IssueTracker Application!!!";
-			simpleMailMessage.setSubject(subject);
-			
-			String message="Hi," 
-							+ "You have been successfully successfully registered with Yash Issue Tracking System Application with email id."+memberForm.getEmail()+
-
-			"Regards,"
-			+"Team : Yash Issue Tracking Sytem.";
-			
-			simpleMailMessage.setText(message);
-			
-			javaMailSender.send(simpleMailMessage);
+			if(result==true)
+			{
+				ApplicationContext context=ContextAware.getApplicationContext();
+				System.out.println("object of application context"+context);
+				JavaMailSenderImpl javamailsender=(JavaMailSenderImpl) context.getBean("mailSender");
+				
+				System.out.println(javamailsender.getHost()+"  "+javamailsender.getPort());
+				SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
+				
+				simpleMailMessage.setFrom(javamailsender.getUsername());
+				simpleMailMessage.setTo(memberForm.getEmail());
+				/*simpleMailMessage.setCc(memberForm.getManagerEmail());*/
+				String subject="Successful Registration In IssueTracker Application!!!";
+				simpleMailMessage.setSubject(subject);
+				
+				String message="Hi," 
+								+ "You have been successfully successfully registered with Yash Issue Tracking System Application with email id."+memberForm.getEmail()+
+	
+				"Regards,"
+				+"Team : Yash Issue Tracking Sytem.";
+				
+				simpleMailMessage.setText(message);
+				
+				javaMailSender.send(simpleMailMessage);
+			}
 
 			
 			

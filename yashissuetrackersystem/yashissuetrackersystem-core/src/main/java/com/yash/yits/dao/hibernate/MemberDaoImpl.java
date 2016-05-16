@@ -31,7 +31,7 @@ public class MemberDaoImpl implements MemberDao {
 			Session session=sessionFactory.getCurrentSession();
 			System.out.println(member);
 			Criteria criteria = session.createCriteria(Member.class);
-			criteria.add(Restrictions.eqOrIsNull("memberId",member.getMemberId()));
+			criteria.add(Restrictions.eqOrIsNull("name",member.getName()));
 			List<Member> listOfMember=criteria.list();
 			if(listOfMember.size()==1){
 				
