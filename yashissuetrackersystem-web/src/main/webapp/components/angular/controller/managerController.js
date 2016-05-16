@@ -417,7 +417,7 @@ angular
 								managerService.getList()
 								.then(
 										function(data) {
-											alert(data);
+											
 											$scope.applicationNames=data;
 										
 										},
@@ -455,7 +455,7 @@ angular
 								managerService.getadvSearchData(filterIssueType,filterProjectName,filterPriority)
 								.then(
 										function(data) {
-											alert(data);
+											
 											$scope.defaultIssueList = data;
 											$('#advsearch').hide();
 
@@ -726,11 +726,11 @@ angular
 								
 								var id = angular.element(document.querySelector("input[id=radio]:checked")).val();
 								
-								alert("our id "+id);
+								
 								managerService.viewIssueDetails(id)
 								.then(
 									function(data){
-										alert(data);
+										
 										
 										$scope.issueDetails=data.issueobject;
 										$scope.attachments=data.listOfAttachment;
@@ -747,7 +747,7 @@ angular
 							$scope.download = function(id){
 								
 								
-								alert(id);
+								
 									managerService.download(id)
 									.then(
 										function(data){

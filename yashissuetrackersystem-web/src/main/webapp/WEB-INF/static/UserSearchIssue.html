@@ -27,6 +27,24 @@
 		float:right;
 	}
 	
+	.modal-dialog, .modal-content {
+	
+	width: 70%;
+}
+
+.modal-header {
+	background-color: darkcyan;
+	color: white;
+}
+
+#dark {
+	background-color: lightgrey;
+}
+
+.modal-footer {
+	background-color: darkcyan;
+}
+	
 </style>
 </head>
 <body>
@@ -113,7 +131,7 @@
 			</thead>
 			<tbody>
 			<tr id="defaultTable" ng-repeat="issue in defaultIssueSearchList">
-				<td><input id='radio' type='radio' value="{{issue.id}}"></td>
+				<td><input id='radio' type='radio' name="issueId" value="{{issue.id}}"></td>
 				<td>{{issue.createdDateTime}}</td>
 				<td>{{issue.dueDate}}</td>
 				<td>{{issue.project.name}}</td>
@@ -121,11 +139,105 @@
 				<td>{{issue.applicationIssueStatus.status}}</td>
 				<td>{{issue.applicationIssuePriority.type}}</td> 
 				<td>{{issue.summary}}</td>
-				<td><input type="button" value="View Details" class="btn btn-primary" ng-click="viewIssue()"></td>
+				<td><input type="button" value="View Details"
+						class="btn btn-primary" data-toggle="modal"
+							data-target="#myModal1" ng-click="viewIssue()"></td>
 			</tr>
 			</tbody>
 		</table>
-		
+		<div class="modal fade" id="myModal1" role="dialog" align="center">
+		<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Issue Details</h4>
+					</div>
+					<div class="modal-body">
+					
+						<table class="table table-striped" id="tblGrid">
+            				<tr id="light">
+            					<td><strong>Affected Version </strong></td>
+            					<td class="text-right">{{issueDetails.affectedVersion}}</td>
+            				</tr>
+            				<tr id="dark">
+            					<td><strong>Component </strong></td>
+            					<td class="text-right">{{issueDetails.component}}</td>
+            				</tr>
+            				<tr id="light">
+            					<td><strong>Description </strong></td>
+            					<td class="text-right">{{issueDetails.description}}</td>
+            				</tr>
+            				<tr id="dark">
+            					<td><strong>Original Estimate </strong></td>
+            					<td class="text-right">{{issueDetails.originalEstimate}}</td>
+            				</tr>
+            				<tr id="light">
+            					<td><strong>Remaining Estimate </strong></td>
+            					<td class="text-right">{{issueDetails.remainingEstimate}}</td>
+            				</tr>
+            				<tr id="dark">
+            					<td><strong>Task Progress Update </strong></td>
+            					<td class="text-right">{{issueDetails.taskProgressUpdate}}</td>
+            				</tr>
+            				<tr id="light">
+            					<td><strong>Issue Type </strong></td>
+            					<td class="text-right">{{issueDetails.applicationIssueType.type}}</td>
+            				</tr>
+            				<tr id="dark">
+            					<td><strong>Issue Priority </strong></td>
+            					<td class="text-right">{{issueDetails.applicationIssuePriority.type}}</td>
+            				</tr>
+            				<tr id="light">
+            					<td><strong>Owner </strong></td>
+            					<td class="text-right">{{issueDetails.issueOwner.member.name}}</td>
+            				</tr>
+            				<tr id="dark">
+            					<td><strong>Created By </strong></td>
+            					<td class="text-right">{{issueDetails.createdBy.member.name}}</td>
+            				</tr>
+            				<tr id="light">
+            					<td><strong>Close Date </strong></td>
+            					<td class="text-right">{{issueDetails.closeDate}}</td>
+            				</tr>
+            				<tr id="dark">
+            					<td><strong>Created Date Time </strong></td>
+            					<td class="text-right">{{issueDetails.createdDateTime}}</td>
+            				</tr>
+            				<tr id="light">
+            					<td><strong>Due Date</strong></td>
+            					<td class="text-right">{{issueDetails.dueDate}}</td>
+            				</tr>
+            				<tr id="dark">
+            					<td><strong>Attachment File </strong></td>
+            					<td class="text-right"><p ng-repeat="attachment in attachments"><a href="" ng-click="download(attachment.id)" >{{attachment.name}}</a> &nbsp; <em>{{attachment.label}}</em><br></p></td>
+            				</tr>
+          				</table>
+						<!-- <div id="light"><Strong>Affected Version</Strong>{{issueDetails.affectedVersion}}</div>
+						<div id="dark"><Strong>Component</Strong>{{issueDetails.component}}</div>
+						<div id="light"><Strong>Description</Strong>{{issueDetails.description}}</div>
+						<div id="dark"><Strong>Original Estimate</Strong>{{issueDetails.originalEstimate}}</div>
+						<div id="light"><Strong>Remaining Estimate</Strong>{{issueDetails.remainingEstimate}}</div>
+						<div id="dark"><Strong>Task Progress Update</Strong>{{issueDetails.taskProgressUpdate}}</div>
+						<div id="light"><Strong>Issue Type</Strong>{{issueDetails.applicationIssueType.type}}</div>
+						<div id="dark"><Strong>Issue Priority</Strong>{{issueDetails.applicationIssuePriority.type}}</div>
+						<div id="light"><Strong>Owner</Strong>{{issueDetails.issueOwner.member.name}}</div>
+						<div id="dark"><Strong>Created By</Strong>{{issueDetails.createdBy.member.name}}</div>
+						<div id="light"><Strong>Close Date</Strong>{{issueDetails.closeDate}}</div>
+						<div id="dark"><Strong>Created Date Time</Strong>{{issueDetails.createdDateTime}}</div>
+						<div id="light"><Strong>Due Date</Strong>{{issueDetails.dueDate}}</div>
+						<div id="dark"><Strong>Attachment</Strong><p ng-repeat="attachment in attachments">
+						
+						<div ng-init="id={{attachment.id}}">
+						<a href="" ng-click="download(attachment.id)" >{{attachment.name}}</a> &nbsp; <em>{{attachment.label}}</em><br></p></div> -->
+					</div>
+					<div class="modal-footer">
+          				<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+       		 		</div>
+				</div> 
+			</div>
+	</div> 
 		
 </form>
 </body>

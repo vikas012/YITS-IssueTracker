@@ -110,6 +110,43 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
   				
   			},
   			
+  			download:function(id){
+  				
+  				return $http.get('../download/'+id)
+  				.then(
+  						
+  						function(response){
+  							
+  							return response.data;
+  						},
+  						
+  						function(errRespnse){
+  							
+  							console.error('Error while showing Issue details');
+  							return $q.reject(errResponse);
+  						}
+  				);
+  				
+  			},
+				  
+  		  
+  			viewIssueDetails:function(id){
+  				return $http.get('../showIssueDetails/'+id)
+					//return $http({  url: '../showIssueDetails', method: "GET", params: {id: id} })
+	  					.then(
+	  								function(response){
+	  									
+	  								  return response.data;
+	  								},
+	  								function(errResponse){
+	  									console.error('Error while showing Issue details');
+	  									return $q.reject(errResponse);
+	  								}
+
+	  						);
+		  
+				},
+  			
   			
   			getadvSearchData:function(filterIssueType,filterProjectName,filterPriority){
   				return $http.post('../getadvsearchdata/'+filterIssueType+'/'+filterProjectName+'/'+filterPriority)

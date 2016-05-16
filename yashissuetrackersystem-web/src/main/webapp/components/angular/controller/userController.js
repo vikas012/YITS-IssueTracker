@@ -13,7 +13,7 @@ angular
 								method : 'GET',
 								url : '../defaultIssuesList'
 							}).success(function(data) {
-								alert("-------in controller-------" + data);
+								
 								$scope.issueList = data;
 							})
 
@@ -34,8 +34,8 @@ angular
 												document
 														.querySelector("select[id=selectId]"))
 										.val();
-								alert("in onchange")
-								alert(projectId);
+								
+								
 								this.pId = projectId;
 								this.project = {
 									id : projectId
@@ -62,8 +62,7 @@ angular
 												document
 														.querySelector("select[id=selectId]"))
 										.val();
-								alert("in onchange")
-								alert(applicationId);
+								
 								/*
 								 * this.pId=projectId; this.project ={
 								 * id:projectId }
@@ -80,7 +79,7 @@ angular
 							}
 
 							this.add = function() {
-								alert("hello");
+								
 								/*
 								 * var projectId =
 								 * this.createIssue.project.projectId; var
@@ -133,7 +132,7 @@ var formData={
 										.submitCreateIssue(formData)
 										.then(
 												function(formData) {
-													alert("REgistered");
+													alert("Registered");
 												},
 												function(errResponse) {
 													console
@@ -148,7 +147,7 @@ var formData={
 								method : 'GET',
 								url : '../defaultIssues'
 							}).success(function(data) {
-								alert("searchUser")
+								
 								$scope.defaultIssueSearchList = data;
 
 							})
@@ -161,7 +160,7 @@ var formData={
 								userService.getList()
 								.then(
 										function(data) {
-											alert(data);
+											
 											$scope.applicationNames=data;
 										
 										},
@@ -199,7 +198,7 @@ var formData={
 								userService.getadvSearchData(filterIssueType,filterProjectName,filterPriority)
 								.then(
 										function(data) {
-											alert(data);
+											
 											$scope.defaultIssueSearchList = data;
 											$('#advsearch').hide();
 
@@ -213,6 +212,46 @@ var formData={
 							
 							}
 							
+							
+							$scope.viewIssue = function(){
+								
+								var id = angular.element(document.querySelector("input[id=radio]:checked")).val();
+								
+								
+								userService.viewIssueDetails(id)
+								.then(
+									function(data){
+										
+										
+										$scope.issueDetails=data.issueobject;
+										$scope.attachments=data.listOfAttachment;
+										
+									},
+									 function(errResponse){
+												 console.error('Error while showing Issue details');
+											 }
+									)	
+								
+								
+							};
+							
+							$scope.download = function(id){
+								
+								
+								
+									userService.download(id)
+									.then(
+										function(data){
+									
+											
+										},
+										 function(errResponse){
+													 console.error('Error while showing Issue details');
+												 }
+										)	
+									
+									
+								};
 							
 							/* issueService returns list to populate drop-down */
 							/*

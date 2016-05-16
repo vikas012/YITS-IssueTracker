@@ -334,7 +334,7 @@ public class IssueController {
 	        System.out.println("mimetype : "+mimeType);
 	         
 	        response.setContentType(mimeType);*/
-		System.out.println("---------------------"+attachmentForm.getLabel());
+		System.out.println("-----------label----------"+attachmentForm.getLabel());
 		 response.setHeader("Content-Disposition","attachment; filename=\"" + attachmentForm.getName() +"\"");
 		 OutputStream out = response.getOutputStream();
 	        try {
