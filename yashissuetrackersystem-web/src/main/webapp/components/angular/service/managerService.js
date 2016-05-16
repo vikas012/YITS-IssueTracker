@@ -139,7 +139,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			  	          return $http.get('../getProjects')
 			  	              .then(
 			  	                      function(response){
-			  	                    	  alert("in service for projects");
+			  	                    	  //alert("in service for projects");
 			  	                          return response.data;
 			  	                      }, 
 			  	                      function(errResponse){
@@ -149,7 +149,7 @@ angular.module('issueTrackingSystem.managerModule').factory('managerService',['$
 			  	                );
 			  	      	},
 			  	      initializeSelectAll:function(projectId){
-				      		alert("in service Select All");
+				      		//alert("in service Select All");
 				      		alert(projectId);
 				      		return $http.get('../getAllSelectFields/'+projectId)
 				              .then(

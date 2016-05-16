@@ -12,16 +12,16 @@ angular
 
 
 							
-                        alert("in member controller");
+                      //  alert("in member controller");
 							
 							this.createIssue={};
 							managerService.initializeSelect()
 							.then(
 									function(d) {
-										alert("get projects")
+										//alert("get projects")
 										alert(d.myValue);
 										$scope.projects=d.projects;
-										alert(d.projects);
+										//alert(d.projects);
 									}
 									
 							);
