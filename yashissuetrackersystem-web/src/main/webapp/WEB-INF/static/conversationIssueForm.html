@@ -1,0 +1,162 @@
+<style type="text/css">
+.container {
+	width: 200px;
+	float: center;
+}
+
+.input-group {
+	width: 300px;
+	float: center;
+	margin-left: 350px;
+}
+
+#heading {
+	background-color: darkcyan;
+	color: white;
+	font-size: 18px;
+	font-family: "Times New Roman", Times, serif;
+}
+
+.btn-primary {
+	background-color: darkcyan !important;
+}
+</style>
+
+<div>
+	<form>
+
+
+		<div
+			style="border-radius: 10px; padding: 20px; width: 100%; height: 100px; margin-bottom: 25px;"
+			ng-repeat="issues in conversationList">
+		
+			<div>
+				<strong>Issue Summary: </strong>{{issues.summary}}<br> 
+				<strong>Owner_ID:</strong>{{issues.issueOwner.member.memberId}}<br> 
+				<strong>TaskProgressUpdate:</strong>{{issues.taskProgressUpdate}}<br>
+				<strong>Issue Type:</strong>{{issues.applicationIssueType.type}}<br>
+				<strong>Issue Priority:</strong>{{issues.applicationIssuePriority.type}}<br>
+				<strong>Created By:</strong>{{issues.issueOwner.member.name}}
+				<strong>On: </strong>{{issues.createdDateTime}}
+				<button class="btn btn-primary btn-sm">Reassign</button><br>
+				<button type="button" class="btn btn-primary" data-toggle="modal"
+					data-target="#myModal">ReAssign</button>
+			</div>
+		</div>
+
+	
+	<div class="popup">
+		Modal
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+
+				Modal content
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Assign Issue</h4>
+					</div>
+					<div class="modal-body">
+
+
+						<form role="form">
+							<div class="box1">
+								<div class="form-group col-sm-4">
+									<label for="issueProject">Project Name</label> <input
+										type="text" 
+										class="form-control" disabled="disabled">
+								</div>
+
+								<div class="form-group col-sm-4">
+
+									<label for="issueType">IssueType</label>
+									 <input type="text" class="form-control" disabled="disabled">
+								</div>
+
+								<div class="form-group col-sm-4">
+									<label for="issuePriority">IssuePriority</label> 
+									<input type="text" class="form-control" disabled="disabled">
+								</div>
+							</div>
+
+							<div class="box2">
+								<div class="form-group col-sm-4">
+									<label for="component">Issue Component</label> <input
+										type="text"
+										class="form-control" disabled="disabled">
+								</div>
+								<div class="form-group col-sm-4">
+									<label for="affectedVersion">Issue Affective Version</label> <input
+										type="text" 
+										class="form-control" disabled="disabled" />
+								</div>
+								<div class="form-group col-sm-4">
+									<label for="applicationEnvironment">ApplicationEnvironment</label>
+									<input type="text" class="form-control" disabled="disabled" />
+
+								</div>
+							</div>
+							<div class="form-group col-sm-12">
+								<label for="summary">Issue Summary</label> 
+								<input type="text" class="form-control" disabled="disabled" />
+							</div>
+							<div class="box3">
+								<div class="form-group col-sm-12">
+									<label for="description">Issue Description</label>
+									<textarea class="form-control" rows="5"
+										ng-model="fetchedIssue.description" class="form-control"
+										disabled="disabled"></textarea>
+								</div>
+							</div>
+							<div class="box4">
+								<div class="form-group col-sm-4">
+									<label for="issueTeamMember">IssueOwner</label> <input
+										type="text"
+										class="form-control" disabled="disabled" />
+								</div>
+							</div>
+							<div class="box4">
+								<div class="form-group col-sm-4">
+									<label for="createdByTeamMember">Created By</label> <input
+										type="text" 
+										class="form-control" disabled="disabled" />
+								</div>
+							</div>
+							<div class="box5">
+								<div class="form-group col-sm-4">
+									<label for="original Estmimate">Original Estimate</label> <input
+										type="text" 
+										class="form-control" placeholder="(in form of HH:mm:ss)" />
+								</div>
+
+								<div class="form-group col-sm-6">
+									<label for="dueDate">IssueDueDate</label> <input type="date"
+										 class="form-control" />
+								</div>
+
+								<div class="form-group col-sm-6">
+									<label for="issueProject">IssueAssignee</label> <select
+										class="dropDown form-control"
+										 class="form-control">
+									
+
+									</select>
+								</div>
+							</div>
+							<div class="form-group submitButton">
+								<div>
+									<center>
+										<button type="submit" class="btn btn-primary">Assign</button>
+									</center>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
