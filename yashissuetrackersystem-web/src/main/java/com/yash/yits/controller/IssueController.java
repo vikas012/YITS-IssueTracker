@@ -1,5 +1,6 @@
 package com.yash.yits.controller;
 
+
 import java.util.List;
 
 import java.util.Map;
@@ -9,20 +10,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+
 import java.io.File;
 
+
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
+
+
+
+
 import java.io.FileOutputStream;
 
 import java.io.IOException;
 
+
 import java.io.InputStream;
+
 
 import java.io.OutputStream;
 
@@ -30,6 +41,7 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +59,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yash.yits.domain.Issue;
+
 
 import com.yash.yits.form.ApplicationForm;
 
@@ -76,11 +89,17 @@ import com.yash.yits.service.IssueService;
 @Controller
 public class IssueController {
 
+
 	@Autowired
 	private IssueService issueService;
 
-	@RequestMapping(value = "/showCreateIssueForm")
-	public String getCreateIssueForm() {
+
+
+	
+	@RequestMapping(value="/showCreateIssueForm")
+	public String getCreateIssueForm()
+	{
+
 		System.out.println("---getCreateIssueForm----");
 		return "redirect:/static/UserCreateIssueForm.html";
 	}
@@ -91,8 +110,12 @@ public class IssueController {
 		return "redirect:/static/ManagerIssueCreateForm.html";
 	}
 
-	@RequestMapping(value = "/showEditIssueForm")
-	public String showEditForm() {
+
+	
+	@RequestMapping(value="/showEditIssueForm")
+	public String showEditForm()
+	{
+
 		return "redirect:/static/UserEditIssue.html";
 	}
 
@@ -151,8 +174,11 @@ public class IssueController {
 		return issuesList;
 	}
 
-	@RequestMapping(value = "/editIssueForm")
-	public String showEditIssueForm() {
+
+	@RequestMapping(value="/editIssueForm")
+	public String showEditIssueForm()
+	{
+
 		return "redirect:/static/ManagerEditIssue.html";
 	}
 
@@ -201,6 +227,7 @@ public class IssueController {
 		System.out.println(chats);
 		return chats;
 
+
 	}
 	@ResponseBody
 	@RequestMapping(value="/getMembers")
@@ -211,13 +238,7 @@ public class IssueController {
 	}
 
 	
-	@ResponseBody
-	@RequestMapping(value="/fetchIssueDetails/{fetchId}")
-	public IssueForm fetchIssueDetails(@PathVariable int fetchId){
 
-		IssueForm issueForm=issueService.fetchIssueDetails(fetchId);
-		return issueForm;
-	}
 	
 	@ResponseBody
 	@RequestMapping(value="/assignIssue",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
@@ -228,6 +249,11 @@ public class IssueController {
 	}
 	
 
+	
+
+
+
+	
 	
 
 	@ResponseBody
@@ -265,8 +291,11 @@ public class IssueController {
 
 	}
 
-	@RequestMapping(value = "/getAssignIssueForm")
-	public String getAssignIssueForm() {
+
+	@RequestMapping(value="/getAssignIssueForm")
+	public String getAssignIssueForm()
+	{
+
 		return "redirect:/static/ManagerAssignIssue.html";
 	}
 
@@ -278,11 +307,36 @@ public class IssueController {
 	}
 
 	
+
 /*	@ResponseBody
+=======
+	@ResponseBody
+	@RequestMapping(value="/fetchIssueDetails")
+	public IssueForm fetchIssueDetails(@PathVariable int index){
+		System.out.println("unassigned Controller");
+		IssueForm issueForm=issueService.fetchIssueDetails(index);
+		return null;
+	}
+	
+	
+	@ResponseBody
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 	@RequestMapping(value="/createIssue",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.POST)
 	public String createIssue(@RequestBody IssueForm issueForm,HttpServletRequest httpServletRequest){
 		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
 		
+		
+		System.out.println("Create Issue "+createdBy);
+		//issueForm.setCreatedBy(createdBy);
+		System.out.println(issueForm);
+		System.out.println("Project createIssue "+issueForm.getProject());
+		System.out.println(issueForm.getApplicationIssuePriority());
+		System.out.println(issueForm.getComponent());
+		System.out.println(issueForm.getDescription());
+		System.out.println(issueForm.getSummary());
+		System.out.println("Application Issue type "+issueForm.getApplicationIssueType());
+		System.out.println("in create issue");
+		System.out.println("Application Issue Owner   "+issueForm.getIssueOwner().getMember());
 		Long issueOwnerMemberId = issueForm.getIssueOwner().getMember().getMemberId();
 		System.out.println("ISSUE OWNER MEMBER ID >>>"+issueOwnerMemberId);
 		int issueId=0;
@@ -326,6 +380,7 @@ public class IssueController {
 		return null;
 
 	}
+
 
 	@ResponseBody
 	@RequestMapping(value = "/managerCreateIssue", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -418,8 +473,8 @@ public class IssueController {
 	 * Function to upload file Takes file from front-end and passes it to
 	 * service layer
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+
+/*	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	public String saveFile(HttpServletRequest request,
 			@RequestParam(value = "file", required = false) MultipartFile uploadedFile) throws IOException {
 
@@ -431,6 +486,19 @@ public class IssueController {
 		System.out.println("Albel" + file1.getLabel());
 
 		return issueService.saveFile(file1);
+
+	}*/
+	@RequestMapping(value="/uploadFile",method=RequestMethod.POST)
+	public String saveFile(HttpServletRequest request,@RequestParam(value="file",required=false) MultipartFile uploadedFile) throws IOException{
+		 
+	     Attachment file1=new Attachment();
+	     file1.setFile(uploadedFile.getBytes());
+	     file1.setName(uploadedFile.getOriginalFilename());
+	     file1.setLabel(request.getParameter("attachmentLabel"));
+	    
+	   
+	     return issueService.saveFile(file1);
+	        
 
 	}
 
@@ -512,6 +580,7 @@ public class IssueController {
 		}
 		
 	}
+
 	/**
 	 * Method to handle requests coming from /issue/stoptask url and providing updated list of issues to view.
 	 */
@@ -537,5 +606,6 @@ public class IssueController {
 		
 		return issues;
 	}
+
 
 }

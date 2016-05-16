@@ -202,7 +202,7 @@ angular
 															.error('Error while searching assigned issues');
 												})
 
-							}
+							};
 
 							$scope.viewIssue = function() {
 
@@ -295,7 +295,7 @@ angular
 							
 
 								$scope.fetchIssueDetailsConv=function(id){
-								
+
 									userService.fetchIssueDetailsConv(id)
 									.then(
 											function(data){
@@ -321,6 +321,263 @@ angular
 									)	
 								};
 
+								
+							
+							
+							
+							
+							/**
+							 * Upload file
+							 */
+							$scope.attachments=[{ attachmentFile:''}];
+							
+
+							$scope.getSearchedMemberType = function() {	
+								var memberType = $scope.memberType;
+								var memberId=0;
+								if(memberType=="Yash"){
+									memberId=1;	
+								}
+								else if(memberType=="NonYash"){
+									memberId=2;
+								
+								}
+								else{
+									memberId=3;
+									
+								}
+								alert(memberId);
+								managerService.searchMemberType(memberId)
+											.then(
+													function(data) {
+														$scope.members = data;
+														console.log(members[0].memberType.id);
+														/*
+														angular.forEach($scope.members,function(value,key){
+															
+															console.log(value.memberType.id);
+															
+														});*/
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing search members');
+													}
+													
+											)
+								
+						
+							} ;
+
+							$scope.getTheFile1 = function($files) {
+								
+								/*angular.forEach($files, function(value, key) {*/
+									 $scope.file1 = $files[0];
+									 $scope.file1Name = $files[0].name; 
+									 $scope.file1Size = $files[0].size;
+								/*});*/
+								console.log($scope.file1,$scope.file1Name,$scope.file1Size);
+							};
+							/*$scope.getTheFile2 = function($files) {
+								
+								angular.forEach($files, function(value, key) {
+									alert(key + " " + value);
+									 $scope.file2 = $files[0];
+									 $scope.file2Name = $files[0].name; 
+									 $scope.file2Size = $files[0].size; 
+								});
+								console.log($scope.file2,$scope.file2Name,$scope.file2Size);
+							};
+							$scope.getTheFile3 = function($files) {
+								
+								angular.forEach($files, function(value, key) {
+									alert(key + " " + value);
+									$scope.file3 = $files[0];
+									$scope.file3Name = $files[0].name; 
+									$scope.file3Size = $files[0].size; 
+								});
+								console.log($scope.file3,$scope.file3Name,$scope.file3Size);
+							};*/
+							
+							$scope.uploadFile1 = function() {
+								
+								var fileInput = $('#selectFile1');
+								var maxSize = fileInput.data('max-size');
+								var fileSize=$scope.file1Size;
+								var fileName=$scope.file1Name;
+								var ext = fileName.split('.').pop();
+								var formData = new FormData();
+								var attachmentLabel= $scope.attachmentLabel1;
+								formData.append("file", $scope.file1); 
+								formData.append("attachmentLabel", attachmentLabel);
+								
+							    switch (ext) {
+							        case 'jpg':
+							        case 'jpeg':
+							        case 'png':
+							        case 'gif':
+							        case 'doc':
+							        case 'docx':
+							        case 'txt':
+							        case 'pdf':
+							        case 'xls':
+							        case 'xlsx':
+							        case 'sql':
+							       /*  case 'java':
+						        	case 'xml': */
+							            break;
+							        default:
+							        	alert('File type not allowed.');
+							        	$("#selectFile1").val("");
+					                	return false;
+							    }
+							   
+								if(fileSize>maxSize){
+						                alert('File size is too big ! Size should be less than 1 MB');
+						                $("#selectFile1").val("");
+						                return false;
+						            }
+								$scope.attachments.push({ 
+									attachmentFile: $scope.file1Name,
+									
+								});
+								
+								userService
+								.fileUpload(formData)
+								.then(
+										function() {
+											
+										},
+										function(errResponse) {
+											
+										}
+								)
+							};
+							/*$scope.uploadFile2 = function() {
+
+								var fileInput = $('#selectFile2');
+								var maxSize = fileInput.data('max-size');
+								var fileSize=$scope.file2Size;
+								var fileName=$scope.file2Name;
+								var ext = fileName.split('.').pop();
+								
+								var formData = new FormData();
+								var attachmentLabel= $scope.attachmentLabel2;
+								formData.append("file", $scope.file2); 
+								formData.append("attachmentLabel", attachmentLabel);
+								
+								switch (ext) {
+						       		case 'jpg':
+						       	 	case 'jpeg':
+						       	 	case 'png':
+						        	case 'gif':
+						        	case 'doc':
+						        	case 'docx':
+						        	case 'txt':
+						        	case 'pdf':
+						        	case 'xls':
+						        	case 'xlsx':
+						        	case 'sql':
+						        	 case 'java':
+						        	case 'xml': 
+						            	break;
+						        	default:
+						        		alert('File type not allowed.');
+						        		$("#selectFile2").val("");
+					            		return false;
+						    	}
+								
+								if(fileSize>maxSize){
+						                alert(' Too big file size ! Size should be less than 1 MB');
+						                $("#selectFile2").val("");
+						                return false;
+						            }
+								
+								$scope.attachments.push({ 
+									attachmentFile: $scope.file2Name,
+								
+								});
+								
+								var request = {
+									method : 'POST',
+									url : '../uploadFile',
+									data : formData,
+									headers : {
+										'Content-Type' : undefined
+									}
+								};
+							
+								$http(request).success(function(data, status) {
+									alert("File Uploaded Successfully ... " + status);
+
+								}).error(function(data, status) {
+									
+								});
+							}
+
+
+							$scope.uploadFile3 = function() {
+								
+								var fileInput = $('#selectFile3');
+								var maxSize = fileInput.data('max-size');
+								var fileSize=$scope.file3Size;
+								var fileName=$scope.file3Name;
+								var ext = fileName.split('.').pop();
+								
+								var formData = new FormData();
+								var attachmentLabel = $scope.attachmentLabel3;
+								formData.append("file", $scope.file3);
+								formData.append("attachmentLabel", attachmentLabel);
+								
+								switch (ext) {
+						        	case 'jpg':
+						       	 	case 'jpeg':
+						        	case 'png':
+						        	case 'gif':
+						        	case 'doc':
+						        	case 'docx':
+						        	case 'txt':
+						        	case 'pdf':
+						        	case 'xls':
+						        	case 'xlsx':
+						        	case 'sql':
+						        	 case 'java':
+						        	case 'xml': 
+						            	break;
+						       	 	default:
+						            	alert('File type not allowed.');
+						        		$("#selectFile3").val("");
+					            		return false;
+						    	}
+
+								if(fileSize>maxSize){
+						            alert(' Too big file size ! Size should be less than 1 MB');
+						            $("#selectFile3").val("");
+						            return false;
+						         }
+								
+								$scope.attachments.push({ 
+									attachmentFile:$scope.file3Name,
+									
+								});
+								
+								var request = {
+									method : 'POST',
+									url : '../uploadFile',
+									data : formData,
+									headers : {
+										'Content-Type' : undefined
+									}
+								};
+								$http(request).success(function(data, status) {
+									alert("File Uploaded Successfully ... " + status);
+									
+								}).error(function(data, status) {
+									
+								});*/
+							}
+							
+
 							/* issueService returns list to populate drop-down */
 							/*
 							 * userService.initializeSelect() .then( function(d) {
@@ -343,4 +600,4 @@ angular
 							 * while fetching'); } ); this.createIssue={}; };
 							 */
 
-						} ]);
+						 ]);

@@ -198,7 +198,32 @@ fetchIssueDetailsConv:function(id){
 
   					);
   				
-  			}	
+  			},
+  			
+  			/**
+			 * File Upload
+			 */
+  			fileUpload:function(formData){
+  				var request = {
+						method : 'POST',
+						url : '../uploadFile',
+						data : formData,
+						headers : {
+							'Content-Type' : undefined
+						}
+					};
+					 $http(request)
+					 .then(
+			 				function(response){
+			 					alert("File uploaded successfully");
+			 				}, 
+			 				function(errResponse){
+			 				}
+         			);
+  				
+  				
+	  
+  			},	
 	  
 
 	      	
