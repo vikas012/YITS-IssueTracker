@@ -1,5 +1,5 @@
 
-<meta http-equiv="refresh" content="10">
+<!-- <meta http-equiv="refresh" content="10"> -->
 <style type="text/css">
  
 .container{
@@ -36,7 +36,7 @@
 		<tr  id="heading">
 			<th>Select</th>
 			<th>Issue Id</th>
-			<th>Owner</th>
+			<!-- <th>Owner</th> -->
 			<th>Summary</th>
 			<th>Due Date</th>
 			<th>Task Progress Update</th>
@@ -52,7 +52,7 @@
 		<tr  ng-repeat="issues in issueList">
 			<td><input id='radio' type="radio" name="issueId" value={{issues.id}} ></td>
 			<td>{{issues.id}}</td>
-			<td>{{issues.issueOwner.member.memberId}}</td>
+			<!-- <td>{{issues.issueOwner.member.memberId}}</td> -->
 			<td>{{issues.summary}}</td>
 			<td>{{issues.dueDate}}</td>
 			<td>{{issues.taskProgressUpdate}}</td>

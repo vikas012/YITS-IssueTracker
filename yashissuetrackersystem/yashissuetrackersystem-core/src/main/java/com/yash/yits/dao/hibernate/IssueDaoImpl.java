@@ -47,7 +47,7 @@ public class IssueDaoImpl implements IssueDao {
 	SessionFactory sessionFactory;
 	public List<Issue> showIssuesList(long memberId) {
 		Session session=sessionFactory.getCurrentSession();
-		Query query = session.createSQLQuery("SELECT * FROM Issue WHERE OWNER=(SELECT member_Id FROM application_team_member WHERE member_id=(SELECT Id FROM member WHERE member_Id="+memberId+"))");
+		Query query = session.createSQLQuery("SELECT * FROM Issue WHERE ASSIGNED_USER=(SELECT member_Id FROM application_team_member WHERE member_id=(SELECT Id FROM member WHERE member_Id="+memberId+"))");
 		
 			Iterator iterator=query.list().iterator();
 			List<Issue> listOfIssues=new ArrayList<Issue>();
