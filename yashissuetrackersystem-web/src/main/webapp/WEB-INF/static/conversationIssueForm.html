@@ -1,4 +1,5 @@
 <style type="text/css">
+
 .container {
 width: 200px;
 float: center;
@@ -22,6 +23,10 @@ background-color: darkcyan !important;
 .modal-header {
 background:darkcyan;
 }
+ .modal-dialog, .modal-content {
+	height: 100%;
+	width: 90%;
+} 
 </style>
 
 <div>
@@ -122,22 +127,19 @@ background:darkcyan;
 										<label for="issueTeamMember">IssueOwner</label> <input
 											type="text" ng-model="fetchedIssue.issueOwner.member.name" class="form-control" disabled="disabled" />
 									</div>
-								</div>
-								<div class="box4">
 									<div class="form-group col-sm-4">
 										<label for="createdByTeamMember">Created By</label> <input
 											type="text" ng-model="fetchedIssue.createdBy.member.name"
 											class="form-control" disabled="disabled" />
 									</div>
+								<div class="form-group col-sm-4">
+									<label for="original Estmimate">Original Estimate</label> <input
+										type="text" ng-model="uc.assignIssue.originalEstimate"
+										class="form-control" placeholder="(in form of HH:mm:ss)" />
 								</div>
-						</div>
-						<div class="box5">
-							<div class="form-group col-sm-4">
-								<label for="original Estmimate">Original Estimate</label> <input
-									type="text" ng-model="uc.assignIssue.originalEstimate"
-									class="form-control" placeholder="(in form of HH:mm:ss)" />
 							</div>
-
+						
+						<div class="box5">
 							<div class="form-group col-sm-6">
 								<label for="dueDate">IssueDueDate</label> <input type="date"
 									ng-model="mc.assignIssue.dueDate" class="form-control" />
@@ -163,7 +165,8 @@ background:darkcyan;
 								
 							</div>
 						</div>
-
+						</div>
+					
 					</div>
 
 				</div>
