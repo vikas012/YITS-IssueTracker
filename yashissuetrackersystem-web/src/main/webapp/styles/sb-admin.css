@@ -363,17 +363,20 @@ a:active
  {
      padding:9px 15px;
      border-bottom:1px solid #eee;
-     background-color: #66b3ff;
+     background-color: darkcyan;
  }
  
 
 
  .modal-dialog modal-sm,
+<<<<<<< HEAD
     .modal-content {
     
     height: 40%;
     width: 150%;
 }
+=======
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 
 .modal-body {
 
@@ -389,3 +392,4 @@ a:active
 	left:300px;
 	position:absolute;
 }
+

@@ -51,12 +51,10 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 		      	
 fetchIssueDetailsConv:function(id){
 					
-					alert(id);
 					
 					return $http.post('../fetchIssueDetailsConv/'+id)
 				 	.then(
 				 				function(response){
-				 					alert(response.data);
 				 						return response.data;
 				 				}, 
 				 				function(errResponse){
@@ -70,12 +68,10 @@ fetchIssueDetailsConv:function(id){
 				
 				getMemberListConv:function(){
 					
-					alert("in service assigne");
 					
 					return $http.get('../getMemberListConv')
 				 	.then(
 				 				function(response){
-				 					alert(response.data);
 				 						return response.data;
 				 				}, 
 				 				function(errResponse){

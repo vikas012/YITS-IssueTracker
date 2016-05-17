@@ -1,28 +1,14 @@
-
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
-
 <!-- Script for jQuery -->
 <script src="../scripts/attachment.js"></script>
-<style>
-.clear{
-clear: both;
-}
-.dropDown{
-height: 36px;
-border-color: silver;
-border-radius: 4px;
-}
-.submitButton{
-margin-left: 31%;
-}
-.container{
-height:50%;
-width:50%;
-}
-</style> 
+ 
 <!-- ng-controller="userController as uc" -->
+<style>
+.container{
+	
+	width:70%;
+}
+</style>
+
 <div class="container">
 <h3 class="headerlabel">Create Issue</h3><br>
   <form role="form" ng-submit="mc.add()">
@@ -99,13 +85,13 @@ width:50%;
   	  </div>
    </div> 
   <div class="box5">
-		<div class="form-group col-sm-8">
+		<div class="form-group col-sm-10">
 		<label for="environment">Original Estimate</label> 
 		<input type="text" ng-model="mc.createIssue.originalEstimate" class="form-control" placeholder="(in form of HH:mm:ss)"/>
 		</div>
   </div>
  
- <div class="form-group col-sm-4">
+ <div class="form-group col-sm-2">
   	  	<label>Attachments</label>
 		<button type="button" class="form-control btn btn-info" title="Include attachments" data-toggle="modal" data-target="#myModal">Attachments</button>
 </div>
@@ -131,7 +117,6 @@ width:50%;
 
 								<div class="form-group">
 
-									<label class="control-label col-sm-2">File 1:</label>
 
 									<div class="col-sm-10">
 										<input type="file" id="selectFile1" name="file[]" data-max-size="1048576" ng-files="getTheFile1($files)" />
@@ -217,9 +202,6 @@ width:50%;
 				</div>
 			</div>
 		</div>
-	</div>
-	
-
   	
   	 <div id="view" hidden> 
 		<div ng-repeat="attachment in attachments">
@@ -227,10 +209,9 @@ width:50%;
 		</div>
 	</div> 
  <div class="form-group submitButton">        
-      <div class="col-sm-offset-2 col-sm-10">
-       <button type="submit" class="btn btn-primary">Save</button>
+      <div class="col-sm-offset-5 col-sm-2">
+       <button type="submit" class="form-control btn btn-info">Save</button>
       </div>
       </div>
 </form>
- 
-</div> 
+</div>

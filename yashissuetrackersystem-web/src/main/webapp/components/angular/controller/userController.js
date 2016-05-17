@@ -332,6 +332,7 @@ angular
 									memberId = 3;
 
 								}
+
 								alert(memberId);
 								managerService
 										.searchMemberType(memberId)
@@ -356,6 +357,29 @@ angular
 										)
 
 							};
+
+								managerService.searchMemberType(memberId)
+											.then(
+													function(data) {
+														$scope.members = data;
+														console.log(members[0].memberType.id);
+														/*
+														angular.forEach($scope.members,function(value,key){
+															
+															console.log(value.memberType.id);
+															
+														});*/
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing search members');
+													}
+													
+											)
+								
+						
+							
+
 
 							$scope.getTheFile1 = function($files) {
 

@@ -1,29 +1,12 @@
-
-  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  -->
-
-	
 <!-- Script for jQuery -->
 <script src="../scripts/attachment.js"></script>
-
 <style>
-.clear{
-clear: both;
-}
-.dropDown{
-height: 36px;
-border-color: silver;
-border-radius: 4px;
-}
-.submitButton{
-margin-left: 31%;
-}
 .container{
-height:50%;
-width:50%;
+	
+	width:70%;
 }
-</style> 
+</style>
+
 <!-- ng-controller="userController as uc" -->
 <div class="container">
 <h3 class="headerlabel">Create Issue</h3><br>
@@ -84,20 +67,20 @@ width:50%;
 		</div>
 	</div>
    <div class="box4">
- 		<div class="form-group col-sm-8">
+ 		<div class="form-group col-sm-10">
 		<label for="issueTeamMember">IssueOwner</label>
 			<select class="dropDown form-control" ng-model="uc.createIssue.owner.memberId" class="form-control">
 				<option value="{{owner.memberId}}" ng-repeat="owner in applicationTeamMembers" value="{{owner.memberId}}">{{owner.name}}</option>
 			</select>
   	  </div>
-  	  <div class="form-group col-sm-4">
+  	  <div class="form-group col-sm-2">
   	  	<label>Attachments</label>
 		<button type="button" class="form-control btn btn-info" title="Include attachments" data-toggle="modal" data-target="#myModal">Attachments</button>
 	</div>
  </div> 
  <div class="form-group submitButton">        
-      <div class="col-sm-offset-2 col-sm-10">
-       <button type="submit" class="btn btn-primary">Save</button>
+      <div class="col-sm-offset-5 col-sm-2">
+       <button type="submit" class="form-control btn btn-info">Save</button>
       </div>
   </div>
 	</form>
@@ -123,7 +106,6 @@ width:50%;
 
 								<div class="form-group">
 
-									<label class="control-label col-sm-2">File 1:</label>
 
 									<div class="col-sm-10">
 										<input type="file" id="selectFile1" name="file[]" data-max-size="1048576" ng-files="getTheFile1($files)" />
