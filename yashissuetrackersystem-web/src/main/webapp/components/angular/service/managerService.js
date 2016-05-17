@@ -8,25 +8,7 @@ angular
 
 							return {
 
-								checkUserInLdap : function(ldapUser) {
-									return $http
-											.post('../checkMemberInLdap',
-													ldapUser)
-											.then(
-													function(response) {
-														return response.data;
-													},
-													function(errResponse) {
-														console
-																.error('Error while fetching users');
-														return $q
-																.reject(errResponse);
-													}
-
-											);
-
-								},
-
+								
 								getMembers : function() {
 
 									var issues = $http({
@@ -99,39 +81,7 @@ angular
 													});
 								},
 
-								registerMember : function(member) {
-									return $http
-											.post('../registerYashMember',
-													member)
-											.then(
-													function(response) {
-														return response.data;
-													},
-													function(errResponse) {
-														console
-																.error('Error while fetching users');
-														return $q
-																.reject(errResponse);
-													}
-
-											);
-								},
-								registerNonYashMember : function(member) {
-									return $http
-											.post('../registerMember', member)
-											.then(
-													function(response) {
-														return response.data;
-													},
-													function(errResponse) {
-														console
-																.error('Error while fetching users');
-														return $q
-																.reject(errResponse);
-													}
-
-											);
-								},
+							
 
 								memberActivate : function(memberId) {
 

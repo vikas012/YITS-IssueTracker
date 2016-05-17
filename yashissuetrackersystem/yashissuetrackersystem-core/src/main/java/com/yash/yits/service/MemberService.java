@@ -23,8 +23,6 @@ import com.yash.yits.form.UserForm;
  */
 public interface MemberService {
 	
-	
-	public InitialDirContext  checkUser(LoginForm loginForm);
 	public UserForm fetchAttributes(InitialDirContext intialDirContext,String name) throws NamingException;
 	public boolean addMember(MemberForm memberForm);
 	public List<MemberForm> showMembers();

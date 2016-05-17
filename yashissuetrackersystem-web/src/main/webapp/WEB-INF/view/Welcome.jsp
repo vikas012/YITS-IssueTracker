@@ -1,3 +1,5 @@
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -95,27 +97,31 @@ input[type="password"] {
 </head>
 <body>
 
-	<!--  <center>
- 		<a href="./managerWelcome">Manager Dashboard</a> 
+
+	<center>
+		<a href="./managerWelcome">Manager Dashboard</a>
 		<a href="./userWelcome">User Dashboard</a>
-	</center> -->
-	
+	</center>
 	<div class="header header-color">
 		<h2 class="h2-tag">YITS</h2>
 	</div>
+
 	<div class="container">
 		<div class="wrapper">
+			<center>
+					<c:if test="${not empty errorMessage}">
+				   		<strong style="color:red"><c:out value="${errorMessage}"/></strong>
+					</c:if>
+			</center>
 			<form class="form-signin" id="wrap-color" action="./loginUser" method="post">
 				<h2 class="form-signin-heading">Login</h2>
 				<div class="form-group">
-					<label for="email">Email:</label> <input type="email"
-						class="form-control" id="email" placeholder="Enter email"
-						name="username">
+					<label for="email">Email:</label> <input type="email"class="form-control" id="email" placeholder="Enter email"name="username" required>
+					
 				</div>
 				<div class="form-group">
-					<label for="pwd">Password:</label> <input type="password"
-						class="form-control" id="pwd" placeholder="Enter password"
-						name="password">
+					<label for="pwd">Password:</label> <input type="password" class="form-control" id="pwd" placeholder="Enter password"name="password" required>
+					
 				</div>
 				<div class="checkbox">
 					<label><input type="checkbox"> Remember me</label>

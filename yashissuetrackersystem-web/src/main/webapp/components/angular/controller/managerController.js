@@ -1,12 +1,4 @@
-angular
-		.module('issueTrackingSystem.managerModule')
-		.controller(
-				'managerController',
-				[
-						'$scope',
-						'$http',
-						'managerService',
-						function($scope, $http, managerService, issueList) {
+angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope, $http, managerService, issueList) {
 
 							$scope.issueList = [];
 

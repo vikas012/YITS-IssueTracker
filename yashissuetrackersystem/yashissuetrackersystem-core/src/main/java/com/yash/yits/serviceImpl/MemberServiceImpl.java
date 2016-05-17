@@ -57,10 +57,6 @@ import com.yash.yits.util.ContextAware;
 @Transactional
 public class MemberServiceImpl implements MemberService {
 
-	
-
-	
-	
 	@Autowired
 	private MemberDao memberDao;
 
@@ -72,39 +68,7 @@ public class MemberServiceImpl implements MemberService {
 	UserForm userForm=new UserForm();
 	Member member=new Member();
 
-	public InitialDirContext checkUser(LoginForm loginForm) {
-		
-		 InitialDirContext intialDirContext=null; 
-		    
-		 String ldapAdServer="ldap://inidradc01.yash.com/";
-		 	
-		 Hashtable<String, Object> environmentHashTable = new    Hashtable<String, Object>();
-	       
-		 environmentHashTable.put(Context.SECURITY_AUTHENTICATION, "simple");
-	        
-	      if( null!=loginForm.getUsername()) {
-	        	
-	        	environmentHashTable.put(Context.SECURITY_PRINCIPAL, loginForm.getUsername());
-	        }
-	        if(null!=loginForm.getPassword()) {
-	        	environmentHashTable.put(Context.SECURITY_CREDENTIALS, loginForm.getPassword());
-	        }
-	        environmentHashTable.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-	        
-	        environmentHashTable.put(Context.PROVIDER_URL, ldapAdServer);
-	        
-	    
-	      try {
-	    	  		intialDirContext = new InitialLdapContext(environmentHashTable, null);
-	    	  		System.out.println("check intial Dir context"+intialDirContext);
-	    	  		return intialDirContext;
-			   } 
-	      catch (NamingException e)
-	      	{
-					return intialDirContext;
-			}
-		
-	}
+	
 
 	public UserForm fetchAttributes(InitialDirContext intialDirContext, String name)throws NamingException {
 		
@@ -226,7 +190,7 @@ public class MemberServiceImpl implements MemberService {
 
 	 public boolean addMember(MemberForm memberForm) {
 			
-		 member.setMemberId(memberForm.getMemberId());
+		 	member.setMemberId(memberForm.getMemberId());
 			member.setName(memberForm.getName());
 			member.setEmail(memberForm.getEmail());
 			member.setContact(memberForm.getContact());
