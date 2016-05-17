@@ -87,4 +87,8 @@ public interface IssueDao {
 	 * @param id
 	 */
 	public List<Issue> startTaskPending(int id,long memberId);
+	
+	
+	public void updateIssueTaskProgress(String task,int id);
+	
 }

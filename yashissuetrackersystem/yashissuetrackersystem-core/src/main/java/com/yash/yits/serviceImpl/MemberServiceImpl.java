@@ -57,10 +57,6 @@ import com.yash.yits.util.ContextAware;
 @Transactional
 public class MemberServiceImpl implements MemberService {
 
-	
-
-	
-	
 	@Autowired
 	private MemberDao memberDao;
 
@@ -72,39 +68,7 @@ public class MemberServiceImpl implements MemberService {
 	UserForm userForm=new UserForm();
 	Member member=new Member();
 
-	public InitialDirContext checkUser(LoginForm loginForm) {
-		
-		 InitialDirContext intialDirContext=null; 
-		    
-		 String ldapAdServer="ldap://inidradc01.yash.com/";
-		 	
-		 Hashtable<String, Object> environmentHashTable = new    Hashtable<String, Object>();
-	       
-		 environmentHashTable.put(Context.SECURITY_AUTHENTICATION, "simple");
-	        
-	      if( null!=loginForm.getUsername()) {
-	        	
-	        	environmentHashTable.put(Context.SECURITY_PRINCIPAL, loginForm.getUsername());
-	        }
-	        if(null!=loginForm.getPassword()) {
-	        	environmentHashTable.put(Context.SECURITY_CREDENTIALS, loginForm.getPassword());
-	        }
-	        environmentHashTable.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-	        
-	        environmentHashTable.put(Context.PROVIDER_URL, ldapAdServer);
-	        
-	    
-	      try {
-	    	  		intialDirContext = new InitialLdapContext(environmentHashTable, null);
-	    	  		System.out.println("check intial Dir context"+intialDirContext);
-	    	  		return intialDirContext;
-			   } 
-	      catch (NamingException e)
-	      	{
-					return intialDirContext;
-			}
-		
-	}
+	
 
 	public UserForm fetchAttributes(InitialDirContext intialDirContext, String name)throws NamingException {
 		
@@ -226,7 +190,7 @@ public class MemberServiceImpl implements MemberService {
 
 	 public boolean addMember(MemberForm memberForm) {
 			
-		 member.setMemberId(memberForm.getMemberId());
+		 	member.setMemberId(memberForm.getMemberId());
 			member.setName(memberForm.getName());
 			member.setEmail(memberForm.getEmail());
 			member.setContact(memberForm.getContact());
@@ -269,30 +233,7 @@ public class MemberServiceImpl implements MemberService {
 			return result;
 		}
 
-	public List<MemberForm> searchMembers(String search) {
-		System.out.println("in service");
-		List<Member> members = memberDao.searchMembers(search);
-		
-		List<MemberForm> memberForms = new ArrayList<MemberForm>();
-		for (Member member : members) {
-
-			//Mapper mapper = new DozerBeanMapper();
-			//IssueForm issueForm = mapper.map(issue, IssueForm.class);
-			MemberForm memberForm = new MemberForm();
-			try {
-				BeanUtils.copyProperties(memberForm, member);
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}
-			memberForms.add(memberForm);
-		}
-		
-		System.out.println(memberForms);
-		
-		return memberForms;
-	}
+	
 	public List<MemberForm> showMembers() {
 
 	List<Member> memberList=memberDao.showMembers();
@@ -406,10 +347,46 @@ public List<String> memberType() {
 			
 	}
 
-	public List<Member> searchMemberType(int memberId) {
-		List<Member> memberTypeList=memberDao.searchMemberType(memberId);
+	public List<MemberForm> searchMembers(String search) {
 		
-		return memberTypeList;
+		List<Member> members = memberDao.searchMembers(search);
+		List<MemberForm> memberForms = new ArrayList<MemberForm>();
+		for (Member member : members) {
+			MemberType memberType = new MemberType();
+			memberType.setId(member.getMemberType().getId());
+			MemberForm memberForm = new MemberForm();
+			memberForm.setMemberId(member.getMemberId());
+			memberForm.setMemberType(memberType);
+			memberForm.setName(member.getName());
+			memberForm.setEmail(member.getEmail());
+			memberForm.setContact(member.getContact());
+			memberForm.setManagerName(member.getManagerName());
+			memberForm.setManagerEmail(member.getManagerEmail());
+			memberForm.setIsActive(member.getIsActive());
+			memberForms.add(memberForm);
+		}
+		return memberForms;
+	}
+
+	public List<MemberForm> searchMemberType(int memberId) {
+		List<Member> memberTypeList = memberDao.searchMemberType(memberId);
+		List<MemberForm> memberForms = new ArrayList<MemberForm>();
+		for (Member member : memberTypeList) {
+
+			MemberType memberType = new MemberType();
+			memberType.setId(member.getMemberType().getId());
+			MemberForm memberForm = new MemberForm();
+			memberForm.setMemberId(member.getMemberId());
+			memberForm.setName(member.getName());
+			memberForm.setEmail(member.getEmail());
+			memberForm.setContact(member.getContact());
+			memberForm.setManagerName(member.getManagerName());
+			memberForm.setManagerEmail(member.getManagerEmail());
+			memberForm.setIsActive(member.getIsActive());
+			memberForm.setMemberType(memberType);
+			memberForms.add(memberForm);
+		}
+		return memberForms;
 	}
 
 }

@@ -36,6 +36,10 @@ body {
     width: 400px;
     height: 350px; 
 }
+#yashnonyashdiv{
+	
+	margin-left: 400px;
+}
 .box{
 	background-color: white;
 	border-color: white;
@@ -45,7 +49,15 @@ body {
         margin-top: 50px;
     }
 }
-
+#horizontal{
+	
+	display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0; 
+}
 #wrapper {
     padding-left: 0;
 }
@@ -369,6 +381,14 @@ a:active
 
 
  .modal-dialog modal-sm,
+<<<<<<< HEAD
+    .modal-content {
+    
+    height: 40%;
+    width: 150%;
+}
+=======
+>>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
 
 .modal-body {
 

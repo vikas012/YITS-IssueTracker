@@ -59,12 +59,12 @@ public class IssueServiceImpl implements IssueService{
 		
 		for (Issue issue : issuesList) {
 			IssueForm issueForm = new IssueForm();
-			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+			//SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 			Date date=issue.getDueDate();
 			System.out.println(date);
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
-			issueForm.setDueDate(format2.format(date));
+			issueForm.setDueDate(date);
 			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
 
 			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
@@ -381,12 +381,12 @@ public class IssueServiceImpl implements IssueService{
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
 		
-		String newDate = issueForm.getDueDate();
-		System.out.println(" Date  in service ::"+newDate);
-		Date date = formatter.parse(newDate);
+		Date newDate = issueForm.getDueDate();
+		//System.out.println(" Date  in service ::"+newDate);
+		//Date date = formatter.parse(newDate);
 		
 		Issue issue=new Issue();
-		issue.setDueDate(date);
+		issue.setDueDate(newDate);
 		issue.setAffectedVersion(issueForm.getAffectedVersion());
 		issue.setComponent(issueForm.getComponent());
 		issue.setDescription(issueForm.getDescription());
@@ -696,9 +696,9 @@ public class IssueServiceImpl implements IssueService{
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
 
-		String newDate = issueForm.getDueDate();
-		Date date = formatter.parse(newDate);
-		issue.setDueDate(date);
+		Date newDate = issueForm.getDueDate();
+		//Date date = formatter.parse(newDate);
+		issue.setDueDate(newDate);
 		
 		issue.setOriginalEstimate(issueForm.getOriginalEstimate());
 		issue.setRemainingEstimate(issueForm.getRemainingEstimate());
@@ -787,11 +787,11 @@ public class IssueServiceImpl implements IssueService{
 		List<IssueForm> issueFormList = new ArrayList<IssueForm>();
 		for (Issue issue : issuesList) {
 			IssueForm issueForm = new IssueForm();
-			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+			//SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 			Date date=issue.getDueDate();
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
-			issueForm.setDueDate(format2.format(date));
+			issueForm.setDueDate(date);
 			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
 
 			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
@@ -832,12 +832,12 @@ public class IssueServiceImpl implements IssueService{
 		List<IssueForm> issueFormList = new ArrayList<IssueForm>();
 		for (Issue issue : issuesList) {
 			IssueForm issueForm = new IssueForm();
-			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+			//SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 			Date date=issue.getDueDate();
 			
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
-			issueForm.setDueDate(format2.format(date));
+			issueForm.setDueDate(date);
 			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
 
 			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
@@ -878,12 +878,12 @@ public class IssueServiceImpl implements IssueService{
 		List<IssueForm> issueFormList = new ArrayList<IssueForm>();
 		for (Issue issue : issuesList) {
 			IssueForm issueForm = new IssueForm();
-			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+			//SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 			Date date=issue.getDueDate();
 		
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
-			issueForm.setDueDate(format2.format(date));
+			issueForm.setDueDate(date);
 			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
 
 			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
@@ -925,12 +925,12 @@ public class IssueServiceImpl implements IssueService{
 		List<IssueForm> issueFormList = new ArrayList<IssueForm>();
 		for (Issue issue : issuesList) {
 			IssueForm issueForm = new IssueForm();
-			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+			//SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 			Date date=issue.getDueDate();
 			
 			issueForm.setId(issue.getId());
 			issueForm.setSummary(issue.getSummary());
-			issueForm.setDueDate(format2.format(date));
+			issueForm.setDueDate(date);
 			issueForm.setTaskProgressUpdate(issue.getTaskProgressUpdate());
 
 			ApplicationIssueTypeForm applicationIssueTypeForm = new ApplicationIssueTypeForm();
@@ -959,6 +959,16 @@ public class IssueServiceImpl implements IssueService{
 		
 	
 		return issueFormList;
+	}
+
+
+	public List<IssueForm> updateIssueTaskProgress(String task, int id,long memberId) {
+		
+		issueDao.updateIssueTaskProgress(task, id);
+		List<IssueForm> issueforms=showIssuesList(memberId);
+		return issueforms;
+		
+		
 	}
 	
 	

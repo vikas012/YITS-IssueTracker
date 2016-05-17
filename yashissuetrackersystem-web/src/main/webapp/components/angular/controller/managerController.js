@@ -1,12 +1,4 @@
-angular
-		.module('issueTrackingSystem.managerModule')
-		.controller(
-				'managerController',
-				[
-						'$scope',
-						'$http',
-						'managerService',
-						function($scope, $http, managerService, issueList) {
+angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope, $http, managerService, issueList) {
 
 							$scope.issueList = [];
 
@@ -990,5 +982,26 @@ angular
 
 							
 							}
+							
+							$scope.memberDeleteForSearch = function(memberId) {
+								 
+								if (memberId == "") {
+								alert("Please Select ID!");
+								} else {
+								managerService.memberDelete(memberId)
+								.then(
+								function(data) {
+								if ($scope.memberType ==undefined) {
+								$scope.getSearchMember();
+								} else {
+								$scope.getSearchedMemberType();
+								}
+								},
+								function(errResponse) {
+								console.error('Error while showing member status');
+								})
+								}
+								}
+
 
 						} ]);

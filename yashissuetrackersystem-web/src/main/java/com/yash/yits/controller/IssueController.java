@@ -57,6 +57,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.w3c.dom.ls.LSInput;
 
 import com.yash.yits.domain.Issue;
 
@@ -141,6 +142,14 @@ public class IssueController {
 
 		return issues;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/fetchIssueDetails/{fetchId}")
+	public IssueForm fetchIssueDetails(@PathVariable int fetchId) {
+		IssueForm issueForm = issueService.fetchIssueDetails(fetchId);
+		return issueForm;
+	}
+	
 /*
 	@ResponseBody
 	@RequestMapping(value = "/getMembers")
@@ -149,13 +158,7 @@ public class IssueController {
 		return memberList;
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/fetchIssueDetails/{fetchId}")
-	public IssueForm fetchIssueDetails(@PathVariable int fetchId) {
-
-		IssueForm issueForm = issueService.fetchIssueDetails(fetchId);
-		return issueForm;
-	}
+	
 
 	@ResponseBody
 	@RequestMapping(value = "/assignIssue", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -307,17 +310,11 @@ public class IssueController {
 		return unassignedIssueList;
 	}
 
-	
+
 
 /*	@ResponseBody
 =======
-	@ResponseBody
-	@RequestMapping(value="/fetchIssueDetails")
-	public IssueForm fetchIssueDetails(@PathVariable int index){
-		System.out.println("unassigned Controller");
-		IssueForm issueForm=issueService.fetchIssueDetails(index);
-		return null;
-	}
+
 	
 	
 	@ResponseBody
@@ -595,7 +592,7 @@ public class IssueController {
 	}
 	
 	/**
-	 * Method to handle requests coming from /issue/pausetask url and providing updated list of issues to view.
+	 * Method to handle requests coming from /issue/pause task url and providing updated list of issues to view.
 	 */
 	@RequestMapping(value="/pausetask/{id}/{reason}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -606,5 +603,18 @@ public class IssueController {
 		
 		return issues;
 	}
+	
+	
+	
+	@RequestMapping(value="/taskProgressUpdate/{task}/{id}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<IssueForm> taskProgressUpdate(@PathVariable("task") String task,@PathVariable("id") int id,HttpServletRequest httpServletRequest) {
+		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
+		System.out.println(task+"of"+id);
+		List<IssueForm> issueForms= issueService.updateIssueTaskProgress(task, id,memberId);
+		return issueForms;
+	}
+	
+	
 
 }

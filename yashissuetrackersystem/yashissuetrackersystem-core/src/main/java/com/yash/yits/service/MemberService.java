@@ -23,8 +23,6 @@ import com.yash.yits.form.UserForm;
  */
 public interface MemberService {
 	
-	
-	public InitialDirContext  checkUser(LoginForm loginForm);
 	public UserForm fetchAttributes(InitialDirContext intialDirContext,String name) throws NamingException;
 	public boolean addMember(MemberForm memberForm);
 	public List<MemberForm> showMembers();
@@ -34,5 +32,5 @@ public interface MemberService {
 	public List<IssueForm> showAssignedIssue();
 	public List<IssueForm> searchAssignedIssue(String searchText);
 	public List<String> memberType();
-	public List<Member> searchMemberType(int memberId);
+	public List<MemberForm> searchMemberType(int memberId);
 }

@@ -31,19 +31,22 @@
 					<th colspan="2">Action</th>
 				</tr>
 			</thead>
-			
-			<tr ng-repeat="member in members">
-				<td>{{member.memberId}}</td>
-				<td>{{member.name}}</td>
-				<td>{{member.email}}</td>
-				<td>{{member.contact}}</td>
-				<td>{{member.managerName}}</td>
-				<td>{{member.managerEmail}}</td>
-				<td><button ng-click="memberActivate(member.memberId)" ng-disabled="member.memberType.id==3" class="btn btn-default">{{member.isActive}}</button></td>
-				<td><input type="button" ng-disabled="member.memberType.id==3" value="Delete" ng-click="memberDelete(member.memberId)" class="btn btn-default"></td>
-			</tr>
 
-			<tbody>
+		<tr ng-repeat="member in members">
+			<td>{{member.memberId}}</td>
+			<td>{{member.name}}</td>
+			<td>{{member.email}}</td>
+			<td>{{member.contact}}</td>
+			<td>{{member.managerName}}</td>
+			<td>{{member.managerEmail}}</td>
+			<td><button ng-click="memberActivateForSearch(member.memberId)"
+					class="btn btn-default" ng-disabled="member.memberType.id==3">{{member.isActive}}</button></td>
+			<td><input type="button" value="Delete"
+				ng-click="memberDeleteForSearch(member.memberId)"
+				class="btn btn-default" ng-disabled="member.memberType.id==3"></td>
+		</tr>
+
+		<tbody>
 
 			</tbody>
 		</table>

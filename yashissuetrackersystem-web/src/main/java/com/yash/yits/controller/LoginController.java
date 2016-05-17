@@ -36,16 +36,18 @@ public class LoginController {
 	
 	
 	
-	@RequestMapping(value="/loginForm")
-	public String getLoginForm(){
+
+	
+	@RequestMapping(value="/logout",method=RequestMethod.GET)
+	public String logOutMember(HttpServletRequest httpServletRequest){
 		
-		return "redirect:/static/Login.html" ;
+		httpServletRequest.getSession().invalidate();
+		return "Welcome";
 	}
 	
 	@RequestMapping(value="/loginUser",method=RequestMethod.POST)
 	public String validateUser(@ModelAttribute LoginForm loginForm,HttpServletRequest httpServletRequest) throws NamingException, IOException{
 		
-		System.out.println("in controller");
 		
 		Properties properties= new Properties();
 		properties.load(getClass().getResourceAsStream("UserTitle.properties"));
@@ -55,6 +57,13 @@ public class LoginController {
 		
 		
 		InitialDirContext intialDirContext=loginService.checkUser(loginForm);
+		
+		if(intialDirContext==null)
+		{
+			
+			httpServletRequest.getSession().setAttribute("errorMessage","Incorrect Username or Password");
+			return "Welcome" ; 
+		}
 		
 		int position=loginForm.getUsername().indexOf("@");
 		
