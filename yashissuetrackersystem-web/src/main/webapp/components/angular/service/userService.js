@@ -274,6 +274,23 @@ startTask:function(id,dueDate){
 				)
 		},
 		
+		
+		updateTaskProgress:function(taskProgressUpdate){
+			return 	$http.get('../taskProgressUpdate/'+taskProgressUpdate)
+			.then(
+					function(response){
+						return response.data;
+					},
+					function(errResponse){
+							console.error('Error while fetching users');
+							return $q.reject(errResponse);
+						}
+			)
+		}
+		
+		
+		
+		
 }
 	  
 

@@ -606,5 +606,18 @@ public class IssueController {
 		
 		return issues;
 	}
+	
+	
+	
+	@RequestMapping(value="/taskProgressUpdate/{task}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<IssueForm> taskProgressUpdate(@PathVariable("task") String task) {
+		
+		
+		
+		return null;
+	}
+	
+	
 
 }

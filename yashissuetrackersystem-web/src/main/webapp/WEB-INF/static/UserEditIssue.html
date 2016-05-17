@@ -57,7 +57,7 @@
 			<td>{{issues.originalEstimate}}</td>
 			<td>{{issues.remainingEstimate}}</td>
 			<td>{{issues.applicationIssueStatus.status}}</td>
-			<td><input type="button" value="Edit" data-toggle="modal" data-target="#myModal" class="btn btn-primary" ng-click="editIssue()"></td>
+			<td><input type="button" value="Edit" data-toggle="modal" data-target="#myModal" class="btn btn-primary" ng-click="getEditIssueId(issues.id)"></td>
 			<td><input type="button" value="Start" class="btn btn-primary" ng-click="startTask($index)" ng-hide="hideStart" ng-disabled="issues.applicationIssueStatus.status=='Opened' || issues.applicationIssueStatus.status=='Closed' || issues.applicationIssueStatus.status=='Pending'"></td>
 			<td><input type="button" value="Pause" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" ng-hide="hidePause" ng-disabled="issues.applicationIssueStatus.status=='Not Started' || issues.applicationIssueStatus.status=='Closed' || issues.applicationIssueStatus.status=='Pending' || issues.applicationIssueStatus.status=='Paused'"></td>
 			<td><input type="button" value="Stop" class="btn btn-primary" ng-click="stopTask()" ng-hide="hideStop" ng-disabled="issues.applicationIssueStatus.status=='Not Started' || issues.applicationIssueStatus.status=='Closed' || issues.applicationIssueStatus.status=='Pending'"></td>
@@ -100,18 +100,18 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h4 class="modal-title">Update Task Progress</h4>
       </div>
       <div class="modal-body">
         <form role="form">
         	<div class="form-group">
     			<label for="taskprogressupdate">Task ProgressUpdate:</label>
-   				<input type="text" class="form-control" id="taskProgressUpdate">
+   				<input type="text" class="form-control" ng-model="taskProgressUpdate" id="taskProgressUpdate">
   			</div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" ng-click="editTaskProgress()" data-dismiss="modal">Submit</button>
       </div>
     </div>
 

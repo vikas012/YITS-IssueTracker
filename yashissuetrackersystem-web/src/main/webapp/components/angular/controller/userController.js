@@ -12,14 +12,12 @@ angular
 							var issues = $http({
 								method : 'GET',
 								url : '../defaultIssuesList'
-							})
-							.success(function(data) {
-								
+							}).success(function(data) {
+
 								$scope.issueList = data;
 							})
 							userService.initializeSelect().then(function(d) {
 								$scope.projects = d.projects;
-							
 
 							});
 							$scope.myFunc = function() {
@@ -28,8 +26,7 @@ angular
 												document
 														.querySelector("select[id=selectId]"))
 										.val();
-								
-								
+
 								this.pId = projectId;
 								this.project = {
 									id : projectId
@@ -38,7 +35,7 @@ angular
 										.initializeSelectAll(this.pId)
 										.then(
 												function(d) {
-											
+
 													$scope.issueTypeList = d.issueType;
 													$scope.priorities = d.issuePriority;
 													$scope.environments = d.applicationEnvironment;
@@ -52,7 +49,7 @@ angular
 												document
 														.querySelector("select[id=selectId]"))
 										.val();
-								
+
 								/*
 								 * this.pId=projectId; this.project ={
 								 * id:projectId }
@@ -69,7 +66,7 @@ angular
 							}
 
 							this.add = function() {
-								
+
 								/*
 								 * var projectId =
 								 * this.createIssue.project.projectId; var
@@ -104,9 +101,9 @@ angular
 									"id" : this.createIssue.issuePriority.id
 								}
 								var applicationEnvironment = {
-									"id":this.createIssue.applicationEnvironment.id
-}
-								var formData={
+									"id" : this.createIssue.applicationEnvironment.id
+								}
+								var formData = {
 									"project" : project,
 									"applicationIssueType" : applicationIssueType,
 									"applicationIssuePriority" : applicationIssuePriority,
@@ -117,7 +114,7 @@ angular
 									"description" : description,
 									"issueOwner" : issueOwner
 								};
-								
+
 								userService
 										.submitCreateIssue(formData)
 										.then(
@@ -137,7 +134,7 @@ angular
 								method : 'GET',
 								url : '../defaultIssues'
 							}).success(function(data) {
-								
+
 								$scope.defaultIssueSearchList = data;
 
 							})
@@ -145,25 +142,21 @@ angular
 							$scope.showadvsearch = function() {
 								$('#advsearch').show();
 
-								$scope.isDisabled=true;
-							
-								userService.getList()
-								.then(
-										function(data) {
-											
-											$scope.applicationNames=data;
-										
-										},
-										function(errResponse) {
-											console
-													.error('Error while searching assigned issues');
-										})
-					};
-							
-							
-							
+								$scope.isDisabled = true;
 
-							
+								userService
+										.getList()
+										.then(
+												function(data) {
+
+													$scope.applicationNames = data;
+
+												},
+												function(errResponse) {
+													console
+															.error('Error while searching assigned issues');
+												})
+							};
 
 							$scope.calldropdowns = function() {
 								var applicationid = this.application;
@@ -188,13 +181,14 @@ angular
 								var filterProjectName = this.advProject;
 								var filterPriority = this.advPriority;
 
-								userService.getadvSearchData(filterIssueType,filterProjectName,filterPriority)
-								.then(
-										function(data) {
-											
-											$scope.defaultIssueSearchList = data;
-									
+								userService
+										.getadvSearchData(filterIssueType,
+												filterProjectName,
+												filterPriority)
+										.then(
+												function(data) {
 
+													$scope.defaultIssueSearchList = data;
 
 												},
 												function(errResponse) {
@@ -242,457 +236,332 @@ angular
 												})
 
 							};
-							
-							
+
 							var conversation = $http({
 								method : 'GET',
 								url : '../conversationList'
 							}).success(function(data) {
-								
+
 								$scope.conversationList = data;
 							})
-							
 
-							$scope.viewIssue = function(){
-								
-								var id = angular.element(document.querySelector("input[id=radio]:checked")).val();
-								
-								
-								userService.viewIssueDetails(id)
-								.then(
-									function(data){
-										
-										
-										$scope.issueDetails=data.issueobject;
-										$scope.attachments=data.listOfAttachment;
-										
-									},
-									 function(errResponse){
-												 console.error('Error while showing Issue details');
-											 }
-									)	
-								
-								
+							$scope.viewIssue = function() {
+
+								var id = angular
+										.element(
+												document
+														.querySelector("input[id=radio]:checked"))
+										.val();
+
+								userService
+										.viewIssueDetails(id)
+										.then(
+												function(data) {
+
+													$scope.issueDetails = data.issueobject;
+													$scope.attachments = data.listOfAttachment;
+
+												},
+												function(errResponse) {
+													console
+															.error('Error while showing Issue details');
+												})
+
 							};
-							
-							$scope.download = function(id){
-								
-								
-								
-									userService.download(id)
-									.then(
-										function(data){
-									
-											
-										},
-										 function(errResponse){
-													 console.error('Error while showing Issue details');
-												 }
-										)	
-									
-									
-								};
-							
 
-								$scope.fetchIssueDetailsConv=function(id){
+							$scope.download = function(id) {
 
-									userService.fetchIssueDetailsConv(id)
-									.then(
-											function(data){
-											
-												$scope.fetchedIssue = data;
-									
-												userService.getMemberListConv()
-												.then(
-														function(data){
-										
-															$scope.fetchedMember = data;
-														},	
-														 function(errResponse)
-														 {
-															console.error('Error while getMemberListConv members');
-														 }
-												)	
-											},
-											 function(errResponse)
-											 {
-												console.error('Error while fetchIssueDetails members');
-											 }
-									)	
-								};
+								userService
+										.download(id)
+										.then(
+												function(data) {
 
-								
-							
-							
-							
-							
+												},
+												function(errResponse) {
+													console
+															.error('Error while showing Issue details');
+												})
+
+							};
+
+							$scope.fetchIssueDetailsConv = function(id) {
+
+								userService
+										.fetchIssueDetailsConv(id)
+										.then(
+												function(data) {
+
+													$scope.fetchedIssue = data;
+
+													userService
+															.getMemberListConv()
+															.then(
+																	function(
+																			data) {
+
+																		$scope.fetchedMember = data;
+																	},
+																	function(
+																			errResponse) {
+																		console
+																				.error('Error while getMemberListConv members');
+																	})
+												},
+												function(errResponse) {
+													console
+															.error('Error while fetchIssueDetails members');
+												})
+							};
+
 							/**
 							 * Upload file
 							 */
-							$scope.attachments=[{ attachmentFile:''}];
-							
+							$scope.attachments = [ {
+								attachmentFile : ''
+							} ];
 
-							$scope.getSearchedMemberType = function() {	
+							$scope.getSearchedMemberType = function() {
 								var memberType = $scope.memberType;
-								var memberId=0;
-								if(memberType=="Yash"){
-									memberId=1;	
-								}
-								else if(memberType=="NonYash"){
-									memberId=2;
-								
-								}
-								else{
-									memberId=3;
-									
+								var memberId = 0;
+								if (memberType == "Yash") {
+									memberId = 1;
+								} else if (memberType == "NonYash") {
+									memberId = 2;
+
+								} else {
+									memberId = 3;
+
 								}
 								alert(memberId);
-								managerService.searchMemberType(memberId)
-											.then(
-													function(data) {
-														$scope.members = data;
-														console.log(members[0].memberType.id);
-														/*
-														angular.forEach($scope.members,function(value,key){
-															
-															console.log(value.memberType.id);
-															
-														});*/
-													},
-													function(errResponse) {
-														console
-																.error('Error while showing search members');
-													}
-													
-											)
-								
-						
-							} ;
+								managerService
+										.searchMemberType(memberId)
+										.then(
+												function(data) {
+													$scope.members = data;
+													console
+															.log(members[0].memberType.id);
+													/*
+													 * angular.forEach($scope.members,function(value,key){
+													 * 
+													 * console.log(value.memberType.id);
+													 * 
+													 * });
+													 */
+												},
+												function(errResponse) {
+													console
+															.error('Error while showing search members');
+												}
+
+										)
+
+							};
 
 							$scope.getTheFile1 = function($files) {
-								
-								/*angular.forEach($files, function(value, key) {*/
-									 $scope.file1 = $files[0];
-									 $scope.file1Name = $files[0].name; 
-									 $scope.file1Size = $files[0].size;
-								/*});*/
-								console.log($scope.file1,$scope.file1Name,$scope.file1Size);
+
+								/* angular.forEach($files, function(value, key) { */
+								$scope.file1 = $files[0];
+								$scope.file1Name = $files[0].name;
+								$scope.file1Size = $files[0].size;
+								/* }); */
+								console.log($scope.file1, $scope.file1Name,
+										$scope.file1Size);
 							};
-							/*$scope.getTheFile2 = function($files) {
-								
-								angular.forEach($files, function(value, key) {
-									alert(key + " " + value);
-									 $scope.file2 = $files[0];
-									 $scope.file2Name = $files[0].name; 
-									 $scope.file2Size = $files[0].size; 
-								});
-								console.log($scope.file2,$scope.file2Name,$scope.file2Size);
-							};
-							$scope.getTheFile3 = function($files) {
-								
-								angular.forEach($files, function(value, key) {
-									alert(key + " " + value);
-									$scope.file3 = $files[0];
-									$scope.file3Name = $files[0].name; 
-									$scope.file3Size = $files[0].size; 
-								});
-								console.log($scope.file3,$scope.file3Name,$scope.file3Size);
-							};*/
-							
-							$scope.uploadFile1 = function() {
-								
-								var fileInput = $('#selectFile1');
-								var maxSize = fileInput.data('max-size');
-								var fileSize=$scope.file1Size;
-								var fileName=$scope.file1Name;
-								var ext = fileName.split('.').pop();
-								var formData = new FormData();
-								var attachmentLabel= $scope.attachmentLabel1;
-								formData.append("file", $scope.file1); 
-								formData.append("attachmentLabel", attachmentLabel);
-								
-							    switch (ext) {
-							        case 'jpg':
-							        case 'jpeg':
-							        case 'png':
-							        case 'gif':
-							        case 'doc':
-							        case 'docx':
-							        case 'txt':
-							        case 'pdf':
-							        case 'xls':
-							        case 'xlsx':
-							        case 'sql':
-							       /*  case 'java':
-						        	case 'xml': */
-							            break;
-							        default:
-							        	alert('File type not allowed.');
-							        	$("#selectFile1").val("");
-					                	return false;
-							    }
-							   
-								if(fileSize>maxSize){
-						                alert('File size is too big ! Size should be less than 1 MB');
-						                $("#selectFile1").val("");
-						                return false;
-						            }
-								$scope.attachments.push({ 
-									attachmentFile: $scope.file1Name,
-									
-								});
-								
-								userService
-								.fileUpload(formData)
-								.then(
-										function() {
-											
-										},
-										function(errResponse) {
-											
-										}
-								)
-							};
-							
-							$scope.searchAllIssues = function(){
-								
-								$http.get('../defaultIssuesList').success(function(data) {
-												
-												
-									$scope.issueList = data;
-											
-											
-												});
-
-										};
-							
-							
-							
-							
-							
-							$scope.startTask = function(index){
-
-								var id=angular.element(document.querySelector("input[id=radio]:checked")).val();	
-								
-								var dueDate = $scope.issueList[index].dueDate;
-								var date1 = new Date(dueDate);
-							    var dd = date1.getDate();
-							    var mm = date1.getMonth()+1; //January is 0!
-								var yyyy = date1.getFullYear();
-							    var date2 = mm+'/'+dd+'/'+yyyy;
-								
-									userService.startTask(id,dueDate)
-											.then(
-													function(data) {
-														$scope.searchAllIssues();
-														
-														
-													},
-													function(errResponse) {
-														console
-																.error('Error while showing startTask members');
-													})
-
-								
-
-							};
-							
-							
-							$scope.stopTask = function(){
-
-								
-								var id=angular.element(document.querySelector("input[id=radio]:checked")).val();	
-							
-									userService.stopTask(id)
-											.then(
-													function(data) {
-														$scope.searchAllIssues();
-														
-													},
-													function(errResponse) {
-														console.error('Error while showing stopTask members');
-													});
-
-								
-
-							};
-							
-							
-							$scope.pauseTask = function(){
-								
-								var id=angular.element(document.querySelector("input[id=radio]:checked")).val();	
-								
-								var reason=$scope.reason;
-									
-								userService.pauseTask(id,reason)
-								.then(
-										function(data) {
-											$scope.searchAllIssues(); 
-											
-										},
-										function(errResponse) {
-											console.error('Error while showing pauseTask members');
-										});
-								
-										};
-							
-								$scope.refresh = function(){
-											
-									$scope.searchAllIssues();
-													};
-													
-													$scope.exportData = function () {
-												        var blob = new Blob([document.getElementById('someInfo').innerHTML], {
-												            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-												        });
-												        saveAs(blob, "Report.xls");
-												    };
-							
-							/*$scope.uploadFile2 = function() {
-
-								var fileInput = $('#selectFile2');
-								var maxSize = fileInput.data('max-size');
-								var fileSize=$scope.file2Size;
-								var fileName=$scope.file2Name;
-								var ext = fileName.split('.').pop();
-								
-								var formData = new FormData();
-								var attachmentLabel= $scope.attachmentLabel2;
-								formData.append("file", $scope.file2); 
-								formData.append("attachmentLabel", attachmentLabel);
-								
-								switch (ext) {
-						       		case 'jpg':
-						       	 	case 'jpeg':
-						       	 	case 'png':
-						        	case 'gif':
-						        	case 'doc':
-						        	case 'docx':
-						        	case 'txt':
-						        	case 'pdf':
-						        	case 'xls':
-						        	case 'xlsx':
-						        	case 'sql':
-						        	 case 'java':
-						        	case 'xml': 
-						            	break;
-						        	default:
-						        		alert('File type not allowed.');
-						        		$("#selectFile2").val("");
-					            		return false;
-						    	}
-								
-								if(fileSize>maxSize){
-						                alert(' Too big file size ! Size should be less than 1 MB');
-						                $("#selectFile2").val("");
-						                return false;
-						            }
-								
-								$scope.attachments.push({ 
-									attachmentFile: $scope.file2Name,
-								
-								});
-								
-								var request = {
-									method : 'POST',
-									url : '../uploadFile',
-									data : formData,
-									headers : {
-										'Content-Type' : undefined
-									}
-								};
-							
-								$http(request).success(function(data, status) {
-									alert("File Uploaded Successfully ... " + status);
-
-								}).error(function(data, status) {
-									
-								});
-							}
-
-
-							$scope.uploadFile3 = function() {
-								
-								var fileInput = $('#selectFile3');
-								var maxSize = fileInput.data('max-size');
-								var fileSize=$scope.file3Size;
-								var fileName=$scope.file3Name;
-								var ext = fileName.split('.').pop();
-								
-								var formData = new FormData();
-								var attachmentLabel = $scope.attachmentLabel3;
-								formData.append("file", $scope.file3);
-								formData.append("attachmentLabel", attachmentLabel);
-								
-								switch (ext) {
-						        	case 'jpg':
-						       	 	case 'jpeg':
-						        	case 'png':
-						        	case 'gif':
-						        	case 'doc':
-						        	case 'docx':
-						        	case 'txt':
-						        	case 'pdf':
-						        	case 'xls':
-						        	case 'xlsx':
-						        	case 'sql':
-						        	 case 'java':
-						        	case 'xml': 
-						            	break;
-						       	 	default:
-						            	alert('File type not allowed.');
-						        		$("#selectFile3").val("");
-					            		return false;
-						    	}
-
-								if(fileSize>maxSize){
-						            alert(' Too big file size ! Size should be less than 1 MB');
-						            $("#selectFile3").val("");
-						            return false;
-						         }
-								
-								$scope.attachments.push({ 
-									attachmentFile:$scope.file3Name,
-									
-								});
-								
-								var request = {
-									method : 'POST',
-									url : '../uploadFile',
-									data : formData,
-									headers : {
-										'Content-Type' : undefined
-									}
-								};
-								$http(request).success(function(data, status) {
-									alert("File Uploaded Successfully ... " + status);
-									
-								}).error(function(data, status) {
-									
-								});*/
-							}
-							
-
-							/* issueService returns list to populate drop-down */
 							/*
-							 * userService.initializeSelect() .then( function(d) {
+							 * $scope.getTheFile2 = function($files) {
 							 * 
-							 * retrieve and assign value from list
-							 * angular.forEach(d,function(value,key){
-							 * switch(key){
+							 * angular.forEach($files, function(value, key) {
+							 * alert(key + " " + value); $scope.file2 =
+							 * $files[0]; $scope.file2Name = $files[0].name;
+							 * $scope.file2Size = $files[0].size; });
+							 * console.log($scope.file2,$scope.file2Name,$scope.file2Size); };
+							 * $scope.getTheFile3 = function($files) {
 							 * 
-							 * case 0: $scope.priorities=value; break; case 1:
-							 * $scope.assigneeList=value; break; case 2:
-							 * $scope.issueTypeList=value; break; case 3:
-							 * $scope.projects=value; break; } }); },
-							 * function(errResponse){ console.error('Error while
-							 * fetching'); } ); this.createIssue={};
-							 * this.add=function(){ // call service to persist
-							 * in db
-							 * userService.submitCreateIssue(this.createIssue);
-							 * .then( function(d) {
-							 *  }, function(errResponse){ console.error('Error
-							 * while fetching'); } ); this.createIssue={}; };
+							 * angular.forEach($files, function(value, key) {
+							 * alert(key + " " + value); $scope.file3 =
+							 * $files[0]; $scope.file3Name = $files[0].name;
+							 * $scope.file3Size = $files[0].size; });
+							 * console.log($scope.file3,$scope.file3Name,$scope.file3Size); };
 							 */
 
-						 ]);
+							$scope.uploadFile1 = function() {
+
+								var fileInput = $('#selectFile1');
+								var maxSize = fileInput.data('max-size');
+								var fileSize = $scope.file1Size;
+								var fileName = $scope.file1Name;
+								var ext = fileName.split('.').pop();
+								var formData = new FormData();
+								var attachmentLabel = $scope.attachmentLabel1;
+								formData.append("file", $scope.file1);
+								formData.append("attachmentLabel",
+										attachmentLabel);
+
+								switch (ext) {
+								case 'jpg':
+								case 'jpeg':
+								case 'png':
+								case 'gif':
+								case 'doc':
+								case 'docx':
+								case 'txt':
+								case 'pdf':
+								case 'xls':
+								case 'xlsx':
+								case 'sql':
+									/*
+									 * case 'java': case 'xml':
+									 */
+									break;
+								default:
+									alert('File type not allowed.');
+									$("#selectFile1").val("");
+									return false;
+								}
+
+								if (fileSize > maxSize) {
+									alert('File size is too big ! Size should be less than 1 MB');
+									$("#selectFile1").val("");
+									return false;
+								}
+								$scope.attachments.push({
+									attachmentFile : $scope.file1Name,
+
+								});
+
+								userService.fileUpload(formData).then(
+										function() {
+
+										}, function(errResponse) {
+
+										})
+							};
+
+							$scope.searchAllIssues = function() {
+
+								$http.get('../defaultIssuesList').success(
+										function(data) {
+
+											$scope.issueList = data;
+
+										});
+
+							};
+
+							$scope.startTask = function(index) {
+
+								var id = angular
+										.element(
+												document
+														.querySelector("input[id=radio]:checked"))
+										.val();
+
+								var dueDate = $scope.issueList[index].dueDate;
+								var date1 = new Date(dueDate);
+								var dd = date1.getDate();
+								var mm = date1.getMonth() + 1; // January is 0!
+								var yyyy = date1.getFullYear();
+								var date2 = mm + '/' + dd + '/' + yyyy;
+
+								userService
+										.startTask(id, dueDate)
+										.then(
+												function(data) {
+													$scope.searchAllIssues();
+
+												},
+												function(errResponse) {
+													console
+															.error('Error while showing startTask members');
+												})
+
+							};
+
+							$scope.stopTask = function() {
+
+								var id = angular
+										.element(
+												document
+														.querySelector("input[id=radio]:checked"))
+										.val();
+
+								userService
+										.stopTask(id)
+										.then(
+												function(data) {
+													$scope.searchAllIssues();
+
+												},
+												function(errResponse) {
+													console
+															.error('Error while showing stopTask members');
+												});
+
+							};
+
+							$scope.pauseTask = function() {
+
+								var id = angular
+										.element(
+												document
+														.querySelector("input[id=radio]:checked"))
+										.val();
+
+								var reason = $scope.reason;
+
+								userService
+										.pauseTask(id, reason)
+										.then(
+												function(data) {
+													$scope.searchAllIssues();
+
+												},
+												function(errResponse) {
+													console
+															.error('Error while showing pauseTask members');
+												});
+
+							};
+
+							$scope.refresh = function() {
+
+								$scope.searchAllIssues();
+							};
+
+							$scope.exportData = function() {
+								var blob = new Blob(
+										[ document.getElementById('someInfo').innerHTML ],
+										{
+											type : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+										});
+								saveAs(blob, "Report.xls");
+							}
+								
+							var editIssueId=0;
+							
+							$scope.getEditIssueId=function(id){
+								alert(id);
+								editIssueId=id;
+							}
+							
+							
+							$scope.editTaskProgress = function() {
+								$scope.editId=editIssueId;
+								alert($scope.editId);
+								var taskProgressUpdate=$scope.taskProgressUpdate;
+								alert(taskProgressUpdate);
+								/*userService
+								.updateTaskProgress(taskProgressUpdate)
+								.then(
+										function(data) {
+										alert("updated");
+
+										},
+										function(errResponse) {
+											console
+													.error('Error while showing stopTask members');
+										});*/
+
+							}
+
+						} ]);
