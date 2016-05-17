@@ -119,7 +119,7 @@ angular
 										.submitCreateIssue(formData)
 										.then(
 												function(formData) {
-													alert("Registered");
+													alert("Issue Created!!!!");
 												},
 												function(errResponse) {
 													console
