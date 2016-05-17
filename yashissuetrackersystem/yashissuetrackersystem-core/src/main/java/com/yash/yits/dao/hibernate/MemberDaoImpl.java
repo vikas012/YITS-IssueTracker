@@ -215,7 +215,8 @@ public class MemberDaoImpl implements MemberDao {
 				.add(Projections.property("contact"),"contact")
 				.add(Projections.property("managerName"),"managerName")
 				.add(Projections.property("managerEmail"),"managerEmail")
-				.add(Projections.property("memberType"),"memberType"))
+				.add(Projections.property("memberType"),"memberType")
+				.add(Projections.property("isActive"),"isActive"))
 				.add(Restrictions.eq("memberType.id", memberId))
 				.setResultTransformer(Transformers.aliasToBean(Member.class));
 				List<Member> members=criteria.list();
