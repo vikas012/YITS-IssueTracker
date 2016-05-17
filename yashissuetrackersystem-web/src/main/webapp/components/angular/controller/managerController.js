@@ -113,41 +113,44 @@ angular
 												});
 							}
 
-							$scope.members1 = [];
-
+							// rectify
 							var issues = $http({
 								method : 'GET',
 								url : '../defaultIssuesList'
 							}).success(function(data) {
 								$scope.issueList = data;
 							})
-
-							var members = $http({
-								method : 'GET',
-								url : '../memberList'
-							})
-									.success(
-											function(data) {
-
-												$scope.members1 = data;
-
-												angular
-														.forEach(
-																$scope.members1,
-																function(value,
-																		key) {
-
-																	if (value.isActive == 0) {
-
-																		value.isActive = "Activate";
-																	} else {
-
-																		value.isActive = "DeActivate";
-																	}
-
-																});
-
-											})
+							
+							// rectify
+							$scope.showMemberList=function(){
+								$scope.members1 = [];
+								$http({
+									method : 'GET',
+									url : '../memberList'
+								})
+										.success(
+												function(data) {
+	
+													$scope.members1 = data;
+	
+													angular
+															.forEach(
+																	$scope.members1,
+																	function(value,
+																			key) {
+	
+																		if (value.isActive == 0) {
+	
+																			value.isActive = "Activate";
+																		} else {
+	
+																			value.isActive = "DeActivate";
+																		}
+	
+																	});
+	
+												})
+							}
 
 							$scope.showLookUpForm = false;
 							$scope.showRegisterForm = false;
@@ -208,7 +211,7 @@ angular
 								if (index == null) {
 									alert("Please select the entry you want to update!");
 								}
-
+								// rectify
 								var fetchIssueDetails = $http({
 									method : 'GET',
 									url : '../fetchIssueDetails/{index}'
@@ -230,7 +233,7 @@ angular
 							}
 
 							$scope.unassignedIssueList = [];
-
+							// rectify
 							var unassignedIssues = $http({
 								method : 'GET',
 								url : '../issue/assign'
@@ -319,7 +322,7 @@ angular
 
 							}
 							$scope.defaultIssueList = [];
-
+							// rectify
 							var issueList = $http({
 								method : 'GET',
 								url : '../defaultIssues'
@@ -330,8 +333,9 @@ angular
 							})
 
 							$scope.getMemberType = [];
+							// rectify
 							var getMemberType = $http({
-
+									
 								method : 'GET',
 								url : '../memberType'
 							}).success(function(data) {
@@ -380,7 +384,7 @@ angular
 							}
 
 							$scope.getDataAfterActiveStatus = function() {
-
+								// rectify
 								$http({
 									method : 'GET',
 									url : '../memberList'
@@ -471,8 +475,10 @@ angular
 												})
 
 							}
-
-							managerService
+							
+							$scope.showAssignedIssues=function(){
+								
+								managerService
 									.showAssignedIssues()
 									.then(
 											function(data) {
@@ -482,7 +488,8 @@ angular
 												console
 														.error('Error while showing assigned issues');
 											})
-
+							}
+							
 							$scope.getSearchAssignedIssue = function() {
 
 								var searchText = $scope.searchAssignedIssueText;
