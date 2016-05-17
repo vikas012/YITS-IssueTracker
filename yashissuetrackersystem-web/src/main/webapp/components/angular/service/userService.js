@@ -275,8 +275,8 @@ startTask:function(id,dueDate){
 		},
 		
 		
-		updateTaskProgress:function(taskProgressUpdate){
-			return 	$http.get('../taskProgressUpdate/'+taskProgressUpdate)
+		updateTaskProgress:function(taskProgressUpdate,id){
+			return 	$http.get('../taskProgressUpdate/'+taskProgressUpdate+'/'+id)
 			.then(
 					function(response){
 						return response.data;

@@ -95,4 +95,7 @@ public interface IssueService {
 	 * @param issuestatusId
 	 */
 	public List<IssueForm> startTaskPending(int issuestatusId,long memberId);
+	
+	public List<IssueForm> updateIssueTaskProgress(String task,int id,long memberId);
+	
 }

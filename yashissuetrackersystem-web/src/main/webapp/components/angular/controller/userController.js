@@ -540,27 +540,32 @@ angular
 							var editIssueId=0;
 							
 							$scope.getEditIssueId=function(id){
+								$scope.issueList=null;
 								alert(id);
 								editIssueId=id;
 							}
 							
 							
 							$scope.editTaskProgress = function() {
+							
 								$scope.editId=editIssueId;
 								alert($scope.editId);
 								var taskProgressUpdate=$scope.taskProgressUpdate;
 								alert(taskProgressUpdate);
-								/*userService
-								.updateTaskProgress(taskProgressUpdate)
+								userService
+								.updateTaskProgress(taskProgressUpdate,$scope.editId)
 								.then(
 										function(data) {
-										alert("updated");
+										//alert("updated");
+											$scope.searchAllIssues();
+											$scope.taskProgressUpdate="";
+										
 
 										},
 										function(errResponse) {
 											console
 													.error('Error while showing stopTask members');
-										});*/
+										});
 
 							}
 

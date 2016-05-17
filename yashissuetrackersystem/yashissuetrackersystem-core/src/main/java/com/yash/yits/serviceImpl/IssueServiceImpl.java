@@ -960,6 +960,16 @@ public class IssueServiceImpl implements IssueService{
 	
 		return issueFormList;
 	}
+
+
+	public List<IssueForm> updateIssueTaskProgress(String task, int id,long memberId) {
+		
+		issueDao.updateIssueTaskProgress(task, id);
+		List<IssueForm> issueforms=showIssuesList(memberId);
+		return issueforms;
+		
+		
+	}
 	
 	
 }

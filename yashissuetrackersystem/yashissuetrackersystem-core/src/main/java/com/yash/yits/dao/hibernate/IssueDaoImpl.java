@@ -616,13 +616,13 @@ Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 		System.out.println(issue.getOriginalEstimate());
 		System.out.println(issue.getRemainingEstimate());
 		System.out.println(issue.getAssignedUser());
-		
-		Issue issue2 = session.get(Issue.class, issue.getId());
+		int id=issue.getId();
+		Issue issue2 = session.get(Issue.class,id);
 		issue2.setOriginalEstimate(issue.getOriginalEstimate());
 		issue2.setRemainingEstimate(issue.getRemainingEstimate());
 		issue2.setAssignedUser(issue.getAssignedUser());
 		issue2.setDueDate(issue.getDueDate());
-		session.update(issue2);
+		//session.update(issue2);
 	}
 	
 	public Issue fetchIssueDetailsConv(int id) {
@@ -876,5 +876,25 @@ Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 		
 		return issues1;
 	}
+	
+	
+	
+	public void updateIssueTaskProgress(String task,int id){
+		
+		Session session = sessionFactory.getCurrentSession();
+
+	Issue issue2 = session.get(Issue.class, id);
+		issue2.setTaskProgressUpdate(task);
+
+		/*
+		Issue issue=new Issue();
+		issue.setId(id);
+		issue.setTaskProgressUpdate(task);
+		session.update(issue);*/
+		
+		
+	}
+	
+	
 
 }
