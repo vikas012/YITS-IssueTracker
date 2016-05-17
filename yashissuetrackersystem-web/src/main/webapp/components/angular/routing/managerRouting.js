@@ -36,7 +36,7 @@ managerModule.config(function($routeProvider) {
 	})
 	.when('/assignIssue', {
 		templateUrl : '../getAssignIssueForm',
-		controller : 'managerController as mc',
+		controller : 'assignedIssueController',
 	})
 	
 	.when('/searchMembers',{

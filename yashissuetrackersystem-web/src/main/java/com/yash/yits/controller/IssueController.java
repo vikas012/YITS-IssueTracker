@@ -472,20 +472,6 @@ public class IssueController {
 	 * service layer
 	 */
 
-/*	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	public String saveFile(HttpServletRequest request,
-			@RequestParam(value = "file", required = false) MultipartFile uploadedFile) throws IOException {
-
-		Attachment file1 = new Attachment();
-		file1.setFile(uploadedFile.getBytes());
-		file1.setName(uploadedFile.getOriginalFilename());
-		file1.setLabel(request.getParameter("attachmentLabel"));
-
-		System.out.println("Albel" + file1.getLabel());
-
-		return issueService.saveFile(file1);
-
-	}*/
 	@RequestMapping(value="/uploadFile",method=RequestMethod.POST)
 	public String saveFile(HttpServletRequest request,@RequestParam(value="file",required=false) MultipartFile uploadedFile) throws IOException{
 		 

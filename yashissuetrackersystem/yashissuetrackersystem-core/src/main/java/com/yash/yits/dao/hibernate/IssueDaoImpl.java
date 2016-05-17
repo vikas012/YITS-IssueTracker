@@ -194,9 +194,8 @@ public class IssueDaoImpl implements IssueDao {
 		applicationTeamMember2.setId(findMemberId(issueOwnerMemberId));
 
 		issue.setIssueOwner(applicationTeamMember2);
-
-		session.saveOrUpdate(issue);
 		int issueId=0;
+		
 		issueId=(Integer) session.save(issue);
 		return issueId;
 		

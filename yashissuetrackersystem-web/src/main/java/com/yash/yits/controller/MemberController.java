@@ -96,24 +96,6 @@ public class MemberController {
 	}
 	
 	/**
-	 * This method returns list of issues assigned to a members
-	 */
-	@ResponseBody
-	@RequestMapping(value="/showAssignedIssue")
-	public List<IssueForm> showAssignedIssue(){
-		return memberService.showAssignedIssue();
-	}
-	
-	/**
-	 * This method searches list of issues assigned to a members
-	 */
-	@ResponseBody
-	@RequestMapping(value="/searchAssignedIssue/{searchText}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<IssueForm> searchAssignedIssue(@PathVariable("searchText") String searchText){
-		return memberService.searchAssignedIssue(searchText);
-	}
-	
-	/**
 	 * This method deletes member.
 	 */
 	@ResponseBody

@@ -467,41 +467,6 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 												})
 
 							}
-							
-							$scope.showAssignedIssues=function(){
-								
-								managerService
-									.showAssignedIssues()
-									.then(
-											function(data) {
-												$scope.assignedIssues = data;
-											},
-											function(errResponse) {
-												console
-														.error('Error while showing assigned issues');
-											})
-							}
-							
-							$scope.getSearchAssignedIssue = function() {
-
-								var searchText = $scope.searchAssignedIssueText;
-
-								if (searchText == "") {
-
-									alert("Please Enter Text!");
-								} else {
-									managerService
-											.searchAssignedIssue(searchText)
-											.then(
-													function(data) {
-														$scope.assignedIssues = data;
-													},
-													function(errResponse) {
-														console
-																.error('Error while searching assigned issues');
-													})
-								}
-							}
 
 							$scope.showadvsearch = function() {
 								$('#advsearch').show();

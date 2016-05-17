@@ -413,6 +413,7 @@ public class IssueServiceImpl implements IssueService{
 	public String saveFile(Attachment file) {
 		file.setCreatedDateTime(new Date());
 		file.setLastModifiedDateTime(new Date());
+		file.setIsActive(1);
 		return issueDao.saveFile(file);
 		 
 	}
