@@ -421,8 +421,7 @@ angular
 											.then(
 													function(data) {
 
-														$scope
-																.getDataAfterActiveStatus();
+														$scope.getSearchedMemberType();
 													},
 													function(errResponse) {
 														console
