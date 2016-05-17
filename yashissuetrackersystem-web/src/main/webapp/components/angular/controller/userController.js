@@ -346,7 +346,6 @@ angular
 									memberId=3;
 									
 								}
-								alert(memberId);
 								managerService.searchMemberType(memberId)
 											.then(
 													function(data) {

@@ -363,17 +363,12 @@ a:active
  {
      padding:9px 15px;
      border-bottom:1px solid #eee;
-     background-color: #66b3ff;
+     background-color: darkcyan;
  }
  
 
 
  .modal-dialog modal-sm,
-    .modal-content {
-    
-    height: 150%;
-    width: 150%;
-}
 
 .modal-body {
 
@@ -390,4 +385,3 @@ a:active
 	position:absolute;
 }
 
-/* Create issue Form */
