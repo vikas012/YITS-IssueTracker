@@ -146,7 +146,6 @@ public class IssueController {
 	@ResponseBody
 	@RequestMapping(value = "/fetchIssueDetails/{fetchId}")
 	public IssueForm fetchIssueDetails(@PathVariable int fetchId) {
-
 		IssueForm issueForm = issueService.fetchIssueDetails(fetchId);
 		return issueForm;
 	}
@@ -311,17 +310,11 @@ public class IssueController {
 		return unassignedIssueList;
 	}
 
-	
+
 
 /*	@ResponseBody
 =======
-	@ResponseBody
-	@RequestMapping(value="/fetchIssueDetails")
-	public IssueForm fetchIssueDetails(@PathVariable int index){
-		System.out.println("unassigned Controller");
-		IssueForm issueForm=issueService.fetchIssueDetails(index);
-		return null;
-	}
+
 	
 	
 	@ResponseBody

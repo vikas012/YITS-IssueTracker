@@ -8,10 +8,10 @@
 	<div >
 		<button  ng-click="showadvsearch()" class="btn btn-primary" ><span class="glyphicon glyphicon-search"></span>Advance Search</button>
 	</div>
-	
+	<br/>
 			<div id="advsearch" hidden>
 					<div>
-					<div >
+					<div>	
 						<label>Application:</label> 
 						<select ng-model="application" ng-change="calldropdowns()">
 							<option ng-repeat="Application in applicationNames " value="{{Application.id}}">{{Application.name}}</option>
