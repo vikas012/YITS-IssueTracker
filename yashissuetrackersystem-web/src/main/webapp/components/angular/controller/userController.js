@@ -541,7 +541,7 @@ angular
 							
 							$scope.getEditIssueId=function(id){
 								$scope.issueList=null;
-								alert(id);
+								
 								editIssueId=id;
 							}
 							
@@ -549,9 +549,9 @@ angular
 							$scope.editTaskProgress = function() {
 							
 								$scope.editId=editIssueId;
-								alert($scope.editId);
+								
 								var taskProgressUpdate=$scope.taskProgressUpdate;
-								alert(taskProgressUpdate);
+								
 								userService
 								.updateTaskProgress(taskProgressUpdate,$scope.editId)
 								.then(
