@@ -96,10 +96,10 @@ input[type="password"] {
 <body>
 
 
-	<center>
+	<!-- <center>
  		<a href="./managerWelcome">Manager Dashboard</a> 
-	<!-- 	<a href="./userWelcome">User Dashboard</a> -->
-	</center>
+		<a href="./userWelcome">User Dashboard</a>
+	</center> -->
 	<div class="header header-color">
 		<h2 class="h2-tag">YITS</h2>
 	</div>
@@ -124,9 +124,9 @@ input[type="password"] {
 
 			</form>
 		</div>
-		<div class="footer">
+		<!-- <div class="footer">
 			<h5 class="h4-color">YASH Technologies. All Rights Reserved</h5>
-		</div>
+		</div> -->
 	</div>
 	
 	

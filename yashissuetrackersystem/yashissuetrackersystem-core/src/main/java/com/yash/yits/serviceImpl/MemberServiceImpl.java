@@ -375,7 +375,8 @@ public class MemberServiceImpl implements MemberService {
 			issueForm.setProject(ProjectMapper.domainForm(issue.getProject()));
 			issueForm.setDescription(issue.getDescription());
 			issueForm.setSummary(issue.getSummary());
-			
+			issueForm.setAffectedVersion(issue.getAffectedVersion());
+			issueForm.setComponent(issue.getComponent());
 			issueForms.add(issueForm);
 		}
 		return issueForms;

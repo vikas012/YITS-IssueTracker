@@ -1,41 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<style type="text/css">
-.container {
-	width: 200px;
-	float: center;
-}
-
-.input-group {
-	width: 300px;
-	float: center;
-	margin-left: 350px;
-}
-
-#heading {
-	background-color: darkcyan;
-	color: white;
-	font-size: 17px;
-	font-family: "Times New Roman", Times, serif;
-}
-
-.btn-primary {
-	background-color: darkcyan !important;
-}
-</style>
-</head>
-<body ng-controller="managerController as mc">
+<div>
 
 <h2 class="headerlabel">Show Members</h2>
 
 <div id="exportable">
 			<table datatable="ng" class="table table-striped table-bordered table-hover">
 				<thead class="thead-inverse">
-				<tr id="heading">
-					<th >SELECT</th>		
+				<tr id="heading">		
 					<th>MEMBER ID</th>		
 					<th>MEMBER NAME</th>
 					<th>MEMBER EMAIL</th>
@@ -45,8 +15,7 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr id="defaultTable" ng-repeat="member in members1">
-					<td><input id='radio' type='radio' value={{member.memberId}}></td>				
+				<tr id="defaultTable" ng-repeat="member in members1">			
 					<td>{{member.memberId}}</td>
 					<td>{{member.name}}</td>
 					<td>{{member.email}}</td>
@@ -60,6 +29,5 @@
 				</tbody>
 			</table>
 		</div>
-	<button ng-click="exportData()">Export Data to Excel</button>
-</body>
-</html>
+	<button ng-click="exportData()" class="btn btn-primary">Export Data to Excel</button>
+</div>

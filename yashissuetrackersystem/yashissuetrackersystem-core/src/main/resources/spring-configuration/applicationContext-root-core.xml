@@ -25,7 +25,7 @@
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
-			<value>classpath:config/${yashApplicationConfigSuffix}_yash-issuetracker-core.properties</value>
+			<value>classpath:config/DEVL_yash-issuetracker-core.properties</value>
 		</property>
 	</bean>
 

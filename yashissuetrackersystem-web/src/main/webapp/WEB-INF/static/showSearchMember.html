@@ -1,28 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style type="text/css">
-.container {
-	width: 200px;
-	float: center;
-}
-
-.input-group {
-	
-	float: center;
-	margin-left: 350px;
-}
-
-.btn-primary {
-	background-color: darkcyan !important;
-}
-</style>
-</head>
-<body>
+<div>
 <h3 class="headerlabel">Search Members</h3><br>
-	<form>
-	
-    	<div class="input-group" style="margin-left:250px;">
+    	<div class="input-group">
 			<input type="text" class="form-control" ng-model="searchText" placeholder="Member Name ,Member Email ,Manager name">
 			<div class="input-group-btn">
 				<button class="btn btn-primary" type="button" ng-click="getSearchMember()">
@@ -70,6 +48,4 @@
 			</tbody>
 		</table>
 
-	</form>
-</body>
-</html>
+</div>

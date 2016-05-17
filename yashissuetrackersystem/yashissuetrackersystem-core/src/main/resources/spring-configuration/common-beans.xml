@@ -59,7 +59,7 @@
 	<bean id="userProperties"
 		class="org.apache.commons.configuration.PropertiesConfiguration">
 		<constructor-arg type="java.net.URL"
-			value="classpath:config/${yashApplicationConfigSuffix}_yash-issuetracker-core.properties" />
+			value="classpath:config/DEVL_yash-issuetracker-core.properties" />
 	</bean>
 
 
