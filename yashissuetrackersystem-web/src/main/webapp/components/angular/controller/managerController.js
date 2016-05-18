@@ -417,7 +417,7 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 											.then(
 													function(data) {
 
-														$scope.getSearchedMemberType();
+														$scope.getDataAfterActiveStatus();
 													},
 													function(errResponse) {
 														console

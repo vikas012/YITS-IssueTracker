@@ -683,9 +683,9 @@ Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 	 * Without it, nothing gets scheduled. 
 	 */
 	/*Run every 10 seconds  */ 
-//	@Async // this will be executed asynchronously.
-//	@Scheduled(cron="*/10 * * * * ?")
-	/*public void scheduleTask() throws ParseException{
+	@Async // this will be executed asynchronously.
+	@Scheduled(cron="*/10 * * * * ?")
+	public void scheduleTask() throws ParseException{
 	
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -693,7 +693,7 @@ Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 		List<Issue> issues = query.list();
 		
 
-		 this is current date
+		/* this is current date*/
 		//Date date=new Date(); 
 		Calendar calendar=Calendar.getInstance();
 		SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
@@ -765,7 +765,7 @@ Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 			}
 			}
 		transaction.commit();
-	}*/
+	}
 
 	/**
 	 * Method to update status of assigned issue when it is started.
