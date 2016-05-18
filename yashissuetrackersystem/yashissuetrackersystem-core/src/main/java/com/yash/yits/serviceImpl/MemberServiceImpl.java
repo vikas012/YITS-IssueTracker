@@ -3,6 +3,7 @@
  */
 package com.yash.yits.serviceImpl;
 
+import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +20,9 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.mail.SimpleMailMessage;
@@ -33,8 +37,7 @@ import com.yash.yits.domain.Member;
 import com.yash.yits.domain.MemberType;
 import com.yash.yits.form.IssueForm;
 import com.yash.yits.form.LoginForm;
-
-
+import com.yash.yits.form.MailForm;
 import com.yash.yits.form.UserForm;
 import com.yash.yits.mapper.ApplicationTeamMemberMapper;
 import com.yash.yits.mapper.ProjectMapper;
@@ -60,7 +63,9 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDao memberDao;
 
-	
+	@Autowired
+	private VelocityEngine velocityEngine;
+
 	@Autowired
 	JavaMailSender javaMailSender;
 
@@ -204,31 +209,45 @@ public class MemberServiceImpl implements MemberService {
 			
 			if(result==true)
 			{
-				ApplicationContext context=ContextAware.getApplicationContext();
-				System.out.println("object of application context"+context);
-				JavaMailSenderImpl javamailsender=(JavaMailSenderImpl) context.getBean("mailSender");
 				
-				System.out.println(javamailsender.getHost()+"  "+javamailsender.getPort());
 				SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
 				
-				simpleMailMessage.setFrom(javamailsender.getUsername());
-				simpleMailMessage.setTo(memberForm.getEmail());
-				/*simpleMailMessage.setCc(memberForm.getManagerEmail());*/
-				String subject="Successful Registration In IssueTracker Application!!!";
-				simpleMailMessage.setSubject(subject);
+				MailForm mailForm=new MailForm();
+				ApplicationContext context=ContextAware.getApplicationContext();
+			 	JavaMailSenderImpl javaMailSender=(JavaMailSenderImpl) context.getBean("mailSender");
+				simpleMailMessage.setFrom(javaMailSender.getUsername());
 				
-				String message="Hi," 
-								+ "You have been successfully successfully registered with Yash Issue Tracking System Application with email id."+memberForm.getEmail()+
-	
-				"Regards,"
-				+"Team : Yash Issue Tracking Sytem.";
-				
-				simpleMailMessage.setText(message);
-				
-				javaMailSender.send(simpleMailMessage);
+				mailForm.setMailFrom(simpleMailMessage.getFrom());
+				mailForm.setMailSubject("Registration Success mail from Yash IssueTracker System");
+				mailForm.setTemplateName("emailtemplate.vm");
+				  
+				  
+				  VelocityContext velocityContext = new VelocityContext();
+				 velocityContext.put("username",memberForm.getName() );
+				  velocityContext.put("location", "Crystal IT Park-Indore");
+				  velocityContext.put("sentFrom", "YashIssueTrackerSystem");
+				  
+				  Template template = velocityEngine.getTemplate("/template/" + mailForm.getTemplateName());
+				  StringWriter stringWriter = new StringWriter();
+				  
+				  template.merge(velocityContext, stringWriter);
+		  
+				  simpleMailMessage.setFrom(mailForm.getMailFrom());
+				  simpleMailMessage.setTo(memberForm.getEmail());
+				  simpleMailMessage.setSubject(mailForm.getMailSubject());
+				  simpleMailMessage.setText(stringWriter.toString());
+				  
+				  
+				  System.out.println(mailForm);
+				  try{
+					  
+					  javaMailSender.send(simpleMailMessage);
+				  }catch(Exception e){
+					  
+					  System.out.println("Error occured in Authentication");
+				  }
+				  
 			}
-
-			
 			
 			return result;
 		}

@@ -676,15 +676,15 @@ Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 	
 	/**
 	 * Method to execute on a fixed schedule, based on a Spring cron expression.
-	 * Run every 10 seconds when task is started by member.
+	 * Run every 1 hour when task is started by member.
 	 * automatically updates the remaining estimate of each task assigned.
 	 * this will be executed asynchronously.
 	 * This method enables task scheduling, which automatically updates IssueRemainingestimate and status of issue assigned.
 	 * Without it, nothing gets scheduled. 
 	 */
-	/*Run every 10 seconds  */ 
+	/*Run every 1 hour  */ 
 	@Async // this will be executed asynchronously.
-	@Scheduled(cron="*/10 * * * * ?")
+	@Scheduled(cron="0 0/60 * * * ?")
 	public void scheduleTask() throws ParseException{
 	
 		Session session = sessionFactory.openSession();
@@ -726,7 +726,7 @@ Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 				String oldRemainingEstimate=issue.getRemainingEstimate();
 				SimpleDateFormat format4 = new SimpleDateFormat("HH:mm:ss"); 
 				Date date1 = format4.parse(oldRemainingEstimate);
-				Date date2 = format4.parse("00:00:10");
+				Date date2 = format4.parse("01:00:00");
 				
 				long remainder = date1.getTime() - date2.getTime();
 				String remainder1=DurationFormatUtils.formatDuration(remainder, "HH:mm:ss");

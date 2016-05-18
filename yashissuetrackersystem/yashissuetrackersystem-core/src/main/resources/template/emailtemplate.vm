@@ -1,0 +1,15 @@
+Dear ${username},
+ 
+
+	This mail is for the notification of successful registration in YashIssueTracker System Application
+	developed by a team of ${location} location.
+
+
+	For further login process:-
+	Click Here:- http://idrtrapppc01:8080/yashissuetrackersystem-web/
+
+
+
+
+Thanks & Regards,
+Team:${sentFrom}

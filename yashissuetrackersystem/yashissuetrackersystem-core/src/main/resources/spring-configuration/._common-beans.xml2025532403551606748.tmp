@@ -29,9 +29,6 @@
 
 	<import resource="classpath*:spring-configuration/persistence-orm.xml" />
 
-	<!-- <context:property-placeholder location="classpath*:/config/*.properties" 
-		/> -->
-
 
 	<!-- context Aware bean -->
 	<bean id="contextAware" class="com.yash.yits.util.ContextAware"></bean>
@@ -54,18 +51,20 @@
 
 	</bean>
 
-	<!-- apache commons configuration -->
+	<!-- velocity engine template for mail-->
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean"> 
+		<property name="velocityProperties"> <props> <prop key="resource.loader">class</prop> 
+		<prop key="class.resource.loader.class"> org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader 
+		</prop> </props> </property> </bean> 
 
+
+	<!-- apache commons configuration -->
 	<bean id="userProperties"
 		class="org.apache.commons.configuration.PropertiesConfiguration">
 		<constructor-arg type="java.net.URL"
 			value="classpath:config/DEVL_yash-issuetracker-core.properties" />
 	</bean>
-
-<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean"> 
-		<property name="velocityProperties"> <props> <prop key="resource.loader">class</prop> 
-		<prop key="class.resource.loader.class"> org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader 
-		</prop> </props> </property> </bean> 
+	
 
 
 
