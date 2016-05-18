@@ -64,7 +64,6 @@ angular
 								},
 
 								searchMember : function(searchText) {
-									alert("Please Enter Text service!");
 									return $http
 											.get(
 													'../searchMember/'

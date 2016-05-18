@@ -430,7 +430,6 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								if (memberId == "") {
 									alert("Please Select ID!");
 								} else {
-									alert(memberId);
 									managerService.memberActivate(memberId)
 											.then(
 													function(data) {
@@ -439,8 +438,7 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 
 															$scope.getSearchMember();
 															}
-															else{
-																alert("getFilter for list");		
+															else{	
 																$scope.getSearchedMemberType();
 															}
 													},

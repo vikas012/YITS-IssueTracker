@@ -1,5 +1,5 @@
 angular.module('issueTrackingSystem.managerModule').controller('AddMemberManagerController',['$scope','AddMemberManagerService',function($scope,AddMemberManagerService){
-	
+
 	//setting form and message value true or false 
 	$scope.showLookUpForm = true;
 	$scope.showRegisterForm = false;
@@ -57,7 +57,6 @@ angular.module('issueTrackingSystem.managerModule').controller('AddMemberManager
 	
 	//this function calls checkUserInLdap method of AddMemberManagerService and passes login credentials 
 	$scope.checkUserInLdap = function(ldapUser) {
-
 		//calling checkUserInLdap method of AddMemberManagerService
 		AddMemberManagerService.checkUserInLdap(ldapUser)
 				.then(

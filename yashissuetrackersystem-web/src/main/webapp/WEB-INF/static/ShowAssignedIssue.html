@@ -1,5 +1,6 @@
-<div ng-init="showAssignedIssues()">
+<div ng-controller="AssignedIssueController">	
 
+	<div ng-init="showAssignedIssues()">
 	<h2 class="headerlabel">Show Issues</h2>
 	<div class="input-group">
 		<input type="text" class="form-control" ng-model="searchAssignedIssueText" placeholder="Member, Project">
@@ -35,5 +36,5 @@
 	
 		</table>
 	</div>
-
+	</div>
 </div>
