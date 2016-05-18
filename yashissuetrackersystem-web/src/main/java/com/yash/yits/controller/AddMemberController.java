@@ -61,7 +61,6 @@ public class AddMemberController {
 		
 		userForm=memberService.fetchAttributes(intialDirContext,username);
 		
-		
 		return userForm;
 	}
 	@ResponseBody 

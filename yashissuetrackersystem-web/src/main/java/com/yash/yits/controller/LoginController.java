@@ -74,7 +74,7 @@ public class LoginController {
 		
 		httpServletRequest.getSession().setAttribute("memberId",userForm.getUserId());
 		
-		
+		httpServletRequest.getSession().setAttribute("userName",username);
 		
 		httpServletRequest.getSession().setAttribute("IntialDirContext",intialDirContext);
 		
