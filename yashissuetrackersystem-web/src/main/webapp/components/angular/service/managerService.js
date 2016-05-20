@@ -249,11 +249,11 @@ angular
 
 								},
 
-								searchMemberType : function(memberId) {
+								searchMemberType : function(memberTypeId) {
 									return $http
 											.get(
 													'../searchMemberType/'
-															+ memberId)
+															+ memberTypeId)
 											.then(
 													function(response) {
 														return response.data;

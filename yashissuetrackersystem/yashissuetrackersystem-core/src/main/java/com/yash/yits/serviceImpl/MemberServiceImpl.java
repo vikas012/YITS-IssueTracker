@@ -387,8 +387,8 @@ public List<String> memberType() {
 		return memberForms;
 	}
 
-	public List<MemberForm> searchMemberType(int memberId) {
-		List<Member> memberTypeList = memberDao.searchMemberType(memberId);
+	public List<MemberForm> searchMemberType(int memberTypeId) {
+		List<Member> memberTypeList = memberDao.searchMemberType(memberTypeId);
 		List<MemberForm> memberForms = new ArrayList<MemberForm>();
 		for (Member member : memberTypeList) {
 

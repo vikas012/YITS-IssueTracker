@@ -18,5 +18,5 @@ public interface MemberDao {
 	public List<Issue> showAssignedIssue();
 	public List<Issue> searchAssignedIssue(String searchText);
 	public List<MemberType> memberType();
-	public List<Member> searchMemberType(int memberId);
+	public List<Member> searchMemberType(int memberTypeId);
 }

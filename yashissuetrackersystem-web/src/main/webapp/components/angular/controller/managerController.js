@@ -337,46 +337,47 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							})
 
 							$scope.getSearchMember = function() {
-
+								$scope.memberType=undefined;
 								var searchText = $scope.searchText;
 
 								if (searchText == undefined) {
 
 									alert("Please Enter Text!");
 								} else {
-									managerService.searchMember(searchText)
-											.then(
-													function(data) {
-														$scope.members = data;
+									managerService
+									.searchMember(searchText)
+									.then(
+											function(data) {
+												$scope.members = data;
 
-														angular
-																.forEach(
-																		$scope.members,
-																		function(
-																				value,
-																				key) {
+												angular
+												.forEach(
+														$scope.members,
+														function(
+																value,
+																key) {
 
-																			if (value.isActive == 0) {
+															if (value.isActive == 0) {
 
-																				value.isActive = "Activate";
-																			} else {
+																value.isActive = "Activate";
+															} else {
 
-																				value.isActive = "DeActivate";
-																			}
+																value.isActive = "DeActivate";
+															}
 
-																		});
-													},
-													function(errResponse) {
-														console
-																.error('Error while showing search members');
-													})
+														});
+											},
+											function(errResponse) {
+												console
+												.error('Error while showing search members');
+											})
 
 								}
 
 							}
 
 							$scope.getDataAfterActiveStatus = function() {
-								// rectify
+								
 								$http({
 									method : 'GET',
 									url : '../memberList'
@@ -491,7 +492,7 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 										.getAllList(applicationid)
 										.then(
 												function(data) {
-													// $scope.application=data;
+													
 													$scope.issuepriorities = data.priorities;
 													$scope.issuetype = data.issuetypes;
 													$scope.project = data.projects;
@@ -531,52 +532,46 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								attachmentFile : ''
 							} ];
 
-							$scope.getSearchedMemberType = function() {	
-								
-								console.log($scope.memberType);
+							$scope.getSearchedMemberType = function() {
 								var memberType = $scope.memberType;
-								var memberTypeId=0;
-								if(memberType=="Yash"){
-									memberTypeId=1;	
+								var memberTypeId = 0;
+								if (memberType == "Yash") {
+									memberTypeId = 1;
+								} else if (memberType == "NonYash") {
+									memberTypeId = 2;
+								} else {
+									memberTypeId = 3;
 								}
-								else if(memberType=="NonYash"){
-									memberTypeId=2;
-									
-								}
-								else{
-									memberTypeId=3;
-									
-								}
-							
-								managerService.searchMemberType(memberTypeId)
-								.then(
-										function(data) {
-											$scope.members = data;
-											
-										//	console.log(members);
-											angular.forEach(
-													$scope.members,
-													function(value,key) {
-														
-														if (value.isActive == 0) {
-															
-															value.isActive = "Activate";
-														} else {
-															
-															value.isActive = "DeActivate";
-														}
-														
-													});
-											
-										},
-										function(errResponse) {
-											console
-											.error('Error while showing search members');
-										}
-										
-								)
 								
-								
+								managerService
+										.searchMemberType(memberTypeId)
+										.then(
+												function(data) {
+													$scope.members = data;
+													
+													angular
+															.forEach(
+																	$scope.members,
+																	function(
+																			value,
+																			key) {
+
+																		if (value.isActive == 0) {
+
+																			value.isActive = "Active";
+																		} else {
+
+																			value.isActive = "DeActivate";
+																		}
+																		
+																	});
+													
+												},
+												function(errResponse) {
+													console
+															.error('Error while showing search members');
+												})
+												
 							}
 
 							$scope.getTheFile1 = function($files) {
@@ -589,22 +584,7 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								console.log($scope.file1, $scope.file1Name,
 										$scope.file1Size);
 							};
-							/*
-							 * $scope.getTheFile2 = function($files) {
-							 * 
-							 * angular.forEach($files, function(value, key) {
-							 * alert(key + " " + value); $scope.file2 =
-							 * $files[0]; $scope.file2Name = $files[0].name;
-							 * $scope.file2Size = $files[0].size; });
-							 * console.log($scope.file2,$scope.file2Name,$scope.file2Size); };
-							 * $scope.getTheFile3 = function($files) {
-							 * 
-							 * angular.forEach($files, function(value, key) {
-							 * alert(key + " " + value); $scope.file3 =
-							 * $files[0]; $scope.file3Name = $files[0].name;
-							 * $scope.file3Size = $files[0].size; });
-							 * console.log($scope.file3,$scope.file3Name,$scope.file3Size); };
-							 */
+							
 
 							$scope.uploadFile1 = function() {
 
@@ -663,92 +643,6 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 															.error('Error while searching assigned issues');
 												})
 
-								/*
-								 * $scope.uploadFile2 = function() {
-								 * 
-								 * var fileInput = $('#selectFile2'); var
-								 * maxSize = fileInput.data('max-size'); var
-								 * fileSize=$scope.file2Size; var
-								 * fileName=$scope.file2Name; var ext =
-								 * fileName.split('.').pop();
-								 * 
-								 * var formData = new FormData(); var
-								 * attachmentLabel= $scope.attachmentLabel2;
-								 * formData.append("file", $scope.file2);
-								 * formData.append("attachmentLabel",
-								 * attachmentLabel);
-								 * 
-								 * switch (ext) { case 'jpg': case 'jpeg': case
-								 * 'png': case 'gif': case 'doc': case 'docx':
-								 * case 'txt': case 'pdf': case 'xls': case
-								 * 'xlsx': case 'sql': case 'java': case 'xml':
-								 * break; default: alert('File type not
-								 * allowed.'); $("#selectFile2").val(""); return
-								 * false; }
-								 * 
-								 * if(fileSize>maxSize){ alert(' Too big file
-								 * size ! Size should be less than 1 MB');
-								 * $("#selectFile2").val(""); return false; }
-								 * 
-								 * $scope.attachments.push({ attachmentFile:
-								 * $scope.file2Name,
-								 * 
-								 * });
-								 * 
-								 * var request = { method : 'POST', url :
-								 * '../uploadFile', data : formData, headers : {
-								 * 'Content-Type' : undefined } };
-								 * 
-								 * $http(request).success(function(data, status) {
-								 * alert("File Uploaded Successfully ... " +
-								 * status);
-								 * 
-								 * }).error(function(data, status) {
-								 * 
-								 * }); }
-								 * 
-								 * $scope.uploadFile3 = function() {
-								 * 
-								 * var fileInput = $('#selectFile3'); var
-								 * maxSize = fileInput.data('max-size'); var
-								 * fileSize=$scope.file3Size; var
-								 * fileName=$scope.file3Name; var ext =
-								 * fileName.split('.').pop();
-								 * 
-								 * var formData = new FormData(); var
-								 * attachmentLabel = $scope.attachmentLabel3;
-								 * formData.append("file", $scope.file3);
-								 * formData.append("attachmentLabel",
-								 * attachmentLabel);
-								 * 
-								 * switch (ext) { case 'jpg': case 'jpeg': case
-								 * 'png': case 'gif': case 'doc': case 'docx':
-								 * case 'txt': case 'pdf': case 'xls': case
-								 * 'xlsx': case 'sql': case 'java': case 'xml':
-								 * break; default: alert('File type not
-								 * allowed.'); $("#selectFile3").val(""); return
-								 * false; }
-								 * 
-								 * if(fileSize>maxSize){ alert(' Too big file
-								 * size ! Size should be less than 1 MB');
-								 * $("#selectFile3").val(""); return false; }
-								 * 
-								 * $scope.attachments.push({
-								 * attachmentFile:$scope.file3Name,
-								 * 
-								 * });
-								 * 
-								 * var request = { method : 'POST', url :
-								 * '../uploadFile', data : formData, headers : {
-								 * 'Content-Type' : undefined } };
-								 * $http(request).success(function(data, status) {
-								 * alert("File Uploaded Successfully ... " +
-								 * status);
-								 * 
-								 * }).error(function(data, status) {
-								 * 
-								 * });
-								 */
 							}
 
 							$scope.viewIssue = function() {
@@ -830,11 +724,7 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								managerService.submitAssignedIssue(formData)
 										.then(function(formData) {
 											alert("Assigned");
-										}/*
-											 * , function(errResponse) {
-											 * console.error('Error while
-											 * assigning issue controller'); }
-											 */);
+										});
 							};
 
 							$scope.fetchIssueDetails = function() {
@@ -947,24 +837,26 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							}
 							
 							$scope.memberDeleteForSearch = function(memberId) {
-								 
+									
 								if (memberId == "") {
-								alert("Please Select ID!");
+									alert("Please Select ID!");
 								} else {
-								managerService.memberDelete(memberId)
-								.then(
-								function(data) {
-								if ($scope.memberType ==undefined) {
-								$scope.getSearchMember();
-								} else {
-								$scope.getSearchedMemberType();
-								}
-								},
-								function(errResponse) {
-								console.error('Error while showing member status');
-								})
-								}
-								}
-
+									managerService.memberDelete(memberId)
+											.then(
+													function(data) {
+												
+														if ($scope.memberType ==undefined) {
+														
+															$scope.getSearchMember();
+														} else {
+															
+															$scope.getSearchedMemberType();
+														}
+													},
+													function(errResponse) {
+														console.error('Error while showing member status');
+													})
+									}
+							}
 
 						} ]);

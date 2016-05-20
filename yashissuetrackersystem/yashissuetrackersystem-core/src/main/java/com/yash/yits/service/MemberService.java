@@ -32,5 +32,5 @@ public interface MemberService {
 	public List<IssueForm> showAssignedIssue();
 	public List<IssueForm> searchAssignedIssue(String searchText);
 	public List<String> memberType();
-	public List<MemberForm> searchMemberType(int memberId);
+	public List<MemberForm> searchMemberType(int memberTypeId);
 }

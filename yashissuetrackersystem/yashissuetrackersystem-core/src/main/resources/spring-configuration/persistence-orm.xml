@@ -57,6 +57,6 @@
 	 <!-- Activates @Scheduled and @Async annotations for scheduling -->
 	<task:annotation-driven scheduler="taskScheduler" proxy-target-class="true"/>
 
-	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/issuetrackerDB" />
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/MyLocalDB"/>
 
 </beans>

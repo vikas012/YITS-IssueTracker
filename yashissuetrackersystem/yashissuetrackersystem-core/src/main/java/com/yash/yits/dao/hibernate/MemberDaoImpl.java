@@ -203,7 +203,7 @@ public class MemberDaoImpl implements MemberDao {
 		
 	}
 
-	public List<Member> searchMemberType(int memberId) {
+	public List<Member> searchMemberType(int memberTypeId) {
 		
 		Session session=sessionFactory.getCurrentSession();
 		Criteria criteria=session.createCriteria(Member.class)
@@ -217,7 +217,7 @@ public class MemberDaoImpl implements MemberDao {
 				.add(Projections.property("managerEmail"),"managerEmail")
 				.add(Projections.property("memberType"),"memberType")
 				.add(Projections.property("isActive"),"isActive"))
-				.add(Restrictions.eq("memberType.id", memberId))
+				.add(Restrictions.eq("memberType.id", memberTypeId))
 				.setResultTransformer(Transformers.aliasToBean(Member.class));
 				List<Member> members=criteria.list();
 				for(Member membersList:members){
