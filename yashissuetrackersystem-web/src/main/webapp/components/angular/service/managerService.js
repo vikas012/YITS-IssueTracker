@@ -108,12 +108,10 @@ angular
 
 								},
 
-								
-
 								initializeSelect : function() {
-								
+									
 									return $http
-											.get('../getProjects')
+											.get('../getApplications')
 											.then(
 													function(response) {
 
@@ -126,12 +124,13 @@ angular
 																.reject(errResponse);
 													});
 								},
-								initializeSelectAll : function(projectId) {
+								
+								initializeSelectAll : function(applicationId) {
 
 									return $http
 											.get(
 													'../getAllSelectFields/'
-															+ projectId)
+															+ applicationId)
 											.then(
 													function(response) {
 
@@ -145,24 +144,23 @@ angular
 													});
 								},
 
-								submitCreateIssue : function(createIssue) {
-									return $http
-											.post('../managerCreateIssue',
-													createIssue)
+								submitCreateIssue: function(createIssue,dueDate) {
+							          return $http.post('../managerCreateIssue/'+dueDate,createIssue)
 
-											.then(
-													function(response) {
-
-														return response.data;
-													},
-													function(errResponse) {
-														console
-																.error('Error while fetching users');
-														return $q
-																.reject(errResponse);
-													});
-
-								},
+							              .then(
+							                      function(response){
+							                    	  alert(response.data);
+							                          return response.data;
+							                      }, 
+							                      function(errResponse){
+							                          console.error('Error while fetching users');
+							                              return $q.reject(errResponse);
+							                      }
+							                );
+						      	
+						  
+						      	
+						      	},
 
 								getList : function() {
 									return $http

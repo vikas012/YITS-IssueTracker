@@ -233,16 +233,16 @@ public class IssueServiceImpl implements IssueService{
 		return issueId;
 
 }
-		public Map<String, Object> getAllSelectFields(ProjectForm projectForm, MemberForm member) {
+	public Map<String, Object> getAllSelectFields(ApplicationForm applicationForm, MemberForm member) {
 
-			Project project = new Project();
-			project.setId(projectForm.getId());
-			
-	
-			return issueDao.getAllSelectFields(project,member);
+		Application application = new Application();
+		application.setId(applicationForm.getId());
+		
+
+		return issueDao.getAllSelectFields(application,member);
 
 
-		}
+	}
 
 
 	public List<ApplicationForm> getApplicationNames() {

@@ -9,14 +9,26 @@
 
 <!-- ng-controller="userController as uc" -->
 <div class="container">
+
 <h3 class="headerlabel">Create Issue</h3><br>
+
   <form role="form" ng-submit="uc.add()">
-<div class="box1">
+  
+  <div class="box1">
+	  	<div class="form-group col-sm-12">
+	  	<label for="issueApplication">Application Name</label>
+		  	<select ng-model="uc.createIssue.application.id" class="dropDown form-control" ng-change="selectApplicationId()" id="selectAppId">
+			<option ng-repeat="application in applications" value="{{application.id}}" >{{application.name}}</option>
+			</select>
+		</div>
+  </div>
+  
+<div class="box2">
 	
 <div class="form-group col-sm-4">
 	
 	<label for="issueProject">Project Name</label>
-	<select ng-model="uc.createIssue.project.id" class="dropDown form-control" ng-change="myFunc()" id="selectId">
+	<select ng-model="uc.createIssue.project.id" class="dropDown form-control">
 	<option ng-repeat="project in projects" value="{{project.id}}" >{{project.name}}</option>
 	</select>
   </div>
@@ -39,7 +51,7 @@
 </div>
 
 
- <div class="box2">
+ <div class="box3">
   <div class="form-group col-sm-4">
 <label for="component">Issue Component</label>
 <input type="text" ng-model="uc.createIssue.component" class="form-control" />
@@ -58,19 +70,21 @@
  </div>
  	<div class="form-group col-sm-12">
 		<label for="summary">Issue Summary</label>
-		<input type="text" ng-model="uc.createIssue.summary" class="form-control" />
+		<input type="text" ng-model="uc.createIssue.summary" class="form-control" required="required" />
     </div>
-    <div class="box3">
+    <div class="box4">
 		<div class="form-group col-sm-12">
 			<label for="description">Issue Description</label>
-			<textarea class="form-control" rows="5" ng-model="uc.createIssue.description" class="form-control" ></textarea>
+			<textarea class="form-control" rows="5" ng-model="uc.createIssue.description" class="form-control" required="required" ></textarea>
 		</div>
 	</div>
+
    <div class="box4">
  		<div class="form-group col-sm-10">
 		<label for="issueTeamMember">IssueOwner</label>
+
 			<select class="dropDown form-control" ng-model="uc.createIssue.owner.memberId" class="form-control">
-				<option value="{{owner.memberId}}" ng-repeat="owner in applicationTeamMembers" value="{{owner.memberId}}">{{owner.name}}</option>
+				<option ng-repeat="owner in owners" value="{{owner.memberId}}">{{owner.name}}</option>
 			</select>
   	  </div>
   	  <div class="form-group col-sm-2">
@@ -84,6 +98,11 @@
       </div>
   </div>
 	</form>
+</div>
+	
+	
+	
+	
  <!-- Modal -->
 		<div class="modal fade" id="myModal" role="dialog">
 			<div class="modal-dialog">
@@ -191,7 +210,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	
 	
 
   	
@@ -200,4 +219,3 @@
 			<a href="#" >{{ attachment.attachmentFile }}</a>
 		</div>
 	</div> 
-</div> 

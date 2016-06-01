@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.time.DurationFormatUtils;
@@ -183,30 +185,33 @@ public class IssueDaoImpl implements IssueDao {
 	public int createIssue(Issue issue,Long createdBy,Long issueOwnerMemberId) {
 
 		Session session=sessionFactory.getCurrentSession();
-		int createdBy1=findMemberId(createdBy);
-		ApplicationTeamMember applicationTeamMember=new ApplicationTeamMember();
+		
+		ApplicationTeamMember applicationTeamMember=session.load(ApplicationTeamMember.class,findMemberId(createdBy).getId());
 
-		applicationTeamMember.setId(createdBy1);
+		//applicationTeamMember.setId(createdBy1);
 
 		issue.setCreatedBy(applicationTeamMember);
 
-		ApplicationTeamMember applicationTeamMember2 = new ApplicationTeamMember();
-		applicationTeamMember2.setId(findMemberId(issueOwnerMemberId));
+		ApplicationTeamMember applicationTeamMember2 =session.load(ApplicationTeamMember.class, findMemberId(issueOwnerMemberId).getId());
+		//applicationTeamMember2.setId(findMemberId(issueOwnerMemberId));
 
 		issue.setIssueOwner(applicationTeamMember2);
-		int issueId=0;
+
 		
+		int issueId=0;
 		issueId=(Integer) session.save(issue);
 		return issueId;
 		
 
 	}
 
-	public int findMemberId(Long memberId) {
+	public ApplicationTeamMember findMemberId(Long memberId) {
 		Session session = sessionFactory.getCurrentSession();
 
 		Criteria criteria = session.createCriteria(ApplicationTeamMember.class);
-		criteria.setProjection(Projections.projectionList().add(Projections.property("id"), "id"))
+		criteria.setProjection(Projections.projectionList().add(Projections.property("id"), "id")
+				.add(Projections.property("member"), "member")
+				.add(Projections.property("application"), "application"))
 				.setResultTransformer(Transformers.aliasToBean(ApplicationTeamMember.class));
 		Criteria criteria1 = criteria.createCriteria("member");
 		criteria1.add(Restrictions.eq("memberId", memberId));
@@ -216,76 +221,84 @@ public class IssueDaoImpl implements IssueDao {
 
 		System.out.println(" Application Team menber ID" + applicationTeamMember.getId());
 
-		return id;
+		return applicationTeamMember;
 
 	}
+	
+	
+	public Map<String, Object> getAllSelectFields(Application application, MemberForm member) {
 
-	public Map<String, Object> getAllSelectFields(Project project, MemberForm member) {
-
-		System.out.println("In DAO for all select fields " + project.getId() + " " + member.getMemberId());
-		Session session = sessionFactory.getCurrentSession();
-
-		Criteria criteria2 = session.createCriteria(Project.class)
-				.setProjection(Projections.projectionList().add(Projections.property("id"), "id")
-						.add(Projections.property("name"), "name")
-						.add(Projections.property("application"), "application"))
+		System.out.println("In DAO for all select fields "+application.getId()+" "+member.getMemberId());
+		Session session=sessionFactory.getCurrentSession();
+		
+		Criteria criteria = session.createCriteria(Project.class)
+				.setProjection(Projections.projectionList()
+					      .add(Projections.property("id"), "id")
+					      .add(Projections.property("name"), "name"))
 				.setResultTransformer(Transformers.aliasToBean(Project.class));
-		criteria2.add(Restrictions.eq("id", project.getId()));
-
-		Project project3 = (Project) criteria2.uniqueResult();
-
-		Application application = new Application();
-
-		application = project3.getApplication();
-		System.out.println("Application  " + application);
-
+		criteria.add(Restrictions.eq("application", application));
+		
+		List<Project> projects=criteria.list();
+		
+		
+		
+		
 		List<ApplicationIssuePriority> applicationIssuePriority = getApplicationIssuePriority(application);
-		System.out.println("ApplicationIssuePriority " + applicationIssuePriority);
-
-		List<ApplicationIssueType> applicationIssueType = getApplicationIssueType(application);
-		System.out.println("ApplicationIssueType " + applicationIssueType);
-
+		System.out.println("ApplicationIssuePriority "+applicationIssuePriority);
+		
+		
+		
+		List<ApplicationIssueType> applicationIssueType=getApplicationIssueType(application);
+		System.out.println("ApplicationIssueType "+applicationIssueType);
+		
+		
 		List<ApplicationEnvironment> applicationEnvironment = getApplicationEnvironment(application);
-		System.out.println("ApplicationEnvironment " + applicationEnvironment);
-
+		System.out.println("ApplicationEnvironment "+applicationEnvironment);
+		
+		
 		List<Member> members = getApplicationMembers(application);
-
 		
 		List<Member> allMembers = getAllMembers();
 		
 		System.out.println("Select all Members "+allMembers);
-
+		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projects", projects);
 		map.put("applicationTeamMembers", members);
 		map.put("allMembers", allMembers);
 		map.put("issuePriority", applicationIssuePriority);
 		map.put("issueType", applicationIssueType);
-		map.put("applicationEnvironment", applicationEnvironment);
+		map.put("applicationEnvironment",applicationEnvironment);
 		return map;
+		
 
 	}
 
 	public List<Member> getApplicationMembers(Application application) {
 		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria5 = session.createCriteria(Application.class);
-		criteria5.add(Restrictions.eq("id", application.getId()));
-		List<Application> applications = criteria5.list();
-
-		List<ApplicationTeamMember> applicationTeamMembers = application.getApplicationTeamMembers();
-
-Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
-		List<Member> members = new ArrayList<Member>();
-
+		Criteria criteria5 = session.createCriteria(ApplicationTeamMember.class);
+		Criteria criteria=criteria5.createCriteria("application");
+		criteria.add(Restrictions.eq("id", application.getId()));
+		List<ApplicationTeamMember> applicationTeamMembers = criteria5.list();
+		
+/*		List<ApplicationTeamMember> applicationTeamMembers = application.getApplicationTeamMembers();
+		System.out.println("ApplicationTeamMembers "+applicationTeamMembers);*/
+		
+		Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
+		Set<Member> members = new HashSet<Member>();
+		
 		while (iterator.hasNext()) {
 			ApplicationTeamMember applicationTeamMember = (ApplicationTeamMember) iterator.next();
 			System.out.println(applicationTeamMember);
 			members.add(applicationTeamMember.getMember());
-
+			
 		}
+		
+		List<Member> members2 = new ArrayList<Member>();
+		members2.addAll(members);
 
 
-
-		return members;
+		return members2;
 
 	}
 
@@ -568,26 +581,23 @@ Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 	}
 
 
-	public int managerCreateIssue(Issue issue, Long createdBy, Long issueOwnerMemberId) {
+public int managerCreateIssue(Issue issue, Long createdBy, Long assignee) {
 		
 		int issueId =0;
 		Session session=sessionFactory.getCurrentSession();
 		try {
-		int createdBy1=findMemberId(createdBy);
+		//int createdBy1=findMemberId(createdBy);
 		
 		
-		ApplicationTeamMember applicationTeamMember=new ApplicationTeamMember();
-		applicationTeamMember.setId(createdBy1);
+		ApplicationTeamMember applicationTeamMember=session.load(ApplicationTeamMember.class, findMemberId(createdBy).getId());
+		//applicationTeamMember.setId(createdBy1);
 		issue.setCreatedBy(applicationTeamMember);
 		
+		issue.setIssueOwner(applicationTeamMember);
 		
-		ApplicationTeamMember applicationTeamMember2 = new ApplicationTeamMember();
-		applicationTeamMember2.setId(findMemberId(issueOwnerMemberId));
-		
-		
-		issue.setIssueOwner(applicationTeamMember2);
-		
-		
+		ApplicationTeamMember applicationTeamMember3 =session.load(ApplicationTeamMember.class, findMemberId(assignee).getId());
+
+		issue.setAssignedUser(applicationTeamMember3);
 		issueId=(Integer) session.save(issue);
 		} catch (Exception e) {
 			System.out.println("Exception "+e);
@@ -596,6 +606,7 @@ Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
 		
 		return issueId;
 	}
+
 
 
 	public List<Member> getMemberList() {

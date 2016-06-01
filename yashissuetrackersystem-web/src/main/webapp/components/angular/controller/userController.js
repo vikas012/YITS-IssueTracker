@@ -16,71 +16,48 @@ angular
 
 								$scope.issueList = data;
 							})
-							userService.initializeSelect().then(function(d) {
-								$scope.projects = d.projects;
+							
+					userService.initializeSelect().then(function(d) {
+								$scope.applications = d.applications;
 
 							});
-							$scope.myFunc = function() {
-								var projectId = angular
+							$scope.selectApplicationId = function() {
+								alert("in select application Id");
+								var applicationId = angular
 										.element(
 												document
-														.querySelector("select[id=selectId]"))
+														.querySelector("select[id=selectAppId]"))
 										.val();
 
-								this.pId = projectId;
-								this.project = {
-									id : projectId
+								this.appId = applicationId;
+								alert(this.appId);
+								this.application = {
+									"id" : applicationId
 								}
 								userService
-										.initializeSelectAll(this.pId)
+										.initializeSelectAll(this.appId)
 										.then(
 												function(d) {
-
+													
+													$scope.projects = d.projects;
 													$scope.issueTypeList = d.issueType;
 													$scope.priorities = d.issuePriority;
 													$scope.environments = d.applicationEnvironment;
-													$scope.applicationTeamMembers = d.applicationTeamMembers;
+													$scope.owners = d.applicationTeamMembers;
 
 												});
 							}
-							$scope.myFunction = function() {
+							/*$scope.myFunction = function() {
 								var applicationId = angular
 										.element(
 												document
 														.querySelector("select[id=selectId]"))
 										.val();
 
-								/*
-								 * this.pId=projectId; this.project ={
-								 * id:projectId }
-								 * userService.initializeSelectAll(this.pId).then(
-								 * function(d) { alert("in success all select");
-								 * alert("In controller select all called");
-								 * alert(d.myValue1);
-								 * $scope.issueTypeList=d.issueType;
-								 * $scope.priorities=d.issuePriority;
-								 * $scope.environments=d.applicationEnvironment;
-								 * 
-								 * });
-								 */
-							}
+							}*/
 
 							this.add = function() {
 
-								/*
-								 * var projectId =
-								 * this.createIssue.project.projectId; var
-								 * issueId = this.createIssue.issueType.issueId;
-								 * var issuePriorityId =
-								 * this.createIssue.issuePriority.issuePriorityId;
-								 * var summary = this.createIssue.summary; var
-								 * component = this.createIssue.component; var
-								 * affectedVersion =
-								 * this.createIssue.affectedVersion; var
-								 * applicationEnvironment =
-								 * this.createIssue.applicationEnvironment; var
-								 * description = this.createIssue.description;
-								 */
 								var summary = this.createIssue.summary;
 								var component = this.createIssue.component;
 								var affectedVersion = this.createIssue.affectedVersion;
@@ -125,7 +102,7 @@ angular
 													console
 															.error('Error while searching issues');
 												});
-							}
+							};
 
 							$scope.defaultIssueSearchList = [];
 

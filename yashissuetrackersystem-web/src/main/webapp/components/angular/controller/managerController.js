@@ -4,107 +4,126 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 
 					
 
+
 							this.createIssue = {};
 							managerService.initializeSelect().then(function(d) {
 								
 
-								$scope.projects = d.projects;
+								$scope.applications = d.applications;
 								
 							}
 
 							);
-
-							$scope.myFunc = function() {
-								var projectId = angular
+							$scope.selectApplicationId = function() {
+								alert("in select application Id");
+								var applicationId = angular
 										.element(
 												document
-														.querySelector("select[id=selectId]"))
+														.querySelector("select[id=selectAppId]"))
 										.val();
 
-								this.pId = projectId;
-								this.project = {
-									id : projectId
+								this.appId = applicationId;
+								alert(this.appId);
+								this.application = {
+									"id" : applicationId
 								}
 								managerService
-										.initializeSelectAll(this.pId)
+										.initializeSelectAll(this.appId)
 										.then(
 												function(d) {
-										
+													
+													$scope.projects = d.projects;
 													$scope.issueTypeList = d.issueType;
 													$scope.priorities = d.issuePriority;
 													$scope.environments = d.applicationEnvironment;
-													$scope.assigneeList = d.applicationTeamMembers;
+													$scope.assignees = d.applicationTeamMembers;
 
 												});
 							}
 
 							this.add = function() {
-
-								var summary = this.createIssue.summary;
-								var component = this.createIssue.component;
-								var affectedVersion = this.createIssue.affectedVersion;
-								var description = this.createIssue.description;
+								alert("hello");
+								alert("In submit issue...!!");
+								
+								var summary =this.createIssue.summary;
+								var component=this.createIssue.component;
+								var affectedVersion=this.createIssue.affectedVersion;
+								var description=this.createIssue.description;
 								var member = {
-									"memberId" : this.createIssue.owner.memberId
+										"memberId":this.createIssue.assignedUser.member.memberId
 								}
-
-								var issueOwner = {
-									"member" : member
+								
+								var assignedUser={
+										"member":member
+									}
+								
+								var project={
+										"id":this.createIssue.project.id
 								}
-
-								var project = {
-									"id" : this.createIssue.project.id
+								
+								var applicationIssueType={
+										"id":this.createIssue.issueType.id
 								}
-
-								var applicationIssueType = {
-									"id" : this.createIssue.issueType.id
+								
+								var applicationIssuePriority={
+										"id":this.createIssue.issuePriority.id
 								}
-
-								var applicationIssuePriority = {
-									"id" : this.createIssue.issuePriority.id
+								
+								 var applicationEnvironment={
+										"id":this.createIssue.applicationEnvironment.id
 								}
-
-								var applicationEnvironment = {
-									"id" : this.createIssue.applicationEnvironment.id
+								
+								//var dueDate= this.createIssue.dueDate;
+								alert(new Date(this.createIssue.dueDate));
+								console.log(new Date(this.createIssue.dueDate));
+								//var date=new Date(dueDate);
+								//alert("Angular Date ");
+								//alert(date);
+								//var year=date.getFullYear();
+								//var month=date.getMonth()+1;
+								//var day=date.getDate();
+								//var newDate=year+"-"+month+"-"+day;
+								
+								
+								var originalEstimate=this.createIssue.originalEstimate;
+								var dueDate=new Date(this.createIssue.dueDate);
+								//alert(formData);
+								
+								var jsonDate ={
+									"dueDate":dueDate	
 								}
-
-								var dueDate = this.createIssue.dueDate;
-
-								var date = new Date(dueDate);
-								var year = date.getFullYear();
-								var month = date.getMonth() + 1;
-								var day = date.getDate();
-								var newDate = year + "/" + month + "/" + day;
-
-								var originalEstimate = this.createIssue.originalEstimate;
-
-								var formData = {
-									"project" : project,
-									"applicationIssueType" : applicationIssueType,
-									"applicationIssuePriority" : applicationIssuePriority,
-									"summary" : summary,
-									"component" : component,
-									"affectedVersion" : affectedVersion,
-									"applicationEnvironment" : applicationEnvironment,
-									"description" : description,
-									"issueOwner" : issueOwner,
-									"dueDate" : newDate,
-									"originalEstimate" : originalEstimate
-
+								
+								var formData={
+										"project":project,
+										"applicationIssueType":applicationIssueType,
+										"applicationIssuePriority":applicationIssuePriority,
+										"summary":summary,
+										"component":component,
+										"affectedVersion":affectedVersion,
+										"applicationEnvironment":applicationEnvironment,
+										"description":description,
+										"assignedUser":assignedUser,
+										"originalEstimate":originalEstimate,
+										//"dueDate":jsonDate.dueDate
+									
+										
 								};
-
-								managerService
-										.submitCreateIssue(formData)
-										.then(
-												function(formData) {
-													alert("Issue Created!!");
-												},
-												function(errResponse) {
-													console
-															.error('Error while searching issues');
-												});
+								
+								
+								
+								
+								managerService.submitCreateIssue(formData,dueDate)
+								.then(
+										function(formData) {
+												alert("REgistered");
+										},
+										function(errResponse)
+										{
+										console.error('Error while searching issues');
+										});
 							}
-
+							
+							
 							// rectify
 							var issues = $http({
 								method : 'GET',

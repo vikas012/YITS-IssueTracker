@@ -33,7 +33,7 @@ public interface IssueDao {
 
 	public List<ApplicationIssueType> getDefaultIssueTypes(int applicationId);
 
-	public Map<String, Object> getAllSelectFields(Project project, MemberForm member);
+	public Map<String, Object> getAllSelectFields(Application application, MemberForm member);
 
 	public List<Application> getApplicationNames();
 

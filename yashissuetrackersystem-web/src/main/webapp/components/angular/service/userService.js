@@ -2,7 +2,7 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	  return {
 		  
 		  initializeSelect: function() {
-	          return $http.get('../getProjects')
+	          return $http.get('../getApplications')
 	              .then(
 	                      function(response){
 	                    	
@@ -18,10 +18,10 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 	  
 	      	
 
-	      	initializeSelectAll:function(projectId){
+	      	initializeSelectAll:function(applicationId){
 	      	
 	      	
-	      		return $http.get('../getAllSelectFields/'+projectId)
+	      		return $http.get('../getAllSelectFields/'+applicationId)
 	              .then(
 	                      function(response){
 	                   
@@ -38,7 +38,7 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 
 		              .then(
 		                      function(response){
-		                    	
+		                    	  alert("issue reported ");
 		                          return response.data;
 		                      }, 
 		                      function(errResponse){
@@ -48,7 +48,6 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 		                );
 
 		      	},	 
-		      	
 fetchIssueDetailsConv:function(id){
 					
 					

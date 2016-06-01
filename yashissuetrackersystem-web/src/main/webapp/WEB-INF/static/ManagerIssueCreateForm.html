@@ -1,6 +1,31 @@
+
+
+  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  -->
+
+<style>
+.clear{
+clear: both;
+}
+.dropDown{
+height: 36px;
+border-color: silver;
+border-radius: 4px;
+}
+.submitButton{
+margin-left: 31%;
+}
+.container{
+height:50%;
+width:50%;
+}
+</style> 
+
 <!-- Script for jQuery -->
 <script src="../scripts/attachment.js"></script>
  
+
 <!-- ng-controller="userController as uc" -->
 <style>
 .container{
@@ -12,13 +37,21 @@
 <div class="container">
 <h3 class="headerlabel">Create Issue</h3><br>
   <form role="form" ng-submit="mc.add()">
-<div class="box1">
-	
-	
+
+  <div class="box1">
+	  	<div class="form-group col-sm-12">
+	  	<label for="issueApplication">Application Name</label>
+		  	<select ng-model="mc.createIssue.application.id" class="dropDown form-control" ng-change="selectApplicationId()" id="selectAppId">
+			<option ng-repeat="application in applications" value="{{application.id}}" >{{application.name}}</option>
+			</select>
+		</div>
+  </div>
+<div class="box2">
+
 <div class="form-group col-sm-4">
 	
 	<label for="issueProject">Project Name</label>
-	<select ng-model="mc.createIssue.project.id" class="dropDown form-control" ng-change="myFunc()" id="selectId">
+	<select ng-model="mc.createIssue.project.id" class="dropDown form-control">
 	<option ng-repeat="project in projects" value="{{project.id}}" >{{project.name}}</option>
 	</select>
   </div>
@@ -45,7 +78,7 @@
 </div>
 
 
- <div class="box2">
+ <div class="box3">
   <div class="form-group col-sm-4">
 <label for="component">Issue Component</label>
 <input type="text" ng-model="mc.createIssue.component" class="form-control" />
@@ -66,37 +99,54 @@
 		<label for="summary">Issue Summary</label>
 		<input type="text" ng-model="mc.createIssue.summary" class="form-control" />
     </div>
-    <div class="box3">
+    <div class="box4">
 		<div class="form-group col-sm-12">
 			<label for="description">Issue Description</label>
 			<textarea class="form-control" rows="5" ng-model="mc.createIssue.description" class="form-control" ></textarea>
 		</div>
 	</div>
-   <div class="box4">
+   <div class="box5">
  		<div class="form-group col-sm-6">
 			<label for="dueDate">Due Date</label>
 			<input type="date" ng-model="mc.createIssue.dueDate" class="form-control" />
 		</div>
 		 <div class="form-group col-sm-6">
-			<label for="issueTeamMember">IssueOwner</label>
-			<select class="dropDown form-control" ng-model="mc.createIssue.owner.memberId" class="form-control">
-				<option value="{{owner.memberId}}" ng-repeat="owner in assigneeList" value="{{owner.memberId}}">{{owner.name}}</option>
+			<label for="issueTeamMember">IssueAssignee</label>
+			<select class="dropDown form-control" ng-model="mc.createIssue.assignedUser.member.memberId" class="form-control">
+				<option value="{{assignee.memberId}}" ng-repeat="assignee in assignees" >{{assignee.name}}</option>
 			</select>
   	  </div>
    </div> 
-  <div class="box5">
+
+  <div class="box6">
+		
 		<div class="form-group col-sm-10">
 		<label for="environment">Original Estimate</label> 
 		<input type="text" ng-model="mc.createIssue.originalEstimate" class="form-control" placeholder="(in form of HH:mm:ss)"/>
 		</div>
-  </div>
+  
  
  <div class="form-group col-sm-2">
   	  	<label>Attachments</label>
 		<button type="button" class="form-control btn btn-info" title="Include attachments" data-toggle="modal" data-target="#myModal">Attachments</button>
 </div>
+</div>
+  	 <div id="view" hidden> 
+		<div ng-repeat="attachment in attachments">
+			<a href="#" >{{ attachment.attachmentFile }}</a>
+		</div>
+	</div> 
+ <div class="form-group submitButton">        
+      <div class="col-sm-offset-5 col-sm-2">
+       <button type="submit" class="form-control btn btn-info">Save</button>
+      </div>
+      </div>
+</form>
+</div>
+
 <!-- Modal -->
-		<div class="modal fade" id="myModal" role="dialog">
+		
+<div class="modal fade" id="myModal" role="dialog">
 			<div class="modal-dialog">
 
 				<!-- Modal content-->
@@ -202,16 +252,3 @@
 				</div>
 			</div>
 		</div>
-  	
-  	 <div id="view" hidden> 
-		<div ng-repeat="attachment in attachments">
-			<a href="#" >{{ attachment.attachmentFile }}</a>
-		</div>
-	</div> 
- <div class="form-group submitButton">        
-      <div class="col-sm-offset-5 col-sm-2">
-       <button type="submit" class="form-control btn btn-info">Save</button>
-      </div>
-      </div>
-</form>
-</div>

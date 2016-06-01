@@ -261,36 +261,39 @@ public class IssueController {
 	
 
 	@ResponseBody
-	@RequestMapping(value = "/getProjects", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getProjects() {
+	@RequestMapping(value="/getApplications",produces=MediaType.APPLICATION_JSON_VALUE)
+	public Map<String,Object> getApplications()
+	{
 		System.out.println("in controller for show projects");
-		List<ProjectForm> projectForms = issueService.getProjectNames();
+		List<ProjectForm> projectForms=issueService.getProjectNames();
 		System.out.println(projectForms);
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String,Object> map = new HashMap<String, Object>();
 		List<ApplicationForm> applicationForms = issueService.getApplicationNames();
-		map.put("application", applicationForms);
-		map.put("projects", projectForms);
+		map.put("applications",applicationForms);
+		//map.put("projects", projectForms);
+		//map.put("myValue", "Hie there");
 		
-
-		// System.out.println("Applications >>"+map.get("application"));
+		//System.out.println("Applications >>"+map.get("application"));
 		return map;
 
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/getAllSelectFields/{projectId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String getAllSelectFields(@PathVariable("projectId") int projectId, HttpServletRequest httpServletRequest) {
-		System.out.println("project Id>>>>" + projectId);
+	@RequestMapping(value="/getAllSelectFields/{applicationId}",produces=MediaType.APPLICATION_JSON_VALUE)
+	public String getAllSelectFields(@PathVariable("applicationId") int applicationId,HttpServletRequest httpServletRequest )
+	{
+		System.out.println("applicationId >>>>"+applicationId);
 		MemberForm member = new MemberForm();
-		ProjectForm projectForm = new ProjectForm();
-		projectForm.setId(projectId);
-		member.setMemberId((Long) httpServletRequest.getSession().getAttribute("memberId"));
-		System.out.println("Member ID>>>> " + member.getMemberId());
-		Map<String, Object> map1 = new HashMap<String, Object>();
-		map1 = issueService.getAllSelectFields(projectForm, member);
-		System.out.println("Map value  " + map1.get("issueType"));
-		map1.put("myValue1", "Hello there");
-		Gson gson = new Gson();
+		ApplicationForm applicationForm = new ApplicationForm();
+		applicationForm.setId(applicationId);
+		member.setMemberId((Long)httpServletRequest.getSession().getAttribute("memberId"));
+		System.out.println("Member ID>>>> "+member.getMemberId());
+		Map<String,Object> map1 = new HashMap<String, Object>();
+		map1 = issueService.getAllSelectFields(applicationForm,member);
+		System.out.println("Map value  "+map1.get("issueType"));
+		System.out.println("Map Value Issue controller Application team members "+map1.get("applicationTeamMembers"));
+		map1.put("myValue1", "Map value Select all fields IssueController");
+		Gson gson= new Gson();
 		return gson.toJson(map1);
 
 	}
@@ -311,44 +314,6 @@ public class IssueController {
 	}
 
 
-
-/*	@ResponseBody
-=======
-
-	
-	
-	@ResponseBody
->>>>>>> branch 'devl' of https://github.com/vikas012/YITS-IssueTracker
-	@RequestMapping(value="/createIssue",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.POST)
-	public String createIssue(@RequestBody IssueForm issueForm,HttpServletRequest httpServletRequest){
-		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
-		
-		
-		System.out.println("Create Issue "+createdBy);
-		//issueForm.setCreatedBy(createdBy);
-		System.out.println(issueForm);
-		System.out.println("Project createIssue "+issueForm.getProject());
-		System.out.println(issueForm.getApplicationIssuePriority());
-		System.out.println(issueForm.getComponent());
-		System.out.println(issueForm.getDescription());
-		System.out.println(issueForm.getSummary());
-		System.out.println("Application Issue type "+issueForm.getApplicationIssueType());
-		System.out.println("in create issue");
-		System.out.println("Application Issue Owner   "+issueForm.getIssueOwner().getMember());
-		Long issueOwnerMemberId = issueForm.getIssueOwner().getMember().getMemberId();
-		System.out.println("ISSUE OWNER MEMBER ID >>>"+issueOwnerMemberId);
-		int issueId=0;
-		try
-		{
-			issueId=issueService.createIssue(issueForm,createdBy,issueOwnerMemberId);
-		} catch (Exception e) {
-			System.out.println("Excption "+e);
-		}
-		
-		System.out.println("in controller for show projects");
-		return null;
-
-	}*/
 	@ResponseBody
 	@RequestMapping(value = "/createIssue", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	public String createIssue(@RequestBody IssueForm issueForm, HttpServletRequest httpServletRequest) {
@@ -358,6 +323,7 @@ public class IssueController {
 		// issueForm.setCreatedBy(createdBy);
 		System.out.println(issueForm);
 		System.out.println("Project createIssue " + issueForm.getProject());
+
 		System.out.println(issueForm.getApplicationIssuePriority());
 		System.out.println(issueForm.getComponent());
 		System.out.println(issueForm.getDescription());
@@ -372,6 +338,7 @@ public class IssueController {
 			issueId = issueService.createIssue(issueForm, createdBy, issueOwnerMemberId);
 		} catch (Exception e) {
 			System.out.println("Excption " + e);
+			e.printStackTrace();
 		}
 
 		System.out.println("in controller for show projects");
@@ -381,15 +348,19 @@ public class IssueController {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/managerCreateIssue", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public String managerCreateIssue(@RequestBody IssueForm issueForm, HttpServletRequest httpServletRequest)
-			throws ParseException {
-		long createdBy = (Long) httpServletRequest.getSession().getAttribute("memberId");
+	@RequestMapping(value="/managerCreateIssue/{dueDate}",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.POST)
+	public String managerCreateIssue(@PathVariable("dueDate")Date date,@RequestBody IssueForm issueForm,HttpServletRequest httpServletRequest) throws ParseException{
+		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
+		
+		//long createdBy = 1004683;
+		System.out.println("Create Issue "+createdBy);
+		System.out.println("JSON DATE >>>>"+issueForm.getDueDate());
+		//issueForm.setCreatedBy(createdBy);
+		System.out.println("dueDate in date Controller ++"+date);
+		//IssueForm form = new  IssueForm();
+		issueForm.setDueDate(date);
+		System.out.println("Project createIssue "+issueForm.getProject());
 
-		// long createdBy = 1004683;
-		System.out.println("Create Issue " + createdBy);
-		// issueForm.setCreatedBy(createdBy);
-		System.out.println(issueForm);
 		System.out.println("Project createIssue " + issueForm.getProject());
 		System.out.println(issueForm.getApplicationIssuePriority());
 		System.out.println(issueForm.getComponent());
@@ -397,13 +368,13 @@ public class IssueController {
 		System.out.println(issueForm.getSummary());
 		System.out.println("Application Issue type " + issueForm.getApplicationIssueType());
 		System.out.println("in create issue");
-		System.out.println("Application Issue Owner   " + issueForm.getIssueOwner().getMember().getMemberId());
-		Long issueOwnerMemberId = issueForm.getIssueOwner().getMember().getMemberId();
+		System.out.println("Application Issue Owner   " + issueForm.getAssignedUser().getMember().getMemberId());
+		Long assignee = issueForm.getAssignedUser().getMember().getMemberId();
 		System.out.println("DUE DATE  >>>" + issueForm.getDueDate());
 		System.out.println("Original estimate >>>" + issueForm.getOriginalEstimate());
 		int issueId = 0;
 		try {
-			issueId = issueService.managerCreateIssue(issueForm, createdBy, issueOwnerMemberId);
+			issueId = issueService.managerCreateIssue(issueForm, createdBy, assignee);
 		} catch (Exception e) {
 			System.out.println("Excption " + e);
 		}

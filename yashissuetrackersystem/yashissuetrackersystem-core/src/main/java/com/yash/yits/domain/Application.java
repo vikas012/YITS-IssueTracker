@@ -52,7 +52,7 @@ public class Application implements Serializable {
 	private ApplicationTeamMember createdBy;
 	
 	//bi-directional many-to-one association to ApplicationTeamMember
-	@OneToMany(mappedBy="application", fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
 	private List<ApplicationTeamMember> applicationTeamMembers;
 
 	/*//bi-directional many-to-one association to ApplicationEnvironment
