@@ -38,7 +38,6 @@ angular.module('issueTrackingSystem.userModule').factory('userService',['$http',
 
 		              .then(
 		                      function(response){
-		                    	  alert("issue reported ");
 		                          return response.data;
 		                      }, 
 		                      function(errResponse){

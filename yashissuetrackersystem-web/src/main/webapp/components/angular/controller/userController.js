@@ -5,8 +5,9 @@ angular
 				[
 						'$scope',
 						'$http',
+						'$location',
 						'userService',
-						function($scope, $http, userService, issuesList) {
+						function($scope, $http,$location, userService, issuesList) {
 
 							$scope.issueList = [];
 							var issues = $http({
@@ -22,7 +23,6 @@ angular
 
 							});
 							$scope.selectApplicationId = function() {
-								alert("in select application Id");
 								var applicationId = angular
 										.element(
 												document
@@ -30,7 +30,6 @@ angular
 										.val();
 
 								this.appId = applicationId;
-								alert(this.appId);
 								this.application = {
 									"id" : applicationId
 								}
@@ -96,7 +95,8 @@ angular
 										.submitCreateIssue(formData)
 										.then(
 												function(formData) {
-													alert("Issue Created!!!!");
+													alert("Issue Reported !");
+													$location.path("/home");
 												},
 												function(errResponse) {
 													console
@@ -310,7 +310,6 @@ angular
 
 								}
 
-								alert(memberId);
 								managerService
 										.searchMemberType(memberId)
 										.then(

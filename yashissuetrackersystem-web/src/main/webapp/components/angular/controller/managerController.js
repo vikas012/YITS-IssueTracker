@@ -1,4 +1,4 @@
-angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope, $http, managerService, issueList) {
+angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','$location','managerService',function($scope, $http,$location, managerService, issueList) {
 
 							$scope.issueList = [];
 
@@ -15,7 +15,6 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 
 							);
 							$scope.selectApplicationId = function() {
-								alert("in select application Id");
 								var applicationId = angular
 										.element(
 												document
@@ -23,7 +22,6 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 										.val();
 
 								this.appId = applicationId;
-								alert(this.appId);
 								this.application = {
 									"id" : applicationId
 								}
@@ -42,8 +40,6 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							}
 
 							this.add = function() {
-								alert("hello");
-								alert("In submit issue...!!");
 								
 								var summary =this.createIssue.summary;
 								var component=this.createIssue.component;
@@ -73,21 +69,8 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 										"id":this.createIssue.applicationEnvironment.id
 								}
 								
-								//var dueDate= this.createIssue.dueDate;
-								alert(new Date(this.createIssue.dueDate));
-								console.log(new Date(this.createIssue.dueDate));
-								//var date=new Date(dueDate);
-								//alert("Angular Date ");
-								//alert(date);
-								//var year=date.getFullYear();
-								//var month=date.getMonth()+1;
-								//var day=date.getDate();
-								//var newDate=year+"-"+month+"-"+day;
-								
-								
 								var originalEstimate=this.createIssue.originalEstimate;
 								var dueDate=new Date(this.createIssue.dueDate);
-								//alert(formData);
 								
 								var jsonDate ={
 									"dueDate":dueDate	
@@ -115,7 +98,8 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								managerService.submitCreateIssue(formData,dueDate)
 								.then(
 										function(formData) {
-												alert("REgistered");
+											alert("Issue Reported !");
+											$location.path("/home");
 										},
 										function(errResponse)
 										{

@@ -48,6 +48,10 @@ userModule.config(function($routeProvider){
 				templateUrl:'../showConversationForm',
 				controller:'userController as uc'
 			})
+			.when('/home',{
+				templateUrl:'../homeDashboard',
+				controller:'userController as uc'
+			})
 			
 
 	});

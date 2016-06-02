@@ -33,7 +33,11 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-
+	@RequestMapping(value="/homeDashboard",method=RequestMethod.GET)
+	public String homeDasboard(){
+		
+		return "redirect:/static/DashboardHome.html";
+	}
 	
 	@RequestMapping(value="/showMembersPage")
 	public String showMembersPage(){
@@ -124,4 +128,6 @@ public class MemberController {
 		return memberTypeList;
 
 	}
+	
+	
 }

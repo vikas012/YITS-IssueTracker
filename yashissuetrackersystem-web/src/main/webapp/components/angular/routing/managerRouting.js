@@ -82,5 +82,10 @@ managerModule.config(function($routeProvider) {
 		templateUrl:'editIssueForm',
 		controller:'managerController as mc'
 	})
+	
+	.when('/home',{
+		templateUrl:'../homeDashboard',
+		controller:'managerController as mc'
+	})
 
 });
