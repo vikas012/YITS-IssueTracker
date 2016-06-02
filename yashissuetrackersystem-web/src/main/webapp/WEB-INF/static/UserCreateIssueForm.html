@@ -12,7 +12,7 @@
 
 <h3 class="headerlabel">Create Issue</h3><br>
 
-  <form role="form" ng-submit="uc.add()">
+  <form role="form"  name="createIsuue" ng-submit="uc.add()">
   
   <div class="box1">
 	  	<div class="form-group col-sm-12">
@@ -70,12 +70,13 @@
  </div>
  <div class="form-group col-sm-4">
  <label for="applicationEnvironment">ApplicationEnvironment</label>
-<select name="applicationEnvironment"  ng-model="uc.createIssue.applicationEnvironment.id" class="dropDown form-control">
+<select name="applicationEnvironment"  ng-model="uc.createIssue.applicationEnvironment.id" class="dropDown form-control" required="required">
 <option value=""></option>
 <option ng-repeat="environment in environments" value="{{environment.id}}">{{environment.environment}}</option>
 </select>
 	<span class="error" ng-show="createIsuue.applicationEnvironment.$error.required"></span>
  </div>
+ 
  </div>
  	<div class="form-group col-sm-12">
 		<label for="summary">Issue Summary</label>
@@ -92,7 +93,7 @@
  		<div class="form-group col-sm-10">
 		<label for="issueTeamMember">IssueOwner</label>
 
-			<select name="issueTeamMember" class="dropDown form-control" ng-model="uc.createIssue.owner.memberId" class="form-control">
+			<select name="issueTeamMember" class="dropDown form-control" ng-model="uc.createIssue.owner.memberId" class="form-control" required="required">
 				<option value=""></option>
 				<option ng-repeat="owner in owners" value="{{owner.memberId}}">{{owner.name}}</option>
 			</select>
