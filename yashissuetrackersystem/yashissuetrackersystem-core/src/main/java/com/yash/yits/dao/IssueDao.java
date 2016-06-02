@@ -25,11 +25,11 @@ public interface IssueDao {
 
 	public List<Issue> getUnassignedIssues();
 
-	public int managerCreateIssue(Issue issue,Long createdBy,Long issueOwnerMemberId);
+	public int managerCreateIssue(Issue issue,Long createdBy,Long issueOwnerMemberId,Attachment attachmentId);
 
 	List<Issue> showIssuesList(long memberId);
 
-	public int createIssue(Issue issue,Long createdBy,Long issueOwnerMemberId);
+	public int createIssue(Issue issue,Long createdBy,Long issueOwnerMemberId,Attachment attachmentId);
 
 	public List<ApplicationIssueType> getDefaultIssueTypes(int applicationId);
 
@@ -44,7 +44,7 @@ public interface IssueDao {
 	
 	public List<Issue> getFilteredIssue(int issuepriorityId1,int issuetypeId1,int projectnameId);
 	
-	public String saveFile(Attachment file);
+	
 
 	
 	public List<Issue> getConversationList(long createdBy);

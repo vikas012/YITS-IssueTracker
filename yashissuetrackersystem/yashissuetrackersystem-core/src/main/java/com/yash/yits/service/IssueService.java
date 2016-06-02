@@ -28,7 +28,7 @@ public interface IssueService {
 
 	
 
-	public int managerCreateIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId)throws ParseException ;
+	public int managerCreateIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId ,Attachment attachment)throws ParseException ;
 
 	public List<IssueForm> getDefaultIssues();
 
@@ -41,7 +41,7 @@ public interface IssueService {
 	public Map<String, Object> getAllSelectFields(ApplicationForm applicationForm, MemberForm member);
 	
 
-	public int createIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId);
+	public int createIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId,Attachment attachment);
 	
 	public List<ApplicationForm> getApplicationNames();
 
@@ -53,7 +53,7 @@ public interface IssueService {
 	
 	public List<IssueForm> getFilteredIssue(int issuepriorityId1,int issuetypeId1,int projectnameId);
 
-	public String saveFile(Attachment file);
+
 
 	public List<Issue> getConversationList(long createdBy);
 
