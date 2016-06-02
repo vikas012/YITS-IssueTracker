@@ -42,7 +42,7 @@ userModule.config(function($routeProvider){
 			})
 			.when('/editIssues',{
 				templateUrl:'../displayEditIssueForm',
-				controller:'userController as uc'
+				controller:'userEditController as uec'
 			})
 			.when('/showConversation',{
 				templateUrl:'../showConversationForm',

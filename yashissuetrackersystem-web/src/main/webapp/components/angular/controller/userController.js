@@ -9,7 +9,7 @@ angular
 						'userService',
 						function($scope, $http,$location, userService, issuesList) {
 
-							$scope.issueList = [];
+							/*$scope.issueList = [];
 							var issues = $http({
 								method : 'GET',
 								url : '../defaultIssuesList'
@@ -17,7 +17,7 @@ angular
 
 								$scope.issueList = data;
 							})
-							
+							*/
 					userService.initializeSelect().then(function(d) {
 								$scope.applications = d.applications;
 
@@ -420,7 +420,7 @@ angular
 										})
 							};
 
-							$scope.searchAllIssues = function() {
+							/*$scope.searchAllIssues = function() {
 
 								$http.get('../defaultIssuesList').success(
 										function(data) {
@@ -430,8 +430,8 @@ angular
 										});
 
 							};
-
-							$scope.startTask = function(index) {
+*/
+							/*$scope.startTask = function(index) {
 
 								var id = angular
 										.element(
@@ -551,5 +551,5 @@ angular
 										});
 
 							}
-
+*/
 						} ]);
