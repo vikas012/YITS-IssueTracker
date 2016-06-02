@@ -76,10 +76,10 @@ input[type="password"] {
 
 .header-color {
 	background-color: #F2F6FF;
-	margin:0px 20px;
+	/* margin:0px 20px; */
 	padding: 20px;
-	border-bottom-left-radius:10px;
-	border-bottom-right-radius:10px;
+	/* border-bottom-left-radius:10px;
+	border-bottom-right-radius:10px; */
 }
 
 .h2-tag {
@@ -101,10 +101,10 @@ input[type="password"] {
 
 .footer{
 	background-color: #F2F6FF;
-	margin:0px 20px;
+	/* margin:0px 20px; */
 	padding: 20px;
-	border-top-left-radius:10px;
-	border-top-right-radius:10px;
+	/* border-top-left-radius:10px;
+	border-top-right-radius:10px; */
 	text-align: center;
 }
 </style>
