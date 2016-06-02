@@ -17,9 +17,11 @@
   <div class="box1">
 	  	<div class="form-group col-sm-12">
 	  	<label for="issueApplication">Application Name</label>
-		  	<select ng-model="uc.createIssue.application.id" class="dropDown form-control" ng-change="selectApplicationId()" id="selectAppId">
+		  	<select name="issueApplication" required="required" ng-model="uc.createIssue.application.id" class="dropDown form-control" ng-change="selectApplicationId()" id="selectAppId">
+			<option value="">Select Application Name</option>
 			<option ng-repeat="application in applications" value="{{application.id}}" >{{application.name}}</option>
 			</select>
+			<span class="error" ng-show="createIsuue.issueApplication.$error.required"></span>
 		</div>
   </div>
   
@@ -28,24 +30,30 @@
 <div class="form-group col-sm-4">
 	
 	<label for="issueProject">Project Name</label>
-	<select ng-model="uc.createIssue.project.id" class="dropDown form-control">
+	<select name="issueProject" ng-model="uc.createIssue.project.id" required="required" class="dropDown form-control">
+	<option value="">Select Project Name</option>
 	<option ng-repeat="project in projects" value="{{project.id}}" >{{project.name}}</option>
 	</select>
+	 <span class="error" ng-show="createIsuue.issueProject.$error.required"></span>
   </div>
   
   <div class="form-group col-sm-4">
 
 	<label for="issueType">IssueType</label>
-	<select ng-model="uc.createIssue.issueType.id" class="dropDown form-control">
+	<select name="issueType" ng-model="uc.createIssue.issueType.id" required="required" class="dropDown form-control">
+	<option value="">Select Issue Type</option>
 	<option ng-repeat="issueType in issueTypeList" value="{{issueType.id}}" >{{issueType.type}}</option>
 	</select>
+	 <span class="error" ng-show="createIsuue.issueType.$error.required"></span>
   </div>
   
   <div class="form-group col-sm-4">
 <label for="issuePriority">IssuePriority</label>
-<select ng-model="uc.createIssue.issuePriority.id" class="dropDown form-control">
+<select  name="issuePriority" ng-model="uc.createIssue.issuePriority.id" required="required" class="dropDown form-control">
+<option value="">Select Priority</option>
 <option ng-repeat="priority in priorities" value="{{priority.id}}">{{priority.type}}</option>
 </select>
+ <span class="error" ng-show="createIsuue.issuePriority.$error.required"></span>
   </div>
 
 </div>
@@ -54,18 +62,19 @@
  <div class="box3">
   <div class="form-group col-sm-4">
 <label for="component">Issue Component</label>
-<input type="text" ng-model="uc.createIssue.component" class="form-control" />
+<input type="text" ng-model="uc.createIssue.component" class="form-control" required="required" />
  </div>
  <div class="form-group col-sm-4">
 <label for="affectedVersion">Issue Affective Version</label>
-<input type="text" ng-model="uc.createIssue.affectedVersion" class="form-control" />
+<input type="text" ng-model="uc.createIssue.affectedVersion" class="form-control" required="required"/>
  </div>
  <div class="form-group col-sm-4">
  <label for="applicationEnvironment">ApplicationEnvironment</label>
-<select ng-model="uc.createIssue.applicationEnvironment.id" class="dropDown form-control">
+<select name="applicationEnvironment"  ng-model="uc.createIssue.applicationEnvironment.id" class="dropDown form-control">
+<option value="">Select Application Environment</option>
 <option ng-repeat="environment in environments" value="{{environment.id}}">{{environment.environment}}</option>
 </select>
-	
+	<span class="error" ng-show="createIsuue.applicationEnvironment.$error.required"></span>
  </div>
  </div>
  	<div class="form-group col-sm-12">
@@ -83,9 +92,10 @@
  		<div class="form-group col-sm-10">
 		<label for="issueTeamMember">IssueOwner</label>
 
-			<select class="dropDown form-control" ng-model="uc.createIssue.owner.memberId" class="form-control">
+			<select name="issueTeamMember" class="dropDown form-control" ng-model="uc.createIssue.owner.memberId" class="form-control">
 				<option ng-repeat="owner in owners" value="{{owner.memberId}}">{{owner.name}}</option>
 			</select>
+				<span class="error" ng-show="createIsuue.issueTeamMember.$error.required"></span>
   	  </div>
   	  <div class="form-group col-sm-2">
   	  	<label>Attachments</label>

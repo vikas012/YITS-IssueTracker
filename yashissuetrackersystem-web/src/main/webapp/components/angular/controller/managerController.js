@@ -826,14 +826,16 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 									
 								});
 								
-								managerService
-								.fileUpload(formData)
+								managerService.fileUpload(formData)
 								.then(
-										function(data) {
-										},
-										function(errResponse) {
-											
-										}
+												function(data) {
+													alert("hgsdhgsh")
+													//$scope.fetchedIssue = data;
+												},
+												function(errResponse) {
+													console
+															.error('Error showing fetched issue');
+												}
 								)
 
 							

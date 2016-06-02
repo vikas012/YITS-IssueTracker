@@ -183,7 +183,7 @@ public class IssueDaoImpl implements IssueDao {
 
 	}
 
-	public int createIssue(Issue issue,Long createdBy,Long issueOwnerMemberId) {
+	public int createIssue(Issue issue,Long createdBy,Long issueOwnerMemberId,Attachment attachment) {
 
 		Session session=sessionFactory.getCurrentSession();
 		
@@ -201,6 +201,15 @@ public class IssueDaoImpl implements IssueDao {
 		
 		int issueId=0;
 		issueId=(Integer) session.save(issue);
+		
+		
+		//Attachment attachment=session.get(Attachment.class,attachmentId);
+		if(attachment!=null){
+		Issue issue2=session.get(Issue.class,issueId);
+		attachment.setIssue(issue2);
+		session.saveOrUpdate(attachment);
+		}
+		
 		return issueId;
 		
 
@@ -433,15 +442,6 @@ public class IssueDaoImpl implements IssueDao {
 		return issues;
 	}
 
-	/**
-	 * DAO method to save file--Takes file form service layer and saves it into
-	 * database
-	 */
-	public String saveFile(Attachment file) {
-		Session session = sessionFactory.getCurrentSession();
-		session.save(file);
-		return "success";
-	}
 
 
 	public List<Member> getAllMembers() {
@@ -581,8 +581,7 @@ public class IssueDaoImpl implements IssueDao {
 
 	}
 
-
-public int managerCreateIssue(Issue issue, Long createdBy, Long assignee) {
+public int managerCreateIssue(Issue issue, Long createdBy, Long assignee,Attachment attachment) {
 		
 		int issueId =0;
 		Session session=sessionFactory.getCurrentSession();
@@ -600,6 +599,18 @@ public int managerCreateIssue(Issue issue, Long createdBy, Long assignee) {
 
 		issue.setAssignedUser(applicationTeamMember3);
 		issueId=(Integer) session.save(issue);
+	
+		
+		if(attachment!=null){
+		
+		Issue issue2=session.get(Issue.class, issueId);
+		attachment.setIssue(issue2);
+		session.saveOrUpdate(attachment);
+		}
+		
+		
+		
+		
 		} catch (Exception e) {
 			System.out.println("Exception "+e);
 		}

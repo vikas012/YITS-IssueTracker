@@ -36,14 +36,16 @@ width:50%;
 
 <div class="container">
 <h3 class="headerlabel">Create Issue</h3><br>
-  <form role="form" ng-submit="mc.add()">
+  <form role="form" name="createIsuue" ng-submit="mc.add()">
 
   <div class="box1">
 	  	<div class="form-group col-sm-12">
 	  	<label for="issueApplication">Application Name</label>
-		  	<select ng-model="mc.createIssue.application.id" class="dropDown form-control" ng-change="selectApplicationId()" id="selectAppId">
+		  	<select name="issueApplication" ng-model="mc.createIssue.application.id" class="dropDown form-control" ng-change="selectApplicationId()" id="selectAppId" required="required">
+			<option value="">Select Application Name</option>
 			<option ng-repeat="application in applications" value="{{application.id}}" >{{application.name}}</option>
 			</select>
+			<span class="error" ng-show="createIsuue.issueApplication.$error.required"></span>
 		</div>
   </div>
 <div class="box2">
@@ -51,24 +53,30 @@ width:50%;
 <div class="form-group col-sm-4">
 	
 	<label for="issueProject">Project Name</label>
-	<select ng-model="mc.createIssue.project.id" class="dropDown form-control">
+	<select name="issueProject" ng-model="mc.createIssue.project.id" class="dropDown form-control" required="required">
+		<option value="">Select Project Name</option>
 	<option ng-repeat="project in projects" value="{{project.id}}" >{{project.name}}</option>
 	</select>
+	 <span class="error" ng-show="createIsuue.issueProject.$error.required"></span>
   </div>
   
   <div class="form-group col-sm-4">
 
 	<label for="issueType">IssueType</label>
-	<select ng-model="mc.createIssue.issueType.id" class="dropDown form-control">
+	<select name="issueType" ng-model="mc.createIssue.issueType.id" class="dropDown form-control" required="required">
+	<option value="">Select Issue Type</option>
 	<option ng-repeat="issueType in issueTypeList" value="{{issueType.id}}" >{{issueType.type}}</option>
 	</select>
+	 <span class="error" ng-show="createIsuue.issueType.$error.required"></span>
   </div>
   
   <div class="form-group col-sm-4">
 <label for="issuePriority">IssuePriority</label>
-<select ng-model="mc.createIssue.issuePriority.id" class="dropDown form-control">
+<select name="issuePriority" ng-model="mc.createIssue.issuePriority.id" class="dropDown form-control" required>
+<option value="">Select Priority</option>
 <option ng-repeat="priority in priorities" value="{{priority.id}}">{{priority.type}}</option>
 </select>
+ <span class="error" ng-show="createIsuue.issuePriority.$error.required"></span>
   </div>
   
   
@@ -81,40 +89,43 @@ width:50%;
  <div class="box3">
   <div class="form-group col-sm-4">
 <label for="component">Issue Component</label>
-<input type="text" ng-model="mc.createIssue.component" class="form-control" />
+<input type="text" ng-model="mc.createIssue.component" class="form-control" required="required"/>
  </div>
  <div class="form-group col-sm-4">
 <label for="affectedVersion">Issue Affective Version</label>
-<input type="text" ng-model="mc.createIssue.affectedVersion" class="form-control" />
+<input type="text" ng-model="mc.createIssue.affectedVersion" class="form-control" required="required" />
  </div>
  <div class="form-group col-sm-4">
  <label for="applicationEnvironment">ApplicationEnvironment</label>
-<select ng-model="mc.createIssue.applicationEnvironment.id" class="dropDown form-control">
+<select name="applicationEnvironment" ng-model="mc.createIssue.applicationEnvironment.id" class="dropDown form-control" required="required">
+<option value="">Select Application Environment</option>
 <option ng-repeat="environment in environments" value="{{environment.id}}">{{environment.environment}}</option>
 </select>
-	
+ <span class="error" ng-show="createIsuue.applicationEnvironment.$error.required"></span>	
  </div>
  </div>
  	<div class="form-group col-sm-12">
 		<label for="summary">Issue Summary</label>
-		<input type="text" ng-model="mc.createIssue.summary" class="form-control" />
+		<input type="text" ng-model="mc.createIssue.summary" class="form-control" required="required"/>
     </div>
     <div class="box4">
 		<div class="form-group col-sm-12">
 			<label for="description">Issue Description</label>
-			<textarea class="form-control" rows="5" ng-model="mc.createIssue.description" class="form-control" ></textarea>
+			<textarea class="form-control" rows="5" ng-model="mc.createIssue.description" class="form-control" required="required"></textarea>
 		</div>
 	</div>
    <div class="box5">
  		<div class="form-group col-sm-6">
 			<label for="dueDate">Due Date</label>
-			<input type="date" ng-model="mc.createIssue.dueDate" class="form-control" />
+			<input type="date" ng-model="mc.createIssue.dueDate" class="form-control" required="required" />
 		</div>
 		 <div class="form-group col-sm-6">
 			<label for="issueTeamMember">IssueAssignee</label>
-			<select class="dropDown form-control" ng-model="mc.createIssue.assignedUser.member.memberId" class="form-control">
+			<select name="issueTeamMember" class="dropDown form-control" ng-model="mc.createIssue.assignedUser.member.memberId" class="form-control" required="required">
+				<option value="">Select IssueAssignee</option>
 				<option value="{{assignee.memberId}}" ng-repeat="assignee in assignees" >{{assignee.name}}</option>
 			</select>
+			<span class="error" ng-show="createIsuue.issueTeamMember.$error.required"></span>
   	  </div>
    </div> 
 
@@ -122,7 +133,7 @@ width:50%;
 		
 		<div class="form-group col-sm-10">
 		<label for="environment">Original Estimate</label> 
-		<input type="text" ng-model="mc.createIssue.originalEstimate" class="form-control" placeholder="(in form of HH:mm:ss)"/>
+		<input type="text" ng-model="mc.createIssue.originalEstimate" class="form-control" placeholder="(in form of HH:mm:ss)" required="required"/>
 		</div>
   
  

@@ -278,10 +278,19 @@ angular
 											'Content-Type' : undefined
 										}
 									};
-									$http(request).then(function(response) {
-										alert("File uploaded successfully");
-									}, function(errResponse) {
-									});
+									$http(request)
+									.then(
+											function(response) {
+												return response.data;
+											},
+											function(errResponse) {
+												console
+														.error('Error while fetching assigned issues');
+												return $q
+														.reject(errResponse);
+											}
+
+									);
 
 								},
 

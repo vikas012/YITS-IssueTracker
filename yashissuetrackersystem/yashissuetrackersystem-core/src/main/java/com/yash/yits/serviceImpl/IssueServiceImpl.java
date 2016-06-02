@@ -197,7 +197,7 @@ public class IssueServiceImpl implements IssueService{
 	}
 
 
-	public int createIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId) {
+	public int createIssue(IssueForm issueForm,Long createdBy,Long issueOwnerMemberId,Attachment attachmentId) {
 		Project project=new Project();
 		project.setId(issueForm.getProject().getId());
 		
@@ -229,7 +229,7 @@ public class IssueServiceImpl implements IssueService{
 		issue.setCreatedDateTime(new Date());
 		issue.setIsActive(1);
 		
-		int issueId=issueDao.createIssue(issue,createdBy,issueOwnerMemberId);
+		int issueId=issueDao.createIssue(issue,createdBy,issueOwnerMemberId,attachmentId);
 		return issueId;
 
 }
@@ -354,7 +354,7 @@ public class IssueServiceImpl implements IssueService{
 
 
 
-	public int managerCreateIssue(IssueForm issueForm, Long createdBy, Long issueOwnerMemberId) throws ParseException {
+	public int managerCreateIssue(IssueForm issueForm, Long createdBy, Long issueOwnerMemberId ,Attachment attachment) throws ParseException {
 		Project project=new Project();
 		project.setId(issueForm.getProject().getId());
 		int issueId=0;
@@ -401,22 +401,13 @@ public class IssueServiceImpl implements IssueService{
 		issue.setCreatedDateTime(new Date());
 		issue.setIsActive(1);
 		
-		issueId=issueDao.managerCreateIssue(issue, createdBy, issueOwnerMemberId);
+		issueId=issueDao.managerCreateIssue(issue, createdBy, issueOwnerMemberId,attachment);
 		return issueId;
 	}
 
 
 
-	/**
-	 * File upload method--Takes file from controller and passes it to dao layer
-	 */
-	public String saveFile(Attachment file) {
-		file.setCreatedDateTime(new Date());
-		file.setLastModifiedDateTime(new Date());
-		file.setIsActive(1);
-		return issueDao.saveFile(file);
-		 
-	}
+	
 
 	public List<Issue> getConversationList(long createdBy) {
 		List<Issue> chats=issueDao.getConversationList(createdBy);

@@ -316,7 +316,7 @@ public class IssueController {
 
 	@ResponseBody
 	@RequestMapping(value = "/createIssue", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public String createIssue(@RequestBody IssueForm issueForm, HttpServletRequest httpServletRequest) {
+	public String createIssue(@RequestBody IssueForm issueForm, HttpServletRequest httpServletRequest,HttpSession httpSession) {
 		long createdBy = (Long) httpServletRequest.getSession().getAttribute("memberId");
 
 		System.out.println("Create Issue " + createdBy);
@@ -335,7 +335,9 @@ public class IssueController {
 		System.out.println("ISSUE OWNER MEMBER ID >>>" + issueOwnerMemberId);
 		int issueId = 0;
 		try {
-			issueId = issueService.createIssue(issueForm, createdBy, issueOwnerMemberId);
+			Attachment attachment=(Attachment) httpSession.getAttribute("attachment");
+			
+			issueId = issueService.createIssue(issueForm, createdBy, issueOwnerMemberId,attachment);
 		} catch (Exception e) {
 			System.out.println("Excption " + e);
 			e.printStackTrace();
@@ -349,7 +351,7 @@ public class IssueController {
 
 	@ResponseBody
 	@RequestMapping(value="/managerCreateIssue/{dueDate}",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE,method=RequestMethod.POST)
-	public String managerCreateIssue(@PathVariable("dueDate")Date date,@RequestBody IssueForm issueForm,HttpServletRequest httpServletRequest) throws ParseException{
+	public String managerCreateIssue(@PathVariable("dueDate")Date date,@RequestBody IssueForm issueForm,HttpServletRequest httpServletRequest,HttpSession httpSession) throws ParseException{
 		long createdBy=(Long)httpServletRequest.getSession().getAttribute("memberId");
 		
 		//long createdBy = 1004683;
@@ -374,7 +376,9 @@ public class IssueController {
 		System.out.println("Original estimate >>>" + issueForm.getOriginalEstimate());
 		int issueId = 0;
 		try {
-			issueId = issueService.managerCreateIssue(issueForm, createdBy, assignee);
+			
+			Attachment attachment=(Attachment) httpSession.getAttribute("attachment");
+			issueId = issueService.managerCreateIssue(issueForm, createdBy, assignee,attachment);
 		} catch (Exception e) {
 			System.out.println("Excption " + e);
 		}
@@ -444,16 +448,23 @@ public class IssueController {
 	 */
 
 	@RequestMapping(value="/uploadFile",method=RequestMethod.POST)
-	public String saveFile(HttpServletRequest request,@RequestParam(value="file",required=false) MultipartFile uploadedFile) throws IOException{
+	public String saveFile(HttpServletRequest request,@RequestParam(value="file",required=false) MultipartFile uploadedFile,HttpSession httpSession) throws IOException{
 		 
 	     Attachment file1=new Attachment();
 	     file1.setFile(uploadedFile.getBytes());
 	     file1.setName(uploadedFile.getOriginalFilename());
 	     file1.setLabel(request.getParameter("attachmentLabel"));
+	 		file1.setCreatedDateTime(new Date());
+	 		file1.setLastModifiedDateTime(new Date());
+	 		file1.setIsActive(1);
 	    
-	   
-	     return issueService.saveFile(file1);
+	   System.out.println("=======coming here");
+	     
+	    		//int attachmentId= issueService.saveFile(file1);
+	    		httpSession.setAttribute("attachment", file1);
+				return "sucess";
 	        
+	    		
 
 	}
 
