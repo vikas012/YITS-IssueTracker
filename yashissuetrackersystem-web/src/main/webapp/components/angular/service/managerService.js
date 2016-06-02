@@ -149,7 +149,6 @@ angular
 
 							              .then(
 							                      function(response){
-							                    	  alert(response.data);
 							                          return response.data;
 							                      }, 
 							                      function(errResponse){

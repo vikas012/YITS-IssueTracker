@@ -829,7 +829,6 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								managerService.fileUpload(formData)
 								.then(
 												function(data) {
-													alert("hgsdhgsh")
 													//$scope.fetchedIssue = data;
 												},
 												function(errResponse) {

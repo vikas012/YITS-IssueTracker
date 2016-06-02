@@ -706,7 +706,7 @@ public int managerCreateIssue(Issue issue, Long createdBy, Long assignee,Attachm
 	 * Without it, nothing gets scheduled. 
 	 */
 	/*Run every 1 hour  */ 
-	@Async // this will be executed asynchronously.
+	/*@Async // this will be executed asynchronously.
 	@Scheduled(cron="0 0/60 * * * ?")
 	public void scheduleTask() throws ParseException{
 	
@@ -716,7 +716,7 @@ public int managerCreateIssue(Issue issue, Long createdBy, Long assignee,Attachm
 		List<Issue> issues = query.list();
 		
 
-		/* this is current date*/
+		 this is current date
 		//Date date=new Date(); 
 		Calendar calendar=Calendar.getInstance();
 		SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
@@ -788,7 +788,7 @@ public int managerCreateIssue(Issue issue, Long createdBy, Long assignee,Attachm
 			}
 			}
 		transaction.commit();
-	}
+	}*/
 
 	/**
 	 * Method to update status of assigned issue when it is started.
