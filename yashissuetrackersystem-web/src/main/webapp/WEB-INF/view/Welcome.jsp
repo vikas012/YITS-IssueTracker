@@ -1,6 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -8,15 +8,15 @@
 <title>YITS</title>
 
 <link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	 href="<c:url value="styles/bootstrap.css"/>" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+<link rel="shortcut icon" type="image/x-icon" href="<c:url value="images/favicon.ico"/>" />
 <style type="text/css">
 .wrapper {
-	margin-top: 105px;
+	margin: 140px 0px;
 }
 
 .form-signin {
@@ -75,9 +75,11 @@ input[type="password"] {
 }
 
 .header-color {
-	background-color: #337ab7;
-	margin-top: 0px;
-	padding-bottom: 23px;
+	background-color: #F2F6FF;
+	/* margin:0px 20px; */
+	padding: 20px;
+	/* border-bottom-left-radius:10px;
+	border-bottom-right-radius:10px; */
 }
 
 .h2-tag {
@@ -91,6 +93,20 @@ input[type="password"] {
 	color: white;
 	padding-left: 539px;
 }
+
+.logo{
+	height: 8%;
+	width: 8%;
+}
+
+.footer{
+	background-color: #F2F6FF;
+	/* margin:0px 20px; */
+	padding: 20px;
+	/* border-top-left-radius:10px;
+	border-top-right-radius:10px; */
+	text-align: center;
+}
 </style>
 
 
@@ -102,8 +118,10 @@ input[type="password"] {
 		<a href="./userWelcome">User Dashboard</a>
 	</center> --%>
 	
-	<div class="header header-color">
-		<h2 class="h2-tag">YITS</h2>
+	<div class="header-color">
+		<div class="logo ">
+			<img src="<c:url value="images/logo-yash.svg"/>">
+		</div>
 	</div>
 
 	<div class="container">
@@ -130,11 +148,11 @@ input[type="password"] {
 
 			</form>
 		</div>
-		<!-- <div class="footer">
-			<h5 class="h4-color">YASH Technologies. All Rights Reserved</h5>
-		</div> -->
+		
 	</div>
-	
+	<div class="footer">
+			<div><strong>Copyright © 2016. YASH Technologies. All Rights Reserved.</strong></div>
+		</div>
 	
 </body>
 </html>

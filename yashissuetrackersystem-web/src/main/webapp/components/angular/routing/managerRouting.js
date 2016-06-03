@@ -60,7 +60,7 @@ managerModule.config(function($routeProvider) {
 
 	.when('/issues', {
 		templateUrl : '../issues',
-		controller : 'managerController as mc',	
+		controller : 'managerSearchIssueController as mc',	
 	})
 
 	.when('/searchMembers',{		
@@ -80,6 +80,11 @@ managerModule.config(function($routeProvider) {
 
 	.when('/editIssues',{
 		templateUrl:'editIssueForm',
+		controller:'managerController as mc'
+	})
+	
+	.when('/home',{
+		templateUrl:'../homeDashboard',
 		controller:'managerController as mc'
 	})
 

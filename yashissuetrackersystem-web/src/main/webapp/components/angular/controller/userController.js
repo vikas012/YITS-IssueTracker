@@ -5,10 +5,11 @@ angular
 				[
 						'$scope',
 						'$http',
+						'$location',
 						'userService',
-						function($scope, $http, userService, issuesList) {
+						function($scope, $http,$location, userService, issuesList) {
 
-							$scope.issueList = [];
+							/*$scope.issueList = [];
 							var issues = $http({
 								method : 'GET',
 								url : '../defaultIssuesList'
@@ -16,13 +17,12 @@ angular
 
 								$scope.issueList = data;
 							})
-							
+							*/
 					userService.initializeSelect().then(function(d) {
 								$scope.applications = d.applications;
 
 							});
 							$scope.selectApplicationId = function() {
-								alert("in select application Id");
 								var applicationId = angular
 										.element(
 												document
@@ -30,7 +30,6 @@ angular
 										.val();
 
 								this.appId = applicationId;
-								alert(this.appId);
 								this.application = {
 									"id" : applicationId
 								}
@@ -96,7 +95,8 @@ angular
 										.submitCreateIssue(formData)
 										.then(
 												function(formData) {
-													alert("Issue Created!!!!");
+													alert("Issue Reported !");
+													$location.path("/home");
 												},
 												function(errResponse) {
 													console
@@ -310,7 +310,6 @@ angular
 
 								}
 
-								alert(memberId);
 								managerService
 										.searchMemberType(memberId)
 										.then(
@@ -421,7 +420,7 @@ angular
 										})
 							};
 
-							$scope.searchAllIssues = function() {
+							/*$scope.searchAllIssues = function() {
 
 								$http.get('../defaultIssuesList').success(
 										function(data) {
@@ -431,8 +430,8 @@ angular
 										});
 
 							};
-
-							$scope.startTask = function(index) {
+*/
+							/*$scope.startTask = function(index) {
 
 								var id = angular
 										.element(
@@ -552,5 +551,5 @@ angular
 										});
 
 							}
-
+*/
 						} ]);

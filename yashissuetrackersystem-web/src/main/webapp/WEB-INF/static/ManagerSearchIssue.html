@@ -106,7 +106,7 @@
 		<table datatable="ng" class="table table-striped table-bordered table-hover" id="searchIssueTable">
 			<thead class="thead-inverse">
 				<tr  id="heading">
-					<th>Select</th>
+					
 					<th>Creation Date</th>
 					<!-- <th>Due Date</th> -->
 					<th>Project Name</th>
@@ -119,7 +119,6 @@
 			</thead>
 			<tbody>
 			<tr id="defaultTable" ng-repeat="issue in defaultIssueList">
-				<td><input id='radio' type='radio' name="issueId" value="{{issue.id}}"></td>
 				<td>{{issue.createdDateTime}}</td>
 				<!-- <td>{{issue.dueDate}}</td> -->
 				<td>{{issue.project.name}}</td>
@@ -129,7 +128,7 @@
 				<td>{{issue.summary}}</td>
 				<td><input type="button" value="View Details"
 						class="btn btn-primary" data-toggle="modal"
-							data-target="#myModal1" ng-click="viewIssue()"></td>
+							data-target="#myModal1" ng-click="viewIssue(issue.id)"></td>
 			</tr>
 			</tbody>
 		</table>

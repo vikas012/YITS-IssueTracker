@@ -37,15 +37,19 @@ userModule.config(function($routeProvider){
 
 			.when('/searchIssues', {
 				templateUrl : '../userIssues',
-				controller : 'userController as uc',
+				controller : 'userSearchIssueController as uc',
 		
 			})
 			.when('/editIssues',{
 				templateUrl:'../displayEditIssueForm',
-				controller:'userController as uc'
+				controller:'userEditController as uec'
 			})
 			.when('/showConversation',{
 				templateUrl:'../showConversationForm',
+				controller:'userController as uc'
+			})
+			.when('/home',{
+				templateUrl:'../homeDashboard',
 				controller:'userController as uc'
 			})
 			
