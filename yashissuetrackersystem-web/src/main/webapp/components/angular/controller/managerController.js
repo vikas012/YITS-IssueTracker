@@ -230,16 +230,19 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							
 							
 							
-							managerService.unassignedIssues().then(function(d) {
-								
-								alert("In AssigneIssue controller");
-								$scope.unassignedIssueList = d;
-								
+							$scope.init=function()
+							{
+								managerService.unassignedIssues().then(function(d) {
+									
+									alert("In AssigneIssue controller");
+									$scope.unassignedIssueList = d;
+									
+								}
+
+								);
 							}
-
-							);
 							
-
+							$scope.init();
 							
 							$scope.checkUserInLdap = function(ldapUser) {
 
