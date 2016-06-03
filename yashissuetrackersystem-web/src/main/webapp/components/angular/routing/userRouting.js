@@ -37,7 +37,7 @@ userModule.config(function($routeProvider){
 
 			.when('/searchIssues', {
 				templateUrl : '../userIssues',
-				controller : 'userController as uc',
+				controller : 'userSearchIssueController as uc',
 		
 			})
 			.when('/editIssues',{
