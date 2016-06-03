@@ -34,16 +34,15 @@ angular.module('issueTrackingSystem.managerModule').controller('AddMemberManager
 		$scope.showNonYashRegisterForm = true;
 		$scope.showRegistrationMessaage=false;
 		$scope.memberAlreadyInDatabase=false;
-		$scope.userId =" ";
-		$scope.userName =" ";
-		$scope.userEmail =" ";
-		$scope.userMobile =" ";
-		$scope.managerEmail =" ";
+		$scope.userId ="";
+		$scope.userName ="";
+		$scope.userEmail ="";
+		$scope.userMobile ="";
+		$scope.managerEmail ="";
 	}
 	
 	//checkUser accept login credentials
 	$scope.checkUser = function() {
-
 		$scope.ldapUser.ldapName = $scope.ldapName;
 		$scope.ldapUser.ldapEmail = $scope.ldapEmail;
 

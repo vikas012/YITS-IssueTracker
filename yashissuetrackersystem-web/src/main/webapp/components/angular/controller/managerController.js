@@ -234,7 +234,6 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							{
 								managerService.unassignedIssues().then(function(d) {
 									
-									alert("In AssigneIssue controller");
 									$scope.unassignedIssueList = d;
 									
 								}
