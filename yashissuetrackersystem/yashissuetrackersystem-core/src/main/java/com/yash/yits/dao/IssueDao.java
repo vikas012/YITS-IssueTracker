@@ -59,7 +59,7 @@ public interface IssueDao {
 
 	public List<Member> getMemberList();
 
-	public void assignIssue(Issue issue, int fetchId);
+	public void assignIssue(Issue issue,Long fetchId);
 	public Issue fetchIssueDetailsConv(int id);
 
 	public List<Member> getMemberListConv();

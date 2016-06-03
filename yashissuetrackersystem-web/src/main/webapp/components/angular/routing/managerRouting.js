@@ -40,7 +40,7 @@ managerModule.config(function($routeProvider) {
 
 	.when('/assignIssue', {
 		templateUrl : '../getAssignIssueForm',
-		controller : 'AssignedIssueController',
+		controller : 'managerController as mc',
 	})
 
 	.when('/showMembers', {

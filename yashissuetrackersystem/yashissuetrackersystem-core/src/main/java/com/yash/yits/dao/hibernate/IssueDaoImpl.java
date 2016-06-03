@@ -20,6 +20,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
@@ -625,13 +626,14 @@ public int managerCreateIssue(Issue issue, Long createdBy, Long assignee,Attachm
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Member.class)
 				.setProjection(Projections.projectionList().add(Projections.property("id"), "id")
+						.add(Projections.property("memberId"), "memberId")
 						.add(Projections.property("name"), "name"))
 				.setResultTransformer(Transformers.aliasToBean(Member.class));
 		List<Member> members = criteria.list();
 		return members;
 	}
 
-	public void assignIssue(Issue issue, int fetchId) {
+	public void assignIssue(Issue issue,Long memberId) {
 
 		Session session = sessionFactory.getCurrentSession();
 		System.out.println(issue.getOriginalEstimate());
@@ -641,9 +643,11 @@ public int managerCreateIssue(Issue issue, Long createdBy, Long assignee,Attachm
 		Issue issue2 = session.get(Issue.class,id);
 		issue2.setOriginalEstimate(issue.getOriginalEstimate());
 		issue2.setRemainingEstimate(issue.getRemainingEstimate());
-		issue2.setAssignedUser(issue.getAssignedUser());
+		System.out.println("AssignIssue MemberID "+memberId);
+		ApplicationTeamMember applicationTeamMember=session.load(ApplicationTeamMember.class, findMemberId(memberId).getId());
+		issue2.setAssignedUser(applicationTeamMember);
 		issue2.setDueDate(issue.getDueDate());
-		//session.update(issue2);
+		session.update(issue2);
 	}
 	
 	public Issue fetchIssueDetailsConv(int id) {

@@ -676,34 +676,25 @@ public class IssueServiceImpl implements IssueService{
 			MemberForm memberForm = new MemberForm();
 			memberForm.setName(member.getName());
 			memberForm.setId(member.getId());
+			memberForm.setMemberId(member.getMemberId());
 			memberForms.add(memberForm);
 		}
 		return memberForms;
 	}
 
-	public void assignIssue(IssueForm issueForm, int fetchId) throws ParseException {
+	public void assignIssue(IssueForm issueForm, Long memberId) throws ParseException {
 
 		Issue issue = new Issue();
 		issue.setId(issueForm.getId());
 
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
-
-		Date newDate = issueForm.getDueDate();
-		//Date date = formatter.parse(newDate);
-		issue.setDueDate(newDate);
+		issue.setDueDate(issueForm.getDueDate());
 		
 		issue.setOriginalEstimate(issueForm.getOriginalEstimate());
 		issue.setRemainingEstimate(issueForm.getRemainingEstimate());
 
-		ApplicationTeamMemberForm applicationTeamMemberForm = issueForm.getAssignedUser();
+		System.out.println("Member ID Service Assign user  "+memberId);
 
-		Member member = new Member();
-		member.setId(issueForm.getAssignedUser().getMember().getId());
-		ApplicationTeamMember applicationTeamMember = new ApplicationTeamMember();
-		applicationTeamMember.setMember(member);
-		issue.setAssignedUser(applicationTeamMember);
-
-		issueDao.assignIssue(issue, fetchId);
+		issueDao.assignIssue(issue, memberId);
 
 	}
 	

@@ -408,10 +408,10 @@ angular
 									$("#selectFile1").val("");
 									return false;
 								}
-								$scope.attachments.push({
+								/*$scope.attachments.push({
 									attachmentFile : $scope.file1Name,
 
-								});
+								});*/
 
 								userService.fileUpload(formData).then(
 										function() {

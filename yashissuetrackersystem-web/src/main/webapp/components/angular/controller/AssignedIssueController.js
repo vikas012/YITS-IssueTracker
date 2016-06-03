@@ -1,5 +1,13 @@
 angular.module('issueTrackingSystem.managerModule').controller('AssignedIssueController',['$scope','AssignedIssueService',function($scope,AssignedIssueService){
 
+	AssignedIssueService.unassignedIssues().then(function(d) {
+		
+		alert("In AssigneIssue controller");
+		$scope.unassignedIssueList = d;
+		
+	}
+
+	);
 	
 	$scope.showAssignedIssues=function(){
 		AssignedIssueService

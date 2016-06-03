@@ -14,6 +14,7 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							}
 
 							);
+							
 							$scope.selectApplicationId = function() {
 								alert("in select application Id");
 								var applicationId = angular
@@ -242,17 +243,20 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								$scope.checkUserInLdap($scope.ldapUser);
 
 							}
+							
+							
+							
+							managerService.unassignedIssues().then(function(d) {
+								
+								alert("In AssigneIssue controller");
+								$scope.unassignedIssueList = d;
+								
+							}
 
-							$scope.unassignedIssueList = [];
-							// rectify
-							var unassignedIssues = $http({
-								method : 'GET',
-								url : '../issue/assign'
-							}).success(function(data) {
+							);
+							
 
-								$scope.unassignedIssueList = data;
-							})
-
+							
 							$scope.checkUserInLdap = function(ldapUser) {
 
 								managerService
@@ -711,37 +715,45 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								url : '../getMembers'
 							}).success(function(data) {
 								$scope.assigneeList = data;
+								
 							})
 
 							this.assignIssue = {};
-							this.assignIssue = function() {
-
+							this.assignIssueSave = function() {
+								alert("In assign Issue");
 								var id = this.issueId;
 								var originalEstimate = this.assignIssue.originalEstimate;
-								var dueDate = this.assignIssue.dueDate;
-								var date = new Date(dueDate);
-								var year = date.getFullYear();
-								var month = date.getMonth() + 1;
-								var day = date.getDate();
-								var newDate = year + "/" + month + "/" + day;
-								// var newDate1=new Date(newDate);
+								var dueDate=new Date(this.assignIssue.dueDate);
+								
 								var remainingEstimate = this.assignIssue.originalEstimate;
-								var assignedUser = this.assignIssue.assignedUser;
-
+								
+								alert("assignee");
+								
+								
+								alert(this.assignIssue.assignedUser.member.memberId);
+								
+								var member = {
+										"memberId":this.assignIssue.assignedUser.member.memberId
+								}
+								
+								var assignedUser={
+										"member":member
+									}
+								
+								
 								var formData = {
 									"id" : id,
 									"originalEstimate" : originalEstimate,
-									"dueDate" : newDate,
+									
 									"remainingEstimate" : remainingEstimate,
-									"assignedUser" : {
-										"member" : {
-											"id" : assignedUser
-										}
-									},
+									"assignedUser" : assignedUser
 								};
-
-								managerService.submitAssignedIssue(formData)
-										.then(function(formData) {
+								
+								//alert(formData.assignedUser.member.memberId);
+								alert(dueDate);
+								
+								managerService.submitAssignedIssue(formData,dueDate)
+										.then(function(data) {
 											alert("Assigned");
 										});
 							};

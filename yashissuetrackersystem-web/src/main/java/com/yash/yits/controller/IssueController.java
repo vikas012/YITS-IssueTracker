@@ -43,6 +43,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -237,6 +238,14 @@ public class IssueController {
 	@RequestMapping(value="/getMembers")
 	public List<MemberForm> getMemberList(){
 		List<MemberForm> memberList=issueService.getMemberList();
+		System.out.println("In Issue Controller Members>>>>>>");
+		Iterator<MemberForm> iterator = memberList.iterator();
+		while (iterator.hasNext()) {
+			MemberForm memberForm = (MemberForm) iterator.next();
+			System.out.println("MemberId"+memberForm.getMemberId());
+			
+		}
+		
 		return memberList;
 
 	}
@@ -245,11 +254,16 @@ public class IssueController {
 
 	
 	@ResponseBody
-	@RequestMapping(value="/assignIssue",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void assignIssue(@RequestBody IssueForm issueForm)throws ParseException{
-		int fetchId=issueForm.getAssignedUser().getMember().getId();
-		System.out.println("CONTROLLER "+fetchId);
-		issueService.assignIssue(issueForm, fetchId);
+	@RequestMapping(value="/assignIssue/{dueDate}",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public String assignIssue(@PathVariable("dueDate")Date date,@RequestBody IssueForm issueForm)throws ParseException{
+		System.out.println("Assign issue controller >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
+		//int fetchId=issueForm.getAssignedUser().getMember().getId();
+		Long memberId = issueForm.getAssignedUser().getMember().getMemberId();
+		issueForm.setDueDate(date);
+		System.out.println("Assign Issue due date"+date);
+		//System.out.println("CONTROLLER "+fetchId);
+		issueService.assignIssue(issueForm, memberId);
+		return "";
 	}
 	
 
@@ -309,6 +323,7 @@ public class IssueController {
 	@ResponseBody
 	@RequestMapping(value = "/issue/assign")
 	public List<IssueForm> getUnassignedIssues() {
+		System.out.println("gjhjgjgjhgjhgjhgj");
 		List<IssueForm> unassignedIssueList = issueService.getUnassignedIssues();
 		return unassignedIssueList;
 	}

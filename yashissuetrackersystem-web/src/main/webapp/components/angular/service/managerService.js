@@ -47,19 +47,18 @@ angular
 																.reject(errResponse);
 													});
 								},
-								submitAssignedIssue : function(assignedIssue) {
-
-									return $http.post('../assignIssue',
+								submitAssignedIssue : function(assignedIssue,dueDate) {
+									alert("in assign issue service");
+									return $http.post('../assignIssue/'+dueDate,
 											assignedIssue).then(
 											function(response) {
 									
 												return response.data;
-											}/*
-												 * , function(errResponse){
-												 * console.error('Error while
-												 * assigning issue'); return
-												 * $q.reject(errResponse); }
-												 */
+											}
+												  , function(errResponse){
+												  console.error('Error while assigning issue'); 
+												  return $q.reject(errResponse); }
+												 
 									);
 								},
 
@@ -106,6 +105,22 @@ angular
 
 											);
 
+								},
+								
+								unassignedIssues:function(){
+									return $http
+									.get('../issue/assign')
+									.then(
+											function(response) {
+
+												return response.data;
+											},
+											function(errResponse) {
+												console
+														.error('Error while fetching users');
+												return $q
+														.reject(errResponse);
+											});
 								},
 
 								initializeSelect : function() {

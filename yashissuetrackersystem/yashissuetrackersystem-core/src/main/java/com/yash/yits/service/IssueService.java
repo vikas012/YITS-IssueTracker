@@ -61,7 +61,7 @@ public interface IssueService {
 
 	public List<MemberForm> getMemberList();
 
-	public void assignIssue(IssueForm issueForm, int fetchId) throws ParseException;
+	public void assignIssue(IssueForm issueForm,Long memberId) throws ParseException;
 	
 	public AttachmentForm getAttachment(int id);
 
