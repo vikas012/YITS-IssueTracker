@@ -486,34 +486,25 @@ public class IssueController {
 	}
 
 	@RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
-	public String download(@PathVariable("id") int id, HttpServletResponse response) throws IOException {
+	public String download(@PathVariable("id") int id, HttpServletResponse response, HttpServletRequest httpServletRequest) throws IOException {
 
 		AttachmentForm attachmentForm = issueService.getAttachment(id);
-
-		/*
-		 * String mimeType=
-		 * URLConnection.guessContentTypeFromName(attachmentForm.getName());
-		 * if(mimeType==null){ System.out.println(
-		 * "mimetype is not detectable, will take default"); mimeType =
-		 * "application/octet-stream"; }
-		 * 
-		 * System.out.println("mimetype : "+mimeType);
-		 * 
-		 * response.setContentType(mimeType);
-		 */
-
+	
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + attachmentForm.getName() + "\"");
-		OutputStream out = response.getOutputStream();
+		
 		try {
 			FileCopyUtils.copy(attachmentForm.getFile(), response.getOutputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-
-		FileOutputStream fos = new FileOutputStream(attachmentForm.getLabel() + ".jpg");
+		
+		String userName=(String)httpServletRequest.getSession().getAttribute("userName");
+		
+		
+		FileOutputStream fos = new FileOutputStream("C:\\Users\\"+userName+"\\Downloads\\"+attachmentForm.getLabel() + ".jpg");
 		fos.write(attachmentForm.getFile());
 		fos.close();
+		
 		return "index";
 
 	}
