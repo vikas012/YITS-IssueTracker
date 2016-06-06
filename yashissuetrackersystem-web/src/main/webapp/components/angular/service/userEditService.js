@@ -11,7 +11,7 @@ angular
 									return $http.get('./defaultIssuesList')
 											.then(
 													function(response) {
-														alert(response.data);
+			
 														return response.data;
 													},
 													function(errResponse) {
@@ -42,8 +42,6 @@ angular
 								},
 
 								startTask : function(id, dueDate) {
-									alert(id);
-
 									return $http
 											.get(
 													'../starttask/' + id + "/"

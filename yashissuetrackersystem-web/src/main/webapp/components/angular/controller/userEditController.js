@@ -15,7 +15,6 @@ angular
 							}).success(function(data) {
 
 								$scope.issueList = data;
-								alert(data);
 							});
 
 							$scope.searchAllIssues = function() {
@@ -32,18 +31,14 @@ angular
 							var editIssueId = 0;
 
 							$scope.getEditIssueId = function(id) {
-								alert("in getIssueID");
-								$scope.issueList = null;
-
+							
 								editIssueId = id;
 							}
 							
 							$scope.editTaskProgress = function() {
 
 								$scope.editId = editIssueId;
-								alert($scope.editId);
-								alert("In edit task progress");
-
+						
 								var taskProgressUpdate = $scope.taskProgressUpdate;
 
 								userEditService
@@ -51,7 +46,6 @@ angular
 												$scope.editId)
 										.then(
 												function(data) {
-													alert("updated");
 													$scope.searchAllIssues();
 													$scope.taskProgressUpdate = "";
 
@@ -64,17 +58,6 @@ angular
 							}
 							
 							$scope.startTask = function(index,id) {
-
-								/*var id = angular
-										.element(
-												document
-														.querySelector("input[id=radio]:checked"))
-										.val();*/
-								
-								alert(index);
-								
-								/*$scope.id = editIssueId;*/
-								alert(id);
 
 								var dueDate = $scope.issueList[index].dueDate;
 								var date1 = new Date(dueDate);
@@ -99,13 +82,6 @@ angular
 							
 							$scope.stopTask = function(id) {
 
-								/*var id = angular
-										.element(
-												document
-														.querySelector("input[id=radio]:checked"))
-										.val();*/
-								alert(id);
-
 								userEditService
 										.stopTask(id)
 										.then(
@@ -123,7 +99,7 @@ angular
 							var pauseId = 0;
 							
 							$scope.pauseId = function(id) {
-								alert("In pause Id");
+					
 								pauseId = id;
 								alert(pauseId);
 							}
@@ -131,15 +107,8 @@ angular
 							
 							$scope.pauseTask = function(index) {
 
-								/*var id = angular
-										.element(
-												document
-														.querySelector("input[id=radio]:checked"))
-										.val();*/
-								
 								$scope.id = pauseId;
-								alert($scope.id);
-
+								
 								var reason = $scope.reason;
 
 								userEditService
