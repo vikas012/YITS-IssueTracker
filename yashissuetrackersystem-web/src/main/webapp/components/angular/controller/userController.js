@@ -176,7 +176,7 @@ angular
 							};
 
 							$scope.viewIssue = function() {
-
+								alert();
 								var id = angular
 										.element(
 												document

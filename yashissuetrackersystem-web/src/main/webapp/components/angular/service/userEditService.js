@@ -8,10 +8,10 @@ angular
 							return {
 
 								EditIssue : function() {
-									return $http
-											.get('./defaultIssuesList')
+									return $http.get('./defaultIssuesList')
 											.then(
 													function(response) {
+														alert(response.data);
 														return response.data;
 													},
 													function(errResponse) {

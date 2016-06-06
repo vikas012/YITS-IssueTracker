@@ -51,9 +51,10 @@ public class IssueDaoImpl implements IssueDao {
 	
 	public List<Issue> showIssuesList(long memberId) {
 		Session session=sessionFactory.getCurrentSession();
-		Query query = session.createSQLQuery("SELECT * FROM Issue WHERE ASSIGNED_USER=(SELECT member_Id FROM application_team_member WHERE member_id=(SELECT Id FROM member WHERE member_Id="+memberId+"))");
-		
+		Query query = session.createSQLQuery("SELECT * FROM Issue WHERE ASSIGNED_USER=(SELECT id FROM application_team_member WHERE member_id=(SELECT Id FROM member WHERE member_Id="+memberId+"))");
+
 			Iterator iterator=query.list().iterator();
+			
 			List<Issue> listOfIssues=new ArrayList<Issue>();
 			
 			List<Member> listOfMember=new ArrayList<Member>();
@@ -78,7 +79,6 @@ public class IssueDaoImpl implements IssueDao {
 				Iterator iterator2=query3.list().iterator();
 				while(iterator2.hasNext()){
 					BigInteger bigInteger=(BigInteger)iterator2.next();
-					System.out.println(bigInteger.longValue());
 					member.setMemberId(bigInteger.longValue());	
 				}
 				ApplicationTeamMember applicationTeamMember= new ApplicationTeamMember();
@@ -160,6 +160,7 @@ public class IssueDaoImpl implements IssueDao {
 						.add(Projections.property("applicationIssueType"), "applicationIssueType"))
 				.add(Restrictions.isNull("assignedUser")).setResultTransformer(Transformers.aliasToBean(Issue.class));
 		List<Issue> unassignedIssueList = criteria.list();
+		
 		return unassignedIssueList;
 
 	}
@@ -266,7 +267,6 @@ public class IssueDaoImpl implements IssueDao {
 		List<ApplicationEnvironment> applicationEnvironment = getApplicationEnvironment(application);
 		System.out.println("ApplicationEnvironment "+applicationEnvironment);
 		
-		
 		List<Member> members = getApplicationMembers(application);
 		
 		List<Member> allMembers = getAllMembers();
@@ -287,29 +287,17 @@ public class IssueDaoImpl implements IssueDao {
 
 	public List<Member> getApplicationMembers(Application application) {
 		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria5 = session.createCriteria(ApplicationTeamMember.class);
-		Criteria criteria=criteria5.createCriteria("application");
-		criteria.add(Restrictions.eq("id", application.getId()));
-		List<ApplicationTeamMember> applicationTeamMembers = criteria5.list();
-		
-/*		List<ApplicationTeamMember> applicationTeamMembers = application.getApplicationTeamMembers();
-		System.out.println("ApplicationTeamMembers "+applicationTeamMembers);*/
-		
+		Criteria criteria = session.createCriteria(ApplicationTeamMember.class);
+		criteria.add(Restrictions.eq("application", application));
+		List<ApplicationTeamMember> applicationTeamMembers = criteria.list();
+
 		Iterator<ApplicationTeamMember> iterator = applicationTeamMembers.iterator();
-		Set<Member> members = new HashSet<Member>();
+		List<Member> members = new ArrayList<Member>();
 		
-		while (iterator.hasNext()) {
-			ApplicationTeamMember applicationTeamMember = (ApplicationTeamMember) iterator.next();
-			System.out.println(applicationTeamMember);
-			members.add(applicationTeamMember.getMember());
-			
-		}
-		
-		List<Member> members2 = new ArrayList<Member>();
-		members2.addAll(members);
+		while (iterator.hasNext())
+			members.add(iterator.next().getMember());	
 
-
-		return members2;
+		return members;
 
 	}
 
@@ -578,6 +566,9 @@ public class IssueDaoImpl implements IssueDao {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from Issue where id=" + fetchId);
 		Issue issue = (Issue) query.uniqueResult();
+		// application member list added
+		issue.setMemberList(getApplicationMembers(issue.getProject().getApplication()));	
+		System.out.println("After : "+issue.getMemberList().size());
 		return issue;
 
 	}

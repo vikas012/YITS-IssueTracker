@@ -3,6 +3,8 @@ package com.yash.yits.form;
 import java.util.Date;
 import java.util.List;
 
+import com.yash.yits.domain.Member;
+
 
 public class IssueForm {
 	
@@ -56,7 +58,7 @@ public class IssueForm {
 	
 	private List<AttachmentForm> attachmentForms;
 	
-	
+	private List<Member> memberList;
 
 	public Date getDueDate() {
 		return dueDate;
@@ -262,4 +264,13 @@ public class IssueForm {
 		this.createdBy = createdBy;
 	}
 
+	public List<Member> getMemberList() {
+		return memberList;
+	}
+
+	public void setMemberList(List<Member> memberList) {
+		this.memberList = memberList;
+	}
+
+	
 }
