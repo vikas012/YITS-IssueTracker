@@ -1,3 +1,13 @@
+<style>
+	.cancel{
+		color:white;
+	}
+	.cancel:hover{
+		color:white;
+		text-decoration: none;
+	}
+
+</style>
 <div>
 
 <h2 class="headerlabel">Add Member</h2>
@@ -20,26 +30,26 @@
 		<br> 			
 		<center>
 			<div class="container" ng-show="showLookUpForm" id="r2corners" >
-				  <form class="form-inline" role="form" name="myForm" >
+				  <form class="form-inline" role="form" name="myForm" ng-submit="checkUser()">
 				   	<div class="form-group">
 				      <label for="email">Email:</label>
-				      <input type="email" class="form-control"  placeholder="Enter email" ng-model="ldapEmail" name="ldapEmail">
+				      <input type="email" class="form-control"  placeholder="Enter email" ng-model="ldapEmail" name="ldapEmail" required>
 				      <!-- <span ng-show="myForm.ldapEmail.$error.email">Invalid email address.</span> -->
 				    </div>
 				    &nbsp;&nbsp;&nbsp;&nbsp; 
 				    &nbsp;&nbsp;&nbsp;&nbsp; 
-				    <button type="submit" class="btn btn-success" ng-click="checkUser()">LookUp</button>
+				    <button type="submit" class="btn btn-success">LookUp</button>
 				  </form>
 			</div>
 		</center>
 		<center>
 				<div class="container" ng-show="showRegisterForm" id="r3corners">
-					  <form class="form-inline" role="form">
+					  <form class="form-inline" role="form" ng-submit="registerMember()">
 					    
 					    <div class="form-group">
 						      <label class="control-label col-sm-4" for="Id">Id:</label>
 						      <div class="col-sm-8">
-						             <input type="text" class="form-control" id="Id"  ng-model="userId" ng-disabled="true">
+						             <input type="text" class="form-control" id="Id"  ng-model="userId" ng-disabled="true" required>
 						      </div>
 					    </div>
 					    
@@ -49,7 +59,7 @@
 					    <div class="form-group">
 						      <label class="control-label col-sm-4" for="name">Name:</label>
 						      <div class="col-sm-8">
-						      <input type="name" class="form-control" id="name"  ng-model="userName" ng-disabled="true">
+						      <input type="name" class="form-control" id="name"  ng-model="userName" ng-disabled="true" required>
 						      </div>
 					    </div>
 					    
@@ -59,7 +69,7 @@
 					    <div class="form-group">
 						      <label class="control-label col-sm-4" for="email">Email:</label>
 						      <div class="col-sm-8">
-						      <input type="email" class="form-control" id="email"  ng-model="userEmail" ng-disabled="true">
+						      <input type="email" class="form-control" id="email"  ng-model="userEmail" ng-disabled="true" required>
 						      </div>
 					    </div>
 					    
@@ -69,13 +79,13 @@
 					    <div class="form-group">
 						      <label  class="control-label col-sm-4" for="contact">Contact:</label>
 						      <div class="col-sm-8" >
-						      <input type="text" class="form-control" id="contact" ng-model="userMobile" ng-disabled="true">
+						      <input type="text" class="form-control" id="contact" ng-model="userMobile" ng-disabled="true" required>
 						      </div>
 					    </div>
 					  	<br>
 					  	<br> 
 					  	<div class="col-sm-8">
-					  		<center> 
+					  		
 								 &nbsp;&nbsp;&nbsp;&nbsp; 
 				   			 	&nbsp;&nbsp;&nbsp;&nbsp; 		
 				   			 	&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -83,7 +93,9 @@
 				   			 	&nbsp;&nbsp;&nbsp;&nbsp;
 				   			 	&nbsp;&nbsp;&nbsp;&nbsp;
 				   			 	&nbsp;&nbsp;&nbsp;&nbsp;
-				     			<button type="submit" class="btn btn-success" ng-click="registerMember()">Register</button>
+				     		<center> 	
+				     			<button type="submit" class="btn btn-success" >Register</button>
+				     			<button type="button" class="btn btn-success"><a class="cancel" href="#/home">Cancel</a></button>
 					  		</center>
 		    			</div>
 		  			</form>
@@ -92,14 +104,7 @@
 		
 		<div class="container" ng-show="showNonYashRegisterForm" id="r4corners">
 				  
-				  <form class="form-inline" role="form">
-				    
-				     <div class="form-group">
-					      <label class="control-label col-sm-4" for="Id">Id:</label>
-					      <div class="col-sm-8">
-					             <input type="text" class="form-control" id="Id"  ng-model="userId" ng-disabled="true">
-					      </div>
-				     </div>
+				  <form class="form-inline" role="form" ng-submit="registerNonYashMember()">
 				    
 				  	<br>
 				  	<br>
@@ -107,7 +112,7 @@
 				    <div class="form-group">
 					      <label class="control-label col-sm-4" for="name">Name:</label>
 					      <div class="col-sm-8">
-					      		<input type="name" class="form-control" id="name"  ng-model="userName">
+					      		<input type="text" class="form-control" id="name" ng-model="userName" required>
 					      </div>
 				    </div>
 				    
@@ -117,7 +122,7 @@
 				    <div class="form-group">
 						      <label class="control-label col-sm-4" for="email">Email:</label>
 						      <div class="col-sm-8">
-						      	<input type="email" class="form-control" id="email"  ng-model="userEmail">
+						      	<input type="email" class="form-control" id="email"  ng-model="userEmail" required>
 						      </div>
 				    </div>
 				    
@@ -127,7 +132,7 @@
 				    <div class="form-group">
 						      <label  class="control-label col-sm-4" for="contact">Contact:</label>
 						      <div class="col-sm-8" >
-						      	<input type="text" class="form-control" id="contact" ng-model="userMobile"/>
+						      	<input type="text" class="form-control" id="contact" ng-model="userMobile" required>
 						      </div>
 				    </div>
 				    
@@ -137,12 +142,15 @@
 				  	<div class="form-group">
 					      <label for="email">Manager Email:</label>
 					       &nbsp;&nbsp;&nbsp;
-					      <input type="email" class="form-control" id="email" ng-model="managerEmail"/>
+					      <input type="email" class="form-control" id="email" ng-model="managerEmail" required/>
 				    </div>
 				    
 				    <br>
 				  	<br>
-					<button type="submit" class="btn btn-success" ng-click="registerNonYashMember()">Register</button>
+				  	<center>
+						<button type="submit" class="btn btn-success">Register</button>
+						<button type="button" class="btn btn-success"><a class="cancel" href="#/home">Cancel</a></button>
+					</center>
 				  </form>
 			</div>
 

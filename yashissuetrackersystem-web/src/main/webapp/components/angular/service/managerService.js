@@ -48,7 +48,7 @@ angular
 													});
 								},
 								submitAssignedIssue : function(assignedIssue,dueDate) {
-									alert("in assign issue service");
+		
 									return $http.post('../assignIssue/'+dueDate,
 											assignedIssue).then(
 											function(response) {

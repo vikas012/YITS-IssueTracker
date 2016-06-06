@@ -234,7 +234,6 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							{
 								managerService.unassignedIssues().then(function(d) {
 									
-									alert("In AssigneIssue controller");
 									$scope.unassignedIssueList = d;
 									
 								}
@@ -707,17 +706,12 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 
 							this.assignIssue = {};
 							this.assignIssueSave = function() {
-								alert("In assign Issue");
+								
 								var id = this.issueId;
 								var originalEstimate = this.assignIssue.originalEstimate;
 								var dueDate=new Date(this.assignIssue.dueDate);
 								
 								var remainingEstimate = this.assignIssue.originalEstimate;
-								
-								alert("assignee");
-								
-								
-								alert(this.assignIssue.assignedUser.member.memberId);
 								
 								var member = {
 										"memberId":this.assignIssue.assignedUser.member.memberId
@@ -736,9 +730,6 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 									"assignedUser" : assignedUser
 								};
 								
-								//alert(formData.assignedUser.member.memberId);
-								alert(dueDate);
-								
 								managerService.submitAssignedIssue(formData,dueDate)
 										.then(function(data) {
 											alert("Assigned");
@@ -752,17 +743,18 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 												document
 														.querySelector("input[id=radio]:checked"))
 										.val();
-
+/*
 								managerService
 										.fetchIssueDetails(fetchId)
 										.then(
 												function(data) {
 													$scope.fetchedIssue = data;
+													alert(fetchIssueDetails);
 												},
 												function(errResponse) {
 													console
 															.error('Error showing fetched issue');
-												})
+												})*/
 								var fetchedIssue = $http({
 									method : 'GET',
 									url : '../fetchIssueDetails/' + fetchId

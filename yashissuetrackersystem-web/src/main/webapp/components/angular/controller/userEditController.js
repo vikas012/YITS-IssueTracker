@@ -7,7 +7,7 @@ angular
 						'$http',
 						'userEditService',
 						function($scope, $http, userEditService, issuesList) {
-
+							
 							$scope.issueList = [];
 							var issues = $http({
 								method : 'GET',
@@ -15,6 +15,7 @@ angular
 							}).success(function(data) {
 
 								$scope.issueList = data;
+								alert(data);
 							});
 
 							$scope.searchAllIssues = function() {

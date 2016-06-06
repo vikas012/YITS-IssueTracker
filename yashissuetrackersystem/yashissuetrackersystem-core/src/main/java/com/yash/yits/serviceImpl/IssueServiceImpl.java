@@ -647,6 +647,8 @@ public class IssueServiceImpl implements IssueService{
 
 		fetchedIssueForm.setDescription(fetchedIssue.getDescription());
 
+		fetchedIssueForm.setMemberList(fetchedIssue.getMemberList());
+		
 		ApplicationEnvironmentForm applicationEnvironmentForm = new ApplicationEnvironmentForm();
 		applicationEnvironmentForm.setEnvironment(fetchedIssue.getApplicationEnvironment().getEnvironment());
 		fetchedIssueForm.setApplicationEnvironment(applicationEnvironmentForm);

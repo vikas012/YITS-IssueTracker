@@ -48,7 +48,7 @@ angular
 
 											.then(
 													function(response) {
-														alert("issue reported ");
+														
 														return response.data;
 													},
 													function(errResponse) {

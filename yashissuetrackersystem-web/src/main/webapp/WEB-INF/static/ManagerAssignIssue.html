@@ -176,8 +176,7 @@
 									<div class="form-group col-sm-6">
 										<label for="issueProject">IssueAssignee</label> 
 										<select class="dropDown form-control" ng-model="mc.assignIssue.assignedUser.member.memberId" class="form-control" ng-click="getMemberList()">
-											<option value="{{assignee.memberId}}" ng-repeat="assignee in assigneeList">{{assignee.name}}</option>
-											
+											<option value="{{assignee.memberId}}" ng-repeat="assignee in fetchedIssue.memberList">{{assignee.name}}</option>
 										</select>
 									</div>
 								</div>

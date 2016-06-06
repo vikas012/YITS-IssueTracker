@@ -172,11 +172,15 @@ public class IssueController {
 	@RequestMapping(value = "/defaultIssuesList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<IssueForm> showIssuesList(HttpServletRequest httpServletRequest) throws ClassNotFoundException {
-		System.out.println("In controller");
+
 		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
-		System.out.println(memberId);
+
 		List<IssueForm> issuesList = issueService.showIssuesList(memberId);
+
 		System.out.println("Here is issuesList "+issuesList);
+
+		System.out.println(issuesList.size());
+
 		return issuesList;
 	}
 
