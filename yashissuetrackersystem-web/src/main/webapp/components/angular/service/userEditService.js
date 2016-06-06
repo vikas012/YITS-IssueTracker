@@ -42,6 +42,7 @@ angular
 								},
 
 								startTask : function(id, dueDate) {
+									alert(id);
 
 									return $http
 											.get(

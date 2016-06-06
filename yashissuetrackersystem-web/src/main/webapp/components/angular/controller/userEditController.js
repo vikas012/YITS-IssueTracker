@@ -36,10 +36,11 @@ angular
 
 								editIssueId = id;
 							}
-
+							
 							$scope.editTaskProgress = function() {
 
 								$scope.editId = editIssueId;
+								alert($scope.editId);
 								alert("In edit task progress");
 
 								var taskProgressUpdate = $scope.taskProgressUpdate;
@@ -61,13 +62,18 @@ angular
 
 							}
 							
-							$scope.startTask = function(index) {
+							$scope.startTask = function(index,id) {
 
-								var id = angular
+								/*var id = angular
 										.element(
 												document
 														.querySelector("input[id=radio]:checked"))
-										.val();
+										.val();*/
+								
+								alert(index);
+								
+								/*$scope.id = editIssueId;*/
+								alert(id);
 
 								var dueDate = $scope.issueList[index].dueDate;
 								var date1 = new Date(dueDate);
@@ -90,13 +96,14 @@ angular
 
 							};
 							
-							$scope.stopTask = function() {
+							$scope.stopTask = function(id) {
 
-								var id = angular
+								/*var id = angular
 										.element(
 												document
 														.querySelector("input[id=radio]:checked"))
-										.val();
+										.val();*/
+								alert(id);
 
 								userEditService
 										.stopTask(id)
@@ -112,18 +119,30 @@ angular
 
 							};
 							
-							$scope.pauseTask = function() {
+							var pauseId = 0;
+							
+							$scope.pauseId = function(id) {
+								alert("In pause Id");
+								pauseId = id;
+								alert(pauseId);
+							}
 
-								var id = angular
+							
+							$scope.pauseTask = function(index) {
+
+								/*var id = angular
 										.element(
 												document
 														.querySelector("input[id=radio]:checked"))
-										.val();
+										.val();*/
+								
+								$scope.id = pauseId;
+								alert($scope.id);
 
 								var reason = $scope.reason;
 
 								userEditService
-										.pauseTask(id, reason)
+										.pauseTask($scope.id, reason)
 										.then(
 												function(data) {
 													$scope.searchAllIssues();

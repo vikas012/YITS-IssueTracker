@@ -176,6 +176,7 @@ public class IssueController {
 		long memberId = (Long) httpServletRequest.getSession().getAttribute("memberId");
 		System.out.println(memberId);
 		List<IssueForm> issuesList = issueService.showIssuesList(memberId);
+		System.out.println("Here is issuesList "+issuesList);
 		return issuesList;
 	}
 
