@@ -64,7 +64,7 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao memberDao;
 
 	@Autowired
-	private VelocityEngine velocityEngine;
+	 private VelocityEngine velocityEngine;
 
 	@Autowired
 	JavaMailSender javaMailSender;
@@ -387,8 +387,8 @@ public List<String> memberType() {
 		return memberForms;
 	}
 
-	public List<MemberForm> searchMemberType(int memberTypeId) {
-		List<Member> memberTypeList = memberDao.searchMemberType(memberTypeId);
+	public List<MemberForm> searchMemberType(int memberId) {
+		List<Member> memberTypeList = memberDao.searchMemberType(memberId);
 		List<MemberForm> memberForms = new ArrayList<MemberForm>();
 		for (Member member : memberTypeList) {
 

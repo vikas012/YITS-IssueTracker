@@ -1,38 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style type="text/css">
-.container {
-	width: 200px;
-	float: center;
-}
-
-.input-group {
-	
-	float: center;
-	margin-left: 350px;
-}
-
-.btn-primary {
-	background-color: darkcyan !important;
-}
-</style>
-</head>
-<body ng-controller="managerController as mc">
+<div>
 <h3 class="headerlabel">Search Members</h3><br>
-	<form>
-	
     	<div class="input-group">
-			
-			
-			<div class="input-group-btn" >
 			<input type="text" class="form-control" ng-model="searchText" placeholder="Member Name ,Member Email ,Manager name">
+			<div class="input-group-btn">
 				<button class="btn btn-primary" type="button" ng-click="getSearchMember()">
 					<i class="glyphicon glyphicon-search"></i>&nbsp; Search
 				</button>
 			</div>
 			
-			<div class="col-xs-4" style="margin-left:200px;">
+			<div class="col-xs-4" style="margin-left:100px;">
   				<select ng-model="memberType" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-change="getSearchedMemberType()">
 					<option ng-repeat="getMemberType in getMemberTypes" value="{{getMemberType}}">{{getMemberType}}</option>
 				</select>
@@ -55,23 +31,24 @@
 					<th colspan="2">Action</th>
 				</tr>
 			</thead>
-			
-			<tr ng-repeat="member in members">
-				<td>{{member.memberId}}</td>
-				<td>{{member.name}}</td>
-				<td>{{member.email}}</td>
-				<td>{{member.contact}}</td>
-				<td>{{member.managerName}}</td>
-				<td>{{member.managerEmail}}</td>
-				<td><button  ng-click="memberActivateForSearch(member.memberId)"  class="btn btn-default" ng-disabled="member.memberType.id==3">{{member.isActive}}</button></td>
-				<td><input type="button" value="Delete" ng-click="memberDeleteForSearch(member.memberId)"  class="btn btn-default" ng-disabled="member.memberType.id==3"></td>
-			</tr>
 
-			<tbody>
+		<tr ng-repeat="member in members">
+			<td>{{member.memberId}}</td>
+			<td>{{member.name}}</td>
+			<td>{{member.email}}</td>
+			<td>{{member.contact}}</td>
+			<td>{{member.managerName}}</td>
+			<td>{{member.managerEmail}}</td>
+			<td><button ng-click="memberActivateForSearch(member.memberId)"
+					class="btn btn-default" ng-disabled="member.memberType.id==3">{{member.isActive}}</button></td>
+			<td><input type="button" value="Delete"
+				ng-click="memberDeleteForSearch(member.memberId)"
+				class="btn btn-default" ng-disabled="member.memberType.id==3"></td>
+		</tr>
+
+		<tbody>
 
 			</tbody>
 		</table>
 
-	</form>
-</body>
-</html>
+</div>

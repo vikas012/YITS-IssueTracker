@@ -29,9 +29,6 @@
 
 	<import resource="classpath*:spring-configuration/persistence-orm.xml" />
 
-	<!-- <context:property-placeholder location="classpath*:/config/*.properties" 
-		/> -->
-
 
 	<!-- context Aware bean -->
 	<bean id="contextAware" class="com.yash.yits.util.ContextAware"></bean>
@@ -40,8 +37,8 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.mail.yahoo.com" />
 		<property name="port" value="587" />
-		<property name="username" value="vikas.yits2016@yahoo.com" />
-		<property name="password" value="Password1234" />
+		<property name="username" value="somesh.gautam123@yahoo.com" />
+		<property name="password" value="7385288995" />
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.transport.protocol">smtp</prop>
@@ -54,18 +51,20 @@
 
 	</bean>
 
-	<!-- apache commons configuration -->
+	<!-- velocity engine template for mail-->
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean"> 
+		<property name="velocityProperties"> <props> <prop key="resource.loader">class</prop> 
+		<prop key="class.resource.loader.class"> org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader 
+		</prop> </props> </property> </bean> 
 
+
+	<!-- apache commons configuration -->
 	<bean id="userProperties"
 		class="org.apache.commons.configuration.PropertiesConfiguration">
 		<constructor-arg type="java.net.URL"
 			value="classpath:config/DEVL_yash-issuetracker-core.properties" />
 	</bean>
-
-<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean"> 
-		<property name="velocityProperties"> <props> <prop key="resource.loader">class</prop> 
-		<prop key="class.resource.loader.class"> org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader 
-		</prop> </props> </property> </bean> 
+	
 
 
 

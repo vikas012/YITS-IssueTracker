@@ -33,11 +33,7 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	@RequestMapping(value="/homeDashboard",method=RequestMethod.GET)
-	public String homeDasboard(){
-		
-		return "redirect:/static/DashboardHome.html";
-	}
+
 	
 	@RequestMapping(value="/showMembersPage")
 	public String showMembersPage(){
@@ -120,14 +116,12 @@ public class MemberController {
 	
 	}
 	@ResponseBody
-	@RequestMapping(value="/searchMemberType/{memberTypeId}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<MemberForm> searchMemberType(@PathVariable("memberTypeId") int memberTypeId){
-		System.out.println("---MemberId---"+ memberTypeId);
-		List<MemberForm> memberTypeList=memberService.searchMemberType(memberTypeId);
+	@RequestMapping(value="/searchMemberType/{memberId}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<MemberForm> searchMemberType(@PathVariable("memberId") int memberId){
+		System.out.println("---MemberId---"+ memberId);
+		List<MemberForm> memberTypeList=memberService.searchMemberType(memberId);
 		
 		return memberTypeList;
 
 	}
-	
-	
 }

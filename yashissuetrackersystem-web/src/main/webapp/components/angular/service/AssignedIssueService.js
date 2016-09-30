@@ -17,22 +17,6 @@ angular.module('issueTrackingSystem.managerModule').factory('AssignedIssueServic
 																.reject(errResponse);
 													});
 								},
-								
-								unassignedIssues:function(){
-									return $http
-									.get('../issue/assign')
-									.then(
-											function(response) {
-
-												return response.data;
-											},
-											function(errResponse) {
-												console
-														.error('Error while fetching users');
-												return $q
-														.reject(errResponse);
-											});
-								},
 
 								//search list of assigned issues
 								searchAssignedIssue : function(searchText) {

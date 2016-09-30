@@ -61,8 +61,6 @@ public class Issue implements Serializable {
 
 	private String summary;
 
-	@Transient
-	private List<Member> memberList;
 	/*//bi-directional many-to-one association to Attachment
 	@OneToMany(mappedBy="issue", fetch=FetchType.EAGER)
 	private List<Attachment> attachments;
@@ -355,14 +353,6 @@ public class Issue implements Serializable {
 				+ "]";
 	}
 
-	public List<Member> getMemberList() {
-		return memberList;
-	}
-
-	public void setMemberList(List<Member> memberList) {
-		this.memberList = memberList;
-	}
-
 /*	public List<IssueActivityLog> getIssueActivityLogs() {
 		return issueActivityLogs;
 	}
@@ -370,5 +360,5 @@ public class Issue implements Serializable {
 	public void setIssueActivityLogs(List<IssueActivityLog> issueActivityLogs) {
 		this.issueActivityLogs = issueActivityLogs;
 	}*/
-	
+
 }

@@ -1,114 +1,110 @@
-angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','$location','managerService',function($scope, $http,$location, managerService, issueList) {
+angular.module('issueTrackingSystem.managerModule').controller('managerController',['$scope','$http','managerService',function($scope, $http, managerService, issueList) {
 
 							$scope.issueList = [];
 
 					
 
-
 							this.createIssue = {};
 							managerService.initializeSelect().then(function(d) {
 								
 
-								$scope.applications = d.applications;
+								$scope.projects = d.projects;
 								
 							}
 
 							);
-							
-							$scope.selectApplicationId = function() {
-								var applicationId = angular
+
+							$scope.myFunc = function() {
+								var projectId = angular
 										.element(
 												document
-														.querySelector("select[id=selectAppId]"))
+														.querySelector("select[id=selectId]"))
 										.val();
 
-								this.appId = applicationId;
-								this.application = {
-									"id" : applicationId
+								this.pId = projectId;
+								this.project = {
+									id : projectId
 								}
 								managerService
-										.initializeSelectAll(this.appId)
+										.initializeSelectAll(this.pId)
 										.then(
 												function(d) {
-													
-													$scope.projects = d.projects;
+										
 													$scope.issueTypeList = d.issueType;
 													$scope.priorities = d.issuePriority;
 													$scope.environments = d.applicationEnvironment;
-													$scope.assignees = d.applicationTeamMembers;
+													$scope.assigneeList = d.applicationTeamMembers;
 
 												});
 							}
 
 							this.add = function() {
-								
-								var summary =this.createIssue.summary;
-								var component=this.createIssue.component;
-								var affectedVersion=this.createIssue.affectedVersion;
-								var description=this.createIssue.description;
+
+								var summary = this.createIssue.summary;
+								var component = this.createIssue.component;
+								var affectedVersion = this.createIssue.affectedVersion;
+								var description = this.createIssue.description;
 								var member = {
-										"memberId":this.createIssue.assignedUser.member.memberId
+									"memberId" : this.createIssue.owner.memberId
 								}
-								
-								var assignedUser={
-										"member":member
-									}
-								
-								var project={
-										"id":this.createIssue.project.id
+
+								var issueOwner = {
+									"member" : member
 								}
-								
-								var applicationIssueType={
-										"id":this.createIssue.issueType.id
+
+								var project = {
+									"id" : this.createIssue.project.id
 								}
-								
-								var applicationIssuePriority={
-										"id":this.createIssue.issuePriority.id
+
+								var applicationIssueType = {
+									"id" : this.createIssue.issueType.id
 								}
-								
-								 var applicationEnvironment={
-										"id":this.createIssue.applicationEnvironment.id
+
+								var applicationIssuePriority = {
+									"id" : this.createIssue.issuePriority.id
 								}
-								
-								var originalEstimate=this.createIssue.originalEstimate;
-								var dueDate=new Date(this.createIssue.dueDate);
-								
-								var jsonDate ={
-									"dueDate":dueDate	
+
+								var applicationEnvironment = {
+									"id" : this.createIssue.applicationEnvironment.id
 								}
-								
-								var formData={
-										"project":project,
-										"applicationIssueType":applicationIssueType,
-										"applicationIssuePriority":applicationIssuePriority,
-										"summary":summary,
-										"component":component,
-										"affectedVersion":affectedVersion,
-										"applicationEnvironment":applicationEnvironment,
-										"description":description,
-										"assignedUser":assignedUser,
-										"originalEstimate":originalEstimate,
-										//"dueDate":jsonDate.dueDate
-									
-										
+
+								var dueDate = this.createIssue.dueDate;
+
+								var date = new Date(dueDate);
+								var year = date.getFullYear();
+								var month = date.getMonth() + 1;
+								var day = date.getDate();
+								var newDate = year + "/" + month + "/" + day;
+
+								var originalEstimate = this.createIssue.originalEstimate;
+
+								var formData = {
+									"project" : project,
+									"applicationIssueType" : applicationIssueType,
+									"applicationIssuePriority" : applicationIssuePriority,
+									"summary" : summary,
+									"component" : component,
+									"affectedVersion" : affectedVersion,
+									"applicationEnvironment" : applicationEnvironment,
+									"description" : description,
+									"issueOwner" : issueOwner,
+									"dueDate" : newDate,
+									"originalEstimate" : originalEstimate
+
 								};
-								
-								
-								
-								
-								managerService.submitCreateIssue(formData,dueDate)
-								.then(
-										function(formData) {
-											alert("Issue Reported !");
-											$location.path("/home");
-										},
-										function(errResponse)
-										{
-										console.error('Error while searching issues');
-										});
+
+								managerService
+										.submitCreateIssue(formData)
+										.then(
+												function(formData) {
+													alert("Issue Created!!");
+												},
+												function(errResponse) {
+													console
+															.error('Error while searching issues');
+												});
 							}
-							
-							
+
 							// rectify
 							var issues = $http({
 								method : 'GET',
@@ -227,22 +223,17 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								$scope.checkUserInLdap($scope.ldapUser);
 
 							}
-							
-							
-							
-							$scope.init=function()
-							{
-								managerService.unassignedIssues().then(function(d) {
-									
-									$scope.unassignedIssueList = d;
-									
-								}
 
-								);
-							}
-							
-							$scope.init();
-							
+							$scope.unassignedIssueList = [];
+							// rectify
+							var unassignedIssues = $http({
+								method : 'GET',
+								url : '../issue/assign'
+							}).success(function(data) {
+
+								$scope.unassignedIssueList = data;
+							})
+
 							$scope.checkUserInLdap = function(ldapUser) {
 
 								managerService
@@ -346,47 +337,46 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 							})
 
 							$scope.getSearchMember = function() {
-								$scope.memberType=undefined;
+
 								var searchText = $scope.searchText;
 
 								if (searchText == undefined) {
 
 									alert("Please Enter Text!");
 								} else {
-									managerService
-									.searchMember(searchText)
-									.then(
-											function(data) {
-												$scope.members = data;
+									managerService.searchMember(searchText)
+											.then(
+													function(data) {
+														$scope.members = data;
 
-												angular
-												.forEach(
-														$scope.members,
-														function(
-																value,
-																key) {
+														angular
+																.forEach(
+																		$scope.members,
+																		function(
+																				value,
+																				key) {
 
-															if (value.isActive == 0) {
+																			if (value.isActive == 0) {
 
-																value.isActive = "Activate";
-															} else {
+																				value.isActive = "Activate";
+																			} else {
 
-																value.isActive = "DeActivate";
-															}
+																				value.isActive = "DeActivate";
+																			}
 
-														});
-											},
-											function(errResponse) {
-												console
-												.error('Error while showing search members');
-											})
+																		});
+													},
+													function(errResponse) {
+														console
+																.error('Error while showing search members');
+													})
 
 								}
 
 							}
 
 							$scope.getDataAfterActiveStatus = function() {
-								
+								// rectify
 								$http({
 									method : 'GET',
 									url : '../memberList'
@@ -501,7 +491,7 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 										.getAllList(applicationid)
 										.then(
 												function(data) {
-													
+													// $scope.application=data;
 													$scope.issuepriorities = data.priorities;
 													$scope.issuetype = data.issuetypes;
 													$scope.project = data.projects;
@@ -541,46 +531,52 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								attachmentFile : ''
 							} ];
 
-							$scope.getSearchedMemberType = function() {
-								var memberType = $scope.memberType;
-								var memberTypeId = 0;
-								if (memberType == "Yash") {
-									memberTypeId = 1;
-								} else if (memberType == "NonYash") {
-									memberTypeId = 2;
-								} else {
-									memberTypeId = 3;
-								}
+							$scope.getSearchedMemberType = function() {	
 								
-								managerService
-										.searchMemberType(memberTypeId)
-										.then(
-												function(data) {
-													$scope.members = data;
-													
-													angular
-															.forEach(
-																	$scope.members,
-																	function(
-																			value,
-																			key) {
-
-																		if (value.isActive == 0) {
-
-																			value.isActive = "Active";
-																		} else {
-
-																			value.isActive = "DeActivate";
-																		}
-																		
-																	});
-													
-												},
-												function(errResponse) {
-													console
-															.error('Error while showing search members');
-												})
-												
+								console.log($scope.memberType);
+								var memberType = $scope.memberType;
+								var memberTypeId=0;
+								if(memberType=="Yash"){
+									memberTypeId=1;	
+								}
+								else if(memberType=="NonYash"){
+									memberTypeId=2;
+									
+								}
+								else{
+									memberTypeId=3;
+									
+								}
+							
+								managerService.searchMemberType(memberTypeId)
+								.then(
+										function(data) {
+											$scope.members = data;
+											
+										//	console.log(members);
+											angular.forEach(
+													$scope.members,
+													function(value,key) {
+														
+														if (value.isActive == 0) {
+															
+															value.isActive = "Activate";
+														} else {
+															
+															value.isActive = "DeActivate";
+														}
+														
+													});
+											
+										},
+										function(errResponse) {
+											console
+											.error('Error while showing search members');
+										}
+										
+								)
+								
+								
 							}
 
 							$scope.getTheFile1 = function($files) {
@@ -593,7 +589,22 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								console.log($scope.file1, $scope.file1Name,
 										$scope.file1Size);
 							};
-							
+							/*
+							 * $scope.getTheFile2 = function($files) {
+							 * 
+							 * angular.forEach($files, function(value, key) {
+							 * alert(key + " " + value); $scope.file2 =
+							 * $files[0]; $scope.file2Name = $files[0].name;
+							 * $scope.file2Size = $files[0].size; });
+							 * console.log($scope.file2,$scope.file2Name,$scope.file2Size); };
+							 * $scope.getTheFile3 = function($files) {
+							 * 
+							 * angular.forEach($files, function(value, key) {
+							 * alert(key + " " + value); $scope.file3 =
+							 * $files[0]; $scope.file3Name = $files[0].name;
+							 * $scope.file3Size = $files[0].size; });
+							 * console.log($scope.file3,$scope.file3Name,$scope.file3Size); };
+							 */
 
 							$scope.uploadFile1 = function() {
 
@@ -652,6 +663,92 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 															.error('Error while searching assigned issues');
 												})
 
+								/*
+								 * $scope.uploadFile2 = function() {
+								 * 
+								 * var fileInput = $('#selectFile2'); var
+								 * maxSize = fileInput.data('max-size'); var
+								 * fileSize=$scope.file2Size; var
+								 * fileName=$scope.file2Name; var ext =
+								 * fileName.split('.').pop();
+								 * 
+								 * var formData = new FormData(); var
+								 * attachmentLabel= $scope.attachmentLabel2;
+								 * formData.append("file", $scope.file2);
+								 * formData.append("attachmentLabel",
+								 * attachmentLabel);
+								 * 
+								 * switch (ext) { case 'jpg': case 'jpeg': case
+								 * 'png': case 'gif': case 'doc': case 'docx':
+								 * case 'txt': case 'pdf': case 'xls': case
+								 * 'xlsx': case 'sql': case 'java': case 'xml':
+								 * break; default: alert('File type not
+								 * allowed.'); $("#selectFile2").val(""); return
+								 * false; }
+								 * 
+								 * if(fileSize>maxSize){ alert(' Too big file
+								 * size ! Size should be less than 1 MB');
+								 * $("#selectFile2").val(""); return false; }
+								 * 
+								 * $scope.attachments.push({ attachmentFile:
+								 * $scope.file2Name,
+								 * 
+								 * });
+								 * 
+								 * var request = { method : 'POST', url :
+								 * '../uploadFile', data : formData, headers : {
+								 * 'Content-Type' : undefined } };
+								 * 
+								 * $http(request).success(function(data, status) {
+								 * alert("File Uploaded Successfully ... " +
+								 * status);
+								 * 
+								 * }).error(function(data, status) {
+								 * 
+								 * }); }
+								 * 
+								 * $scope.uploadFile3 = function() {
+								 * 
+								 * var fileInput = $('#selectFile3'); var
+								 * maxSize = fileInput.data('max-size'); var
+								 * fileSize=$scope.file3Size; var
+								 * fileName=$scope.file3Name; var ext =
+								 * fileName.split('.').pop();
+								 * 
+								 * var formData = new FormData(); var
+								 * attachmentLabel = $scope.attachmentLabel3;
+								 * formData.append("file", $scope.file3);
+								 * formData.append("attachmentLabel",
+								 * attachmentLabel);
+								 * 
+								 * switch (ext) { case 'jpg': case 'jpeg': case
+								 * 'png': case 'gif': case 'doc': case 'docx':
+								 * case 'txt': case 'pdf': case 'xls': case
+								 * 'xlsx': case 'sql': case 'java': case 'xml':
+								 * break; default: alert('File type not
+								 * allowed.'); $("#selectFile3").val(""); return
+								 * false; }
+								 * 
+								 * if(fileSize>maxSize){ alert(' Too big file
+								 * size ! Size should be less than 1 MB');
+								 * $("#selectFile3").val(""); return false; }
+								 * 
+								 * $scope.attachments.push({
+								 * attachmentFile:$scope.file3Name,
+								 * 
+								 * });
+								 * 
+								 * var request = { method : 'POST', url :
+								 * '../uploadFile', data : formData, headers : {
+								 * 'Content-Type' : undefined } };
+								 * $http(request).success(function(data, status) {
+								 * alert("File Uploaded Successfully ... " +
+								 * status);
+								 * 
+								 * }).error(function(data, status) {
+								 * 
+								 * });
+								 */
 							}
 
 							$scope.viewIssue = function() {
@@ -701,39 +798,43 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 								url : '../getMembers'
 							}).success(function(data) {
 								$scope.assigneeList = data;
-								
 							})
 
 							this.assignIssue = {};
-							this.assignIssueSave = function() {
-								
+							this.assignIssue = function() {
+
 								var id = this.issueId;
 								var originalEstimate = this.assignIssue.originalEstimate;
-								var dueDate=new Date(this.assignIssue.dueDate);
-								
+								var dueDate = this.assignIssue.dueDate;
+								var date = new Date(dueDate);
+								var year = date.getFullYear();
+								var month = date.getMonth() + 1;
+								var day = date.getDate();
+								var newDate = year + "/" + month + "/" + day;
+								// var newDate1=new Date(newDate);
 								var remainingEstimate = this.assignIssue.originalEstimate;
-								
-								var member = {
-										"memberId":this.assignIssue.assignedUser.member.memberId
-								}
-								
-								var assignedUser={
-										"member":member
-									}
-								
-								
+								var assignedUser = this.assignIssue.assignedUser;
+
 								var formData = {
 									"id" : id,
 									"originalEstimate" : originalEstimate,
-									
+									"dueDate" : newDate,
 									"remainingEstimate" : remainingEstimate,
-									"assignedUser" : assignedUser
+									"assignedUser" : {
+										"member" : {
+											"id" : assignedUser
+										}
+									},
 								};
-								
-								managerService.submitAssignedIssue(formData,dueDate)
-										.then(function(data) {
+
+								managerService.submitAssignedIssue(formData)
+										.then(function(formData) {
 											alert("Assigned");
-										});
+										}/*
+											 * , function(errResponse) {
+											 * console.error('Error while
+											 * assigning issue controller'); }
+											 */);
 							};
 
 							$scope.fetchIssueDetails = function() {
@@ -743,18 +844,17 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 												document
 														.querySelector("input[id=radio]:checked"))
 										.val();
-/*
+
 								managerService
 										.fetchIssueDetails(fetchId)
 										.then(
 												function(data) {
 													$scope.fetchedIssue = data;
-													alert(fetchIssueDetails);
 												},
 												function(errResponse) {
 													console
 															.error('Error showing fetched issue');
-												})*/
+												})
 								var fetchedIssue = $http({
 									method : 'GET',
 									url : '../fetchIssueDetails/' + fetchId
@@ -833,41 +933,38 @@ angular.module('issueTrackingSystem.managerModule').controller('managerControlle
 									
 								});
 								
-								managerService.fileUpload(formData)
+								managerService
+								.fileUpload(formData)
 								.then(
-												function(data) {
-													//$scope.fetchedIssue = data;
-												},
-												function(errResponse) {
-													console
-															.error('Error showing fetched issue');
-												}
+										function(data) {
+										},
+										function(errResponse) {
+											
+										}
 								)
 
 							
 							}
 							
 							$scope.memberDeleteForSearch = function(memberId) {
-									
+								 
 								if (memberId == "") {
-									alert("Please Select ID!");
+								alert("Please Select ID!");
 								} else {
-									managerService.memberDelete(memberId)
-											.then(
-													function(data) {
-												
-														if ($scope.memberType ==undefined) {
-														
-															$scope.getSearchMember();
-														} else {
-															
-															$scope.getSearchedMemberType();
-														}
-													},
-													function(errResponse) {
-														console.error('Error while showing member status');
-													})
-									}
-							}
+								managerService.memberDelete(memberId)
+								.then(
+								function(data) {
+								if ($scope.memberType ==undefined) {
+								$scope.getSearchMember();
+								} else {
+								$scope.getSearchedMemberType();
+								}
+								},
+								function(errResponse) {
+								console.error('Error while showing member status');
+								})
+								}
+								}
+
 
 						} ]);

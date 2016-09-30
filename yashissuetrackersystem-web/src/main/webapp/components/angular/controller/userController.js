@@ -5,11 +5,10 @@ angular
 				[
 						'$scope',
 						'$http',
-						'$location',
 						'userService',
-						function($scope, $http,$location, userService, issuesList) {
+						function($scope, $http, userService, issuesList) {
 
-							/*$scope.issueList = [];
+							$scope.issueList = [];
 							var issues = $http({
 								method : 'GET',
 								url : '../defaultIssuesList'
@@ -17,46 +16,71 @@ angular
 
 								$scope.issueList = data;
 							})
-							*/
-					userService.initializeSelect().then(function(d) {
-								$scope.applications = d.applications;
+							userService.initializeSelect().then(function(d) {
+								$scope.projects = d.projects;
 
 							});
-							$scope.selectApplicationId = function() {
-								var applicationId = angular
+							$scope.myFunc = function() {
+								var projectId = angular
 										.element(
 												document
-														.querySelector("select[id=selectAppId]"))
+														.querySelector("select[id=selectId]"))
 										.val();
 
-								this.appId = applicationId;
-								this.application = {
-									"id" : applicationId
+								this.pId = projectId;
+								this.project = {
+									id : projectId
 								}
 								userService
-										.initializeSelectAll(this.appId)
+										.initializeSelectAll(this.pId)
 										.then(
 												function(d) {
-													
-													$scope.projects = d.projects;
+
 													$scope.issueTypeList = d.issueType;
 													$scope.priorities = d.issuePriority;
 													$scope.environments = d.applicationEnvironment;
-													$scope.owners = d.applicationTeamMembers;
+													$scope.applicationTeamMembers = d.applicationTeamMembers;
 
 												});
 							}
-							/*$scope.myFunction = function() {
+							$scope.myFunction = function() {
 								var applicationId = angular
 										.element(
 												document
 														.querySelector("select[id=selectId]"))
 										.val();
 
-							}*/
+								/*
+								 * this.pId=projectId; this.project ={
+								 * id:projectId }
+								 * userService.initializeSelectAll(this.pId).then(
+								 * function(d) { alert("in success all select");
+								 * alert("In controller select all called");
+								 * alert(d.myValue1);
+								 * $scope.issueTypeList=d.issueType;
+								 * $scope.priorities=d.issuePriority;
+								 * $scope.environments=d.applicationEnvironment;
+								 * 
+								 * });
+								 */
+							}
 
 							this.add = function() {
 
+								/*
+								 * var projectId =
+								 * this.createIssue.project.projectId; var
+								 * issueId = this.createIssue.issueType.issueId;
+								 * var issuePriorityId =
+								 * this.createIssue.issuePriority.issuePriorityId;
+								 * var summary = this.createIssue.summary; var
+								 * component = this.createIssue.component; var
+								 * affectedVersion =
+								 * this.createIssue.affectedVersion; var
+								 * applicationEnvironment =
+								 * this.createIssue.applicationEnvironment; var
+								 * description = this.createIssue.description;
+								 */
 								var summary = this.createIssue.summary;
 								var component = this.createIssue.component;
 								var affectedVersion = this.createIssue.affectedVersion;
@@ -95,14 +119,13 @@ angular
 										.submitCreateIssue(formData)
 										.then(
 												function(formData) {
-													alert("Issue Reported !");
-													$location.path("/home");
+													alert("Issue Created!!!!");
 												},
 												function(errResponse) {
 													console
 															.error('Error while searching issues');
 												});
-							};
+							}
 
 							$scope.defaultIssueSearchList = [];
 
@@ -176,7 +199,7 @@ angular
 							};
 
 							$scope.viewIssue = function() {
-								alert();
+
 								var id = angular
 										.element(
 												document
@@ -310,6 +333,7 @@ angular
 
 								}
 
+								alert(memberId);
 								managerService
 										.searchMemberType(memberId)
 										.then(
@@ -407,10 +431,10 @@ angular
 									$("#selectFile1").val("");
 									return false;
 								}
-								/*$scope.attachments.push({
+								$scope.attachments.push({
 									attachmentFile : $scope.file1Name,
 
-								});*/
+								});
 
 								userService.fileUpload(formData).then(
 										function() {
@@ -420,7 +444,7 @@ angular
 										})
 							};
 
-							/*$scope.searchAllIssues = function() {
+							$scope.searchAllIssues = function() {
 
 								$http.get('../defaultIssuesList').success(
 										function(data) {
@@ -430,8 +454,8 @@ angular
 										});
 
 							};
-*/
-							/*$scope.startTask = function(index) {
+
+							$scope.startTask = function(index) {
 
 								var id = angular
 										.element(
@@ -551,5 +575,5 @@ angular
 										});
 
 							}
-*/
+
 						} ]);

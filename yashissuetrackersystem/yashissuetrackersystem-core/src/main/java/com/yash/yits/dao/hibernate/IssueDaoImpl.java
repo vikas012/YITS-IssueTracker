@@ -568,8 +568,8 @@ public class IssueDaoImpl implements IssueDao {
 		Query query = session.createQuery("from Issue where id=" + fetchId);
 		Issue issue = (Issue) query.uniqueResult();
 		// application member list added
-		issue.setMemberList(getApplicationMembers(issue.getProject().getApplication()));	
-		System.out.println("After : "+issue.getMemberList().size());
+	//	issue.setMemberList(getApplicationMembers(issue.getProject().getApplication()));	
+	//	System.out.println("After : "+issue.getMemberList().size());
 		return issue;
 
 	}
